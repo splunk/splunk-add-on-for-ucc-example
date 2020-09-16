@@ -1,0 +1,53 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Windows template
+# Windows thumbnail cache files
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Dump file
+*.stackdump
+
+# Folder config file
+[Dd]esktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+### Python template
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+venv/
+.venv/
+build/
+test-reports
+#Splunk Files
+
+tests/model-conformance
+tests/functional
+
+
+.csms
+.DS_Store
+.env
+src
+*.lock
+*_event
+*_wait
+!deps/build
+!package/appserver/static/js/build
+*.log
