@@ -1,0 +1,8 @@
+pytest==4.3.1
+pytest-html
+selenium
+pyopenssl
+pytest-rerunfailures
+requests==2.11.0
+urllib3
+future
