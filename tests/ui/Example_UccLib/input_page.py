@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 05b2a6dd44d8e8323eceb44a6b6c2480b55d97f1
 from ucc_smartx.pages.page import Page
 from ucc_smartx.components.tabs import Tab
 from ucc_smartx.components.dropdown import Dropdown
