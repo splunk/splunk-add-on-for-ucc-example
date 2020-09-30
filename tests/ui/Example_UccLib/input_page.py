@@ -1,17 +1,17 @@
 
-from .Base_UccLib.pages.page import Page
-from .Base_UccLib.components.tabs import Tab
-from .Base_UccLib.components.dropdown import Dropdown
-from .Base_UccLib.components.entity import Entity
-from .Base_UccLib.components.controls.button import Button
-from .Base_UccLib.components.controls.checkbox import Checkbox
-from .Base_UccLib.components.controls.learn_more import LearnMore
-from .Base_UccLib.components.controls.textbox import TextBox
-from .Base_UccLib.components.controls.single_select import SingleSelect
-from .Base_UccLib.components.controls.multi_select import MultiSelect
-from .Base_UccLib.components.input_table import InputTable
-from .Base_UccLib.backend_confs import ListBackendConf
-from .Base_UccLib.components.controls.toggle import Toggle
+from ucc_smartx.pages.page import Page
+from ucc_smartx.components.tabs import Tab
+from ucc_smartx.components.dropdown import Dropdown
+from ucc_smartx.components.entity import Entity
+from ucc_smartx.components.controls.button import Button
+from ucc_smartx.components.controls.checkbox import Checkbox
+from ucc_smartx.components.controls.learn_more import LearnMore
+from ucc_smartx.components.controls.textbox import TextBox
+from ucc_smartx.components.controls.single_select import SingleSelect
+from ucc_smartx.components.controls.multi_select import MultiSelect
+from ucc_smartx.components.input_table import InputTable
+from ucc_smartx.backend_confs import ListBackendConf
+from ucc_smartx.components.controls.toggle import Toggle
 from selenium.webdriver.common.by import By
 
 class ExampleInputOne(Entity):
@@ -74,26 +74,26 @@ class InputPage(Page):
     Page: Input page
     """
 
-    def __init__(self, browser, urls, session_key):
+    def __init__(self, ucc_smartx_configs):
         """
             :param browser: The selenium webdriver
             :param urls: Splunk web & management url. {"web": , "mgmt": }
             :param session_key: session key to access the rest endpoints
         """
-        super(InputPage, self).__init__(browser, urls)
+        super(InputPage, self).__init__(ucc_smartx_configs)
 
         input_container = {
             "by": By.CSS_SELECTOR,
             "select": "div.inputsContainer"
         }
         
-        self.create_new_input = Dropdown(browser, {"by": By.CSS_SELECTOR, "select": ".add-button"})
-        self.table = InputTable(browser, input_container, mapping={"status": "disabled", "input_type":3})
-        self.entity1 = ExampleInputOne(browser, input_container)
-        self.entity2 = ExampleInputTwo(browser, input_container)
-        self.backend_conf = ListBackendConf(self._get_input_endpoint(), session_key)
-        self.pagination = Dropdown(browser, {"by": By.CSS_SELECTOR, "select": "control btn-group shared-controls-syntheticselectcontrol control-default"})
-        self.type_filter = Dropdown(browser, {"by": By.CSS_SELECTOR, "select": " .type-filter"})
+        self.create_new_input = Dropdown(ucc_smartx_configs.browser, {"by": By.CSS_SELECTOR, "select": ".add-button"})
+        self.table = InputTable(ucc_smartx_configs.browser, input_container, mapping={"status": "disabled", "input_type":3})
+        self.entity1 = ExampleInputOne(ucc_smartx_configs.browser, input_container)
+        self.entity2 = ExampleInputTwo(ucc_smartx_configs.browser, input_container)
+        self.backend_conf = ListBackendConf(self._get_input_endpoint(), ucc_smartx_configs.session_key)
+        self.pagination = Dropdown(ucc_smartx_configs.browser, {"by": By.CSS_SELECTOR, "select": "control btn-group shared-controls-syntheticselectcontrol control-default"})
+        self.type_filter = Dropdown(ucc_smartx_configs.browser, {"by": By.CSS_SELECTOR, "select": " .type-filter"})
 
     def open(self):
         self.browser.get('{}/en-US/app/Splunk_TA_UCCExample/inputs'.format(self.splunk_web_url))
