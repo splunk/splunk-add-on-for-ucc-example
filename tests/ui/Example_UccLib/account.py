@@ -1,17 +1,17 @@
-from Base_UccLib.pages.page import Page
-from Base_UccLib.components.tabs import Tab
-from Base_UccLib.components.entity import Entity
-from Base_UccLib.components.controls.button import Button
-from Base_UccLib.components.controls.single_select import SingleSelect
-from Base_UccLib.components.controls.oauth_select import OAuthSelect
-from Base_UccLib.components.controls.multi_select import MultiSelect
-from Base_UccLib.components.controls.checkbox import Checkbox
-from Base_UccLib.components.controls.toggle import Toggle
-from Base_UccLib.components.controls.textbox import TextBox
-from Base_UccLib.components.controls.learn_more import LearnMore
-from Base_UccLib.components.controls.toggle import Toggle
-from Base_UccLib.components.conf_table import ConfigurationTable
-from Base_UccLib.backend_confs import ListBackendConf
+from ucc_smartx.pages.page import Page
+from ucc_smartx.components.tabs import Tab
+from ucc_smartx.components.entity import Entity
+from ucc_smartx.components.controls.button import Button
+from ucc_smartx.components.controls.single_select import SingleSelect
+from ucc_smartx.components.controls.oauth_select import OAuthSelect
+from ucc_smartx.components.controls.multi_select import MultiSelect
+from ucc_smartx.components.controls.checkbox import Checkbox
+from ucc_smartx.components.controls.toggle import Toggle
+from ucc_smartx.components.controls.textbox import TextBox
+from ucc_smartx.components.controls.learn_more import LearnMore
+from ucc_smartx.components.controls.toggle import Toggle
+from ucc_smartx.components.conf_table import ConfigurationTable
+from ucc_smartx.backend_confs import ListBackendConf
 from selenium.webdriver.common.by import By
 
 class AccountEntity(Entity):
@@ -48,20 +48,18 @@ class AccountPage(Page):
     """
     Page: Server page
     """
-    def __init__(self, browser, urls, session_key):
+    def __init__(self, ucc_smartx_configs):
         """
-            :param browser: The selenium webdriver
-            :param urls: Splunk web & management url. {"web": , "mgmt": }
-            :param session_key: session key to access the rest endpoints
+            :param ucc_smartx_configs: smartx configuration fixture
         """
-        super(AccountPage, self).__init__(browser, urls)
+        super(AccountPage, self).__init__(ucc_smartx_configs)
         account_container = {
             "by": By.CSS_SELECTOR,
             "select": "div#account-tab"
         }
-        self.table = ConfigurationTable(browser, account_container)
-        self.entity = AccountEntity(browser, account_container)
-        self.backend_conf = ListBackendConf(self._get_account_endpoint(), session_key)
+        self.table = ConfigurationTable(ucc_smartx_configs.browser, account_container)
+        self.entity = AccountEntity(ucc_smartx_configs.browser, account_container)
+        self.backend_conf = ListBackendConf(self._get_account_endpoint(), ucc_smartx_configs.session_key)
 
     def open(self):
         """
