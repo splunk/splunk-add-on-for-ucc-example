@@ -122,14 +122,7 @@ class TestInput(UccTester):
     #### TEST CASES FOR EXAMPLE INPUT ONE ####
     ##########################################
 
-    # @pytest.mark.input
-    # @pytest.mark.first
-    # # Create account before running testcases
-    # def test_add_account(self, add_account):
-    #     pass
-
     @pytest.mark.input
-    
     # Verifies required field name in example input one
     def test_example_input_one_required_field_name(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
@@ -706,9 +699,6 @@ class TestInput(UccTester):
             'Query Start Date': '2020-12-11T20:00:32.000z',
             'Limit': '1000',
        }
-
-    # @pytest.mark.input
-    # def test_inputs_input_type_list_values
 
     @pytest.mark.input
     # Verifies the enable and disable functionality of the input
