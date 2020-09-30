@@ -1,4 +1,3 @@
-
 from ucc_smartx.pages.page import Page
 from ucc_smartx.components.tabs import Tab
 from ucc_smartx.components.dropdown import Dropdown
@@ -100,4 +99,3 @@ class InputPage(Page):
 
     def _get_input_endpoint(self):
         return '{}/servicesNS/nobody/Splunk_TA_UCCExample/configs/conf-inputs'.format(self.splunk_mgmt_url)
-
