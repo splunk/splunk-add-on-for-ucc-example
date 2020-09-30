@@ -230,32 +230,38 @@ class TestAccount(UccTester):
     @pytest.mark.account
     def test_delete_close(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        assert account.table.delete_row(ACCOUNT_CONFIG["name"], close=True)
+        account.table.delete_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.close()
         
     @pytest.mark.account
     def test_delete_cancel(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        assert account.table.delete_row(ACCOUNT_CONFIG["name"], cancel=True)
+        account.table.delete_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.cancel()
     
     @pytest.mark.account
     def test_edit_close(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        assert account.table.edit_row(ACCOUNT_CONFIG["name"], close=True)
+        account.table.edit_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.close()
         
     @pytest.mark.account
     def test_edit_cancel(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        assert account.table.edit_row(ACCOUNT_CONFIG["name"], cancel=True)
+        account.table.edit_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.cancel()
     
     @pytest.mark.account
     def test_clone_close(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        assert account.table.clone_row(ACCOUNT_CONFIG["name"], close=True)
-        
+        account.table.clone_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.close()
+
     @pytest.mark.account
     def test_clone_cancel(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        assert account.table.clone_row(ACCOUNT_CONFIG["name"], cancel=True)
+        assert account.table.clone_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.cancel()
         
     @pytest.mark.account
     def test_verify_duplicate_account_name(self, ucc_smartx_configs, add_account):
