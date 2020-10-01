@@ -600,7 +600,6 @@ class TestInput(UccTester):
         assert input_page.entity1.close()
 
     @pytest.mark.input
-    @pytest.mark.test
     # Verifies close functionality at time of clone
     def test_example_input_one_clone_close_entity(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
@@ -608,7 +607,6 @@ class TestInput(UccTester):
         assert input_page.entity1.close()
 
     @pytest.mark.input
-    @pytest.mark.test
     # Verifies close functionality at time of delete
     def test_example_input_one_delete_close_entity(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
@@ -924,7 +922,6 @@ class TestInput(UccTester):
     ###################################
 
     @pytest.mark.input
-    @pytest.mark.test
     # Verifies the frontend after adding a Example Input Two
     def test_example_input_two_add_frontend_validation(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
@@ -950,7 +947,6 @@ class TestInput(UccTester):
         url = input_page._get_input_endpoint()
 
     @pytest.mark.input
-    @pytest.mark.test
     # Verifies the backend after adding a Example Input Two
     def test_example_input_two_add_backend_validation(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
