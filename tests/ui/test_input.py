@@ -150,7 +150,6 @@ class TestInput(UccTester):
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
-    @pytest.mark.test
     # Verifies values Single Select Group Test dropdown in example input one
     def test_example_input_one_list_signle_select_group_test(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
@@ -201,6 +200,17 @@ class TestInput(UccTester):
         for each in selected_values:
             input_page.entity1.multiple_select_test.select(each)
         assert input_page.entity1.multiple_select_test.get_values() == selected_values
+
+    @pytest.mark.input
+    # Verifies deselect in Multiple Select Test dropdown in example input one
+    def test_example_input_one_deselect_multiple_select_test(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        selected_values = ["A", "B"]
+        input_page.create_new_input.select("Example Input One")
+        for each in selected_values:
+            input_page.entity1.multiple_select_test.select(each)
+        input_page.entity1.multiple_select_test.deselect("A")
+        assert input_page.entity1.multiple_select_test.get_values() == ["B"]
 
     @pytest.mark.input
     # Verifies multiple select seach funtionality properly
@@ -563,7 +573,7 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies the frontend delete functionlity
-    def test_example_input_one_delete_row_frontend_validatino(self, ucc_smartx_configs, add_input_one):
+    def test_example_input_one_delete_row_frontend_validation(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.delete_row("dummy_input_one")
         assert "dummy_input_one" not in input_page.table.get_table()
@@ -590,6 +600,7 @@ class TestInput(UccTester):
         assert input_page.entity1.close()
 
     @pytest.mark.input
+    @pytest.mark.test
     # Verifies close functionality at time of clone
     def test_example_input_one_clone_close_entity(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
@@ -597,6 +608,7 @@ class TestInput(UccTester):
         assert input_page.entity1.close()
 
     @pytest.mark.input
+    @pytest.mark.test
     # Verifies close functionality at time of delete
     def test_example_input_one_delete_close_entity(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
@@ -912,6 +924,7 @@ class TestInput(UccTester):
     ###################################
 
     @pytest.mark.input
+    @pytest.mark.test
     # Verifies the frontend after adding a Example Input Two
     def test_example_input_two_add_frontend_validation(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
@@ -937,6 +950,7 @@ class TestInput(UccTester):
         url = input_page._get_input_endpoint()
 
     @pytest.mark.input
+    @pytest.mark.test
     # Verifies the backend after adding a Example Input Two
     def test_example_input_two_add_backend_validation(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
@@ -1077,7 +1091,7 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies the frontend delete functionlity
-    def test_example_input_two_delete_row_frontend_validatino(self, ucc_smartx_configs, add_input_two):
+    def test_example_input_two_delete_row_frontend_validation(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.delete_row("dummy_input_two")
         assert "dummy_input_two" not in input_page.table.get_table()

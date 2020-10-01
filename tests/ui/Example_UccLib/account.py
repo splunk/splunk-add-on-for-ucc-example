@@ -1,4 +1,5 @@
 from ucc_smartx.pages.page import Page
+from ucc_smartx.components.base_component import Selector
 from ucc_smartx.components.tabs import Tab
 from ucc_smartx.components.entity import Entity
 from ucc_smartx.components.controls.button import Button
@@ -23,26 +24,26 @@ class AccountEntity(Entity):
             :param browser: The selenium webdriver
             :param container: The container in which the entity is located in
         """
-        add_btn = Button(browser, {"by": By.CSS_SELECTOR, "select": container["select"] + " button.add-button" })
-        entity_container = {"by": By.CSS_SELECTOR, "select": ".modal-content"}
+        add_btn = Button(browser, Selector(select=container.select + " button.add-button" ))
+        entity_container = Selector(select=".modal-content")
         
         super(AccountEntity, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
-        self.name = TextBox(browser, {"by": By.NAME, "select": "name"})
-        self.environment = SingleSelect(browser, {"by": By.CSS_SELECTOR, "select": ".custom_endpoint"}, False)
-        self.account_radio = Toggle(browser, {"by": By.CSS_SELECTOR, "select": ".account_radio"})
-        self.example_checkbox = Checkbox(browser, {"by": By.CSS_SELECTOR, "select": ".account_checkbox"})
-        self.multiple_select = MultiSelect(browser, {"by": By.CSS_SELECTOR, "select": ".account_multiple_select"})
-        self.auth_key = OAuthSelect(browser, {"by": By.CSS_SELECTOR, "select": ".auth_type"})
-        self.username = TextBox(browser, {"by": By.CSS_SELECTOR, "select": ".shared-controls-textcontrol .username"})
-        self.password = TextBox(browser, {"by": By.CSS_SELECTOR, "select": ".shared-controls-textcontrol .password"})
-        self.security_token = TextBox(browser, {"by": By.CSS_SELECTOR, "select": ".shared-controls-textcontrol .token"})
-        self.client_id = TextBox(browser, {"by": By.CSS_SELECTOR, "select": ".shared-controls-textcontrol .client_id"})
-        self.client_secret = TextBox(browser, {"by": By.CSS_SELECTOR, "select": ".shared-controls-textcontrol .client_secret"})
-        self.redirect_url = TextBox(browser, {"by": By.CSS_SELECTOR, "select": ".shared-controls-textcontrol .redirect_url"})
-        self.search_query  = TextBox(browser, {"by": By.CSS_SELECTOR, "select": " .search-query"})
-        self.help_link = LearnMore(browser, {"by": By.CSS_SELECTOR, "select": entity_container["select"] + " .example_help_link a"})
+        self.name = TextBox(browser, Selector(by=By.NAME, select="name"))
+        self.environment = SingleSelect(browser, Selector(select=".custom_endpoint"), False)
+        self.account_radio = Toggle(browser, Selector(select=".account_radio"))
+        self.example_checkbox = Checkbox(browser, Selector(select=".account_checkbox"))
+        self.multiple_select = MultiSelect(browser, Selector(select=".account_multiple_select"))
+        self.auth_key = OAuthSelect(browser, Selector(select=".auth_type"))
+        self.username = TextBox(browser, Selector(select=".shared-controls-textcontrol .username"))
+        self.password = TextBox(browser, Selector(select=".shared-controls-textcontrol .password"))
+        self.security_token = TextBox(browser, Selector(select=".shared-controls-textcontrol .token"))
+        self.client_id = TextBox(browser, Selector(select=".shared-controls-textcontrol .client_id"))
+        self.client_secret = TextBox(browser, Selector(select=".shared-controls-textcontrol .client_secret"))
+        self.redirect_url = TextBox(browser, Selector(select=".shared-controls-textcontrol .redirect_url"))
+        self.search_query  = TextBox(browser, Selector(select=" .search-query"))
+        self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
         
 class AccountPage(Page):
     """
@@ -53,10 +54,7 @@ class AccountPage(Page):
             :param ucc_smartx_configs: smartx configuration fixture
         """
         super(AccountPage, self).__init__(ucc_smartx_configs)
-        account_container = {
-            "by": By.CSS_SELECTOR,
-            "select": "div#account-tab"
-        }
+        account_container = Selector(select="div#account-tab")
         self.table = ConfigurationTable(ucc_smartx_configs.browser, account_container)
         self.entity = AccountEntity(ucc_smartx_configs.browser, account_container)
         self.backend_conf = ListBackendConf(self._get_account_endpoint(), ucc_smartx_configs.session_key)
