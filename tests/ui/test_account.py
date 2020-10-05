@@ -71,7 +71,7 @@ def add_multiple_account(ucc_smartx_configs):
         account.backend_conf.post_stanza(url, kwargs)
 
 @pytest.fixture(autouse=True)
-def delete_inputs(ucc_smartx_configs):
+def delete_accounts(ucc_smartx_configs):
     yield
     account = AccountPage(ucc_smartx_configs)
     account.backend_conf.delete_all_stanzas()
@@ -260,7 +260,7 @@ class TestAccount(UccTester):
     @pytest.mark.account
     def test_clone_cancel(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        assert account.table.clone_row(ACCOUNT_CONFIG["name"])
+        account.table.clone_row(ACCOUNT_CONFIG["name"])
         assert account.entity.cancel()
         
     @pytest.mark.account
