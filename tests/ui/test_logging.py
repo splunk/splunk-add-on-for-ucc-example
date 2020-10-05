@@ -29,7 +29,7 @@ class TestLogging(UccTester):
         
     @pytest.mark.logging
     #This test cases checks the functionality of selecting random log level and verification of the same in UI
-    def test_logging_random(self, ucc_smartx_configs):
+    def test_logging_select_random_log_level(self, ucc_smartx_configs):
         levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
         logging = Logging(ucc_smartx_configs, TA_NAME)
         level = random.choice(levels)
@@ -39,7 +39,7 @@ class TestLogging(UccTester):
         
     @pytest.mark.logging
     #This test case checks list of log levels present in the drop down
-    def test_logging_list(self, ucc_smartx_configs):
+    def test_logging_list_log_levels(self, ucc_smartx_configs):
         logging = Logging(ucc_smartx_configs, TA_NAME)
         assert set(logging.log_level.list_of_values()) == {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
         

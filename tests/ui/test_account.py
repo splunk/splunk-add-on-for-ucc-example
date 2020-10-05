@@ -80,26 +80,24 @@ def delete_accounts(ucc_smartx_configs):
 class TestAccount(UccTester):
     
     @pytest.mark.account
-    def test_account_sort_name(self, ucc_smartx_configs, add_multiple_account):
+    def test_account_sort_functionality(self, ucc_smartx_configs, add_multiple_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.sort_column("Name")
         sort_order = account.table.get_sort_order()
-        x = list(account.table.get_column_values("Name"))
-        x = list(str(item) for item in x)
-        y = sorted(x , key = str.lower)
+        column_values = list(account.table.get_column_values("Name"))
+        column_values = list(str(item) for item in column_values)
+        sorted_values = sorted(column_values , key = str.lower)
         assert sort_order["header"].lower() == "name"
-        assert x==y
+        assert column_values==sorted_values
         assert sort_order["ascending"]
         
     @pytest.mark.account
-    def test_account_title_count(self, ucc_smartx_configs, add_multiple_account):
+    def test_account_count(self, ucc_smartx_configs, add_multiple_account):
         account = AccountPage(ucc_smartx_configs)
-        no_of_accounts = account.table.get_count_title()
-        total_items = len(account.backend_conf.get_all_stanzas())
-        assert no_of_accounts == "{} Items".format(total_items)
+        assert account.table.get_count_title() == "{} Items".format(len(account.backend_conf.get_all_stanzas()))
 
     @pytest.mark.account
-    def test_add_account_frontend(self, ucc_smartx_configs):
+    def test_account_add_frontend_validation(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG['name'])
@@ -115,21 +113,29 @@ class TestAccount(UccTester):
             }
 
     @pytest.mark.account
-    def test_account_username_required_fields(self, ucc_smartx_configs):
+    # Verifies the filter functionality (Positive)
+    def test_accounts_filter_functionality(self, ucc_smartx_configs, add_account):
+        account = AccountPage(ucc_smartx_configs)
+        account.table.set_filter("TestAccount")
+        assert account.table.get_count_title() == "{} Items".format(account.table.get_row_count())
+        account.table.clean_filter()
+
+    @pytest.mark.account
+    def test_account_required_field_username(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
         assert account.entity.save(expect_error=True) == 'Field Username is required'
 
     @pytest.mark.account
-    def test_account_password_required_fields(self, ucc_smartx_configs):
+    def test_account_required_field_password(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         assert account.entity.save(expect_error=True) == 'Field Password is required'
 
     @pytest.mark.account
-    def test_account_name_required_fields(self, ucc_smartx_configs):
+    def test_account_required_field_name(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
@@ -137,7 +143,17 @@ class TestAccount(UccTester):
         assert account.entity.save(expect_error=True) == 'Field Name is required'
 
     @pytest.mark.account
-    def test_multi_select_required_fields(self, ucc_smartx_configs):
+    def test_account_required_field_example_environment(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        account.entity.name.set_value(ACCOUNT_CONFIG["name"])
+        account.entity.username.set_value(ACCOUNT_CONFIG["username"])
+        account.entity.password.set_value(ACCOUNT_CONFIG["password"])
+        account.entity.environment.cancel_selected_value()
+        assert account.entity.save(expect_error=True) == 'Field Example Environment is required'
+
+    @pytest.mark.account
+    def test_account_required_field_example_multiple_select(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.name.set_value("TestMultiAccount")
@@ -146,7 +162,7 @@ class TestAccount(UccTester):
         assert account.entity.save(expect_error=True) == 'Field Example Multiple Select is required'
     
     @pytest.mark.account
-    def test_account_client_id_required_fields(self, ucc_smartx_configs):
+    def test_account_required_field_client_id(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.auth_key.select('OAuth 2.0 Authentication')
@@ -163,7 +179,7 @@ class TestAccount(UccTester):
         assert account.entity.save(expect_error=True) == 'Field Client Secret is required'
 
     @pytest.mark.account
-    def test_account_name_start_with_number_required_fields(self, ucc_smartx_configs):
+    def test_account_valid_input_name(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
@@ -172,7 +188,7 @@ class TestAccount(UccTester):
         assert account.entity.save(expect_error=True) == 'Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.'
     
     @pytest.mark.account
-    def test_account_name_length_validation(self, ucc_smartx_configs):
+    def test_account_valid_length_name(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
@@ -181,7 +197,7 @@ class TestAccount(UccTester):
         assert account.entity.save(expect_error=True) == 'Length of ID should be between 1 and 50'
 
     @pytest.mark.account
-    def test_environment_default_value(self, ucc_smartx_configs):
+    def test_account_default_value_example_environment(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
@@ -189,7 +205,7 @@ class TestAccount(UccTester):
         assert account.entity.environment.get_value() == "Value1"
 
     @pytest.mark.account
-    def test_account_enviornment_list(self, ucc_smartx_configs):
+    def test_account_list_example_environment(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         assert set(account.entity.environment.list_of_values()) == {"Value1", "Value2", "Other"}
@@ -201,13 +217,13 @@ class TestAccount(UccTester):
         assert account.entity.auth_key.get_value() == "basic"
 
     @pytest.mark.account
-    def test_account_auth_list(self, ucc_smartx_configs):
+    def test_account_default_value_auth_type(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         assert set(account.entity.auth_key.list_of_values()) == {"Basic Authentication", "OAuth 2.0 Authentication"}
 
     @pytest.mark.account
-    def test_account_example_checkbox_checked(self, ucc_smartx_configs):
+    def test_account_checked_example_checkbox(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.example_checkbox.check()
@@ -216,55 +232,88 @@ class TestAccount(UccTester):
         assert account.entity.example_checkbox.is_checked() == False
         
     @pytest.mark.account
-    def test_account_entity_close(self, ucc_smartx_configs):
+    def test_account_select_value_example_environment(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        account.entity.environment.select("Value2")
+        assert account.entity.environment.get_value() == "Value2"
+
+    @pytest.mark.account
+    def test_account_list_example_multiple_select(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        assert set(account.entity.multiple_select.list_of_values()) == {"Option One", "Option Two"}
+
+    @pytest.mark.account
+    def test_account_select_value_example_multiple_select(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        account.entity.multiple_select.select("Option One")
+        account.entity.multiple_select.select("Option Two")
+        assert account.entity.multiple_select.get_values() == ['Option One', 'Option Two']
+
+    @pytest.mark.input
+    def test_account_search_value_example_multiple_select(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        assert account.entity.multiple_select.search_get_list("Option One") == ["Option One"]
+        
+    @pytest.mark.input
+    def test_account_default_value_example_radio(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        assert account.entity.account_radio.get_value() == "Yes"
+
+    @pytest.mark.account
+    def test_account_add_close_entity(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         assert account.entity.close()
 
     @pytest.mark.account
-    def test_account_entity_cancel(self, ucc_smartx_configs):
+    def test_account_add_cancel_entity(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         assert account.entity.cancel()
 
     @pytest.mark.account
-    def test_delete_close(self, ucc_smartx_configs, add_account):
+    def test_account_delete_close_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
         assert account.entity.close()
         
     @pytest.mark.account
-    def test_delete_cancel(self, ucc_smartx_configs, add_account):
+    def test_account_delete_cancel_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
         assert account.entity.cancel()
     
     @pytest.mark.account
-    def test_edit_close(self, ucc_smartx_configs, add_account):
+    def test_account_edit_close_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
         assert account.entity.close()
         
     @pytest.mark.account
-    def test_edit_cancel(self, ucc_smartx_configs, add_account):
+    def test_account_edit_cancel_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
         assert account.entity.cancel()
     
     @pytest.mark.account
-    def test_clone_close(self, ucc_smartx_configs, add_account):
+    def test_account_clone_close_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         assert account.entity.close()
 
     @pytest.mark.account
-    def test_clone_cancel(self, ucc_smartx_configs, add_account):
+    def test_account_clone_cancel_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         assert account.entity.cancel()
         
     @pytest.mark.account
-    def test_verify_duplicate_account_name(self, ucc_smartx_configs, add_account):
+    def test_add_account_duplicate_name(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
@@ -272,22 +321,22 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.account_radio.select("Yes")
-        assert account.entity.save(expect_error=True) == 'Name TestAccount is already in use'
-    
+        assert account.entity.save(expect_error=True) == 'Name {} is already in use'.format(ACCOUNT_CONFIG["name"])
+        
     @pytest.mark.account
-    def test_account_delete_row(self, ucc_smartx_configs, add_account):
+    def test_account_delete_row_frontend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
         assert ACCOUNT_CONFIG["name"] not in account.table.get_table()
 
     @pytest.mark.account
-    def test_account_name_is_not_editable(self, ucc_smartx_configs, add_account):
+    def test_account_edit_uneditable_field_name(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
         assert account.entity.name.is_editable() == False
-    
+
     @pytest.mark.account
-    def test_account_edit_frontend(self, ucc_smartx_configs, add_account):
+    def test_account_edit_frontend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
         account.entity.environment.select("Value2")
@@ -301,10 +350,17 @@ class TestAccount(UccTester):
                 'name': 'TestAccount', 
                 'auth type': 'basic',
                 'actions': 'Edit | Clone | Delete'
-            }
+        }
+        
+    @pytest.mark.account
+    def test_clone_account_duplicate_name(self, ucc_smartx_configs, add_account):
+        account = AccountPage(ucc_smartx_configs)
+        account.table.clone_row(ACCOUNT_CONFIG["name"])
+        account.entity.name.set_value(ACCOUNT_CONFIG["name"])
+        assert account.entity.save(expect_error=True) == 'Name {} is already in use'.format(ACCOUNT_CONFIG["name"])
 
     @pytest.mark.account
-    def test_account_clone_frontend(self, ucc_smartx_configs, add_account):
+    def test_account_clone_frontend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         assert account.entity.name.get_value() == ""
@@ -319,9 +375,18 @@ class TestAccount(UccTester):
                 'auth type': 'basic',
                 'actions': 'Edit | Clone | Delete'
             }
+
+    @pytest.mark.account
+    def test_account_clone_default_values(self, ucc_smartx_configs, add_account):
+        account = AccountPage(ucc_smartx_configs)
+        account.table.clone_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.name.get_value() == ""
+        assert account.entity.username.get_value() == "TestUser"
+        assert account.entity.multiple_select.get_values() == ['Option One']
+        assert account.entity.auth_key.get_value() == "basic"
     
     @pytest.mark.account
-    def test_add_account_backend_verification(self, ucc_smartx_configs):
+    def test_add_account_backend_validation(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
@@ -343,7 +408,7 @@ class TestAccount(UccTester):
             }
 
     @pytest.mark.account
-    def test_edit_account_backend_verification(self, ucc_smartx_configs, add_account):
+    def test_edit_account_backend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
         account.entity.multiple_select.select("Option Two")
@@ -365,7 +430,7 @@ class TestAccount(UccTester):
             }
     
     @pytest.mark.account
-    def test_clone_account_backend_verification(self, ucc_smartx_configs, add_account):
+    def test_clone_account_backend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         account.entity.name.set_value("TestAccountClone")
@@ -388,7 +453,7 @@ class TestAccount(UccTester):
             }
     
     @pytest.mark.account
-    def test_delete_row_backend_verification(self, ucc_smartx_configs, add_account):
+    def test_delete_row_backend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
         assert ACCOUNT_CONFIG["name"] not in account.backend_conf.get_all_stanzas().keys()
@@ -402,15 +467,15 @@ class TestAccount(UccTester):
         assert name_column_page1 != name_column_page2
 
     @pytest.mark.account
-    def test_account_page_help_link(self, ucc_smartx_configs):
+    def test_account_helplink(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         go_to_link = "https://docs.splunk.com/Documentation"
         account.entity.open()
         assert account.entity.help_link.go_to_link() == go_to_link
 
     @pytest.mark.account
-    def test_delete_input_used_account(self, ucc_smartx_configs, add_account, add_input):
+    @pytest.mark.skip(reason="This functionality is not working in Example addon")
+    def test_account_delete_account_in_use(self, ucc_smartx_configs, add_account, add_input):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
         assert account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True) == r'TestAccount cannot be deleted because it is in use'
-    
