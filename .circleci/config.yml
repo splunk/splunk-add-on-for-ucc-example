@@ -26,13 +26,13 @@ orbs:
                 pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.0.tar.gz
                 pip install git+https://github.com/pixelb/crudini
           - run:
-            name: Generating package
-            command: |
-              source ~/.venv/bin/activate   
-              VERSION=$(./semtag getcurrent)
-              export VERSION_SPLUNK=$(python ./splver.py ${VERSION})
-              sh ./packagingScript.sh
-              ls --all -l package/
+              name: Generating package
+              command: |
+                source ~/.venv/bin/activate   
+                VERSION=$(./semtag getcurrent)
+                export VERSION_SPLUNK=$(python ./splver.py ${VERSION})
+                sh ./packagingScript.sh
+                ls --all -l package/
           - run:
               name: version
               command: |
