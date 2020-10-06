@@ -775,7 +775,6 @@ class TestInput(UccTester):
         assert input_page.table.get_count_title() == "{} Inputs".format(input_page.table.get_row_count())
     
     @pytest.mark.input
-    @pytest.mark.test
     # Verifies sorting functionality for name column
     def test_inputs_sort_functionality(self, ucc_smartx_configs, add_input_one, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
