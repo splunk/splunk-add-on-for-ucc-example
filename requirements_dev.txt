@@ -3,5 +3,6 @@
 ## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
 ##
 -r tests/requirements.txt
-pip install lovely-pytest-docker
+splunk-add-on-ucc-framework==4.0.7a1
+lovely-pytest-docker
 reuse

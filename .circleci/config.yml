@@ -26,6 +26,14 @@ orbs:
                 pip install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.0.tar.gz
                 pip install git+https://github.com/pixelb/crudini
           - run:
+              name: Generating package
+              command: |
+                source ~/.venv/bin/activate   
+                VERSION=$(./semtag getcurrent)
+                export VERSION_SPLUNK=$(python ./splver.py ${VERSION})
+                sh ./packagingScript.sh
+                ls --all -l package/
+          - run:
               name: version
               command: |
                 source ~/.venv/bin/activate   
@@ -56,7 +64,7 @@ orbs:
                 source ~/.venv/bin/activate                
                 BUILD_DIR=build/source/$PACKAGE_ID
                 mkdir -p $BUILD_DIR
-                cp -r package/* $BUILD_DIR/
+                cp -r output/$PACKAGE_ID/* $BUILD_DIR/
                 rm -rf $BUILD_DIR/samples
                 rm -rf $BUILD_DIR/default/eventgen.conf
                 crudini --set $BUILD_DIR/default/app.conf launcher version $VERSION_SPLUNK
