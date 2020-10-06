@@ -1,7 +1,8 @@
 {
     "pages": {
         "configuration": {
-            "tabs": [{
+            "tabs": [
+                {
                     "name": "account",
                     "table": {
                         "actions": [
@@ -9,7 +10,8 @@
                             "delete",
                             "clone"
                         ],
-                        "header": [{
+                        "header": [
+                            {
                                 "label": "Name",
                                 "field": "name"
                             },
@@ -19,10 +21,12 @@
                             }
                         ]
                     },
-                    "entity": [{
+                    "entity": [
+                        {
                             "type": "text",
                             "label": "Name",
-                            "validators": [{
+                            "validators": [
+                                {
                                     "type": "string",
                                     "errorMsg": "Length of ID should be between 1 and 50",
                                     "minLength": 1,
@@ -46,7 +50,8 @@
                             "label": "Example Environment",
                             "options": {
                                 "disableSearch": true,
-                                "autoCompleteFields": [{
+                                "autoCompleteFields": [
+                                    {
                                         "value": "login.example.com",
                                         "label": "Value1"
                                     },
@@ -89,7 +94,8 @@
                             "help": "This is an example radio button for the account entity",
                             "required": true,
                             "options": {
-                                "items": [{
+                                "items": [
+                                    {
                                         "value": "yes",
                                         "label": "Yes"
                                     },
@@ -108,7 +114,8 @@
                             "help": "This is an example multipleSelect for account entity",
                             "required": true,
                             "options": {
-                                "items": [{
+                                "items": [
+                                    {
                                         "value": "one",
                                         "label": "Option One"
                                     },
@@ -137,7 +144,8 @@
                                     "basic",
                                     "oauth"
                                 ],
-                                "basic": [{
+                                "basic": [
+                                    {
                                         "oauth_field": "username",
                                         "label": "Username",
                                         "help": "Enter the username for this account.",
@@ -158,7 +166,8 @@
                                         "field": "token"
                                     }
                                 ],
-                                "oauth": [{
+                                "oauth": [
+                                    {
                                         "oauth_field": "client_id",
                                         "label": "Client Id",
                                         "field": "client_id",
@@ -197,7 +206,8 @@
                 },
                 {
                     "name": "proxy",
-                    "entity": [{
+                    "entity": [
+                        {
                             "type": "checkbox",
                             "label": "Enable",
                             "field": "proxy_enabled"
@@ -207,7 +217,8 @@
                             "label": "Proxy Type",
                             "options": {
                                 "disableSearch": true,
-                                "autoCompleteFields": [{
+                                "autoCompleteFields": [
+                                    {
                                         "value": "http",
                                         "label": "http"
                                     },
@@ -227,46 +238,60 @@
                         {
                             "type": "text",
                             "label": "Host",
-                            "validators": [{
-                                "type": "string",
-                                "errorMsg": "Max host length is 4096",
-                                "minLength": 0,
-                                "maxLength": 4096
-                            }],
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Proxy Host should not have special characters",
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                },
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Max host length is 4096",
+                                    "minLength": 0,
+                                    "maxLength": 4096
+                                        
+                                }
+                            ],
                             "field": "proxy_url"
                         },
                         {
                             "type": "text",
                             "label": "Port",
-                            "validators": [{
-                                "type": "number",
-                                "range": [
-                                    1,
-                                    65535
-                                ]
-                            }],
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        1,
+                                        65535
+                                    ]
+                                }
+                            ],
                             "field": "proxy_port"
                         },
                         {
                             "type": "text",
                             "label": "Username",
-                            "validators": [{
-                                "type": "string",
-                                "errorMsg": "Max length of username is 50",
-                                "minLength": 0,
-                                "maxLength": 50
-                            }],
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Max length of username is 50",
+                                    "minLength": 0,
+                                    "maxLength": 50
+                                }
+                            ],
                             "field": "proxy_username"
                         },
                         {
                             "type": "text",
                             "label": "Password",
-                            "validators": [{
-                                "type": "string",
-                                "errorMsg": "Max length of password is 8192",
-                                "minLength": 0,
-                                "maxLength": 8192
-                            }],
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Max length of password is 8192",
+                                    "minLength": 0,
+                                    "maxLength": 8192
+                                }
+                            ],
                             "encrypted": true,
                             "field": "proxy_password"
                         },
@@ -277,110 +302,183 @@
                         }
                     ],
                     "options": {
-                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } return true; }"
+                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } if(!formData.proxy_type) {return 'Proxy type can not be empty'; } return true; }"
                     },
                     "title": "Proxy"
                 },
                 {
                     "name": "logging",
-                    "entity": [{
-                        "type": "singleSelect",
-                        "label": "Log level",
-                        "options": {
-                            "disableSearch": true,
-                            "autoCompleteFields": [{
-                                    "value": "DEBUG",
-                                    "label": "DEBUG"
-                                },
-                                {
-                                    "value": "INFO",
-                                    "label": "INFO"
-                                },
-                                {
-                                    "value": "WARNING",
-                                    "label": "WARNING"
-                                },
-                                {
-                                    "value": "ERROR",
-                                    "label": "ERROR"
-                                },
-                                {
-                                    "value": "CRITICAL",
-                                    "label": "CRITICAL"
-                                }
-                            ]
-                        },
-                        "defaultValue": "INFO",
-                        "field": "loglevel"
-                    }],
+                    "entity": [
+                        {
+                            "type": "singleSelect",
+                            "label": "Log level",
+                            "options": {
+                                "disableSearch": true,
+                                "autoCompleteFields": [
+                                    {
+                                        "value": "DEBUG",
+                                        "label": "DEBUG"
+                                    },
+                                    {
+                                        "value": "INFO",
+                                        "label": "INFO"
+                                    },
+                                    {
+                                        "value": "WARNING",
+                                        "label": "WARNING"
+                                    },
+                                    {
+                                        "value": "ERROR",
+                                        "label": "ERROR"
+                                    },
+                                    {
+                                        "value": "CRITICAL",
+                                        "label": "CRITICAL"
+                                    }
+                                ]
+                            },
+                            "defaultValue": "INFO",
+                            "field": "loglevel"
+                        }
+                    ],
                     "title": "Logging"
                 },
                 {
-                    "name": "custom_abc",
-                    "title": "Customized tab",
-                    "entity": [{
-                            "field": "testString",
+                    "name": "custom_tab",
+                    "title": "Customized Tab",
+                    "entity": [
+                        {
+                            "field": "test_string",
                             "label": "Test String",
                             "type": "text",
-                            "validators": [{
-                                "type": "string",
-                                "maxLength": 10,
-                                "minLength": 5
-                            }]
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "maxLength": 10,
+                                    "minLength": 5
+                                }
+                            ],
+                            "required": true,
+                            "options": {
+                                "placeholder": "Required"
+                            }
                         },
                         {
-                            "field": "testNumber",
-                            "label": "Test number",
+                            "field": "test_number",
+                            "label": "Test Number",
                             "type": "text",
-                            "validators": [{
-                                "type": "number",
-                                "range": [
-                                    1,
-                                    10
-                                ]
-                            }]
+                            "validators": [
+                                {
+                                    "type": "number",
+                                    "range": [
+                                        1,
+                                        10
+                                    ]
+                                }
+                            ],
+                            "required": true,
+                            "options": {
+                                "placeholder": "Required"
+                            }
                         },
                         {
-                            "field": "testRegex",
-                            "label": "Test regex",
+                            "field": "test_regex",
+                            "label": "Test Regex",
                             "type": "text",
-                            "validators": [{
-                                "type": "regex",
-                                "pattern": "^\\w+$",
-                                "errorMsg": "Characters of Name should match regex ^\\w+$ ."
-                            }]
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "pattern": "^\\w+$",
+                                    "errorMsg": "Characters of Name should match regex ^\\w+$ ."
+                                }
+                            ]
                         },
                         {
-                            "field": "testEmail",
+                            "field": "test_email",
                             "label": "Test Email",
                             "type": "text",
-                            "validators": [{
-                                "type": "email"
-                            }]
+                            "validators": [
+                                {
+                                    "type": "email"
+                                }
+                            ]
                         },
                         {
-                            "field": "testIpv4",
-                            "label": "Test ipv4",
+                            "field": "test_ipv4",
+                            "label": "Test Ipv4",
                             "type": "text",
-                            "validators": [{
-                                "type": "ipv4"
-                            }]
+                            "validators": [
+                                {
+                                    "type": "ipv4"
+                                }
+                            ]
                         },
                         {
-                            "field": "testDate",
-                            "label": "Test date",
+                            "field": "test_date",
+                            "label": "Test Date",
                             "type": "text",
-                            "validators": [{
-                                "type": "date"
-                            }]
+                            "validators": [
+                                {
+                                    "type": "date"
+                                }
+                            ]
                         },
                         {
-                            "field": "testUrl",
-                            "label": "Test url",
+                            "field": "test_url",
+                            "label": "Test Url",
                             "type": "text",
-                            "validators": [{
-                                "type": "url"
-                            }]
+                            "validators": [
+                                {
+                                    "type": "url"
+                                }
+                            ]
+                        },
+                        {
+                            "field": "test_radio",
+                            "label": "Test Radio",
+                            "type": "radio",
+                            "defaultValue": "Yes",
+                            "required": false,
+                            "options": {
+                                "items": [
+                                    {
+                                        "value": "Yes",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "value": "No",
+                                        "label": "No"
+                                    }
+                                ],
+                                "display": true
+                            }
+                        },
+                        {
+                            "field": "test_multiselect",
+                            "label": "Test Multiselect",
+                            "type": "multipleSelect",
+                            "options": {
+                                "delimiter": "|",
+                                "items": [
+                                    {
+                                        "value": "Option A",
+                                        "label": "Option A"
+                                    },
+                                    {
+                                        "value": "Option B",
+                                        "label": "Option B"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "field": "test_help_link",
+                            "label": "",
+                            "type": "helpLink",
+                            "options": {
+                                "text": "Test Help Link",
+                                "link": "https://docs.splunk.com/Documentation"
+                            }
                         }
                     ]
                 }
@@ -389,15 +487,18 @@
             "description": "Set up your add-on"
         },
         "inputs": {
-            "services": [{
+            "services": [
+                {
                     "hook": {
                         "src": "Hook"
                     },
                     "name": "example_input_one",
-                    "entity": [{
+                    "entity": [
+                        {
                             "type": "text",
                             "label": "Name",
-                            "validators": [{
+                            "validators": [
+                                {
                                     "type": "regex",
                                     "errorMsg": "Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
                                     "pattern": "^[a-zA-Z]\\w*$"
@@ -417,7 +518,8 @@
                             "type": "checkbox",
                             "label": "Example Checkbox",
                             "field": "input_one_checkbox",
-                            "help": "This is an example checkbox for the input one entity"
+                            "help": "This is an example checkbox for the input one entity",
+                            "defaultValue": true
                         },
                         {
                             "type": "radio",
@@ -427,7 +529,8 @@
                             "help": "This is an example radio button for the input one entity",
                             "required": false,
                             "options": {
-                                "items": [{
+                                "items": [
+                                    {
                                         "value": "yes",
                                         "label": "Yes"
                                     },
@@ -445,9 +548,11 @@
                             "type": "singleSelect",
                             "options": {
                                 "createSearchChoice": true,
-                                "autoCompleteFields": [{
+                                "autoCompleteFields": [
+                                    {
                                         "label": "Group1",
-                                        "children": [{
+                                        "children": [
+                                            {
                                                 "value": "one",
                                                 "label": "One"
                                             },
@@ -459,7 +564,8 @@
                                     },
                                     {
                                         "label": "Group2",
-                                        "children": [{
+                                        "children": [
+                                            {
                                                 "value": "three",
                                                 "label": "Three"
                                             },
@@ -476,9 +582,11 @@
                             "field": "multipleSelectTest",
                             "label": "Multiple Select Test",
                             "type": "multipleSelect",
+                            "defaultValue": "a|b",
                             "options": {
                                 "delimiter": "|",
-                                "items": [{
+                                "items": [
+                                    {
                                         "value": "a",
                                         "label": "A"
                                     },
@@ -492,11 +600,13 @@
                         {
                             "type": "text",
                             "label": "Interval",
-                            "validators": [{
-                                "type": "regex",
-                                "errorMsg": "Interval must be an integer.",
-                                "pattern": "^\\-[1-9]\\d*$|^\\d*$"
-                            }],
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Interval must be an integer.",
+                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$"
+                                }
+                            ],
                             "field": "interval",
                             "help": "Time interval of the data input, in seconds.",
                             "required": true
@@ -504,12 +614,14 @@
                         {
                             "type": "singleSelect",
                             "label": "Index",
-                            "validators": [{
-                                "type": "string",
-                                "errorMsg": "Length of index name should be between 1 and 80.",
-                                "minLength": 1,
-                                "maxLength": 80
-                            }],
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Length of index name should be between 1 and 80.",
+                                    "minLength": 1,
+                                    "maxLength": 80
+                                }
+                            ],
                             "defaultValue": "default",
                             "options": {
                                 "endpointUrl": "data/indexes",
@@ -532,12 +644,14 @@
                         {
                             "type": "text",
                             "label": "Object",
-                            "validators": [{
-                                "type": "string",
-                                "errorMsg": "Max length of text input is 8192",
-                                "minLength": 0,
-                                "maxLength": 8192
-                            }],
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Max length of text input is 8192",
+                                    "minLength": 0,
+                                    "maxLength": 8192
+                                }
+                            ],
                             "field": "object",
                             "help": "The name of the object to query for.",
                             "required": true
@@ -545,12 +659,14 @@
                         {
                             "type": "text",
                             "label": "Object Fields",
-                            "validators": [{
-                                "type": "string",
-                                "errorMsg": "Max length of text input is 8192",
-                                "minLength": 0,
-                                "maxLength": 8192
-                            }],
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Max length of text input is 8192",
+                                    "minLength": 0,
+                                    "maxLength": 8192
+                                }
+                            ],
                             "field": "object_fields",
                             "help": "Object fields from which to collect data. Delimit multiple fields using a comma.",
                             "required": true
@@ -558,45 +674,29 @@
                         {
                             "type": "text",
                             "label": "Order By",
-                            "validators": [{
-                                "type": "string",
-                                "errorMsg": "Max length of text input is 8192",
-                                "minLength": 0,
-                                "maxLength": 8192
-                            }],
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Max length of text input is 8192",
+                                    "minLength": 0,
+                                    "maxLength": 8192
+                                }
+                            ],
                             "defaultValue": "LastModifiedDate",
                             "field": "order_by",
                             "help": "The datetime field by which to query results in ascending order for indexing.",
                             "required": true
                         },
                         {
-                            "type": "radio",
-                            "label": "Use existing data input?",
-                            "field": "use_existing_checkpoint",
-                            "defaultValue": "yes",
-                            "help": "Data input already exists. Select `No` if you want to reset the data collection.",
-                            "required": false,
-                            "options": {
-                                "items": [{
-                                        "value": "yes",
-                                        "label": "Yes"
-                                    },
-                                    {
-                                        "value": "no",
-                                        "label": "No"
-                                    }
-                                ],
-                                "display": false
-                            }
-                        },
-                        {
                             "type": "text",
                             "label": "Query Start Date",
-                            "validators": [{
-                                "type": "regex",
-                                "errorMsg": "Invalid date and time format",
-                                "pattern": "^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}z)?$"
-                            }],
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Invalid date and time format",
+                                    "pattern": "^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}z)?$"
+                                }
+                            ],
                             "field": "start_date",
                             "help": "The datetime after which to query and index records, in this format: \"YYYY-MM-DDThh:mm:ss.000z\".\nDefaults to 90 days earlier from now.",
                             "tooltip": "Changing this parameter may result in gaps or duplication in data collection.",
@@ -605,12 +705,14 @@
                         {
                             "type": "text",
                             "label": "Limit",
-                            "validators": [{
-                                "type": "string",
-                                "errorMsg": "Max length of text input is 8192",
-                                "minLength": 0,
-                                "maxLength": 8192
-                            }],
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Max length of text input is 8192",
+                                    "minLength": 0,
+                                    "maxLength": 8192
+                                }
+                            ],
                             "defaultValue": "1000",
                             "field": "limit",
                             "help": "The maximum number of results returned by the query.",
@@ -630,10 +732,12 @@
                 },
                 {
                     "name": "example_input_two",
-                    "entity": [{
+                    "entity": [
+                        {
                             "type": "text",
                             "label": "Name",
-                            "validators": [{
+                            "validators": [
+                                {
                                     "type": "regex",
                                     "errorMsg": "Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
                                     "pattern": "^[a-zA-Z]\\w*$"
@@ -652,11 +756,13 @@
                         {
                             "type": "text",
                             "label": "Interval",
-                            "validators": [{
-                                "type": "regex",
-                                "errorMsg": "Interval must be an integer.",
-                                "pattern": "^\\-[1-9]\\d*$|^\\d*$"
-                            }],
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Interval must be an integer.",
+                                    "pattern": "^\\-[1-9]\\d*$|^\\d*$"
+                                }
+                            ],
                             "field": "interval",
                             "help": "Time interval of the data input, in seconds .",
                             "required": true
@@ -664,12 +770,14 @@
                         {
                             "type": "singleSelect",
                             "label": "Index",
-                            "validators": [{
-                                "type": "string",
-                                "errorMsg": "Length of index name should be between 1 and 80.",
-                                "minLength": 1,
-                                "maxLength": 80
-                            }],
+                            "validators": [
+                                {
+                                    "type": "string",
+                                    "errorMsg": "Length of index name should be between 1 and 80.",
+                                    "minLength": 1,
+                                    "maxLength": 80
+                                }
+                            ],
                             "defaultValue": "default",
                             "options": {
                                 "endpointUrl": "data/indexes",
@@ -696,7 +804,8 @@
                             "help": "This is an example multipleSelect for input two entity",
                             "required": true,
                             "options": {
-                                "items": [{
+                                "items": [
+                                    {
                                         "value": "one",
                                         "label": "Option One"
                                     },
@@ -717,11 +826,11 @@
                             "type": "radio",
                             "label": "Example Radio",
                             "field": "input_two_radio",
-                            "defaultValue": "yes",
                             "help": "This is an example radio button for the input two entity",
-                            "required": false,
+                            "required": true,
                             "options": {
-                                "items": [{
+                                "items": [
+                                    {
                                         "value": "yes",
                                         "label": "Yes"
                                     },
@@ -734,33 +843,15 @@
                             }
                         },
                         {
-                            "type": "radio",
-                            "label": "Use existing data input?",
-                            "field": "use_existing_checkpoint",
-                            "defaultValue": "yes",
-                            "help": "Data input already exists. Select `No` if you want to reset the data collection.",
-                            "required": false,
-                            "options": {
-                                "items": [{
-                                        "value": "yes",
-                                        "label": "Yes"
-                                    },
-                                    {
-                                        "value": "no",
-                                        "label": "No"
-                                    }
-                                ],
-                                "display": false
-                            }
-                        },
-                        {
                             "type": "text",
                             "label": "Query Start Date",
-                            "validators": [{
-                                "type": "regex",
-                                "errorMsg": "Invalid date and time format",
-                                "pattern": "^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}z)?$"
-                            }],
+                            "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Invalid date and time format",
+                                    "pattern": "^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}z)?$"
+                                }
+                            ],
                             "field": "start_date",
                             "help": "The date and time, in \"YYYY-MM-DDThh:mm:ss.000z\" format, after which to query and index records. \nThe default is 90 days before today.",
                             "tooltip": "Changing this parameter may result in gaps or duplication in data collection.",
@@ -788,12 +879,13 @@
                     "delete",
                     "clone"
                 ],
-                "header": [{
+                "header": [
+                    {
                         "label": "Name",
                         "field": "name"
                     },
                     {
-                        "label": "Account Name",
+                        "label": "Account",
                         "field": "account"
                     },
                     {
@@ -809,7 +901,8 @@
                         "field": "disabled"
                     }
                 ],
-                "moreInfo": [{
+                "moreInfo": [
+                    {
                         "label": "Name",
                         "field": "name"
                     },
@@ -857,99 +950,106 @@
             }
         }
     },
-    "alerts": [{
-        "name": "test_alert",
-        "label": "Test Alert",
-        "description": "Description for test Alert Action",
-        "activeResponse": {
-            "task": [
-                "Create",
-                "Update"
-            ],
-            "supportsAdhoc": true,
-            "subject": [
-                "endpoint"
-            ],
-            "category": [
-                "Information Conveyance",
-                "Information Portrayal"
-            ],
-            "technology": [{
-                "version": [
-                    "1.0.0"
+    "alerts": [
+        {
+            "name": "test_alert",
+            "label": "Test Alert",
+            "description": "Description for test Alert Action",
+            "activeResponse": {
+                "task": [
+                    "Create",
+                    "Update"
                 ],
-                "product": "Test Incident Update",
-                "vendor": "Splunk"
-            }],
-            "drilldownUri": "search?q=search%20index%3D\"_internal\"&earliest=0&latest=",
-            "sourcetype": "test:incident"
-        },
-        "entity": [{
-                "type": "text",
-                "label": "Name",
-                "field": "name",
-                "defaultValue": "xyz",
-                "required": true,
-                "help": "Please enter your name"
+                "supportsAdhoc": true,
+                "subject": [
+                    "endpoint"
+                ],
+                "category": [
+                    "Information Conveyance",
+                    "Information Portrayal"
+                ],
+                "technology": [
+                    {
+                        "version": [
+                            "1.0.0"
+                        ],
+                        "product": "Test Incident Update",
+                        "vendor": "Splunk"
+                    }
+                ],
+                "drilldownUri": "search?q=search%20index%3D\"_internal\"&earliest=0&latest=",
+                "sourcetype": "test:incident"
             },
-            {
-                "type": "checkbox",
-                "label": "All Incidents",
-                "field": "all_incidents",
-                "defaultValue": 0,
-                "required": false,
-                "help": "Tick if you want to update all incidents/problems"
-            },
-            {
-                "type": "singleSelect",
-                "label": "Table List",
-                "field": "table_list",
-                "options": {
-                    "items": [{
-                            "value": "Incident",
-                            "label": "incident"
-                        },
-                        {
-                            "value": "Problem",
-                            "label": "problem"
-                        }
-                    ]
+            "entity": [
+                {
+                    "type": "text",
+                    "label": "Name",
+                    "field": "name",
+                    "defaultValue": "xyz",
+                    "required": true,
+                    "help": "Please enter your name"
                 },
-                "help": "Please select the table",
-                "required": false,
-                "defaultValue": "problem"
-            },
-            {
-                "type": "radio",
-                "label": "Action:",
-                "field": "action",
-                "options": {
-                    "items": [{
-                            "value": "Update",
-                            "label": "update"
-                        },
-                        {
-                            "value": "Delete",
-                            "label": "delete"
-                        }
-                    ]
+                {
+                    "type": "checkbox",
+                    "label": "All Incidents",
+                    "field": "all_incidents",
+                    "defaultValue": 0,
+                    "required": false,
+                    "help": "Tick if you want to update all incidents/problems"
                 },
-                "help": "Select the action you want to perform",
-                "required": true,
-                "defaultValue": "two"
-            },
-            {
-                "type": "singleSelectSplunkSearch",
-                "label": "Select Account",
-                "field": "account",
-                "search": "| rest /servicesNS/nobody/TA-SNOW/admin/TA_SNOW_account | dedup title",
-                "valueField": "title",
-                "labelField": "title",
-                "help": "Select the account from the dropdown",
-                "required": true
-            }
-        ]
-    }],
+                {
+                    "type": "singleSelect",
+                    "label": "Table List",
+                    "field": "table_list",
+                    "options": {
+                        "items": [
+                            {
+                                "value": "Incident",
+                                "label": "incident"
+                            },
+                            {
+                                "value": "Problem",
+                                "label": "problem"
+                            }
+                        ]
+                    },
+                    "help": "Please select the table",
+                    "required": false,
+                    "defaultValue": "problem"
+                },
+                {
+                    "type": "radio",
+                    "label": "Action:",
+                    "field": "action",
+                    "options": {
+                        "items": [
+                            {
+                                "value": "Update",
+                                "label": "update"
+                            },
+                            {
+                                "value": "Delete",
+                                "label": "delete"
+                            }
+                        ]
+                    },
+                    "help": "Select the action you want to perform",
+                    "required": true,
+                    "defaultValue": "two"
+                },
+                {
+                    "type": "singleSelectSplunkSearch",
+                    "label": "Select Account",
+                    "field": "account",
+                    "search": "| rest /servicesNS/nobody/TA-SNOW/admin/TA_SNOW_account | dedup title",
+                    "valueField": "title",
+                    "labelField": "title",
+                    "help": "Select the account from the dropdown",
+                    "required": true
+                }
+            ]
+        }
+    ],
     "meta": {
         "apiVersion": "3.2.0",
         "name": "Splunk_TA_UCCExample",

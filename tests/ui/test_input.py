@@ -151,7 +151,7 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies values Single Select Group Test dropdown in example input one
-    def test_example_input_one_list_signle_select_group_test(self, ucc_smartx_configs):
+    def test_example_input_one_list_single_select_group_test(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         single_select_group_test_list = ["One", "Two", "Three", "Four"]
         input_page.create_new_input.select("Example Input One")
@@ -159,7 +159,7 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies selected value of Single Select Group Test dropdown in example input one
-    def test_example_input_one_select_value_signle_select_group_test(self, ucc_smartx_configs):
+    def test_example_input_one_select_value_single_select_group_test(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         selected_value = "Two"
         input_page.create_new_input.select("Example Input One")
@@ -168,28 +168,38 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies singleselect seach funtionality properly
-    def test_example_input_one_search_value_signle_select_group_test(self, ucc_smartx_configs):
+    def test_example_input_one_search_value_single_select_group_test(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One") 
         assert input_page.entity1.single_select_group_test.search_get_list("One") == ["One"]
+
+    @pytest.mark.input
+    # Verifies default values of Multiple Select Test dropdown in example input one
+    def test_example_input_one_default_value_multiple_select_test(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input One")
+        default_values = ["A", "B"]
+        assert input_page.entity1.multiple_select_test.get_values() == default_values
 
     @pytest.mark.input
     # Verifies values of Multiple Select Test dropdown in example input one
     def test_example_input_one_list_multiple_select_test(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.multiple_select_test.deselect_all()
         multiple_select_test = ["A", "B"]
         assert list(input_page.entity1.multiple_select_test.list_of_values()) == multiple_select_test
 
     @pytest.mark.input
     # Verifies selected single value of Multiple Select Test dropdown in example input one
-    def test_example_input_one_select_multiple_values_multiple_select_test(self, ucc_smartx_configs):
+    def test_example_input_one_select_value_multiple_select_test(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         selected_value = ["A"]
         input_page.create_new_input.select("Example Input One")
-        for each in selected_values:
+        input_page.entity1.multiple_select_test.deselect_all()
+        for each in selected_value:
             input_page.entity1.multiple_select_test.select(each)
-        assert input_page.entity1.multiple_select_test.get_values() == selected_values
+        assert input_page.entity1.multiple_select_test.get_values() == selected_value
 
     @pytest.mark.input
     # Verifies selected multiple values of Multiple Select Test dropdown in example input one
@@ -197,6 +207,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         selected_values = ["A", "B"]
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.multiple_select_test.deselect_all()
         for each in selected_values:
             input_page.entity1.multiple_select_test.select(each)
         assert input_page.entity1.multiple_select_test.get_values() == selected_values
@@ -207,6 +218,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         selected_values = ["A", "B"]
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.multiple_select_test.deselect_all()
         for each in selected_values:
             input_page.entity1.multiple_select_test.select(each)
         input_page.entity1.multiple_select_test.deselect("A")
@@ -216,16 +228,31 @@ class TestInput(UccTester):
     # Verifies multiple select seach funtionality properly
     def test_example_input_one_search_value_multiple_select_test(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.create_new_input.select("Example Input One") 
+        input_page.create_new_input.select("Example Input One")
+        input_page.entity1.multiple_select_test.deselect_all()
         assert input_page.entity1.multiple_select_test.search_get_list("A") == ["A"]
 
     @pytest.mark.input
-    # Verifies Check/Uncheck in example checkbox in example input one
+    # Verifies default value of example checkbox in example input one
+    def test_example_input_one_default_value_example_checkbox(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input One")
+        assert input_page.entity1.example_checkbox.is_checked()
+
+    @pytest.mark.input
+    # Verifies Uncheck in example checkbox in example input one
+    def test_example_input_one_unchecked_example_checkbox(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input One")
+        assert input_page.entity1.example_checkbox.uncheck()
+
+    @pytest.mark.input
+    # Verifies checked in example checkbox in example input one
     def test_example_input_one_checked_example_checkbox(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_checkbox.uncheck()
         assert input_page.entity1.example_checkbox.check()
-        assert input_page.entity1.example_checkbox.uncheck()
 
     @pytest.mark.input
     # Verifies default value of example radio in example input one
@@ -235,8 +262,8 @@ class TestInput(UccTester):
         assert input_page.entity1.example_radio.get_value() == "Yes"
 
     @pytest.mark.input
-    # Verifies default value of example radio in example input one
-    def test_example_input_one_select_value_radio(self, ucc_smartx_configs):
+    # Verifies selected value of example radio in example input one
+    def test_example_input_one_select_value_example_radio(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_radio.select("No")
@@ -282,7 +309,7 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies required field Salesforce Account in example input one
-    def test_example_input_one_required_field_account(self, ucc_smartx_configs):
+    def test_example_input_one_required_field_example_account(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.name.set_value("test_name")
@@ -358,7 +385,7 @@ class TestInput(UccTester):
         assert input_page.entity1.limit.get_value() == default_limit
 
     @pytest.mark.input
-    # Verifies whether the storage table help link redirects to the correct URL
+    # Verifies whether the help link redirects to the correct URL
     def test_example_input_one_help_link(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         go_to_link = "https://docs.splunk.com/Documentation"
@@ -376,11 +403,8 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.name.set_value("Test_Add")
-        input_page.entity1.example_checkbox.check()
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
-        input_page.entity1.multiple_select_test.select("A")
-        input_page.entity1.multiple_select_test.select("B")
         input_page.entity1.interval.set_value("90")
         input_page.entity1.example_account.select("test_input")
         input_page.entity1.object.set_value("test_object")
@@ -403,11 +427,8 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.name.set_value("Test_Add")
-        input_page.entity1.example_checkbox.check()
         input_page.entity1.example_radio.select("No")
         input_page.entity1.single_select_group_test.select("Two")
-        input_page.entity1.multiple_select_test.select("A")
-        input_page.entity1.multiple_select_test.select("B")
         input_page.entity1.interval.set_value("90")
         input_page.entity1.example_account.select("test_input")
         input_page.entity1.object.set_value("test_object")
@@ -435,7 +456,7 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies the frontend uneditable fields at time of edit of the example input one entity
-    def test_edit_uneditable_field_name(self, ucc_smartx_configs, add_input_one):
+    def test_example_input_one_edit_uneditable_field_name(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.edit_row("dummy_input_one")
         assert not input_page.entity1.name.is_editable()
@@ -575,6 +596,7 @@ class TestInput(UccTester):
     # Verifies the frontend delete functionlity
     def test_example_input_one_delete_row_frontend_validation(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
+        input_page.table.input_status_toggle("dummy_input_one", enable=False)
         input_page.table.delete_row("dummy_input_one")
         assert "dummy_input_one" not in input_page.table.get_table()
 
@@ -582,6 +604,7 @@ class TestInput(UccTester):
     # Verifies the backend delete functionlity
     def test_example_input_one_delete_row_backend_validation(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
+        input_page.table.input_status_toggle("dummy_input_one", enable=False)
         input_page.table.delete_row("dummy_input_one")
         assert "example_input_one://dummy_input_one" not in input_page.backend_conf.get_all_stanzas().keys()
 
@@ -610,8 +633,7 @@ class TestInput(UccTester):
     # Verifies close functionality at time of delete
     def test_example_input_one_delete_close_entity(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.table.delete_row("dummy_input_one", close=True)
-        assert input_page.entity1.close()
+        assert input_page.table.delete_row("dummy_input_one", close=True)
 
     @pytest.mark.input
     # Verifies cancel functionality at time of add
@@ -638,16 +660,16 @@ class TestInput(UccTester):
     # Verifies cancel functionality at time of delete
     def test_example_input_one_delete_cancel_entity(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.table.delete_row("dummy_input_one", cancel=True)
-        assert input_page.entity1.cancel()
+        assert input_page.table.delete_row("dummy_input_one", cancel=True)
 
     @pytest.mark.input
     # Verifies by saving an entity with duplicate name it displays and error
     def test_example_input_one_add_duplicate_names(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
-        input_page.entity1.name.set_value("dummy_input_one")
-        assert input_page.entity1.save(expect_error=True) == "Name dummy_input_one is already in use"
+        input_name = "dummy_input_one"
+        input_page.entity1.name.set_value(input_name)
+        assert input_page.entity1.save(expect_error=True) == "Name {} is already in use".format(input_name)
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -655,8 +677,9 @@ class TestInput(UccTester):
     def test_example_input_one_clone_duplicate_names(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.clone_row("dummy_input_one")
-        input_page.entity1.name.set_value("dummy_input_one")
-        assert input_page.entity1.save(expect_error=True) == "Name dummy_input_one is already in use"
+        input_name = "dummy_input_one"
+        input_page.entity1.name.set_value(input_name)
+        assert input_page.entity1.save(expect_error=True) == "Name {} is already in use".format(input_name)
         assert input_page.entity1.close_error()
 
 
@@ -681,10 +704,20 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies input type filter list
-    def test_inputs_input_type_list_values(self, ucc_smartx_configs):
+    def test_inputs_input_type_list_values(self, ucc_smartx_configs, add_input_one, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         type_filter_list = ["All", "Example Input One", "Example Input Two"]
         assert input_page.type_filter.get_input_type_list() == type_filter_list
+        input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)
+        assert input_page.table.get_row_count() == 1
+        input_page.type_filter.select_input_type("Example Input Two")
+        assert input_page.table.get_row_count() == 1
+
+    @pytest.mark.input
+    # Verifies enabled input should not delete
+    def test_inputs_delete_enabled_input(self, ucc_smartx_configs, add_input_one):
+        input_page = InputPage(ucc_smartx_configs)
+        assert input_page.table.delete_row("dummy_input_one", prompt_msg=True) == r"Can't delete enabled input"
 
     @pytest.mark.input
     # Verifies pagination list
@@ -741,16 +774,16 @@ class TestInput(UccTester):
     
     @pytest.mark.input
     # Verifies sorting functionality for name column
-    def test_input_sort_name(self, ucc_smartx_configs, add_input_one, add_input_two):
+    def test_inputs_sort_functionality(self, ucc_smartx_configs, add_input_one, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         input_page.pagination.select_page_option("50 Per Page")
         input_page.table.sort_column("Name")
         sort_order = input_page.table.get_sort_order()
-        x = list(input_page.table.get_column_values("Name"))
-        x = list(str(item) for item in x)
-        y = sorted(x , key = str.lower)
+        column_values = list(input_page.table.get_column_values("Name"))
+        column_values = list(str(item) for item in column_values)
+        sorted_values = sorted(column_values , key = str.lower)
         assert sort_order["header"].lower() == "name"
-        assert x==y
+        assert column_values==sorted_values
         assert sort_order["ascending"]
 
     @pytest.mark.input
@@ -882,23 +915,34 @@ class TestInput(UccTester):
         assert input_page.entity2.example_multiple_select.get_values() == selected_values
 
     @pytest.mark.input
-    # Verifies Check/Uncheck in example checkbox in Example Input Two
+    # Verifies Check in example checkbox in Example Input Two
     def test_example_input_two_checked_example_checkbox(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
         assert input_page.entity2.example_checkbox.check()
-        assert input_page.entity2.example_checkbox.uncheck()
 
     @pytest.mark.input
-    # Verifies default value of example radio in Example Input Two
-    def test_example_input_two_default_value_example_radio(self, ucc_smartx_configs):
+    # Verifies Uncheck in example checkbox in Example Input Two
+    def test_example_input_two_unchecked_example_checkbox(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
-        assert input_page.entity2.example_radio.get_value() == "Yes"
+        input_page.entity2.example_checkbox.check()
+        assert input_page.entity2.example_checkbox.uncheck()   
 
     @pytest.mark.input
     # Verifies default value of example radio in Example Input Two
-    def test_example_input_two_select_value_radio(self, ucc_smartx_configs):
+    def test_example_input_two_required_field_example_radio(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.name.set_value("test_name_two")
+        input_page.entity2.interval.set_value("120")
+        input_page.entity2.example_account.select("test_input")
+        input_page.entity2.example_multiple_select.select("Option One")
+        assert input_page.entity2.save(expect_error=True) == r"Field Example Radio is required"
+
+    @pytest.mark.input
+    # Verifies default value of example radio in Example Input Two
+    def test_example_input_two_select_value_example_radio(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.example_radio.select("No")
@@ -913,6 +957,7 @@ class TestInput(UccTester):
         input_page.entity2.interval.set_value("120")
         input_page.entity2.example_account.select("test_input")
         input_page.entity2.example_multiple_select.select("Option One")
+        input_page.entity2.example_radio.select("Yes")
         input_page.entity2.query_start_date.set_value("2020/01/01")
         assert input_page.entity2.save(expect_error=True) == r"Invalid date and time format"
         assert input_page.entity2.close_error()
@@ -1089,6 +1134,7 @@ class TestInput(UccTester):
     # Verifies the frontend delete functionlity
     def test_example_input_two_delete_row_frontend_validation(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
+        input_page.table.input_status_toggle("dummy_input_two", enable=False)
         input_page.table.delete_row("dummy_input_two")
         assert "dummy_input_two" not in input_page.table.get_table()
 
@@ -1096,6 +1142,7 @@ class TestInput(UccTester):
     # Verifies the backend delete functionlity
     def test_example_input_two_delete_row_backend_validation(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
+        input_page.table.input_status_toggle("dummy_input_two", enable=False)
         input_page.table.delete_row("dummy_input_two")
         assert "example_input_two://dummy_input_two" not in input_page.backend_conf.get_all_stanzas().keys()
 
@@ -1124,8 +1171,7 @@ class TestInput(UccTester):
     # Verifies close functionality at time of delete
     def test_example_input_two_delete_close_entity(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.table.delete_row("dummy_input_two", close=True)
-        assert input_page.entity2.close()
+        assert input_page.table.delete_row("dummy_input_two", close=True)
 
     @pytest.mark.input
     # Verifies cancel functionality at time of add
@@ -1152,16 +1198,16 @@ class TestInput(UccTester):
     # Verifies cancel functionality at time of delete
     def test_example_input_two_delete_cancel_entity(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.table.delete_row("dummy_input_two", cancel=True)
-        assert input_page.entity2.cancel()
+        assert input_page.table.delete_row("dummy_input_two", cancel=True)
 
     @pytest.mark.input
     # Verifies by saving an entity with duplicate name it displays and error
     def test_example_input_two_add_duplicate_names(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
-        input_page.entity2.name.set_value("dummy_input_two")
-        assert input_page.entity2.save(expect_error=True) == "Name dummy_input_two is already in use"
+        input_name = "dummy_input_two"
+        input_page.entity2.name.set_value(input_name)
+        assert input_page.entity2.save(expect_error=True) == "Name {} is already in use".format(input_name)
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -1169,6 +1215,7 @@ class TestInput(UccTester):
     def test_example_input_two_clone_duplicate_names(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.clone_row("dummy_input_two")
-        input_page.entity2.name.set_value("dummy_input_two")
-        assert input_page.entity2.save(expect_error=True) == "Name dummy_input_two is already in use"
+        input_name = "dummy_input_two"
+        input_page.entity2.name.set_value(input_name)
+        assert input_page.entity2.save(expect_error=True) == "Name {} is already in use".format(input_name)
         assert input_page.entity2.close_error()
