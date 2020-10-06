@@ -41,11 +41,7 @@ class TestLogging(UccTester):
     @pytest.mark.logging
     #This test case checks list of log levels present in the drop down
     def test_logging_list_log_levels(self, ucc_smartx_configs):
-<<<<<<< HEAD
-        logging = Logging(ucc_smartx_configs, TA_NAME)
-=======
         logging = Logging(ucc_smartx_configs, TA_NAME, TA_CONF)
->>>>>>> cc7c9843641038ebbef57ce52889c697fcef2a25
         assert set(logging.log_level.list_of_values()) == {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
         
     @pytest.mark.logging
