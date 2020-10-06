@@ -187,7 +187,7 @@ class TestAccount(UccTester):
     
     @pytest.mark.account
     # Verifies required field client secret
-    def test_account_client_secret_required_fields(self, ucc_smartx_configs):
+    def test_account_required_field_client_secret(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.auth_key.select('OAuth 2.0 Authentication')
@@ -241,7 +241,7 @@ class TestAccount(UccTester):
 
     @pytest.mark.account
     # Verifies auth type list dropdown
-    def test_account_list_uth_type(self, ucc_smartx_configs):
+    def test_account_list_auth_type(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         assert set(account.entity.auth_key.list_of_values()) == {"Basic Authentication", "OAuth 2.0 Authentication"}
@@ -312,14 +312,14 @@ class TestAccount(UccTester):
     # Verifies close functionality at time of delete
     def test_account_delete_close_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        account.table.delete_row(ACCOUNT_CONFIG["name"])
+        account.table.delete_row(ACCOUNT_CONFIG["name"], close=True)
         assert account.entity.close()
         
     @pytest.mark.account
     # Verifies cancel functionality at time of delete
     def test_account_delete_cancel_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        account.table.delete_row(ACCOUNT_CONFIG["name"])
+        account.table.delete_row(ACCOUNT_CONFIG["name"], cancel=True)
         assert account.entity.cancel()
     
     @pytest.mark.account
@@ -432,7 +432,7 @@ class TestAccount(UccTester):
     
     @pytest.mark.account
     # Verifies the account in backend after adding account from frontend
-    def test_add_account_backend_validation(self, ucc_smartx_configs):
+    def test_account_add_backend_validation(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
@@ -455,7 +455,7 @@ class TestAccount(UccTester):
 
     @pytest.mark.account
     # Verifies the account in backend after editing account from frontend
-    def test_edit_account_backend_validation(self, ucc_smartx_configs, add_account):
+    def test_account_edit_backend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
         account.entity.multiple_select.select("Option Two")
@@ -478,7 +478,7 @@ class TestAccount(UccTester):
     
     @pytest.mark.account
     # Verifies the account in backend after cloning account from frontend
-    def test_clone_account_backend_validation(self, ucc_smartx_configs, add_account):
+    def test_account_clone_backend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         account.entity.name.set_value("TestAccountClone")
@@ -502,7 +502,7 @@ class TestAccount(UccTester):
     
     @pytest.mark.account
     # Verifies the account in backend after deleting the account from frontend
-    def test_delete_row_backend_validation(self, ucc_smartx_configs, add_account):
+    def test_account_delete_row_backend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
         assert ACCOUNT_CONFIG["name"] not in account.backend_conf.get_all_stanzas().keys()
