@@ -84,13 +84,6 @@ class TestCustom(UccTester):
         assert custom.save(expect_error=True) == r"Length of Test String should be greater than or equal to 5"
 
     @pytest.mark.custom
-    # This test case checks length of test string field should be greater than 4
-    def test_custom_valid_length_test_string_greater(self, ucc_smartx_configs):
-        custom = Custom(ucc_smartx_configs)
-        custom.test_string.set_value("test") 
-        assert custom.save(expect_error=True) == r"Length of Test String should be greater than or equal to 5"
-
-    @pytest.mark.custom
     # This test case checks length of test string field should be less than 11
     def test_custom_valid_length_test_string_less(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
@@ -99,7 +92,7 @@ class TestCustom(UccTester):
 
     @pytest.mark.custom
     # This test case checks required field test number
-    def test_custom_required_field_test_string(self, ucc_smartx_configs):
+    def test_custom_required_field_test_number(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
         custom.test_string.set_value("test_str")
         assert custom.save(expect_error=True) == r"Field Test Number is required"
