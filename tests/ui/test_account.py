@@ -312,15 +312,13 @@ class TestAccount(UccTester):
     # Verifies close functionality at time of delete
     def test_account_delete_close_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        account.table.delete_row(ACCOUNT_CONFIG["name"], close=True)
-        assert account.entity.close()
+        assert account.table.delete_row(ACCOUNT_CONFIG["name"], close=True)
         
     @pytest.mark.account
     # Verifies cancel functionality at time of delete
     def test_account_delete_cancel_entity(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
-        account.table.delete_row(ACCOUNT_CONFIG["name"], cancel=True)
-        assert account.entity.cancel()
+        assert account.table.delete_row(ACCOUNT_CONFIG["name"], cancel=True)
     
     @pytest.mark.account
     # Verifies close functionality at time of edit
