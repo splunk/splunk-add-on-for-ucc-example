@@ -248,7 +248,7 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies checked in example checkbox in example input one
-    def test_example_input_one_unchecked_example_checkbox(self, ucc_smartx_configs):
+    def test_example_input_one_checked_example_checkbox(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_checkbox.uncheck()
@@ -633,8 +633,7 @@ class TestInput(UccTester):
     # Verifies close functionality at time of delete
     def test_example_input_one_delete_close_entity(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.table.delete_row("dummy_input_one", close=True)
-        assert input_page.entity1.close()
+        assert input_page.table.delete_row("dummy_input_one", close=True)
 
     @pytest.mark.input
     # Verifies cancel functionality at time of add
@@ -661,8 +660,7 @@ class TestInput(UccTester):
     # Verifies cancel functionality at time of delete
     def test_example_input_one_delete_cancel_entity(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.table.delete_row("dummy_input_one", cancel=True)
-        assert input_page.entity1.cancel()
+        assert input_page.table.delete_row("dummy_input_one", cancel=True)
 
     @pytest.mark.input
     # Verifies by saving an entity with duplicate name it displays and error
@@ -925,7 +923,7 @@ class TestInput(UccTester):
 
     @pytest.mark.input
     # Verifies Uncheck in example checkbox in Example Input Two
-    def test_example_input_two_checked_example_checkbox(self, ucc_smartx_configs):
+    def test_example_input_two_unchecked_example_checkbox(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.example_checkbox.check()
@@ -1173,8 +1171,7 @@ class TestInput(UccTester):
     # Verifies close functionality at time of delete
     def test_example_input_two_delete_close_entity(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.table.delete_row("dummy_input_two", close=True)
-        assert input_page.entity2.close()
+        assert input_page.table.delete_row("dummy_input_two", close=True)
 
     @pytest.mark.input
     # Verifies cancel functionality at time of add
@@ -1201,8 +1198,7 @@ class TestInput(UccTester):
     # Verifies cancel functionality at time of delete
     def test_example_input_two_delete_cancel_entity(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.table.delete_row("dummy_input_two", cancel=True)
-        assert input_page.entity2.cancel()
+        assert input_page.table.delete_row("dummy_input_two", cancel=True)
 
     @pytest.mark.input
     # Verifies by saving an entity with duplicate name it displays and error
