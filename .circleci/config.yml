@@ -23,9 +23,7 @@ orbs:
               name: validate
               command: |
                 PACKAGE=$(ls build/package/splunkbase/*)
-                source .venv/bin/activate
                 slim validate $PACKAGE
-
     jobs:
       package:
         executor: python27
