@@ -19,8 +19,6 @@ pip3 install --upgrade pip
 pip2 install --upgrade pip
 echo install slim
 pip3 install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz --upgrade
-echo install crudini
-pip3 install git+https://git@github.com/pixelb/crudini.git --upgrade
 echo install requirements_dev
 pip3 install -r requirements_dev.txt --upgrade
 

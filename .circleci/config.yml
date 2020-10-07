@@ -22,6 +22,7 @@ orbs:
                 sudo mkdir ~/.ssh || true
                 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
                 sudo ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+                sudo pip install git+https://git@github.com/pixelb/crudini.git --upgrade
                 sudo ./build.sh
                 ls --all -l package/
           - run:
