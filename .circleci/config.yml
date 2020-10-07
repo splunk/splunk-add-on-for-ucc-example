@@ -15,6 +15,9 @@ orbs:
     commands:
       package:
         steps:
+          - add_ssh_keys:
+              fingerprints:
+                - "7c:e9:cc:8d:8e:4d:9c:17:1d:e3:96:23:ce:bd:a4:c3"
           - run:
               name: Generating package
               command: |
