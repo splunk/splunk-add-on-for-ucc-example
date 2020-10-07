@@ -11,15 +11,11 @@ then
 fi
 for line in `cat .python-version`; do pyenv install -s "$line"; done
 # echo "Installing Virtual Environment"
-pip3 install virtualenv > /dev/null
-if [ ! -d "./.venv" ]; then
-python3 -m virtualenv .venv -p python3 > /dev/null
-fi
-source .venv/bin/activate
-echo "Virtual Environment Installed and Activated"
 # echo "Installing Dependencies"
 echo install setuptools
 pip3 install setuptools --upgrade
+pip3 install --upgrade pip
+pip2 install --upgrade pip
 echo install slim
 pip3 install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz --upgrade
 echo install crudini
