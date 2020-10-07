@@ -21,7 +21,7 @@ echo "Virtual Environment Installed and Activated"
 pip3 install -r requirements_dev.txt --upgrade
 
 PACKAGE_ID=$(crudini --get package/default/app.conf id name)
-# VERSION=$(./semtag getcurrent)
+VERSION=$(./semtag getcurrent)
 # BUILD_DIR=build/source/$PACKAGE_ID
 
 # # export VERSION_SPLUNK=$(python ./splver.py ${VERSION})
