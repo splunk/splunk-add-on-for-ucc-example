@@ -19,6 +19,7 @@ orbs:
               name: Generating package
               command: |
                 export VERSION=$(./semtag getcurrent)
+                echo $VERSION
                 sudo ./build.sh
           - run:
               name: validate
