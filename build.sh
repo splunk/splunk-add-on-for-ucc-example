@@ -24,7 +24,7 @@ PACKAGE_ID=$(crudini --get package/default/app.conf id name)
 
 BUILD_DIR=build/source/$PACKAGE_ID
 
-export VERSION_SPLUNK=$(python ./splver.py ${VERSION})
+export VERSION_SPLUNK=$(dunamai from git --no-metadata --format "{base}P{commit}")
 export PACKAGE_BUILD=$(date +%s)
 rm -rf build || true
 rm -rf output || true
@@ -47,4 +47,4 @@ slim package -o build/package/splunkbase $BUILD_DIR
 
 mkdir -p build/package/deployment
 PACKAGE=$(ls build/package/splunkbase/*)
-slim partition -o build/package/deployment $PACKAGE || true
+#slim partition -o build/package/deployment $PACKAGE || true
