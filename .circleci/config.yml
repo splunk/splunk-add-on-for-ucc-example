@@ -11,7 +11,7 @@ orbs:
     executors:
       python27:
         docker:
-          - image: circleci/python:2.7
+          - image: circleci/buildpack-deps:latest
     commands:
       package:
         steps:
