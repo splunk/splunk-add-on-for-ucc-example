@@ -14,6 +14,7 @@ for line in `cat .python-version`; do pyenv install -s "$line"; done
 # echo "Installing Dependencies"
 echo install setuptools
 pip3 install setuptools --upgrade
+pip3 install wheel --upgrade
 pip3 install --upgrade pip
 pip2 install --upgrade pip
 echo install slim
