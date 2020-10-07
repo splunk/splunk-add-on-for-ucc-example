@@ -249,7 +249,6 @@
                                     "errorMsg": "Max host length is 4096",
                                     "minLength": 0,
                                     "maxLength": 4096
-                                        
                                 }
                             ],
                             "field": "proxy_url"
@@ -1054,7 +1053,7 @@
         "apiVersion": "3.2.0",
         "name": "Splunk_TA_UCCExample",
         "restRoot": "splunk_ta_uccexample",
-        "version": "1.0.0",
+        "version": "4.0.2ac400e0a",
         "displayName": "Splunk UCC test Add-on"
     }
 }
