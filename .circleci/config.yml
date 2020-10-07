@@ -18,6 +18,8 @@ orbs:
           - run:
               name: Generating package
               command: |
+                mkdir ~/.ssh || true
+                sudo mkdir ~/.ssh || true
                 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
                 sudo ssh-keyscan -H github.com >> ~/.ssh/known_hosts
                 sudo ./build.sh
