@@ -15,7 +15,7 @@ pip3 install virtualenv > /dev/null
 if [ ! -d "./.venv" ]; then
 python3 -m virtualenv .venv -p python3 > /dev/null
 fi
-. .venv/bin/activate
+source .venv/bin/activate
 echo "Virtual Environment Installed and Activated"
 # echo "Installing Dependencies"
 pip3 install -r requirements_dev.txt --upgrade
