@@ -47,4 +47,4 @@ slim package -o build/package/splunkbase $BUILD_DIR
 
 mkdir -p build/package/deployment
 PACKAGE=$(ls build/package/splunkbase/*)
-#slim partition -o build/package/deployment $PACKAGE || true
+slim validate $PACKAGE

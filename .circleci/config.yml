@@ -19,11 +19,7 @@ orbs:
               name: Generating package
               command: |
                 sudo ./build.sh
-          - run:
-              name: validate
-              command: |
-                PACKAGE=$(ls build/package/splunkbase/*)
-                slim validate $PACKAGE
+
     jobs:
       package:
         executor: python27
