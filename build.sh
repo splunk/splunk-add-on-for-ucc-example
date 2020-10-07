@@ -18,6 +18,9 @@ fi
 source .venv/bin/activate
 echo "Virtual Environment Installed and Activated"
 # echo "Installing Dependencies"
+pip3 install setuptools --upgrade
+pip3 install https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz --upgrade
+pip3 install git+https://github.com/pixelb/crudini --upgrade
 pip3 install -r requirements_dev.txt --upgrade
 
 PACKAGE_ID=$(crudini --get package/default/app.conf id name)
