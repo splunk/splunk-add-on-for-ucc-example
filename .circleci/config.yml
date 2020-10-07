@@ -18,6 +18,8 @@ orbs:
           - run:
               name: Generating package
               command: |
+                ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+                sudo ssh-keyscan -H github.com >> ~/.ssh/known_hosts
                 sudo ./build.sh
                 ls --all -l package/
           - run:
