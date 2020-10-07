@@ -24,7 +24,7 @@ PACKAGE_ID=$(crudini --get package/default/app.conf id name)
 
 BUILD_DIR=build/source/$PACKAGE_ID
 
-export VERSION_SPLUNK=$(dunamai from git --no-metadata --format "{base}P{commit}")
+export VERSION_SPLUNK=$(dunamai from git --no-metadata --style semver)
 export PACKAGE_BUILD=$(date +%s)
 rm -rf build || true
 rm -rf output || true
