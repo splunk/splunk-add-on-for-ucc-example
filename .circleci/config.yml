@@ -119,7 +119,7 @@ orbs:
                 pip install -r requirements_dev.txt
                 pip install git+https://github.com/pixelb/crudini        
                 mkdir test-results
-                cp -r /tmp/workspace/build build
+                cp -r /tmp/workspace/output output
           - run:
               name: Splunk Testing
               command: |
