@@ -1,12 +1,12 @@
 
-from ucc_smartx.components.base_component import Selector
-from ucc_smartx.components.tabs import Tab
-from ucc_smartx.components.entity import Entity
-from ucc_smartx.components.controls.textbox import TextBox
-from ucc_smartx.components.controls.toggle import Toggle
-from ucc_smartx.components.controls.multi_select import MultiSelect
-from ucc_smartx.components.controls.learn_more import LearnMore
-from ucc_smartx.backend_confs import SingleBackendConf
+from pytest_splunk_addon_ui_smartx.components.base_component import Selector
+from pytest_splunk_addon_ui_smartx.components.tabs import Tab
+from pytest_splunk_addon_ui_smartx.components.entity import Entity
+from pytest_splunk_addon_ui_smartx.components.controls.textbox import TextBox
+from pytest_splunk_addon_ui_smartx.components.controls.toggle import Toggle
+from pytest_splunk_addon_ui_smartx.components.controls.multi_select import MultiSelect
+from pytest_splunk_addon_ui_smartx.components.controls.learn_more import LearnMore
+from pytest_splunk_addon_ui_smartx.backend_confs import SingleBackendConf
 from selenium.webdriver.common.by import By
 import time
 

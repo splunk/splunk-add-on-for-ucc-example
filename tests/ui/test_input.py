@@ -1,5 +1,5 @@
-from ucc_smartx.base_test import UccTester
-from ucc_smartx.pages.logging import Logging
+from pytest_splunk_addon_ui_smartx.base_test import UccTester
+from pytest_splunk_addon_ui_smartx.pages.logging import Logging
 from .Example_UccLib.account import AccountPage
 from .Example_UccLib.input_page import InputPage
 import pytest
@@ -363,6 +363,14 @@ class TestInput(UccTester):
         assert input_page.entity1.order_by.get_value() == default_order_by
 
     @pytest.mark.input
+    # Verifies help text for the field name
+    def test_example_input_one_help_text_order_by(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input One")
+        help_text = input_page.entity1.order_by.get_help_text()
+        assert help_text == 'The datetime field by which to query results in ascending order for indexing.'
+
+    @pytest.mark.input
     # Verifies whether adding wrong format, Query Start Date field displays validation error
     def test_example_input_one_valid_input_query_start_date(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
@@ -682,6 +690,42 @@ class TestInput(UccTester):
         assert input_page.entity1.save(expect_error=True) == "Name {} is already in use".format(input_name)
         assert input_page.entity1.close_error()
 
+    @pytest.mark.input
+    # Verifies the title of the 'Add Entity'
+    def test_example_input_one_add_valid_title(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input One")
+        assert input_page.entity1.title.container.get_attribute('textContent').strip() == "Add Example Input One"
+
+    @pytest.mark.input
+    # Verifies the title of the 'Edit Entity'
+    def test_example_input_one_edit_valid_title(self, ucc_smartx_configs, add_input_one):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.edit_row("dummy_input_one")
+        assert input_page.entity1.title.container.get_attribute('textContent').strip() == "Update Example Input One"
+
+    @pytest.mark.input
+    # Verifies the title of the 'Clone Entity'
+    def test_example_input_one_clone_valid_title(self, ucc_smartx_configs, add_input_one):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.clone_row("dummy_input_one")
+        assert input_page.entity1.title.container.get_attribute('textContent').strip() == "Clone Example Input One"
+
+    @pytest.mark.input
+    # Verifies the title of the 'Delete Entity'
+    def test_example_input_one_delete_valid_title(self, ucc_smartx_configs, add_input_one):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.delete_row("dummy_input_one", prompt_msg=True)
+        assert input_page.entity1.title.container.get_attribute('textContent').strip() == "Delete Confirmation"
+
+    @pytest.mark.input
+    # Verifies the prompt message of the 'Delete Entity'
+    def test_example_input_one_delete_valid_prompt_message(self, ucc_smartx_configs, add_input_one):
+        input_page = InputPage(ucc_smartx_configs)
+        input_name = "dummy_input_one"
+        prompt_message = input_page.table.delete_row("dummy_input_one", prompt_msg=True)
+        assert prompt_message == 'Are you sure you want to delete "{}" ?'.format(input_name)
+    
 
 
     ############################
@@ -795,6 +839,20 @@ class TestInput(UccTester):
         assert input_page.table.switch_to_page(2)
         assert input_page.table.switch_to_prev()
         assert input_page.table.switch_to_next()
+
+    @pytest.mark.input
+    # Verifies the title and description of the page
+    def test_inputs_title_and_description(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        assert input_page.title.wait_to_display() == "Inputs"
+        assert input_page.description.wait_to_display() == "Manage your data inputs"
+
+    @pytest.mark.input
+    # Verifies the default number of rows in the table
+    def test_inputs_default_rows_in_table(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)   
+        number_of_rows = input_page.table.get_row_count()
+        assert number_of_rows == 0
 
     ##########################################
     #### TEST CASES FOR EXAMPLE INPUT TWO ####
@@ -913,6 +971,14 @@ class TestInput(UccTester):
         for each in selected_values:
             input_page.entity2.example_multiple_select.select(each)
         assert input_page.entity2.example_multiple_select.get_values() == selected_values
+
+    @pytest.mark.input
+    # Verifies help text for the field name
+    def test_example_input_two_help_text_example_multiple_select(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input Two")
+        help_text = input_page.entity2.example_multiple_select.get_help_text()
+        assert help_text == 'This is an example multipleSelect for input two entity'    
 
     @pytest.mark.input
     # Verifies Check in example checkbox in Example Input Two
@@ -1219,3 +1285,40 @@ class TestInput(UccTester):
         input_page.entity2.name.set_value(input_name)
         assert input_page.entity2.save(expect_error=True) == "Name {} is already in use".format(input_name)
         assert input_page.entity2.close_error()
+
+
+    @pytest.mark.input
+    # Verifies the title of the 'Add Entity'
+    def test_example_input_two_add_valid_title(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input Two")
+        assert input_page.entity2.title.container.get_attribute('textContent').strip() == "Add Example Input Two"
+
+    @pytest.mark.input
+    # Verifies the title of the 'Edit Entity'
+    def test_example_input_two_edit_valid_title(self, ucc_smartx_configs, add_input_two):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.edit_row("dummy_input_two")
+        assert input_page.entity2.title.container.get_attribute('textContent').strip() == "Update Example Input Two"
+
+    @pytest.mark.input
+    # Verifies the title of the 'Clone Entity'
+    def test_example_input_two_clone_valid_title(self, ucc_smartx_configs, add_input_two):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.clone_row("dummy_input_two")
+        assert input_page.entity2.title.container.get_attribute('textContent').strip() == "Clone Example Input Two"
+
+    @pytest.mark.input
+    # Verifies the title of the 'Delete Entity'
+    def test_example_input_two_delete_valid_title(self, ucc_smartx_configs, add_input_two):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.delete_row("dummy_input_two", prompt_msg=True)
+        assert input_page.entity2.title.container.get_attribute('textContent').strip() == "Delete Confirmation"
+
+    @pytest.mark.input
+    # Verifies the prompt message of the 'Delete Entity'
+    def test_example_input_two_delete_valid_prompt_message(self, ucc_smartx_configs, add_input_two):
+        input_page = InputPage(ucc_smartx_configs)
+        input_name = "dummy_input_two"
+        prompt_message = input_page.table.delete_row("dummy_input_two", prompt_msg=True)
+        assert prompt_message == 'Are you sure you want to delete "{}" ?'.format(input_name)

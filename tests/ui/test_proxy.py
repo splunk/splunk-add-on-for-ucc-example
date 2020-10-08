@@ -1,5 +1,5 @@
-from ucc_smartx.base_test import UccTester
-from ucc_smartx.pages.proxy import Proxy
+from pytest_splunk_addon_ui_smartx.base_test import UccTester
+from pytest_splunk_addon_ui_smartx.pages.proxy import Proxy
 import pytest
 import time
 import re
