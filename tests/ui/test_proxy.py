@@ -122,6 +122,13 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
+    # Verifies if the password field is masked or not in the Textbox
+    def test_proxy_encrypted_field_password(self, ucc_smartx_configs):
+        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        textbox_type = proxy.password.get_type()
+        assert textbox_type == 'password'
+
+    @pytest.mark.proxy
     # Verifies the proxy is saved properly in frontend after saving it
     def test_proxy_frontend_validation(self, ucc_smartx_configs):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
