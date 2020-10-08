@@ -116,7 +116,7 @@ orbs:
           - run:
               name: Setup for testing
               command: |
-                pip install -r tests/requirements.txt
+                pip install -r requirements_dev.txt
                 pip install git+https://github.com/pixelb/crudini        
                 mkdir test-results
                 cp -r /tmp/workspace/build build
