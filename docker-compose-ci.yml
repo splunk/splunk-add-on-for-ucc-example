@@ -14,7 +14,7 @@ services:
       - splunk
       - sc4s
     volumes:
-      - results:/work/test-results
+      - results:/home/circleci/work/test-results
 
   sc4s:
     image: splunk/scs:latest

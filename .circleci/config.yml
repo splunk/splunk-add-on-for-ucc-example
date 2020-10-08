@@ -149,10 +149,10 @@ orbs:
               command: |
                 # Collect Results
                 docker container create --name dummy \
-                                    -v project_results:/work/test-results \
+                                    -v project_results:/home/circleci/work/test-results \
                                     registry.access.redhat.com/ubi7/ubi
-                docker cp dummy:/work/test-results/test.xml test-results/  || true
-                docker cp dummy:/work/test-results/cim-compliance-report.md test-results/ || true
+                docker cp dummy:/home/circleci/work/test-results/test.xml test-results/  || true
+                docker cp dummy:/home/circleci/work/test-results/cim-compliance-report.md test-results/ || true
 
     jobs:
       aio:
