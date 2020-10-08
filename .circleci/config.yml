@@ -29,6 +29,7 @@ orbs:
           - persist_to_workspace:
               root: /home/circleci/project
               paths:
+                - output
                 - build
           - store_artifacts:
               path: build/package/splunkbase
