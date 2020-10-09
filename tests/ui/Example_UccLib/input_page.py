@@ -32,7 +32,7 @@ class ExampleInputOne(Entity):
         super(ExampleInputOne, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
-        self.name = extBox(browser, Selector(select=".name"))
+        self.name = TextBox(browser, Selector(select=".name"))
         self.example_checkbox = Checkbox(browser, Selector(select=entity_container.select + " .input_one_checkbox"))
         self.example_radio = Toggle(browser, Selector(select=entity_container.select + " .input_one_radio"))
         self.single_select_group_test = SingleSelect(browser, Selector(select=entity_container.select + " .singleSelectTest"))
@@ -64,14 +64,14 @@ class ExampleInputTwo(Entity):
         super(ExampleInputTwo, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
-        self.name = TextBox(browser, Selector(by=By.NAME, select="name"))
-        self.interval = TextBox(browser, Selector(by=By.NAME, select="interval"))
+        self.name = TextBox(browser, Selector(select=".name"))
+        self.interval = TextBox(browser, Selector(select=".interval"))
         self.index = SingleSelect(browser, Selector(select=entity_container.select + " .index"))
         self.example_account = SingleSelect(browser, Selector(select=entity_container.select + " .account"))
         self.example_multiple_select = MultiSelect(browser, Selector(select=entity_container.select + " .input_two_multiple_select"))
         self.example_checkbox = Checkbox(browser, Selector(select=entity_container.select + " .input_two_checkbox"))
         self.example_radio = Toggle(browser, Selector(select=entity_container.select + " .input_two_radio"))
-        self.query_start_date = TextBox(browser, Selector(by=By.NAME, select="start_date"))
+        self.query_start_date = TextBox(browser, Selector(select=".start_date"))
         self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
         self.title = BaseComponent(browser, Selector(select= "h4.modal-title"))
 
