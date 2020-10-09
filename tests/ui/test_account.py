@@ -132,6 +132,55 @@ class TestAccount(UccTester):
         account.table.clean_filter()
 
     @pytest.mark.account
+    # Verifies the default number of rows in the table
+    def test_account_default_rows_in_table(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)   
+        number_of_rows = account.table.get_row_count()
+        assert number_of_rows == 0 
+
+    @pytest.mark.account
+    # Verifies the title and description of the page
+    def test_account_title_and_description(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        assert account.title.wait_to_display() == "Configuration"
+        assert account.description.wait_to_display() == "Set up your add-on"
+
+    @pytest.mark.account
+    # Verifies the title of the 'Add Entity'
+    def test_account_add_valid_title(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        assert account.entity.title.container.get_attribute('textContent').strip() == "Add Account"
+
+    @pytest.mark.account
+    # Verifies the title of the 'Edit Entity'
+    def test_account_edit_valid_title(self, ucc_smartx_configs, add_account):
+        account = AccountPage(ucc_smartx_configs)
+        account.table.edit_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.title.container.get_attribute('textContent').strip() == "Update Account"
+
+    @pytest.mark.account
+    # Verifies the title of the 'Clone Entity'
+    def test_account_clone_valid_title(self, ucc_smartx_configs, add_account):
+        account = AccountPage(ucc_smartx_configs)
+        account.table.clone_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.title.container.get_attribute('textContent').strip() == "Clone Account"
+
+    @pytest.mark.account
+    # Verifies the title of the 'Delete Entity'
+    def test_account_delete_valid_title(self, ucc_smartx_configs, add_account):
+        account = AccountPage(ucc_smartx_configs)
+        account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True)
+        assert account.entity.title.container.get_attribute('textContent').strip() == "Delete Confirmation"
+
+    @pytest.mark.account
+    # Verifies the prompt message of the 'Delete Entity'
+    def test_account_delete_valid_prompt_message(self, ucc_smartx_configs, add_account):
+        account = AccountPage(ucc_smartx_configs)
+        prompt_message = account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True)
+        assert prompt_message == 'Are you sure you want to delete "{}" ? Ensure that no input is configured with "{}" as this will stop data collection for that input.'.format(ACCOUNT_CONFIG["name"],ACCOUNT_CONFIG["name"])
+
+    @pytest.mark.account
     # Verifies required field username
     def test_account_required_field_username(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
@@ -148,6 +197,14 @@ class TestAccount(UccTester):
         assert account.entity.save(expect_error=True) == 'Field Password is required'
 
     @pytest.mark.account
+    # Verifies if the password field is masked or not in the Textbox
+    def test_account_encrypted_field_password(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        textbox_type = account.entity.password.get_type()
+        assert textbox_type == 'password'
+
+    @pytest.mark.account
     # Verifies required field name
     def test_account_required_field_name(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
@@ -155,6 +212,14 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         assert account.entity.save(expect_error=True) == 'Field Name is required'
+
+    @pytest.mark.account
+    # Verifies help text for the field name
+    def test_account_help_text_name(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        help_text = account.entity.name.get_help_text()
+        assert help_text == 'Enter a unique name for this account.'
 
     @pytest.mark.account
     # Verifies required field example environment
@@ -195,6 +260,15 @@ class TestAccount(UccTester):
         account.entity.multiple_select.select("Option One")
         account.entity.client_id.set_value("TestClientId")
         assert account.entity.save(expect_error=True) == 'Field Client Secret is required'
+
+    @pytest.mark.account
+    # Verifies if the password field is masked or not in the Textbox
+    def test_account_encrypted_field_client_secret(self, ucc_smartx_configs):
+        account = AccountPage(ucc_smartx_configs)
+        account.entity.open()
+        account.entity.auth_key.select('OAuth 2.0 Authentication')
+        textbox_type = account.entity.client_secret.get_type()
+        assert textbox_type == 'password'
 
     @pytest.mark.account
     # Verifies whether adding special characters, number in starting of name field displays validation error

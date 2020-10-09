@@ -1,6 +1,7 @@
 
 from pytest_splunk_addon_ui_smartx.pages.page import Page
 from pytest_splunk_addon_ui_smartx.components.base_component import Selector
+from pytest_splunk_addon_ui_smartx.components.base_component import BaseComponent
 from pytest_splunk_addon_ui_smartx.components.tabs import Tab
 from pytest_splunk_addon_ui_smartx.components.dropdown import Dropdown
 from pytest_splunk_addon_ui_smartx.components.entity import Entity
@@ -10,6 +11,7 @@ from pytest_splunk_addon_ui_smartx.components.controls.learn_more import LearnMo
 from pytest_splunk_addon_ui_smartx.components.controls.textbox import TextBox
 from pytest_splunk_addon_ui_smartx.components.controls.single_select import SingleSelect
 from pytest_splunk_addon_ui_smartx.components.controls.multi_select import MultiSelect
+from pytest_splunk_addon_ui_smartx.components.controls.message import Message
 from pytest_splunk_addon_ui_smartx.components.input_table import InputTable
 from pytest_splunk_addon_ui_smartx.backend_confs import ListBackendConf
 from pytest_splunk_addon_ui_smartx.components.controls.toggle import Toggle
@@ -27,7 +29,7 @@ class ExampleInputOne(Entity):
         add_btn = Button(browser, Selector(select=container.select + " .add-button"))
         entity_container = Selector(select=".modal-content")
         
-        super(ExampleInputOne, self).__init__(browser, entity_container, add_btn=add_btn, wait_for=10)
+        super(ExampleInputOne, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
         self.name = TextBox(browser, Selector(by=By.NAME, select="name"))
@@ -40,10 +42,12 @@ class ExampleInputOne(Entity):
         self.example_account = SingleSelect(browser, Selector(select=entity_container.select + " .account"))
         self.object = TextBox(browser, Selector(by=By.NAME, select="object"))
         self.object_fields = TextBox(browser, Selector(by=By.NAME, select="object_fields"))
-        self.order_by = TextBox(browser, Selector(by=By.NAME, select="order_by"))
+        self.order_by = TextBox(browser, Selector(select=".order_by"))
         self.query_start_date = TextBox(browser, Selector(by=By.NAME, select="start_date"))
         self.limit = TextBox(browser, Selector(by=By.NAME, select="limit"))
         self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
+        self.title = BaseComponent(browser, Selector(select= "h4.modal-title"))
+
 
 class ExampleInputTwo(Entity):
     """
@@ -57,7 +61,7 @@ class ExampleInputTwo(Entity):
         add_btn = Button(browser, Selector(select=container.select + " .add-button"))
         entity_container = Selector(select=".modal-content")
         
-        super(ExampleInputTwo, self).__init__(browser, entity_container, add_btn=add_btn, wait_for=10)
+        super(ExampleInputTwo, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
         self.name = TextBox(browser, Selector(by=By.NAME, select="name"))
@@ -69,6 +73,8 @@ class ExampleInputTwo(Entity):
         self.example_radio = Toggle(browser, Selector(select=entity_container.select + " .input_two_radio"))
         self.query_start_date = TextBox(browser, Selector(by=By.NAME, select="start_date"))
         self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
+        self.title = BaseComponent(browser, Selector(select= "h4.modal-title"))
+
     
 class InputPage(Page):
     """
@@ -85,6 +91,8 @@ class InputPage(Page):
 
         input_container = Selector(select="div.inputsContainer")
         
+        self.title = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
+        self.description = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-description"))
         self.create_new_input = Dropdown(ucc_smartx_configs.browser, Selector(select=".add-button"))
         self.table = InputTable(ucc_smartx_configs.browser, input_container, mapping={"status": "disabled", "input_type":3})
         self.entity1 = ExampleInputOne(ucc_smartx_configs.browser, input_container)
