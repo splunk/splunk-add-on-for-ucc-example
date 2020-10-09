@@ -1,5 +1,5 @@
-from ucc_smartx.base_test import UccTester
-from ucc_smartx.pages.proxy import Proxy
+from pytest_splunk_addon_ui_smartx.base_test import UccTester
+from pytest_splunk_addon_ui_smartx.pages.proxy import Proxy
 import pytest
 import time
 import re
@@ -120,6 +120,13 @@ class TestProxy(UccTester):
         proxy.username.set_value(username_value)
         assert proxy.save(expect_error=True) == "Max length of username is 50"
         assert proxy.close_error()
+
+    @pytest.mark.proxy
+    # Verifies if the password field is masked or not in the Textbox
+    def test_proxy_encrypted_field_password(self, ucc_smartx_configs):
+        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        textbox_type = proxy.password.get_type()
+        assert textbox_type == 'password'
 
     @pytest.mark.proxy
     # Verifies the proxy is saved properly in frontend after saving it

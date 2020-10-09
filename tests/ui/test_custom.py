@@ -1,4 +1,4 @@
-from ucc_smartx.base_test import UccTester
+from pytest_splunk_addon_ui_smartx.base_test import UccTester
 from .Example_UccLib.custom import Custom
 import pytest
 import time
