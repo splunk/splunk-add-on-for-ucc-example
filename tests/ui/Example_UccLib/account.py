@@ -38,12 +38,12 @@ class AccountEntity(Entity):
         self.example_checkbox = Checkbox(browser, Selector(select=".account_checkbox"))
         self.multiple_select = MultiSelect(browser, Selector(select=".account_multiple_select"))
         self.auth_key = OAuthSelect(browser, Selector(select=".auth_type"))
-        self.username = TextBox(browser, Selector(select=".shared-controls-textcontrol .username"))
-        self.password = TextBox(browser, Selector(select=".shared-controls-textcontrol .password"))
-        self.security_token = TextBox(browser, Selector(select=".shared-controls-textcontrol .token"))
-        self.client_id = TextBox(browser, Selector(select=".shared-controls-textcontrol .client_id"))
-        self.client_secret = TextBox(browser, Selector(select=".shared-controls-textcontrol .client_secret"))
-        self.redirect_url = TextBox(browser, Selector(select=".shared-controls-textcontrol .redirect_url"))
+        self.username = TextBox(browser, Selector(select=".form-horizontal .username"))
+        self.password = TextBox(browser, Selector(select=".form-horizontal .password"))
+        self.security_token = TextBox(browser, Selector(select=".form-horizontal .token"))
+        self.client_id = TextBox(browser, Selector(select=".form-horizontal .client_id"))
+        self.client_secret = TextBox(browser, Selector(select=".form-horizontal .client_secret"))
+        self.redirect_url = TextBox(browser, Selector(select=".form-horizontal .redirect_url"))
         self.search_query  = TextBox(browser, Selector(select=" .search-query"))
         self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
         self.title = BaseComponent(browser, Selector(select= "h4.modal-title"))
@@ -52,11 +52,11 @@ class AccountPage(Page):
     """
     Page: Server page
     """
-    def __init__(self, ucc_smartx_configs):
+    def __init__(self, ucc_smartx_configs, open_page=True):
         """
             :param ucc_smartx_configs: smartx configuration fixture
         """
-        super(AccountPage, self).__init__(ucc_smartx_configs)
+        super(AccountPage, self).__init__(ucc_smartx_configs, open_page)
         account_container = Selector(select="div#account-tab")
         self.title = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
         self.description = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-description"))

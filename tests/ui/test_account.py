@@ -35,7 +35,7 @@ ACCOUNT_CONFIG = {
 
 @pytest.fixture
 def add_input(ucc_smartx_configs):
-    input_page = InputPage(ucc_smartx_configs)
+    input_page = InputPage(ucc_smartx_configs, open_page=False)
     url = input_page._get_input_endpoint()
     kwargs = {
         'name': 'example_input_one://dummy_input_one',
@@ -56,14 +56,14 @@ def add_input(ucc_smartx_configs):
 
 @pytest.fixture
 def add_account(ucc_smartx_configs):
-    account = AccountPage(ucc_smartx_configs)
+    account = AccountPage(ucc_smartx_configs, open_page=False)
     url = account._get_account_endpoint()
     kwargs = ACCOUNT_CONFIG
     yield account.backend_conf.post_stanza(url, kwargs)
 
 @pytest.fixture
 def add_multiple_account(ucc_smartx_configs):
-    account = AccountPage(ucc_smartx_configs)
+    account = AccountPage(ucc_smartx_configs, open_page=False)
     url = account._get_account_endpoint()
     for i in range(12):
         kwargs = copy.deepcopy(ACCOUNT_CONFIG)
