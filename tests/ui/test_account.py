@@ -1,5 +1,5 @@
-from ucc_smartx.base_test import UccTester
-from ucc_smartx.backend_confs import BackendConf
+from pytest_splunk_addon_ui_smartx.base_test import UccTester
+from pytest_splunk_addon_ui_smartx.backend_confs import BackendConf
 from .Example_UccLib.account import AccountPage
 from .Example_UccLib.input_page import InputPage
 

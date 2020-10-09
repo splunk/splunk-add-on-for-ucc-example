@@ -1,18 +1,18 @@
 
-from ucc_smartx.pages.page import Page
-from ucc_smartx.components.base_component import Selector
-from ucc_smartx.components.tabs import Tab
-from ucc_smartx.components.dropdown import Dropdown
-from ucc_smartx.components.entity import Entity
-from ucc_smartx.components.controls.button import Button
-from ucc_smartx.components.controls.checkbox import Checkbox
-from ucc_smartx.components.controls.learn_more import LearnMore
-from ucc_smartx.components.controls.textbox import TextBox
-from ucc_smartx.components.controls.single_select import SingleSelect
-from ucc_smartx.components.controls.multi_select import MultiSelect
-from ucc_smartx.components.input_table import InputTable
-from ucc_smartx.backend_confs import ListBackendConf
-from ucc_smartx.components.controls.toggle import Toggle
+from pytest_splunk_addon_ui_smartx.pages.page import Page
+from pytest_splunk_addon_ui_smartx.components.base_component import Selector
+from pytest_splunk_addon_ui_smartx.components.tabs import Tab
+from pytest_splunk_addon_ui_smartx.components.dropdown import Dropdown
+from pytest_splunk_addon_ui_smartx.components.entity import Entity
+from pytest_splunk_addon_ui_smartx.components.controls.button import Button
+from pytest_splunk_addon_ui_smartx.components.controls.checkbox import Checkbox
+from pytest_splunk_addon_ui_smartx.components.controls.learn_more import LearnMore
+from pytest_splunk_addon_ui_smartx.components.controls.textbox import TextBox
+from pytest_splunk_addon_ui_smartx.components.controls.single_select import SingleSelect
+from pytest_splunk_addon_ui_smartx.components.controls.multi_select import MultiSelect
+from pytest_splunk_addon_ui_smartx.components.input_table import InputTable
+from pytest_splunk_addon_ui_smartx.backend_confs import ListBackendConf
+from pytest_splunk_addon_ui_smartx.components.controls.toggle import Toggle
 from selenium.webdriver.common.by import By
 
 class ExampleInputOne(Entity):
