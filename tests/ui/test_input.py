@@ -761,7 +761,7 @@ class TestInput(UccTester):
     # Verifies enabled input should not delete
     def test_inputs_delete_enabled_input(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
-        assert input_page.table.delete_row("dummy_input_one", prompt_msg=True) == r"Can't delete enabled input"
+        assert input_page.table.delete_row("dummy_input_one") == r"Can't delete enabled input"
 
     @pytest.mark.input
     # Verifies pagination list

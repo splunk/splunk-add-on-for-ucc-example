@@ -598,7 +598,6 @@ class TestAccount(UccTester):
 
     @pytest.mark.account
     # Verifies by deleting the input used account
-    @pytest.mark.skip(reason="This functionality is not working in Example addon")
     def test_account_delete_account_in_use(self, ucc_smartx_configs, add_account, add_input):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
