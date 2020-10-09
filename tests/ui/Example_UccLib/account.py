@@ -52,11 +52,11 @@ class AccountPage(Page):
     """
     Page: Server page
     """
-    def __init__(self, ucc_smartx_configs):
+    def __init__(self, ucc_smartx_configs, open_page=True):
         """
             :param ucc_smartx_configs: smartx configuration fixture
         """
-        super(AccountPage, self).__init__(ucc_smartx_configs)
+        super(AccountPage, self).__init__(ucc_smartx_configs, open_page)
         account_container = Selector(select="div#account-tab")
         self.title = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
         self.description = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-description"))

@@ -81,13 +81,13 @@ class InputPage(Page):
     Page: Input page
     """
 
-    def __init__(self, ucc_smartx_configs):
+    def __init__(self, ucc_smartx_configs, open_page=True):
         """
             :param browser: The selenium webdriver
             :param urls: Splunk web & management url. {"web": , "mgmt": }
             :param session_key: session key to access the rest endpoints
         """
-        super(InputPage, self).__init__(ucc_smartx_configs)
+        super(InputPage, self).__init__(ucc_smartx_configs, open_page)
 
         input_container = Selector(select="div.inputsContainer")
         
