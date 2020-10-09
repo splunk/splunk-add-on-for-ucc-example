@@ -32,7 +32,7 @@ class AccountEntity(Entity):
         super(AccountEntity, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
-        self.name = TextBox(browser, Selector(select=".name"))
+        self.name = TextBox(browser, Selector(by=By.NAME, select="name"))
         self.environment = SingleSelect(browser, Selector(select=".custom_endpoint"), False)
         self.account_radio = Toggle(browser, Selector(select=".account_radio"))
         self.example_checkbox = Checkbox(browser, Selector(select=".account_checkbox"))
