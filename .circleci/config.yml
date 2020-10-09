@@ -29,6 +29,7 @@ orbs:
           - persist_to_workspace:
               root: /home/circleci/project
               paths:
+                - output
                 - build
           - store_artifacts:
               path: build/package/splunkbase
@@ -116,10 +117,10 @@ orbs:
           - run:
               name: Setup for testing
               command: |
-                pip install -r tests/requirements.txt
+                pip install -r requirements_dev.txt
                 pip install git+https://github.com/pixelb/crudini        
                 mkdir test-results
-                cp -r /tmp/workspace/build build
+                cp -r /tmp/workspace/output output
           - run:
               name: Splunk Testing
               command: |
@@ -127,7 +128,7 @@ orbs:
                 ls -l deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
-                export SPLUNK_APP_PACKAGE=build/source/$(ls build/source/)
+                export SPLUNK_APP_PACKAGE=output/$(ls output/)
                 docker-compose -f docker-compose-ci.yml build
                 docker-compose -f docker-compose-ci.yml up -d splunk                
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
