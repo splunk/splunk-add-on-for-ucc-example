@@ -593,11 +593,12 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         go_to_link = "https://docs.splunk.com/Documentation"
         input_page.create_new_input.select("Example Input One")
+        help_link = input_page.entity1.help_link.go_to_link()
         self.assert_equal(
-            input_page.entity1.help_link.go_to_link,
+            help_link,
             go_to_link,
             msg="Found : {} Expected : {}".format(
-                input_page.entity1.help_link.go_to_link(),
+                help_link,
                 go_to_link
                 )
             )
