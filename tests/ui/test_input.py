@@ -1167,11 +1167,12 @@ class TestInput(UccTester):
     def test_inputs_input_type_list_values(self, ucc_smartx_configs, add_input_one, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         type_filter_list = ["All", "Example Input One", "Example Input Two"]
+        input_type_list = input_page.type_filter.get_input_type_list()
         self.assert_equal(
-            input_page.type_filter.get_input_type_list,
+            input_type_list,
             type_filter_list,
             msg="Found : {} Expected : {}".format(
-                input_page.type_filter.get_input_type_list(),
+                input_type_list,
                 type_filter_list
                 )
             )
@@ -1212,11 +1213,12 @@ class TestInput(UccTester):
     # Verifies pagination list
     def test_inputs_pagination_list(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
+        pagination_list = input_page.pagination.get_pagination_list() 
         self.assert_equal(
-            input_page.pagination.get_pagination_list,
+            pagination_list,
             ['10 Per Page','25 Per Page','50 Per Page'],
             msg="Found : {} Expected : {}".format(
-                input_page.pagination.get_pagination_list(),
+                pagination_list,
                 ['10 Per Page','25 Per Page','50 Per Page']
                 )
             )
