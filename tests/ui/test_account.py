@@ -1014,7 +1014,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         go_to_link = "https://docs.splunk.com/Documentation"
         account.entity.open()
-        self.assert_util(
+        self.assert_equal(
                 account.entity.help_link.go_to_link,
                 go_to_link,
                 msg="Found : {} Expected : {}".format(
