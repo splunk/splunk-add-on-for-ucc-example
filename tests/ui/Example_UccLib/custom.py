@@ -1,12 +1,12 @@
 
-from ucc_smartx.components.base_component import Selector
-from ucc_smartx.components.tabs import Tab
-from ucc_smartx.components.entity import Entity
-from ucc_smartx.components.controls.textbox import TextBox
-from ucc_smartx.components.controls.toggle import Toggle
-from ucc_smartx.components.controls.multi_select import MultiSelect
-from ucc_smartx.components.controls.learn_more import LearnMore
-from ucc_smartx.backend_confs import SingleBackendConf
+from pytest_splunk_addon_ui_smartx.components.base_component import Selector
+from pytest_splunk_addon_ui_smartx.components.tabs import Tab
+from pytest_splunk_addon_ui_smartx.components.entity import Entity
+from pytest_splunk_addon_ui_smartx.components.controls.textbox import TextBox
+from pytest_splunk_addon_ui_smartx.components.controls.toggle import Toggle
+from pytest_splunk_addon_ui_smartx.components.controls.multi_select import MultiSelect
+from pytest_splunk_addon_ui_smartx.components.controls.learn_more import LearnMore
+from pytest_splunk_addon_ui_smartx.backend_confs import SingleBackendConf
 from selenium.webdriver.common.by import By
 import time
 
@@ -24,13 +24,13 @@ class Custom(Entity):
         self.open()
 
         # Components
-        self.test_string = TextBox(ucc_smartx_configs.browser, Selector(by=By.NAME, select="test_string"))
-        self.test_number = TextBox(ucc_smartx_configs.browser, Selector(by=By.NAME, select="test_number"))
-        self.test_regex = TextBox(ucc_smartx_configs.browser, Selector(by=By.NAME, select="test_regex"))
-        self.test_email = TextBox(ucc_smartx_configs.browser, Selector(by=By.NAME, select="test_email"))
-        self.test_ipv4 = TextBox(ucc_smartx_configs.browser, Selector(by=By.NAME, select="test_ipv4"))
-        self.test_date = TextBox(ucc_smartx_configs.browser, Selector(by=By.NAME, select="test_date"))
-        self.test_url = TextBox(ucc_smartx_configs.browser, Selector(by=By.NAME, select="test_url"))
+        self.test_string = TextBox(ucc_smartx_configs.browser, Selector(select=".test_string"))
+        self.test_number = TextBox(ucc_smartx_configs.browser, Selector(select=".test_number"))
+        self.test_regex = TextBox(ucc_smartx_configs.browser, Selector(select=".test_regex"))
+        self.test_email = TextBox(ucc_smartx_configs.browser, Selector(select=".test_email"))
+        self.test_ipv4 = TextBox(ucc_smartx_configs.browser, Selector(select=".test_ipv4"))
+        self.test_date = TextBox(ucc_smartx_configs.browser, Selector(select=".test_date"))
+        self.test_url = TextBox(ucc_smartx_configs.browser, Selector(select=".test_url"))
         self.test_radio = Toggle(ucc_smartx_configs.browser, Selector(select=".test_radio"))
         self.test_multiselect = MultiSelect(ucc_smartx_configs.browser, Selector(select=".test_multiselect"))
         self.test_help_link = LearnMore(ucc_smartx_configs.browser, Selector(select=".test_help_link a"))

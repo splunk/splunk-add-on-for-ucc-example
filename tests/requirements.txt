@@ -1,3 +1,4 @@
 pytest-expect
 pytest-xdist
+webdriver_manager
 pytest-splunk-addon==1.3.6

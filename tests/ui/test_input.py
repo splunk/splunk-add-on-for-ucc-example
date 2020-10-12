@@ -1,5 +1,5 @@
-from ucc_smartx.base_test import UccTester
-from ucc_smartx.pages.logging import Logging
+from pytest_splunk_addon_ui_smartx.base_test import UccTester
+from pytest_splunk_addon_ui_smartx.pages.logging import Logging
 from .Example_UccLib.account import AccountPage
 from .Example_UccLib.input_page import InputPage
 import pytest
@@ -14,7 +14,7 @@ import json
 
 @pytest.fixture(scope="session", autouse=True)
 def add_account(ucc_smartx_configs):
-    account = AccountPage(ucc_smartx_configs)
+    account = AccountPage(ucc_smartx_configs, open_page=False)
     url = account._get_account_endpoint()
     kwargs = {
         'name': 'test_input',
@@ -39,7 +39,7 @@ def add_account(ucc_smartx_configs):
 
 @pytest.fixture
 def add_multiple_inputs(ucc_smartx_configs):
-    input_page = InputPage(ucc_smartx_configs)
+    input_page = InputPage(ucc_smartx_configs, open_page=False)
     url = input_page._get_input_endpoint()
     for i in range(50):
         kwargs = {
@@ -73,7 +73,7 @@ def add_multiple_inputs(ucc_smartx_configs):
 
 @pytest.fixture
 def add_input_one(ucc_smartx_configs):
-    input_page = InputPage(ucc_smartx_configs)
+    input_page = InputPage(ucc_smartx_configs, open_page=False)
     url = input_page._get_input_endpoint()
     kwargs = {
         'name': 'example_input_one://dummy_input_one',
@@ -94,7 +94,7 @@ def add_input_one(ucc_smartx_configs):
 
 @pytest.fixture
 def add_input_two(ucc_smartx_configs):
-    input_page = InputPage(ucc_smartx_configs)
+    input_page = InputPage(ucc_smartx_configs, open_page=False)
     url = input_page._get_input_endpoint()
     kwargs = {
         'name': 'example_input_two://dummy_input_two',
@@ -127,7 +127,15 @@ class TestInput(UccTester):
     def test_example_input_one_required_field_name(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.save(expect_error=True) == r"Field Name is required"
+        self.assert_util(
+            input_page.entity1.save,
+            r"Field Name is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Field Name is required"
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -137,7 +145,15 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         name_value = "a"* 101
         input_page.entity1.name.set_value(name_value)
-        assert input_page.entity1.save(expect_error=True) == r"Length of input name should be between 1 and 100"
+        self.assert_util(
+            input_page.entity1.save,
+            r"Length of input name should be between 1 and 100",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Length of input name should be between 1 and 100"
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -146,7 +162,15 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.name.set_value("$$test_name")
-        assert input_page.entity1.save(expect_error=True) == r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores."
+        self.assert_util(
+            input_page.entity1.save,
+            r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores."
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -155,7 +179,14 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         single_select_group_test_list = ["One", "Two", "Three", "Four"]
         input_page.create_new_input.select("Example Input One")
-        assert list(input_page.entity1.single_select_group_test.list_of_values()) == single_select_group_test_list
+        self.assert_util(
+            list(input_page.entity1.single_select_group_test.list_of_values()),
+            single_select_group_test_list,
+            msg="Found : {} Expected : {}".format(
+                list(input_page.entity1.single_select_group_test.list_of_values()),
+                single_select_group_test_list
+                )
+            )
 
     @pytest.mark.input
     # Verifies selected value of Single Select Group Test dropdown in example input one
@@ -164,14 +195,29 @@ class TestInput(UccTester):
         selected_value = "Two"
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.single_select_group_test.select(selected_value)
-        assert input_page.entity1.single_select_group_test.get_value() == selected_value
+        self.assert_util(
+            input_page.entity1.single_select_group_test.get_value,
+            selected_value,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.single_select_group_test.get_value(),
+                selected_value
+                )
+            )
 
     @pytest.mark.input
     # Verifies singleselect seach funtionality properly
     def test_example_input_one_search_value_single_select_group_test(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
-        input_page.create_new_input.select("Example Input One") 
-        assert input_page.entity1.single_select_group_test.search_get_list("One") == ["One"]
+        input_page.create_new_input.select("Example Input One")
+        self.assert_util(
+            input_page.entity1.single_select_group_test.search_get_list,
+            ["One"],
+            left_args={'value': 'One'},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.single_select_group_test.search_get_list("One"),
+                ["One"]
+                )
+            )
 
     @pytest.mark.input
     # Verifies default values of Multiple Select Test dropdown in example input one
@@ -179,7 +225,14 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         default_values = ["A", "B"]
-        assert input_page.entity1.multiple_select_test.get_values() == default_values
+        self.assert_util(
+            input_page.entity1.multiple_select_test.get_values,
+            default_values,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.multiple_select_test.get_values(),
+                default_values
+                )
+            )
 
     @pytest.mark.input
     # Verifies values of Multiple Select Test dropdown in example input one
@@ -188,7 +241,14 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.multiple_select_test.deselect_all()
         multiple_select_test = ["A", "B"]
-        assert list(input_page.entity1.multiple_select_test.list_of_values()) == multiple_select_test
+        self.assert_util(
+            list(input_page.entity1.multiple_select_test.list_of_values()),
+            multiple_select_test,
+            msg="Found : {} Expected : {}".format(
+                list(input_page.entity1.multiple_select_test.list_of_values()),
+                multiple_select_test
+                )
+            )
 
     @pytest.mark.input
     # Verifies selected single value of Multiple Select Test dropdown in example input one
@@ -199,7 +259,14 @@ class TestInput(UccTester):
         input_page.entity1.multiple_select_test.deselect_all()
         for each in selected_value:
             input_page.entity1.multiple_select_test.select(each)
-        assert input_page.entity1.multiple_select_test.get_values() == selected_value
+        self.assert_util(
+            input_page.entity1.multiple_select_test.get_values,
+            selected_value,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.multiple_select_test.get_values(),
+                selected_value
+                )
+            )
 
     @pytest.mark.input
     # Verifies selected multiple values of Multiple Select Test dropdown in example input one
@@ -210,7 +277,14 @@ class TestInput(UccTester):
         input_page.entity1.multiple_select_test.deselect_all()
         for each in selected_values:
             input_page.entity1.multiple_select_test.select(each)
-        assert input_page.entity1.multiple_select_test.get_values() == selected_values
+        self.assert_util(
+            input_page.entity1.multiple_select_test.get_values,
+            selected_values,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.multiple_select_test.get_values(),
+                selected_values
+                )
+            )
 
     @pytest.mark.input
     # Verifies deselect in Multiple Select Test dropdown in example input one
@@ -222,7 +296,14 @@ class TestInput(UccTester):
         for each in selected_values:
             input_page.entity1.multiple_select_test.select(each)
         input_page.entity1.multiple_select_test.deselect("A")
-        assert input_page.entity1.multiple_select_test.get_values() == ["B"]
+        self.assert_util(
+            input_page.entity1.multiple_select_test.get_values,
+            ["B"],
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.multiple_select_test.get_values(),
+                ["B"]
+                )
+            )
 
     @pytest.mark.input
     # Verifies multiple select seach funtionality properly
@@ -230,7 +311,15 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.multiple_select_test.deselect_all()
-        assert input_page.entity1.multiple_select_test.search_get_list("A") == ["A"]
+        self.assert_util(
+            input_page.entity1.multiple_select_test.search_get_list("A"),
+            ["A"],
+            left_args={'value': 'A'},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.multiple_select_test.search_get_list("A"),
+                ["A"]
+                )
+            )
 
     @pytest.mark.input
     # Verifies default value of example checkbox in example input one
@@ -259,7 +348,14 @@ class TestInput(UccTester):
     def test_example_input_one_default_value_example_radio(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.example_radio.get_value() == "Yes"
+        self.assert_util(
+            input_page.entity1.example_radio.get_value,
+            "Yes",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.example_radio.get_value(),
+                "Yes"
+                )
+            )
 
     @pytest.mark.input
     # Verifies selected value of example radio in example input one
@@ -267,7 +363,14 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_radio.select("No")
-        assert input_page.entity1.example_radio.get_value() == "No"
+        self.assert_util(
+            input_page.entity1.example_radio.get_value,
+            "No",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.example_radio.get_value(),
+                "No"
+                )
+            )
 
     @pytest.mark.input
     # Verifies required field interval in example input one
@@ -275,7 +378,15 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.name.set_value("test_name")
-        assert input_page.entity1.save(expect_error=True) == r"Field Interval is required"
+        self.assert_util(
+            input_page.entity1.save,
+            r"Field Interval is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Field Interval is required"
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -285,7 +396,15 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.name.set_value("test_name")
         input_page.entity1.interval.set_value("abc")
-        assert input_page.entity1.save(expect_error=True) == r"Interval must be an integer."
+        self.assert_util(
+            input_page.entity1.save,
+            r"Interval must be an integer.",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Interval must be an integer."
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -296,7 +415,15 @@ class TestInput(UccTester):
         input_page.entity1.name.set_value("test_name")
         input_page.entity1.interval.set_value("120")
         input_page.entity1.index.cancel_selected_value()
-        assert input_page.entity1.save(expect_error=True) == r"Field Index is required"
+        self.assert_util(
+            input_page.entity1.save,
+            r"Field Index is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Field Index is required"
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -305,7 +432,14 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         default_index = "default"
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.index.get_value() == default_index
+        self.assert_util(
+            input_page.entity1.index.get_value,
+            default_index,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.index.get_value(),
+                default_index
+                )
+            )
 
     @pytest.mark.input
     # Verifies required field Salesforce Account in example input one
@@ -314,7 +448,15 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.name.set_value("test_name")
         input_page.entity1.interval.set_value("120")
-        assert input_page.entity1.save(expect_error=True) == r"Field Example Account is required"
+        self.assert_util(
+            input_page.entity1.save,
+            r"Field Example Account is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Field Example Account is required"
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -325,7 +467,15 @@ class TestInput(UccTester):
         input_page.entity1.name.set_value("test_name")
         input_page.entity1.interval.set_value("120")
         input_page.entity1.example_account.select("test_input")
-        assert input_page.entity1.save(expect_error=True) == r"Field Object is required"
+        self.assert_util(
+            input_page.entity1.save,
+            r"Field Object is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Field Object is required"
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -337,7 +487,15 @@ class TestInput(UccTester):
         input_page.entity1.interval.set_value("120")
         input_page.entity1.example_account.select("test_input")
         input_page.entity1.object.set_value("test_object")
-        assert input_page.entity1.save(expect_error=True) == r"Field Object Fields is required"
+        self.assert_util(
+            input_page.entity1.save,
+            r"Field Object Fields is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Field Object Fields is required"
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -351,7 +509,15 @@ class TestInput(UccTester):
         input_page.entity1.object.set_value("test_object")
         input_page.entity1.object_fields.set_value("test_object_field")
         input_page.entity1.order_by.clear_text()
-        assert input_page.entity1.save(expect_error=True) == r"Field Order By is required"
+        self.assert_util(
+            input_page.entity1.save,
+            r"Field Order By is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Field Order By is required"
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -360,7 +526,29 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         default_order_by = "LastModifiedDate"
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.order_by.get_value() == default_order_by
+        self.assert_util(
+            input_page.entity1.order_by.get_value,
+            default_order_by,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.order_by.get_value(),
+                default_order_by
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies help text for the field name
+    def test_example_input_one_help_text_order_by(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input One")
+        help_text = input_page.entity1.order_by.get_help_text()
+        self.assert_util(
+            help_text ,
+            'The datetime field by which to query results in ascending order for indexing.',
+            msg="Found : {} Expected : {}".format(
+                help_text ,
+                'The datetime field by which to query results in ascending order for indexing.'
+                )
+            )
 
     @pytest.mark.input
     # Verifies whether adding wrong format, Query Start Date field displays validation error
@@ -373,7 +561,15 @@ class TestInput(UccTester):
         input_page.entity1.object.set_value("test_object")
         input_page.entity1.object_fields.set_value("test_object_field")
         input_page.entity1.query_start_date.set_value("2020/01/01")
-        assert input_page.entity1.save(expect_error=True) == r"Invalid date and time format"
+        self.assert_util(
+            input_page.entity1.save,
+            r"Invalid date and time format",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                r"Invalid date and time format"
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -382,7 +578,14 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         default_limit = "1000"
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.limit.get_value() == default_limit
+        self.assert_util(
+            input_page.entity1.limit.get_value,
+            default_limit,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.limit.get_value(),
+                default_limit
+                )
+            )
 
     @pytest.mark.input
     # Verifies whether the help link redirects to the correct URL
@@ -390,7 +593,14 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         go_to_link = "https://docs.splunk.com/Documentation"
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.help_link.go_to_link() == go_to_link
+        self.assert_util(
+            input_page.entity1.help_link.go_to_link(),
+            go_to_link,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.help_link.go_to_link(),
+                go_to_link
+                )
+            )
 
 
     ###################################
@@ -411,14 +621,29 @@ class TestInput(UccTester):
         input_page.entity1.object_fields.set_value("test_field")
         input_page.entity1.query_start_date.set_value("2020-12-11T20:00:32.000z")
         assert input_page.entity1.save()
-        assert input_page.table.get_table()["Test_Add"] == { 
+        self.assert_util(
+            input_page.table.get_table()["Test_Add"] ,
+            {
                 'name': 'Test_Add', 
                 'account': 'test_input',
                 'interval': '90',
                 'index': 'default',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            }
+            },
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_table()["Test_Add"] ,
+                {
+                    'name': 'Test_Add', 
+                    'account': 'test_input',
+                    'interval': '90',
+                    'index': 'default',
+                    'status': 'Enabled',
+                    'actions': 'Edit | Clone | Delete'
+                    }
+                )
+            )
+
         url = input_page._get_input_endpoint()
 
     @pytest.mark.input
@@ -452,7 +677,14 @@ class TestInput(UccTester):
         backend_stanza = input_page.backend_conf.get_stanza("example_input_one://Test_Add")
         for each_key, each_value in value_to_test.items():
             assert each_key in backend_stanza
-            assert each_value == backend_stanza[each_key]
+            self.assert_util(
+                each_value ,
+                backend_stanza[each_key],
+                msg="Found : {} Expected : {}".format(
+                    each_value ,
+                    backend_stanza[each_key]
+                    )
+                )
 
     @pytest.mark.input
     # Verifies the frontend uneditable fields at time of edit of the example input one entity
@@ -479,15 +711,29 @@ class TestInput(UccTester):
         input_page.entity1.limit.set_value("2000")
         input_page.entity1.query_start_date.set_value("2020-20-20T20:20:20.000z")
         assert input_page.entity1.save()
-        assert input_page.table.get_table()["dummy_input_one"] == { 
+        self.assert_util(
+            input_page.table.get_table()["dummy_input_one"] ,
+            {
                 'name': "dummy_input_one", 
                 'account': 'test_input',
                 'interval': '3600',
                 'index': 'main',
                 'status': 'Enabled',
-                'actions': 'Edit | Clone | Delete',
-            }
-    
+                'actions': 'Edit | Clone | Delete'
+            },
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_table()["dummy_input_one"] ,
+                {
+                    'name': "dummy_input_one", 
+                    'account': 'test_input',
+                    'interval': '3600',
+                    'index': 'main',
+                    'status': 'Enabled',
+                    'actions': 'Edit | Clone | Delete'
+                    }
+                )
+            )
+
     @pytest.mark.input
     # Verifies the backend edit functionality of the example input one entity
     def test_example_input_one_edit_backend_validation(self, ucc_smartx_configs, add_input_one):
@@ -523,27 +769,118 @@ class TestInput(UccTester):
             }
         backend_stanza = input_page.backend_conf.get_stanza("example_input_one://dummy_input_one")
         for each_key, each_value in value_to_test.items():
-            assert each_key in backend_stanza
-            assert each_value == backend_stanza[each_key]
+            self.assert_util(
+                each_value,
+                backend_stanza[each_key],
+                "in",
+                msg="{} should be present un {}".format(
+                    each_value ,
+                    backend_stanza[each_key]
+                    )
+                )
 
     @pytest.mark.input
     # Verifies the frontend default fields at time of clone for example input one entity
     def test_example_input_one_clone_default_values(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.clone_row("dummy_input_one")
-        assert input_page.entity1.name.get_value() == ""
+        self.assert_util(
+            input_page.entity1.name.get_value,
+            "",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.name.get_value(),
+                ""
+                )
+            )
         assert input_page.entity1.example_checkbox.is_checked()
-        assert input_page.entity1.example_radio.get_value() == "Yes"
-        assert input_page.entity1.single_select_group_test.get_value() == "Two"
-        assert input_page.entity1.multiple_select_test.get_values() == ["A", "B"]
-        assert input_page.entity1.interval.get_value() == "90"
-        assert input_page.entity1.index.get_value() == "default"
-        assert input_page.entity1.example_account.get_value() == "test_input"
-        assert input_page.entity1.object.get_value() == "test_object"
-        assert input_page.entity1.object_fields.get_value() == "test_field"
-        assert input_page.entity1.order_by.get_value() == "LastModifiedDate"
-        assert input_page.entity1.query_start_date.get_value() == "2020-12-11T20:00:32.000z"
-        assert input_page.entity1.limit.get_value() == "1000"
+        self.assert_util(
+            input_page.entity1.example_radio.get_value,
+            "Yes",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.example_radio.get_value(),
+                "Yes"
+                )
+            )
+        self.assert_util(
+            input_page.entity1.single_select_group_test.get_value,
+            "Two",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.single_select_group_test.get_value(),
+                "Two"
+                )
+            )
+        self.assert_util(
+            input_page.entity1.multiple_select_test.get_values,
+            ["A", "B"],
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.multiple_select_test.get_values(),
+                ["A", "B"]
+                )
+            )
+        self.assert_util(
+            input_page.entity1.interval.get_value,
+            "90",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.interval.get_value(),
+                "90"
+                )
+            )
+        self.assert_util(
+            input_page.entity1.index.get_value,
+            "default",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.index.get_value(),
+                "default"
+                )
+            )
+        self.assert_util(
+            input_page.entity1.example_account.get_value,
+            "test_input",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.example_account.get_value(),
+                "test_input"
+                )
+            )
+        self.assert_util(
+            input_page.entity1.object.get_value,
+            "test_object",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.object.get_value(),
+                "test_object"
+                )
+            )
+        self.assert_util(
+            input_page.entity1.object_fields.get_value,
+            "test_field",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.object_fields.get_value(),
+                "test_field"
+                )
+            )
+        self.assert_util(
+            input_page.entity1.order_by.get_value,
+            "LastModifiedDate",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.order_by.get_value(),
+                "LastModifiedDate"
+                )
+            )
+        self.assert_util(
+            input_page.entity1.query_start_date.get_value,
+            "2020-12-11T20:00:32.000z",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.query_start_date.get_value(),
+                "2020-12-11T20:00:32.000z"
+                )
+            )
+        self.assert_util(
+            input_page.entity1.limit.get_value,
+            "1000",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.limit.get_value(),
+                "1000"
+                )
+            )
 
     @pytest.mark.input
     # Verifies the frontend clone functionality of the example input one entity
@@ -554,14 +891,28 @@ class TestInput(UccTester):
         input_page.entity1.interval.set_value("180")
         input_page.entity1.limit.set_value("500")
         assert input_page.entity1.save()
-        assert input_page.table.get_table()["Clone_Test"] == { 
+        self.assert_util(
+            input_page.table.get_table()["Clone_Test"] ,
+            {
                 'name': 'Clone_Test', 
                 'account': 'test_input',
                 'interval': '180',
                 'index': 'default',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            }
+            },
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_table()["Clone_Test"] ,
+                {
+                    'name': 'Clone_Test', 
+                    'account': 'test_input',
+                    'interval': '180',
+                    'index': 'default',
+                    'status': 'Enabled',
+                    'actions': 'Edit | Clone | Delete'
+                    }
+                )
+            )
 
     @pytest.mark.input
     # Verifies the backend clone functionality of the example input one entity
@@ -589,8 +940,15 @@ class TestInput(UccTester):
             }
         backend_stanza = input_page.backend_conf.get_stanza("example_input_one://Clone_Test")
         for each_key, each_value in value_to_test.items():
-            assert each_key in backend_stanza
-            assert each_value == backend_stanza[each_key]
+            self.assert_util(
+                each_value ,
+                backend_stanza[each_key],
+                "in",
+                msg="{} should be present in {}".format(
+                    each_value,
+                    backend_stanza[each_key]
+                    )
+                )
 
     @pytest.mark.input
     # Verifies the frontend delete functionlity
@@ -598,7 +956,15 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.input_status_toggle("dummy_input_one", enable=False)
         input_page.table.delete_row("dummy_input_one")
-        assert "dummy_input_one" not in input_page.table.get_table()
+        self.assert_util(
+            "dummy_input_one",
+            input_page.table.get_table(),
+            "not in",
+            msg="{} should not be present in {}".format(
+                "dummy_input_one",
+                input_page.table.get_table()
+                )
+            )
 
     @pytest.mark.input
     # Verifies the backend delete functionlity
@@ -606,7 +972,15 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.input_status_toggle("dummy_input_one", enable=False)
         input_page.table.delete_row("dummy_input_one")
-        assert "example_input_one://dummy_input_one" not in input_page.backend_conf.get_all_stanzas().keys()
+        self.assert_util(
+            "example_input_one://dummy_input_one",
+            input_page.backend_conf.get_all_stanzas().keys(),
+            "not in",
+            msg="{} should not be present in {}".format(
+                "example_input_one://dummy_input_one",
+                input_page.backend_conf.get_all_stanzas().keys()
+                )
+            )
 
     @pytest.mark.input
     # Verifies close functionality at time of add
@@ -669,7 +1043,15 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         input_name = "dummy_input_one"
         input_page.entity1.name.set_value(input_name)
-        assert input_page.entity1.save(expect_error=True) == "Name {} is already in use".format(input_name)
+        self.assert_util(
+            input_page.entity1.save,
+            "Name {} is already in use".format(input_name),
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                "Name {} is already in use".format(input_name)
+                )
+            )
         assert input_page.entity1.close_error()
 
     @pytest.mark.input
@@ -679,9 +1061,88 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_one")
         input_name = "dummy_input_one"
         input_page.entity1.name.set_value(input_name)
-        assert input_page.entity1.save(expect_error=True) == "Name {} is already in use".format(input_name)
+        self.assert_util(
+            input_page.entity1.save,
+            "Name {} is already in use".format(input_name),
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.save(expect_error=True),
+                "Name {} is already in use".format(input_name)
+                )
+            )
         assert input_page.entity1.close_error()
 
+    @pytest.mark.input
+    # Verifies the title of the 'Add Entity'
+    def test_example_input_one_add_valid_title(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input One")
+        self.assert_util(
+            input_page.entity1.title.container.get_attribute('textContent').strip(),
+            "Add Example Input One",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.title.container.get_attribute('textContent').strip(),
+                "Add Example Input One"
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies the title of the 'Edit Entity'
+    def test_example_input_one_edit_valid_title(self, ucc_smartx_configs, add_input_one):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.edit_row("dummy_input_one")
+        self.assert_util(
+            input_page.entity1.title.container.get_attribute('textContent').strip(),
+            "Update Example Input One",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.title.container.get_attribute('textContent').strip(),
+                "Update Example Input One"
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies the title of the 'Clone Entity'
+    def test_example_input_one_clone_valid_title(self, ucc_smartx_configs, add_input_one):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.clone_row("dummy_input_one")
+        self.assert_util(
+            input_page.entity1.title.container.get_attribute('textContent').strip(),
+            "Clone Example Input One",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.title.container.get_attribute('textContent').strip(),
+                "Clone Example Input One"
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies the title of the 'Delete Entity'
+    def test_example_input_one_delete_valid_title(self, ucc_smartx_configs, add_input_one):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.delete_row("dummy_input_one", prompt_msg=True)
+        self.assert_util(
+            input_page.entity1.title.container.get_attribute('textContent').strip(),
+            "Delete Confirmation",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity1.title.container.get_attribute('textContent').strip(),
+                "Delete Confirmation"
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies the prompt message of the 'Delete Entity'
+    def test_example_input_one_delete_valid_prompt_message(self, ucc_smartx_configs, add_input_one):
+        input_page = InputPage(ucc_smartx_configs)
+        input_name = "dummy_input_one"
+        prompt_message = input_page.table.delete_row("dummy_input_one", prompt_msg=True)
+        self.assert_util(
+            prompt_message ,
+            'Are you sure you want to delete "{}" ?'.format(input_name),
+            msg="Found : {} Expected : {}".format(
+                prompt_message ,
+                'Are you sure you want to delete "{}" ?'.format(input_name)
+                )
+            )
+    
 
 
     ############################
@@ -693,55 +1154,124 @@ class TestInput(UccTester):
     def test_inputs_displayed_columns(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         header_list = ["", "Name", "Account", "Interval", "Index", "Status", "Actions"]
-        assert list(input_page.table.get_headers()) == header_list
+        self.assert_util(
+            list(input_page.table.get_headers()),
+            header_list,
+            msg="Found : {} Expected : {}".format(
+                list(input_page.table.get_headers()),
+                header_list
+                )
+            )
 
     @pytest.mark.input
     # Verifies input list dropdown
     def test_inputs_create_new_input_list_values(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         create_new_input_list = ["Example Input One", "Example Input Two"]
-        assert input_page.create_new_input.get_inputs_list() == create_new_input_list
+        self.assert_util(
+            input_page.create_new_input.get_inputs_list,
+            create_new_input_list,
+            msg="Found : {} Expected : {}".format(
+                input_page.create_new_input.get_inputs_list(),
+                create_new_input_list
+                )
+            )
 
     @pytest.mark.input
     # Verifies input type filter list
     def test_inputs_input_type_list_values(self, ucc_smartx_configs, add_input_one, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         type_filter_list = ["All", "Example Input One", "Example Input Two"]
-        assert input_page.type_filter.get_input_type_list() == type_filter_list
+        self.assert_util(
+            input_page.type_filter.get_input_type_list(),
+            type_filter_list,
+            msg="Found : {} Expected : {}".format(
+                input_page.type_filter.get_input_type_list(),
+                type_filter_list
+                )
+            )
         input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)
-        assert input_page.table.get_row_count() == 1
+        self.assert_util(
+            input_page.table.get_row_count,
+            1,
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_row_count(),
+                1
+                )
+            )
         input_page.type_filter.select_input_type("Example Input Two")
-        assert input_page.table.get_row_count() == 1
+        self.assert_util(
+            input_page.table.get_row_count,
+            1,
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_row_count(),
+                1
+                )
+            )
 
     @pytest.mark.input
     # Verifies enabled input should not delete
     def test_inputs_delete_enabled_input(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
-        assert input_page.table.delete_row("dummy_input_one", prompt_msg=True) == r"Can't delete enabled input"
+        self.assert_util(
+            input_page.table.delete_row,
+            r"Can't delete enabled input",
+            left_args={'name': "dummy_input_one"},
+            msg="Found : {} Expected : {}".format(
+                input_page.table.delete_row("dummy_input_one"),
+                r"Can't delete enabled input"
+                )
+            )
 
     @pytest.mark.input
     # Verifies pagination list
     def test_inputs_pagination_list(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
-        assert input_page.pagination.get_pagination_list() == ['10 Per Page','25 Per Page','50 Per Page']
+        self.assert_util(
+            input_page.pagination.get_pagination_list(),
+            ['10 Per Page','25 Per Page','50 Per Page'],
+            msg="Found : {} Expected : {}".format(
+                input_page.pagination.get_pagination_list(),
+                ['10 Per Page','25 Per Page','50 Per Page']
+                )
+            )
     
 
     @pytest.mark.input
     # Verifies the expand functionality of the inputs table
     def test_inputs_more_info(self, ucc_smartx_configs, add_input_one):
         input_page = InputPage(ucc_smartx_configs)
-        assert input_page.table.get_more_info("dummy_input_one") == {
-            'Name': 'dummy_input_one', 
-            'Interval': '90',
-            'Index': 'default',
-            'Status': 'Enabled',
-            'Example Account': 'test_input',
-            'Object': 'test_object',
-            'Object Fields': 'test_field',
-            'Order By': 'LastModifiedDate',
-            'Query Start Date': '2020-12-11T20:00:32.000z',
-            'Limit': '1000',
-       }
+        self.assert_util(
+            input_page.table.get_more_info,
+            {
+                'Name': 'dummy_input_one', 
+                'Interval': '90',
+                'Index': 'default',
+                'Status': 'Enabled',
+                'Example Account': 'test_input',
+                'Object': 'test_object',
+                'Object Fields': 'test_field',
+                'Order By': 'LastModifiedDate',
+                'Query Start Date': '2020-12-11T20:00:32.000z',
+                'Limit': '1000'
+                },
+            left_args={'name': 'dummy_input_one'},
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_more_info("dummy_input_one"),
+                {
+                    'Name': 'dummy_input_one', 
+                    'Interval': '90',
+                    'Index': 'default',
+                    'Status': 'Enabled',
+                    'Example Account': 'test_input',
+                    'Object': 'test_object',
+                    'Object Fields': 'test_field',
+                    'Order By': 'LastModifiedDate',
+                    'Query Start Date': '2020-12-11T20:00:32.000z',
+                    'Limit': '1000'
+                    }
+                )
+            )
 
     @pytest.mark.input
     # Verifies the enable and disable functionality of the input
@@ -755,7 +1285,14 @@ class TestInput(UccTester):
     def test_inputs_filter_functionality_negative(self, ucc_smartx_configs, add_input_one, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.set_filter("hello")
-        assert input_page.table.get_count_title() == "{} Inputs".format(input_page.table.get_row_count())
+        self.assert_util(
+            input_page.table.get_count_title,
+            "{} Inputs".format(input_page.table.get_row_count()),
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_count_title(),
+                "{} Inputs".format(input_page.table.get_row_count())
+                )
+            )
         input_page.table.clean_filter()
 
     @pytest.mark.input
@@ -763,14 +1300,28 @@ class TestInput(UccTester):
     def test_inputs_filter_functionality_positive(self, ucc_smartx_configs, add_input_one, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.set_filter("dummy")
-        assert input_page.table.get_count_title() == "{} Inputs".format(input_page.table.get_row_count())
+        self.assert_util(
+            input_page.table.get_count_title,
+            "{} Inputs".format(input_page.table.get_row_count()),
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_count_title(),
+                "{} Inputs".format(input_page.table.get_row_count())
+                )
+            )
         input_page.table.clean_filter()
 
     @pytest.mark.input
     # Verifies count on table
     def test_inputs_count(self, ucc_smartx_configs, add_input_one, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
-        assert input_page.table.get_count_title() == "{} Inputs".format(input_page.table.get_row_count())
+        self.assert_util(
+            input_page.table.get_count_title,
+            "{} Inputs".format(input_page.table.get_row_count()),
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_count_title(),
+                "{} Inputs".format(input_page.table.get_row_count())
+                )
+            )
     
     @pytest.mark.input
     # Verifies sorting functionality for name column
@@ -780,10 +1331,24 @@ class TestInput(UccTester):
         input_page.table.sort_column("Name")
         sort_order = input_page.table.get_sort_order()
         column_values = list(input_page.table.get_column_values("Name"))
-        column_values = list(str(item) for item in column_values)
+        column_values = list(str(item)for item in column_values)
         sorted_values = sorted(column_values , key = str.lower)
-        assert sort_order["header"].lower() == "name"
-        assert column_values==sorted_values
+        self.assert_util(
+            sort_order["header"].lower(),
+            "name",
+            msg="Found : {} Expected : {}".format(
+                sort_order["header"].lower(),
+                "name"
+                )
+            )
+        self.assert_util(
+            column_values,
+            sorted_values,
+            msg="Found : {} Expected : {}".format(
+                column_values,
+                sorted_values
+                )
+            )
         assert sort_order["ascending"]
 
     @pytest.mark.input
@@ -796,6 +1361,40 @@ class TestInput(UccTester):
         assert input_page.table.switch_to_prev()
         assert input_page.table.switch_to_next()
 
+    @pytest.mark.input
+    # Verifies the title and description of the page
+    def test_inputs_title_and_description(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        self.assert_util(
+            input_page.title.wait_to_display,
+            "Inputs",
+            msg="Found : {} Expected : {}".format(
+                input_page.title.wait_to_display(),
+                "Inputs"
+                )
+            )
+        self.assert_util(
+            input_page.description.wait_to_display,
+            "Manage your data inputs",
+            msg="Found : {} Expected : {}".format(
+                input_page.description.wait_to_display(),
+                "Manage your data inputs"
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies the default number of rows in the table
+    def test_inputs_default_rows_in_table(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        self.assert_util(
+            input_page.table.get_row_count,
+            0,
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_row_count(),
+                0
+                )
+            )
+
     ##########################################
     #### TEST CASES FOR EXAMPLE INPUT TWO ####
     ##########################################
@@ -805,7 +1404,15 @@ class TestInput(UccTester):
     def test_example_input_two_required_field_name(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
-        assert input_page.entity2.save(expect_error=True) == r"Field Name is required"
+        self.assert_util(
+            input_page.entity2.save,
+            r"Field Name is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Field Name is required"
+                )
+            )
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -815,7 +1422,15 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input Two")
         name_value = "a"* 101
         input_page.entity2.name.set_value(name_value)
-        assert input_page.entity2.save(expect_error=True) == r"Length of input name should be between 1 and 100"
+        self.assert_util(
+            input_page.entity2.save,
+            r"Length of input name should be between 1 and 100",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Length of input name should be between 1 and 100"
+                )
+            )
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -824,7 +1439,15 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.name.set_value("$$test_name_two")
-        assert input_page.entity2.save(expect_error=True) == r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores."
+        self.assert_util(
+            input_page.entity2.save,
+            r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores."
+                )
+            )
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -833,7 +1456,15 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.name.set_value("test_name_two")
-        assert input_page.entity2.save(expect_error=True) == r"Field Interval is required"
+        self.assert_util(
+            input_page.entity2.save,
+            r"Field Interval is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Field Interval is required"
+                )
+            )
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -843,7 +1474,15 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.name.set_value("test_name_two")
         input_page.entity2.interval.set_value("abc")
-        assert input_page.entity2.save(expect_error=True) == r"Interval must be an integer."
+        self.assert_util(
+            input_page.entity2.save,
+            r"Interval must be an integer.",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Interval must be an integer."
+                )
+            )
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -854,7 +1493,15 @@ class TestInput(UccTester):
         input_page.entity2.name.set_value("test_name_two")
         input_page.entity2.interval.set_value("120")
         input_page.entity2.index.cancel_selected_value()
-        assert input_page.entity2.save(expect_error=True) == r"Field Index is required"
+        self.assert_util(
+            input_page.entity2.save,
+            r"Field Index is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Field Index is required"
+                )
+            )
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -863,7 +1510,14 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         default_index = "default"
         input_page.create_new_input.select("Example Input Two")
-        assert input_page.entity2.index.get_value() == default_index
+        self.assert_util(
+            input_page.entity2.index.get_value,
+            default_index,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.index.get_value(),
+                default_index
+                )
+            )
 
     @pytest.mark.input
     # Verifies required field Account in Example Input Two
@@ -872,7 +1526,15 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.name.set_value("test_name_two")
         input_page.entity2.interval.set_value("120")
-        assert input_page.entity2.save(expect_error=True) == r"Field Example Account is required"
+        self.assert_util(
+            input_page.entity2.save,
+            r"Field Example Account is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Field Example Account is required"
+                )
+            )
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -883,7 +1545,15 @@ class TestInput(UccTester):
         input_page.entity2.name.set_value("test_name_two")
         input_page.entity2.interval.set_value("120")
         input_page.entity2.example_account.select("test_input")
-        assert input_page.entity2.save(expect_error=True) == r"Field Example Multiple Select is required"
+        self.assert_util(
+            input_page.entity2.save,
+            r"Field Example Multiple Select is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Field Example Multiple Select is required"
+                )
+            )
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -892,7 +1562,14 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
         example_multiple_select_list = ["Option One", "Option Two"]
-        assert list(input_page.entity2.example_multiple_select.list_of_values()) == example_multiple_select_list
+        self.assert_util(
+            list(input_page.entity2.example_multiple_select.list_of_values()),
+            example_multiple_select_list,
+            msg="Found : {} Expected : {}".format(
+                list(input_page.entity2.example_multiple_select.list_of_values()),
+                example_multiple_select_list
+                )
+            )
 
     @pytest.mark.input
     # Verifies selected single value of Multiple Select Test dropdown in Example Input Two
@@ -902,7 +1579,14 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input Two")
         for each in selected_value:
             input_page.entity2.example_multiple_select.select(each)
-        assert input_page.entity2.example_multiple_select.get_values() == selected_value
+        self.assert_util(
+            input_page.entity2.example_multiple_select.get_values,
+            selected_value,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.example_multiple_select.get_values(),
+                selected_value
+                )
+            )
 
     @pytest.mark.input
     # Verifies selected multiple values of Multiple Select Test dropdown in Example Input Two
@@ -912,7 +1596,29 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input Two")
         for each in selected_values:
             input_page.entity2.example_multiple_select.select(each)
-        assert input_page.entity2.example_multiple_select.get_values() == selected_values
+        self.assert_util(
+            input_page.entity2.example_multiple_select.get_values,
+            selected_values,
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.example_multiple_select.get_values(),
+                selected_values
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies help text for the field name
+    def test_example_input_two_help_text_example_multiple_select(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input Two")
+        help_text = input_page.entity2.example_multiple_select.get_help_text()
+        self.assert_util(
+            help_text ,
+            'This is an example multipleSelect for input two entity',
+            msg="Found : {} Expected : {}".format(
+                help_text ,
+                'This is an example multipleSelect for input two entity'
+                )
+            )
 
     @pytest.mark.input
     # Verifies Check in example checkbox in Example Input Two
@@ -927,7 +1633,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.example_checkbox.check()
-        assert input_page.entity2.example_checkbox.uncheck()   
+        assert input_page.entity2.example_checkbox.uncheck()
 
     @pytest.mark.input
     # Verifies default value of example radio in Example Input Two
@@ -938,7 +1644,15 @@ class TestInput(UccTester):
         input_page.entity2.interval.set_value("120")
         input_page.entity2.example_account.select("test_input")
         input_page.entity2.example_multiple_select.select("Option One")
-        assert input_page.entity2.save(expect_error=True) == r"Field Example Radio is required"
+        self.assert_util(
+            input_page.entity2.save,
+            r"Field Example Radio is required",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Field Example Radio is required"
+                )
+            )
 
     @pytest.mark.input
     # Verifies default value of example radio in Example Input Two
@@ -946,7 +1660,14 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.example_radio.select("No")
-        assert input_page.entity2.example_radio.get_value() == "No"
+        self.assert_util(
+            input_page.entity2.example_radio.get_value,
+            "No",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.example_radio.get_value(),
+                "No"
+                )
+            )
 
     @pytest.mark.input
     # Verifies whether adding wrong format, Query Start Date field displays validation error
@@ -959,7 +1680,15 @@ class TestInput(UccTester):
         input_page.entity2.example_multiple_select.select("Option One")
         input_page.entity2.example_radio.select("Yes")
         input_page.entity2.query_start_date.set_value("2020/01/01")
-        assert input_page.entity2.save(expect_error=True) == r"Invalid date and time format"
+        self.assert_util(
+            input_page.entity2.save,
+            r"Invalid date and time format",
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                r"Invalid date and time format"
+                )
+            )
         assert input_page.entity2.close_error()
 
     ###################################
@@ -981,14 +1710,28 @@ class TestInput(UccTester):
         input_page.entity2.example_account.select("test_input")
         input_page.entity2.query_start_date.set_value("2020-12-11T20:00:32.000z")
         assert input_page.entity2.save()
-        assert input_page.table.get_table()["Test_Add"] == { 
+        self.assert_util(
+            input_page.table.get_table()["Test_Add"] ,
+            {
                 'name': 'Test_Add', 
                 'account': 'test_input',
                 'interval': '90',
                 'index': 'main',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            }
+            },
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_table()["Test_Add"] ,
+                { 
+                    'name': 'Test_Add', 
+                    'account': 'test_input',
+                    'interval': '90',
+                    'index': 'main',
+                    'status': 'Enabled',
+                    'actions': 'Edit | Clone | Delete'
+                    }
+                )
+            )
         url = input_page._get_input_endpoint()
 
     @pytest.mark.input
@@ -1018,8 +1761,15 @@ class TestInput(UccTester):
             }
         backend_stanza = input_page.backend_conf.get_stanza("example_input_two://Test_Add")
         for each_key, each_value in value_to_test.items():
-            assert each_key in backend_stanza
-            assert each_value == backend_stanza[each_key]
+            self.assert_util(
+                each_value ,
+                backend_stanza[each_key],
+                "in",
+                msg="{} should be present in {}".format(
+                    each_value ,
+                    backend_stanza[each_key]
+                    )
+                )
 
     @pytest.mark.input
     # Verifies the frontend uneditable fields at time of edit of the Example Input Two entity
@@ -1040,14 +1790,28 @@ class TestInput(UccTester):
         input_page.entity2.example_account.select("test_input")
         input_page.entity2.query_start_date.set_value("2020-20-20T20:20:20.000z")
         assert input_page.entity2.save()
-        assert input_page.table.get_table()["dummy_input_two"] == { 
+        self.assert_util(
+            input_page.table.get_table()["dummy_input_two"] ,
+            {
                 'name': "dummy_input_two", 
                 'account': 'test_input',
                 'interval': '3600',
                 'index': 'main',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            }
+            },
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_table()["dummy_input_two"] ,
+                {
+                    'name': "dummy_input_two", 
+                    'account': 'test_input',
+                    'interval': '3600',
+                    'index': 'main',
+                    'status': 'Enabled',
+                    'actions': 'Edit | Clone | Delete',
+                    }
+                )
+            )
     
     @pytest.mark.input
     # Verifies the backend edit functionality of the Example Input Two entity
@@ -1073,22 +1837,78 @@ class TestInput(UccTester):
             }
         backend_stanza = input_page.backend_conf.get_stanza("example_input_two://dummy_input_two")
         for each_key, each_value in value_to_test.items():
-            assert each_key in backend_stanza
-            assert each_value == backend_stanza[each_key]
+            self.assert_util(
+                each_value ,
+                backend_stanza[each_key],
+                "in",
+                msg="{} should be present in {}".format(
+                    each_value ,
+                    backend_stanza[each_key]
+                    )
+                )
 
     @pytest.mark.input
     # Verifies the frontend default fields at time of clone for Example Input Two entity
     def test_example_input_two_clone_default_values(self, ucc_smartx_configs, add_input_two):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.clone_row("dummy_input_two")
-        assert input_page.entity2.name.get_value() == ""
+        self.assert_util(
+            input_page.entity2.name.get_value,
+            "",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.name.get_value(),
+                ""
+                )
+            )
         assert input_page.entity2.example_checkbox.is_checked()
-        assert input_page.entity2.example_radio.get_value() == "No"
-        assert input_page.entity2.example_multiple_select.get_values() == ["Option One", "Option Two"]
-        assert input_page.entity2.interval.get_value() == "100"
-        assert input_page.entity2.index.get_value() == "main"
-        assert input_page.entity2.example_account.get_value() == "test_input"
-        assert input_page.entity2.query_start_date.get_value() == "2016-10-10T12:10:15.000z"
+        self.assert_util(
+            input_page.entity2.example_radio.get_value,
+            "No",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.example_radio.get_value(),
+                "No"
+                )
+            )
+        self.assert_util(
+            input_page.entity2.example_multiple_select.get_values,
+            ["Option One", "Option Two"],
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.example_multiple_select.get_values(),
+                ["Option One", "Option Two"]
+                )
+            )
+        self.assert_util(
+            input_page.entity2.interval.get_value,
+            "100",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.interval.get_value(),
+                "100"
+                )
+            )
+        self.assert_util(
+            input_page.entity2.index.get_value,
+            "main",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.index.get_value(),
+                "main"
+                )
+            )
+        self.assert_util(
+            input_page.entity2.example_account.get_value,
+            "test_input",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.example_account.get_value(),
+                "test_input"
+                )
+            )
+        self.assert_util(
+            input_page.entity2.query_start_date.get_value,
+            "2016-10-10T12:10:15.000z",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.query_start_date.get_value(),
+                "2016-10-10T12:10:15.000z"
+                )
+            )
 
     @pytest.mark.input
     # Verifies the frontend clone functionality of the Example Input Two entity
@@ -1098,14 +1918,28 @@ class TestInput(UccTester):
         input_page.entity2.name.set_value("Clone_Test")
         input_page.entity2.interval.set_value("180")
         assert input_page.entity2.save()
-        assert input_page.table.get_table()["Clone_Test"] == { 
+        self.assert_util(
+            input_page.table.get_table()["Clone_Test"] ,
+            {
                 'name': 'Clone_Test', 
                 'account': 'test_input',
                 'interval': '180',
                 'index': 'main',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            }
+            },
+            msg="Found : {} Expected : {}".format(
+                input_page.table.get_table()["Clone_Test"] ,
+                {
+                    'name': 'Clone_Test', 
+                    'account': 'test_input',
+                    'interval': '180',
+                    'index': 'main',
+                    'status': 'Enabled',
+                    'actions': 'Edit | Clone | Delete'
+                    }
+                )
+            )
 
     @pytest.mark.input
     # Verifies the backend clone functionality of the Example Input Two entity
@@ -1127,8 +1961,15 @@ class TestInput(UccTester):
             }
         backend_stanza = input_page.backend_conf.get_stanza("example_input_two://Clone_Test")
         for each_key, each_value in value_to_test.items():
-            assert each_key in backend_stanza
-            assert each_value == backend_stanza[each_key]
+            self.assert_util(
+                each_value ,
+                backend_stanza[each_key],
+                "in",
+                msg="{} should be present in {}".format(
+                    each_value ,
+                    backend_stanza[each_key]
+                    )
+                )
 
     @pytest.mark.input
     # Verifies the frontend delete functionlity
@@ -1136,7 +1977,15 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.input_status_toggle("dummy_input_two", enable=False)
         input_page.table.delete_row("dummy_input_two")
-        assert "dummy_input_two" not in input_page.table.get_table()
+        self.assert_util(
+                "dummy_input_two",
+                input_page.table.get_table,
+                "not in",
+                msg="{} should not be present in {}".format(
+                    "dummy_input_two",
+                    input_page.table.get_table()
+                    )
+                )
 
     @pytest.mark.input
     # Verifies the backend delete functionlity
@@ -1144,7 +1993,15 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.input_status_toggle("dummy_input_two", enable=False)
         input_page.table.delete_row("dummy_input_two")
-        assert "example_input_two://dummy_input_two" not in input_page.backend_conf.get_all_stanzas().keys()
+        self.assert_util(
+                "example_input_two://dummy_input_two",
+                input_page.backend_conf.get_all_stanzas().keys(),
+                "not in",
+                msg="{} should not be present in {}".format(
+                    "example_input_two://dummy_input_two",
+                    input_page.backend_conf.get_all_stanzas().keys()
+                    )
+                )
 
     @pytest.mark.input
     # Verifies close functionality at time of add
@@ -1207,7 +2064,15 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input Two")
         input_name = "dummy_input_two"
         input_page.entity2.name.set_value(input_name)
-        assert input_page.entity2.save(expect_error=True) == "Name {} is already in use".format(input_name)
+        self.assert_util(
+            input_page.entity2.save,
+            "Name {} is already in use".format(input_name),
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                "Name {} is already in use".format(input_name)
+                )
+            )
         assert input_page.entity2.close_error()
 
     @pytest.mark.input
@@ -1217,5 +2082,85 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_two")
         input_name = "dummy_input_two"
         input_page.entity2.name.set_value(input_name)
-        assert input_page.entity2.save(expect_error=True) == "Name {} is already in use".format(input_name)
+        self.assert_util(
+            input_page.entity2.save,
+            "Name {} is already in use".format(input_name),
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.save(expect_error=True),
+                "Name {} is already in use".format(input_name)
+                )
+            )
         assert input_page.entity2.close_error()
+
+
+    @pytest.mark.input
+    # Verifies the title of the 'Add Entity'
+    def test_example_input_two_add_valid_title(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.create_new_input.select("Example Input Two")
+        self.assert_util(
+            input_page.entity2.title.container.get_attribute('textContent').strip(),
+            "Add Example Input Two",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.title.container.get_attribute('textContent').strip(),
+                "Add Example Input Two"
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies the title of the 'Edit Entity'
+    def test_example_input_two_edit_valid_title(self, ucc_smartx_configs, add_input_two):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.edit_row("dummy_input_two")
+        self.assert_util(
+            input_page.entity2.title.container.get_attribute('textContent').strip(),
+            "Update Example Input Two",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.title.container.get_attribute('textContent').strip(),
+                "Update Example Input Two"
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies the title of the 'Clone Entity'
+    def test_example_input_two_clone_valid_title(self, ucc_smartx_configs, add_input_two):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.clone_row("dummy_input_two")
+        self.assert_util(
+            input_page.entity2.title.container.get_attribute('textContent').strip(),
+            "Clone Example Input Two",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.title.container.get_attribute('textContent').strip(),
+                "Clone Example Input Two"
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies the title of the 'Delete Entity'
+    def test_example_input_two_delete_valid_title(self, ucc_smartx_configs, add_input_two):
+        input_page = InputPage(ucc_smartx_configs)
+        input_page.table.delete_row("dummy_input_two", prompt_msg=True)
+        self.assert_util(
+            input_page.entity2.title.container.get_attribute('textContent').strip(),
+            "Delete Confirmation",
+            msg="Found : {} Expected : {}".format(
+                input_page.entity2.title.container.get_attribute('textContent').strip(),
+                "Delete Confirmation"
+                )
+            )
+
+    @pytest.mark.input
+    # Verifies the prompt message of the 'Delete Entity'
+    def test_example_input_two_delete_valid_prompt_message(self, ucc_smartx_configs, add_input_two):
+        input_page = InputPage(ucc_smartx_configs)
+        input_name = "dummy_input_two"
+        prompt_message = input_page.table.delete_row("dummy_input_two", prompt_msg=True)
+        self.assert_util(
+            prompt_message ,
+            'Are you sure you want to delete "{}" ?'.format(input_name),
+            msg="Found : {} Expected : {}".format(
+                prompt_message ,
+                'Are you sure you want to delete "{}" ?'.format(input_name)
+                )
+            )

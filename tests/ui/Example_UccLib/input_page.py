@@ -1,18 +1,20 @@
 
-from ucc_smartx.pages.page import Page
-from ucc_smartx.components.base_component import Selector
-from ucc_smartx.components.tabs import Tab
-from ucc_smartx.components.dropdown import Dropdown
-from ucc_smartx.components.entity import Entity
-from ucc_smartx.components.controls.button import Button
-from ucc_smartx.components.controls.checkbox import Checkbox
-from ucc_smartx.components.controls.learn_more import LearnMore
-from ucc_smartx.components.controls.textbox import TextBox
-from ucc_smartx.components.controls.single_select import SingleSelect
-from ucc_smartx.components.controls.multi_select import MultiSelect
-from ucc_smartx.components.input_table import InputTable
-from ucc_smartx.backend_confs import ListBackendConf
-from ucc_smartx.components.controls.toggle import Toggle
+from pytest_splunk_addon_ui_smartx.pages.page import Page
+from pytest_splunk_addon_ui_smartx.components.base_component import Selector
+from pytest_splunk_addon_ui_smartx.components.base_component import BaseComponent
+from pytest_splunk_addon_ui_smartx.components.tabs import Tab
+from pytest_splunk_addon_ui_smartx.components.dropdown import Dropdown
+from pytest_splunk_addon_ui_smartx.components.entity import Entity
+from pytest_splunk_addon_ui_smartx.components.controls.button import Button
+from pytest_splunk_addon_ui_smartx.components.controls.checkbox import Checkbox
+from pytest_splunk_addon_ui_smartx.components.controls.learn_more import LearnMore
+from pytest_splunk_addon_ui_smartx.components.controls.textbox import TextBox
+from pytest_splunk_addon_ui_smartx.components.controls.single_select import SingleSelect
+from pytest_splunk_addon_ui_smartx.components.controls.multi_select import MultiSelect
+from pytest_splunk_addon_ui_smartx.components.controls.message import Message
+from pytest_splunk_addon_ui_smartx.components.input_table import InputTable
+from pytest_splunk_addon_ui_smartx.backend_confs import ListBackendConf
+from pytest_splunk_addon_ui_smartx.components.controls.toggle import Toggle
 from selenium.webdriver.common.by import By
 
 class ExampleInputOne(Entity):
@@ -27,23 +29,25 @@ class ExampleInputOne(Entity):
         add_btn = Button(browser, Selector(select=container.select + " .add-button"))
         entity_container = Selector(select=".modal-content")
         
-        super(ExampleInputOne, self).__init__(browser, entity_container, add_btn=add_btn, wait_for=10)
+        super(ExampleInputOne, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
-        self.name = TextBox(browser, Selector(by=By.NAME, select="name"))
+        self.name = TextBox(browser, Selector(select=".name"))
         self.example_checkbox = Checkbox(browser, Selector(select=entity_container.select + " .input_one_checkbox"))
         self.example_radio = Toggle(browser, Selector(select=entity_container.select + " .input_one_radio"))
         self.single_select_group_test = SingleSelect(browser, Selector(select=entity_container.select + " .singleSelectTest"))
         self.multiple_select_test = MultiSelect(browser, Selector(select=entity_container.select + " .multipleSelectTest"))
-        self.interval = TextBox(browser, Selector(by=By.NAME, select="interval"))
+        self.interval = TextBox(browser, Selector(select=".interval"))
         self.index = SingleSelect(browser, Selector(select=entity_container.select + " .index"))
         self.example_account = SingleSelect(browser, Selector(select=entity_container.select + " .account"))
-        self.object = TextBox(browser, Selector(by=By.NAME, select="object"))
-        self.object_fields = TextBox(browser, Selector(by=By.NAME, select="object_fields"))
-        self.order_by = TextBox(browser, Selector(by=By.NAME, select="order_by"))
-        self.query_start_date = TextBox(browser, Selector(by=By.NAME, select="start_date"))
-        self.limit = TextBox(browser, Selector(by=By.NAME, select="limit"))
+        self.object = TextBox(browser, Selector(select=".object"))
+        self.object_fields = TextBox(browser, Selector(select=".object_fields"))
+        self.order_by = TextBox(browser, Selector(select=".order_by"))
+        self.query_start_date = TextBox(browser, Selector(select=".start_date"))
+        self.limit = TextBox(browser, Selector(select=".limit"))
         self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
+        self.title = BaseComponent(browser, Selector(select= "h4.modal-title"))
+
 
 class ExampleInputTwo(Entity):
     """
@@ -57,34 +61,38 @@ class ExampleInputTwo(Entity):
         add_btn = Button(browser, Selector(select=container.select + " .add-button"))
         entity_container = Selector(select=".modal-content")
         
-        super(ExampleInputTwo, self).__init__(browser, entity_container, add_btn=add_btn, wait_for=10)
+        super(ExampleInputTwo, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
-        self.name = TextBox(browser, Selector(by=By.NAME, select="name"))
-        self.interval = TextBox(browser, Selector(by=By.NAME, select="interval"))
+        self.name = TextBox(browser, Selector(select=".name"))
+        self.interval = TextBox(browser, Selector(select=".interval"))
         self.index = SingleSelect(browser, Selector(select=entity_container.select + " .index"))
         self.example_account = SingleSelect(browser, Selector(select=entity_container.select + " .account"))
         self.example_multiple_select = MultiSelect(browser, Selector(select=entity_container.select + " .input_two_multiple_select"))
         self.example_checkbox = Checkbox(browser, Selector(select=entity_container.select + " .input_two_checkbox"))
         self.example_radio = Toggle(browser, Selector(select=entity_container.select + " .input_two_radio"))
-        self.query_start_date = TextBox(browser, Selector(by=By.NAME, select="start_date"))
+        self.query_start_date = TextBox(browser, Selector(select=".start_date"))
         self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
+        self.title = BaseComponent(browser, Selector(select= "h4.modal-title"))
+
     
 class InputPage(Page):
     """
     Page: Input page
     """
 
-    def __init__(self, ucc_smartx_configs):
+    def __init__(self, ucc_smartx_configs, open_page=True):
         """
             :param browser: The selenium webdriver
             :param urls: Splunk web & management url. {"web": , "mgmt": }
             :param session_key: session key to access the rest endpoints
         """
-        super(InputPage, self).__init__(ucc_smartx_configs)
+        super(InputPage, self).__init__(ucc_smartx_configs, open_page)
 
         input_container = Selector(select="div.inputsContainer")
         
+        self.title = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
+        self.description = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-description"))
         self.create_new_input = Dropdown(ucc_smartx_configs.browser, Selector(select=".add-button"))
         self.table = InputTable(ucc_smartx_configs.browser, input_container, mapping={"status": "disabled", "input_type":3})
         self.entity1 = ExampleInputOne(ucc_smartx_configs.browser, input_container)
