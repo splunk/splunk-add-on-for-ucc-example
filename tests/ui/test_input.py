@@ -594,7 +594,7 @@ class TestInput(UccTester):
         go_to_link = "https://docs.splunk.com/Documentation"
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
-            input_page.entity1.help_link.go_to_link,
+            input_page.entity1.help_link.go_to_link(),
             go_to_link,
             msg="Found : {} Expected : {}".format(
                 input_page.entity1.help_link.go_to_link(),
@@ -1183,7 +1183,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         type_filter_list = ["All", "Example Input One", "Example Input Two"]
         self.assert_util(
-            input_page.type_filter.get_input_type_list,
+            input_page.type_filter.get_input_type_list(),
             type_filter_list,
             msg="Found : {} Expected : {}".format(
                 input_page.type_filter.get_input_type_list(),
@@ -1228,7 +1228,7 @@ class TestInput(UccTester):
     def test_inputs_pagination_list(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         self.assert_util(
-            input_page.pagination.get_pagination_list,
+            input_page.pagination.get_pagination_list(),
             ['10 Per Page','25 Per Page','50 Per Page'],
             msg="Found : {} Expected : {}".format(
                 input_page.pagination.get_pagination_list(),
