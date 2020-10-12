@@ -26,7 +26,7 @@ class TestLogging(UccTester):
     def test_logging_default_log_level(self, ucc_smartx_configs):
         logging = Logging(ucc_smartx_configs, TA_NAME, TA_CONF)
         default_log_level = "INFO"
-        self.assert_equal(
+        self.assert_util(
             logging.log_level.get_value().lower() ,
             default_log_level.lower(),
             msg="Found : {} Expected : {}".format(
@@ -43,7 +43,7 @@ class TestLogging(UccTester):
         level = random.choice(levels)
         logging.log_level.select(level)
         logging.save()
-        self.assert_equal(
+        self.assert_util(
             logging.log_level.get_value().lower() ,
             level.lower(),
             msg="Found : {} Expected : {}".format(
@@ -56,7 +56,7 @@ class TestLogging(UccTester):
     #This test case checks list of log levels present in the drop down
     def test_logging_list_log_levels(self, ucc_smartx_configs):
         logging = Logging(ucc_smartx_configs, TA_NAME, TA_CONF)
-        self.assert_equal(
+        self.assert_util(
             set(logging.log_level.list_of_values()) ,
             {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"},
             msg="Found : {} Expected : {}".format(
@@ -72,7 +72,7 @@ class TestLogging(UccTester):
         logging = Logging(ucc_smartx_configs, TA_NAME, TA_CONF)
         logging.log_level.select(selection_log)
         logging.save()
-        self.assert_equal(
+        self.assert_util(
             logging.log_level.get_value().lower() ,
             selection_log.lower(),
             msg="Found : {} Expected : {}".format(
@@ -89,7 +89,7 @@ class TestLogging(UccTester):
         logging.log_level.select(selection_log)
         logging.save()
         log_level = logging.backend_conf.get_parameter("loglevel")
-        self.assert_equal(
+        self.assert_util(
             log_level ,
             selection_log,
             msg="Found : {} Expected : {}".format(

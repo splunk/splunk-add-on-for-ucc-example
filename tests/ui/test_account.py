@@ -88,7 +88,7 @@ class TestAccount(UccTester):
         column_values = list(account.table.get_column_values("Name"))
         column_values = list(str(item)for item in column_values)
         sorted_values = sorted(column_values , key = str.lower)
-        self.assert_equal(
+        self.assert_util(
             sort_order["header"].lower(),
             'name',
             msg="Found : {} Expected : {}".format(
@@ -96,7 +96,7 @@ class TestAccount(UccTester):
                 'name'
                 )
             )
-        self.assert_equal(
+        self.assert_util(
             column_values,
             sorted_values,
             msg="Found : {} Expected : {}".format(column_values, sorted_values)
@@ -107,7 +107,7 @@ class TestAccount(UccTester):
     # Verifies count on table
     def test_account_count(self, ucc_smartx_configs, add_multiple_account):
         account = AccountPage(ucc_smartx_configs)
-        self.assert_equal(
+        self.assert_util(
             account.table.get_count_title,
             "{} Items".format(len(account.backend_conf.get_all_stanzas())),
             msg="Found : {} Expected : {}".format(
@@ -127,7 +127,7 @@ class TestAccount(UccTester):
         account.entity.password.set_value(ACCOUNT_CONFIG['password'])
         account.entity.security_token.set_value("TestToken")
         assert account.entity.save()
-        self.assert_equal(
+        self.assert_util(
             account.table.get_table()[ACCOUNT_CONFIG['name']],
             {
                 'name': ACCOUNT_CONFIG['name'],
@@ -149,7 +149,7 @@ class TestAccount(UccTester):
     def test_accounts_filter_functionality_negative(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.set_filter("heloo")
-        self.assert_equal(
+        self.assert_util(
             account.table.get_count_title,
             "{} Items".format(account.table.get_row_count()),
             msg="Found : {} Expected : {}".format(
@@ -164,7 +164,7 @@ class TestAccount(UccTester):
     def test_accounts_filter_functionality_positive(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.set_filter("TestAccount")
-        self.assert_equal(
+        self.assert_util(
             account.table.get_count_title,
             "{} Items".format(account.table.get_row_count()),
             msg="Found : {} Expected : {}".format(
@@ -178,7 +178,7 @@ class TestAccount(UccTester):
     # Verifies the default number of rows in the table
     def test_account_default_rows_in_table(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
-        self.assert_equal(
+        self.assert_util(
             account.table.get_row_count,
             0,
             msg="Found : {} Expected : {}".format(
@@ -191,7 +191,7 @@ class TestAccount(UccTester):
     # Verifies the title and description of the page
     def test_account_title_and_description(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
-        self.assert_equal(
+        self.assert_util(
             account.title.wait_to_display,
             "Configuration",
             msg="Found : {} Expected : {}".format(
@@ -199,7 +199,7 @@ class TestAccount(UccTester):
                 "Configuration"
                 )
             )
-        self.assert_equal(
+        self.assert_util(
             account.description.wait_to_display,
             "Set up your add-on",
             msg="Found : {} Expected : {}".format(
@@ -213,7 +213,7 @@ class TestAccount(UccTester):
     def test_account_add_valid_title(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        self.assert_equal(
+        self.assert_util(
             account.entity.title.container.get_attribute('textContent').strip(),
             "Add Account",
             msg="Found : {} Expected : {}".format(
@@ -227,7 +227,7 @@ class TestAccount(UccTester):
     def test_account_edit_valid_title(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
-        self.assert_equal(
+        self.assert_util(
             account.entity.title.container.get_attribute('textContent').strip(),
             "Update Account",
             msg="Found : {} Expected : {}".format(
@@ -241,7 +241,7 @@ class TestAccount(UccTester):
     def test_account_clone_valid_title(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
-        self.assert_equal(
+        self.assert_util(
             account.entity.title.container.get_attribute('textContent').strip(),
             "Clone Account",
             msg="Found : {} Expected : {}".format(
@@ -255,7 +255,7 @@ class TestAccount(UccTester):
     def test_account_delete_valid_title(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True)
-        self.assert_equal(
+        self.assert_util(
             account.entity.title.container.get_attribute('textContent').strip(),
             "Delete Confirmation",
             msg="Found : {} Expected : {}".format(
@@ -269,7 +269,7 @@ class TestAccount(UccTester):
     def test_account_delete_valid_prompt_message(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         prompt_message = account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True)
-        self.assert_equal(
+        self.assert_util(
             prompt_message,
             'Are you sure you want to delete "{}" ? Ensure that no input is configured with "{}" as this will stop data collection for that input.'.format(ACCOUNT_CONFIG["name"],ACCOUNT_CONFIG["name"]),
             msg="Found : {} Expected : {}".format(
@@ -284,7 +284,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
-        self.assert_equal(
+        self.assert_util(
             account.entity.save,
             'Field Username is required',
             left_args={'expect_error': True},
@@ -300,7 +300,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
-        self.assert_equal(
+        self.assert_util(
             account.entity.save,
             'Field Password is required',
             left_args={'expect_error': True},
@@ -316,7 +316,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         textbox_type = account.entity.password.get_type()
-        self.assert_equal(
+        self.assert_util(
             textbox_type,
             'password',
             msg="Found : {} Expected : {}".format(
@@ -332,7 +332,7 @@ class TestAccount(UccTester):
         account.entity.open()
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
-        self.assert_equal(
+        self.assert_util(
             account.entity.save,
             'Field Name is required',
             left_args={'expect_error': True},
@@ -348,7 +348,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         help_text = account.entity.name.get_help_text()
-        self.assert_equal(
+        self.assert_util(
             help_text,
             'Enter a unique name for this account.',
             msg="Found : {} Expected : {}".format(
@@ -366,7 +366,7 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.environment.cancel_selected_value()
-        self.assert_equal(
+        self.assert_util(
             account.entity.save,
             'Field Example Environment is required',
             left_args={'expect_error': True},
@@ -384,7 +384,7 @@ class TestAccount(UccTester):
         account.entity.name.set_value("TestMultiAccount")
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
-        self.assert_equal(
+        self.assert_util(
             account.entity.save,
             'Field Example Multiple Select is required',
             left_args={'expect_error': True},
@@ -400,7 +400,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.auth_key.select('OAuth 2.0 Authentication')
-        self.assert_equal(
+        self.assert_util(
             account.entity.save,
             'Field Client Id is required',
             left_args={'expect_error': True},
@@ -419,7 +419,7 @@ class TestAccount(UccTester):
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
         account.entity.multiple_select.select("Option One")
         account.entity.client_id.set_value("TestClientId")
-        self.assert_equal(
+        self.assert_util(
             account.entity.save,
             'Field Client Secret is required',
             left_args={'expect_error': True},
@@ -436,7 +436,7 @@ class TestAccount(UccTester):
         account.entity.open()
         account.entity.auth_key.select('OAuth 2.0 Authentication')
         textbox_type = account.entity.client_secret.get_type()
-        self.assert_equal(
+        self.assert_util(
             textbox_type,
             'password',
             msg="Found : {} Expected : {}".format(
@@ -453,7 +453,7 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.name.set_value("123TestAccount")
-        self.assert_equal(
+        self.assert_util(
             account.entity.save,
             'Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.',
             left_args={'expect_error': True},
@@ -471,7 +471,7 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.name.set_value("TestUserTestUserTestUserTestUserTestUserTestUserTestUserTestUser")
-        self.assert_equal(
+        self.assert_util(
             account.entity.save,
             'Length of ID should be between 1 and 50',
             left_args={'expect_error': True},
@@ -488,7 +488,7 @@ class TestAccount(UccTester):
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
-        self.assert_equal(
+        self.assert_util(
             account.entity.environment.get_value,
             "Value1",
             msg="Found : {} Expected : {}".format(
@@ -502,7 +502,7 @@ class TestAccount(UccTester):
     def test_account_list_example_environment(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        self.assert_equal(
+        self.assert_util(
             set(account.entity.environment.list_of_values()),
             {"Value1", "Value2", "Other"},
             msg="Found : {} Expected : {}".format(
@@ -516,7 +516,7 @@ class TestAccount(UccTester):
     def test_account_default_value_auth_type(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        self.assert_equal(
+        self.assert_util(
             account.entity.auth_key.get_value,
             "basic",
             msg="Found : {} Expected : {}".format(
@@ -530,7 +530,7 @@ class TestAccount(UccTester):
     def test_account_list_auth_type(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        self.assert_equal(
+        self.assert_util(
                     set(account.entity.auth_key.list_of_values()),
                     {"Basic Authentication", "OAuth 2.0 Authentication"},
                     msg="Found : {} Expected : {}".format(
@@ -545,7 +545,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.example_checkbox.check()
-        self.assert_equal(
+        self.assert_util(
                     account.entity.example_checkbox.is_checked,
                     True,
                     msg="Found : {} Expected : {}".format(
@@ -554,7 +554,7 @@ class TestAccount(UccTester):
                         )
                     )
         account.entity.example_checkbox.uncheck()
-        self.assert_equal(
+        self.assert_util(
                     account.entity.example_checkbox.is_checked,
                     False,
                     msg="Found : {} Expected : {}".format(
@@ -569,7 +569,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.environment.select("Value2")
-        self.assert_equal(
+        self.assert_util(
                     account.entity.environment.get_value,
                     "Value2",
                     msg="Found : {} Expected : {}".format(
@@ -583,7 +583,7 @@ class TestAccount(UccTester):
     def test_account_list_example_multiple_select(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        self.assert_equal(
+        self.assert_util(
                     set(account.entity.multiple_select.list_of_values()),
                     {"Option One", "Option Two"},
                     msg="Found : {} Expected : {}".format(
@@ -599,7 +599,7 @@ class TestAccount(UccTester):
         account.entity.open()
         account.entity.multiple_select.select("Option One")
         account.entity.multiple_select.select("Option Two")
-        self.assert_equal(
+        self.assert_util(
                     account.entity.multiple_select.get_values,
                     ['Option One', 'Option Two'],
                     msg="Found : {} Expected : {}".format(
@@ -613,7 +613,7 @@ class TestAccount(UccTester):
     def test_account_search_value_example_multiple_select(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        self.assert_equal(
+        self.assert_util(
                     account.entity.multiple_select.search_get_list,
                     ["Option One"],
                     left_args={'value': "Option One"},
@@ -628,7 +628,7 @@ class TestAccount(UccTester):
     def test_account_default_value_example_radio(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        self.assert_equal(
+        self.assert_util(
                     account.entity.account_radio.get_value,
                     "Yes",
                     msg="Found : {} Expected : {}".format(
@@ -701,7 +701,7 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.account_radio.select("Yes")
-        self.assert_equal(
+        self.assert_util(
                     account.entity.save,
                     'Name {} is already in use'.format(ACCOUNT_CONFIG["name"]),
                     left_args={'expect_error': True},
@@ -716,14 +716,20 @@ class TestAccount(UccTester):
     def test_account_delete_row_frontend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
-        assert ACCOUNT_CONFIG["name"] not in account.table.get_table()
+        self.assert_util(ACCOUNT_CONFIG["name"],
+                         account.table.get_table(),
+                         "not in",
+                         msg="{} should not be present in {}".format(
+                             ACCOUNT_CONFIG["name"],
+                             account.table.get_table())
+                         )
 
     @pytest.mark.account
     # Verifies the frontend uneditable fields at time of edit of the account
     def test_account_edit_uneditable_field_name(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
-        self.assert_equal(
+        self.assert_util(
                     account.entity.name.is_editable,
                     False,
                     msg="Found : {} Expected : {}".format(
@@ -744,7 +750,7 @@ class TestAccount(UccTester):
         account.entity.security_token.set_value("TestEditToken")
         account.entity.account_radio.select("No")
         assert account.entity.save()
-        self.assert_equal(
+        self.assert_util(
                     account.table.get_table()[ACCOUNT_CONFIG["name"]] ,
                     {
                         'name': 'TestAccount', 
@@ -767,7 +773,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
-        self.assert_equal(
+        self.assert_util(
                     account.entity.save,
                     'Name {} is already in use'.format(ACCOUNT_CONFIG["name"]),
                     left_args={'expect_error': True},
@@ -782,7 +788,7 @@ class TestAccount(UccTester):
     def test_account_clone_frontend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
-        self.assert_equal(
+        self.assert_util(
                     account.entity.name.get_value,
                     "",
                     msg="Found : {} Expected : {}".format(
@@ -796,7 +802,7 @@ class TestAccount(UccTester):
         account.entity.security_token.set_value("TestTokenClone")
         account.entity.account_radio.select("Yes")
         assert account.entity.save()
-        self.assert_equal(
+        self.assert_util(
                     account.table.get_table()["TestAccount2"],
                     {
                         'name': 'TestAccount2', 
@@ -819,7 +825,7 @@ class TestAccount(UccTester):
     def test_account_clone_default_values(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
-        self.assert_equal(
+        self.assert_util(
                     account.entity.name.get_value,
                     "",
                     msg="Found : {} Expected : {}".format(
@@ -827,7 +833,7 @@ class TestAccount(UccTester):
                         ""
                         )
                     )
-        self.assert_equal(
+        self.assert_util(
                     account.entity.username.get_value,
                     "TestUser",
                     msg="Found : {} Expected : {}".format(
@@ -835,7 +841,7 @@ class TestAccount(UccTester):
                         "TestUser"
                         )
                     )
-        self.assert_equal(
+        self.assert_util(
                     account.entity.multiple_select.get_values,
                     ['Option One'],
                     msg="Found : {} Expected : {}".format(
@@ -843,7 +849,7 @@ class TestAccount(UccTester):
                         ['Option One']
                         )
                     )
-        self.assert_equal(
+        self.assert_util(
                     account.entity.auth_key.get_value,
                     "basic",
                     msg="Found : {} Expected : {}".format(
@@ -863,7 +869,7 @@ class TestAccount(UccTester):
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.security_token.set_value(ACCOUNT_CONFIG["token"])
         assert account.entity.save()
-        self.assert_equal(
+        self.assert_util(
                     account.backend_conf.get_stanza,
                     {'account_checkbox': '0',
                         'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
@@ -903,7 +909,7 @@ class TestAccount(UccTester):
         account.entity.security_token.set_value("TestEditToken")
         account.entity.account_radio.select("No")
         account.entity.save()
-        self.assert_equal(
+        self.assert_util(
                     account.backend_conf.get_stanza,
                     {'account_checkbox': '1',
                         'account_multiple_select' : 'one,two',
@@ -944,7 +950,7 @@ class TestAccount(UccTester):
         account.entity.security_token.set_value("TestCloneToken")
         account.entity.account_radio.select("No")
         account.entity.save()
-        self.assert_equal(
+        self.assert_util(
                     account.backend_conf.get_stanza,
                     {
                         'account_checkbox': '1',
@@ -979,7 +985,13 @@ class TestAccount(UccTester):
     def test_account_delete_row_backend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
-        assert ACCOUNT_CONFIG["name"] not in account.backend_conf.get_all_stanzas().keys()
+        self.assert_util(ACCOUNT_CONFIG["name"],
+                         account.backend_conf.get_all_stanzas().keys(),
+                         "not in",
+                         msg="{} should not be present in {}".format(
+                             ACCOUNT_CONFIG["name"],
+                             account.backend_conf.get_all_stanzas().keys())
+                         )
     
     @pytest.mark.account
     # Verifies pagination list
@@ -988,7 +1000,13 @@ class TestAccount(UccTester):
         name_column_page1 = account.table.get_column_values("name")
         account.table.switch_to_next()
         name_column_page2 = account.table.get_column_values("name")
-        assert name_column_page1 != name_column_page2
+        self.assert_util(name_column_page1,
+                         name_column_page2,
+                         "!=",
+                         msg="{} should not be equal to {}".format(
+                             name_column_page1,
+                             name_column_page2)
+                         )
 
     @pytest.mark.account
     # Verifies whether the table help link redirects to the correct URL
@@ -996,7 +1014,7 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         go_to_link = "https://docs.splunk.com/Documentation"
         account.entity.open()
-        self.assert_equal(
+        self.assert_util(
                 account.entity.help_link.go_to_link,
                 go_to_link,
                 msg="Found : {} Expected : {}".format(
@@ -1010,7 +1028,7 @@ class TestAccount(UccTester):
     def test_account_delete_account_in_use(self, ucc_smartx_configs, add_account, add_input):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
-        self.assert_equal(
+        self.assert_util(
                     account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True),
                     r'TestAccount cannot be deleted because it is in use',
                     left_args={'name': ACCOUNT_CONFIG["name"], "prompt_msg": True},

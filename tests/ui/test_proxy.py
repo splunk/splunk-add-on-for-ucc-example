@@ -32,7 +32,7 @@ class TestProxy(UccTester):
     # Verifies the default proxy configurations
     def test_proxy_default_configs(self, ucc_smartx_configs):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
-        self.assert_equal(
+        self.assert_util(
             proxy.proxy_enable.is_checked,
             False,
             msg="Found : {} Expected : {}".format(
@@ -40,7 +40,7 @@ class TestProxy(UccTester):
                 False
                 )
             )
-        self.assert_equal(
+        self.assert_util(
             proxy.dns_enable.is_checked,
             False,
             msg="Found : {} Expected : {}".format(
@@ -48,7 +48,7 @@ class TestProxy(UccTester):
                 False
                 )
             )
-        self.assert_equal(
+        self.assert_util(
             proxy.type.get_value,
             "http",
             msg="Found : {} Expected : {}".format(
@@ -56,7 +56,7 @@ class TestProxy(UccTester):
                 "http"
                 )
             )
-        self.assert_equal(
+        self.assert_util(
             proxy.host.get_value,
             "",
             msg="Found : {} Expected : {}".format(
@@ -64,7 +64,7 @@ class TestProxy(UccTester):
                 ""
                 )
             )
-        self.assert_equal(
+        self.assert_util(
             proxy.port.get_value,
             "",
             msg="Found : {} Expected : {}".format(
@@ -72,7 +72,7 @@ class TestProxy(UccTester):
                 ""
                 )
             )
-        self.assert_equal(
+        self.assert_util(
             proxy.username.get_value,
             "",
             msg="Found : {} Expected : {}".format(
@@ -80,7 +80,7 @@ class TestProxy(UccTester):
                 ""
                 )
             )
-        self.assert_equal(
+        self.assert_util(
             proxy.password.get_value,
             "",
             msg="Found : {} Expected : {}".format(
@@ -94,7 +94,7 @@ class TestProxy(UccTester):
     def test_proxy_required_field_host(self, ucc_smartx_configs):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.proxy_enable.check()
-        self.assert_equal(
+        self.assert_util(
             proxy.save,
             "Proxy Host can not be empty",
             left_args={'expect_error': True},
@@ -110,7 +110,7 @@ class TestProxy(UccTester):
     def test_proxy_host_valid_input(self, ucc_smartx_configs):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.host.set_value("abc$$")
-        self.assert_equal(
+        self.assert_util(
             proxy.save,
             "Proxy Host should not have special characters",
             left_args={'expect_error': True},
@@ -127,7 +127,7 @@ class TestProxy(UccTester):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         host_value = "a" * 4097
         proxy.host.set_value(host_value)
-        self.assert_equal(
+        self.assert_util(
             proxy.save,
             "Max host length is 4096",
             left_args={'expect_error': True},
@@ -144,7 +144,7 @@ class TestProxy(UccTester):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.proxy_enable.check()
         proxy.host.set_value("abc")
-        self.assert_equal(
+        self.assert_util(
             proxy.save,
             "Proxy Port can not be empty",
             left_args={'expect_error': True},
@@ -162,7 +162,7 @@ class TestProxy(UccTester):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.host.set_value("abc")
         proxy.port.set_value("abc")
-        self.assert_equal(
+        self.assert_util(
             proxy.save,
             "Field Port is not a number",
             left_args={'expect_error': True},
@@ -179,7 +179,7 @@ class TestProxy(UccTester):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.host.set_value("abc")
         proxy.port.set_value("65536")
-        self.assert_equal(
+        self.assert_util(
             proxy.save,
             "Field Port should be within the range of [1 and 65535]",
             left_args={'expect_error': True},
@@ -194,7 +194,7 @@ class TestProxy(UccTester):
     # This test case checks list of proxy types present in the drop down
     def test_proxy_list_proxy_types(self, ucc_smartx_configs):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
-        self.assert_equal(
+        self.assert_util(
             set(proxy.type.list_of_values()) ,
             {"http", "socks4", "socks5"},
             msg="Found : {} Expected : {}".format(
@@ -211,7 +211,7 @@ class TestProxy(UccTester):
         proxy.port.set_value("1111")
         proxy.proxy_enable.check()
         proxy.type.cancel_selected_value()
-        self.assert_equal(
+        self.assert_util(
             proxy.save,
             "Proxy type can not be empty",
             left_args={'expect_error': True},
@@ -230,7 +230,7 @@ class TestProxy(UccTester):
         proxy.host.set_value("abc")
         proxy.port.set_value("65535")
         proxy.username.set_value(username_value)
-        self.assert_equal(
+        self.assert_util(
             proxy.save,
             "Max length of username is 50",
             left_args={'expect_error': True},
@@ -246,7 +246,7 @@ class TestProxy(UccTester):
     def test_proxy_encrypted_field_password(self, ucc_smartx_configs):
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         textbox_type = proxy.password.get_type()
-        self.assert_equal(
+        self.assert_util(
             textbox_type ,
             'password',
             msg="Found : {} Expected : {}".format(
@@ -280,7 +280,7 @@ class TestProxy(UccTester):
         proxy.username.set_value("Username")
         proxy.password.set_value("Password")
         proxy.save()
-        self.assert_equal(
+        self.assert_util(
             proxy.backend_conf.get_stanza,
             {
                 'disabled': False,

@@ -57,7 +57,7 @@ class TestCustom(UccTester):
         custom.test_multiselect.select("Option A")
         custom.test_multiselect.select("Option B")
         custom.save()
-        self.assert_equal(
+        self.assert_util(
             custom.backend_conf.get_stanza,
             {
                 'disabled': False,
@@ -92,7 +92,7 @@ class TestCustom(UccTester):
     # This test case checks required field test string
     def test_custom_required_field_test_string(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Field Test String is required",
             left_args={'expect_error': True},
@@ -108,7 +108,7 @@ class TestCustom(UccTester):
     def test_custom_valid_length_test_string_greater(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
         custom.test_string.set_value("test")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Length of Test String should be greater than or equal to 5",
             left_args={'expect_error': True},
@@ -123,7 +123,7 @@ class TestCustom(UccTester):
     def test_custom_valid_length_test_string_less(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
         custom.test_string.set_value("test_string")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Length of Test String should be less than or equal to 10",
             left_args={'expect_error': True},
@@ -138,7 +138,7 @@ class TestCustom(UccTester):
     def test_custom_required_field_test_number(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
         custom.test_string.set_value("test_str")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Field Test Number is required",
             left_args={'expect_error': True},
@@ -154,7 +154,7 @@ class TestCustom(UccTester):
         custom = Custom(ucc_smartx_configs)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("a")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Field Test Number is not a number",
             left_args={'expect_error': True},
@@ -170,7 +170,7 @@ class TestCustom(UccTester):
         custom = Custom(ucc_smartx_configs)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("50")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Field Test Number should be within the range of [1 and 10]",
             left_args={'expect_error': True},
@@ -187,7 +187,7 @@ class TestCustom(UccTester):
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("5")
         custom.test_regex.set_value("$$")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Characters of Name should match regex ^\w+$ .",
             left_args={'expect_error': True},
@@ -205,7 +205,7 @@ class TestCustom(UccTester):
         custom.test_number.set_value("5")
         custom.test_regex.set_value("test_rex")
         custom.test_email.set_value("abc")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Field Test Email is not a valid email address",
             left_args={'expect_error': True},
@@ -224,7 +224,7 @@ class TestCustom(UccTester):
         custom.test_regex.set_value("test_rex")
         custom.test_email.set_value("test@a.b")
         custom.test_ipv4.set_value("10.1.11")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Field Test Ipv4 is not a valid IPV4 address",
             left_args={'expect_error': True},
@@ -244,7 +244,7 @@ class TestCustom(UccTester):
         custom.test_email.set_value("test@a.b")
         custom.test_ipv4.set_value("10.1.11.1")
         custom.test_date.set_value("20-10-2020")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Field Test Date is not a valid date in ISO 8601 format",
             left_args={'expect_error': True},
@@ -265,7 +265,7 @@ class TestCustom(UccTester):
         custom.test_ipv4.set_value("10.1.11.1")
         custom.test_date.set_value("2020-09-18")
         custom.test_url.set_value("\\\\")
-        self.assert_equal(
+        self.assert_util(
             custom.save,
             r"Field Test Url is not a valid URL",
             left_args={'expect_error': True},
@@ -279,7 +279,7 @@ class TestCustom(UccTester):
     # This test case checks default value of test radio
     def test_custom_default_value_test_radio(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
-        self.assert_equal(
+        self.assert_util(
             custom.test_radio.get_value,
             r"Yes",
             msg="Found : {} Expected : {}".format(
@@ -293,7 +293,7 @@ class TestCustom(UccTester):
     def test_custom_select_value_test_radio(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
         custom.test_radio.select("No")
-        self.assert_equal(
+        self.assert_util(
             custom.test_radio.get_value,
             r"No",
             msg="Found : {} Expected : {}".format(
@@ -307,7 +307,7 @@ class TestCustom(UccTester):
     def test_custom_list_test_multiselect(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
         test_multiselect = ["Option A", "Option B"]
-        self.assert_equal(
+        self.assert_util(
             list(custom.test_multiselect.list_of_values()),
             test_multiselect,
             msg="Found : {} Expected : {}".format(
@@ -323,7 +323,7 @@ class TestCustom(UccTester):
         selected_values = ["Option A"]
         for each in selected_values:
             custom.test_multiselect.select(each)
-        self.assert_equal(
+        self.assert_util(
             custom.test_multiselect.get_values,
             selected_values,
             msg="Found : {} Expected : {}".format(
@@ -339,7 +339,7 @@ class TestCustom(UccTester):
         selected_values = ["Option A", "Option B"]
         for each in selected_values:
             custom.test_multiselect.select(each)
-        self.assert_equal(
+        self.assert_util(
             custom.test_multiselect.get_values,
             selected_values,
             msg="Found : {} Expected : {}".format(
@@ -352,7 +352,7 @@ class TestCustom(UccTester):
     # This test case checks multiple select seach funtionality
     def test_custom_search_value_test_multiselect(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
-        self.assert_equal(
+        self.assert_util(
             custom.test_multiselect.search_get_list,
             ["Option A"],
             left_args={'value': "Option A"},
@@ -370,7 +370,7 @@ class TestCustom(UccTester):
         for each in selected_values:
             custom.test_multiselect.select(each)
         custom.test_multiselect.deselect("Option A")
-        self.assert_equal(
+        self.assert_util(
             custom.test_multiselect.get_values,
             ["Option B"],
             msg="Found : {} Expected : {}".format(
@@ -384,7 +384,7 @@ class TestCustom(UccTester):
     def test_custom_help_link(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
         go_to_link = "https://docs.splunk.com/Documentation"
-        self.assert_equal(
+        self.assert_util(
             custom.test_help_link.go_to_link,
             go_to_link,
             msg="Found : {} Expected : {}".format(
