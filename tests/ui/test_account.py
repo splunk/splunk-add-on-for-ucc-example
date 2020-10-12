@@ -91,7 +91,10 @@ class TestAccount(UccTester):
         self.assert_equal(
             sort_order["header"].lower(),
             'name',
-            msg="Header Expected 'Name' found {}".format(sort_order["header"].lower())
+            msg="Found : {} Expected : {}".format(
+                sort_order["header"].lower(),
+                'name'
+                )
             )
         self.assert_equal(
             column_values,
