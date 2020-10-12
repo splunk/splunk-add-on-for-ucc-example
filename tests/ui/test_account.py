@@ -215,10 +215,10 @@ class TestAccount(UccTester):
         account.entity.open()
         self.assert_equal(
             account.entity.title.container.get_attribute('textContent').strip(),
-            "Configuration",
+            "Add Account",
             msg="Found : {} Expected : {}".format(
                 account.entity.title.container.get_attribute('textContent').strip(),
-                "Configuration"
+                "Add Account"
                 )
             )
 
@@ -334,11 +334,11 @@ class TestAccount(UccTester):
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         self.assert_equal(
             account.entity.save,
-            'Field Password is required',
+            'Field Name is required',
             left_args={'expect_error': True},
             msg="Found : {} Expected : {}".format(
                 account.entity.save(expect_error=True),
-                'Field Password is required'
+                'Field Name is required'
                 )
             )
 
