@@ -771,8 +771,8 @@ class TestInput(UccTester):
         for each_key, each_value in value_to_test.items():
             self.assert_util(
                 each_value,
-                "in",
                 backend_stanza[each_key],
+                "in",
                 msg="{} should be present un {}".format(
                     each_value ,
                     backend_stanza[each_key]
