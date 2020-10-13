@@ -594,12 +594,8 @@ class TestInput(UccTester):
         go_to_link = "https://docs.splunk.com/Documentation"
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
-            input_page.entity1.help_link.go_to_link(),
-            go_to_link,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.help_link.go_to_link(),
-                go_to_link
-                )
+            input_page.entity1.help_link.go_to_link,
+            go_to_link
             )
 
 
@@ -1183,30 +1179,18 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         type_filter_list = ["All", "Example Input One", "Example Input Two"]
         self.assert_util(
-            input_page.type_filter.get_input_type_list(),
-            type_filter_list,
-            msg="Found : {} Expected : {}".format(
-                input_page.type_filter.get_input_type_list(),
-                type_filter_list
-                )
+            input_page.type_filter.get_input_type_list,
+            type_filter_list
             )
         input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)
         self.assert_util(
             input_page.table.get_row_count,
-            1,
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_row_count(),
-                1
-                )
+            1
             )
         input_page.type_filter.select_input_type("Example Input Two")
         self.assert_util(
             input_page.table.get_row_count,
-            1,
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_row_count(),
-                1
-                )
+            1
             )
 
     @pytest.mark.input
@@ -1228,12 +1212,8 @@ class TestInput(UccTester):
     def test_inputs_pagination_list(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         self.assert_util(
-            input_page.pagination.get_pagination_list(),
-            ['10 Per Page','25 Per Page','50 Per Page'],
-            msg="Found : {} Expected : {}".format(
-                input_page.pagination.get_pagination_list(),
-                ['10 Per Page','25 Per Page','50 Per Page']
-                )
+            input_page.pagination.get_pagination_list,
+            ['10 Per Page','25 Per Page','50 Per Page']
             )
     
 
@@ -1838,11 +1818,11 @@ class TestInput(UccTester):
         backend_stanza = input_page.backend_conf.get_stanza("example_input_two://dummy_input_two")
         for each_key, each_value in value_to_test.items():
             self.assert_util(
-                each_value ,
+                each_value,
                 backend_stanza[each_key],
                 "in",
                 msg="{} should be present in {}".format(
-                    each_value ,
+                    each_value,
                     backend_stanza[each_key]
                     )
                 )
@@ -1962,11 +1942,11 @@ class TestInput(UccTester):
         backend_stanza = input_page.backend_conf.get_stanza("example_input_two://Clone_Test")
         for each_key, each_value in value_to_test.items():
             self.assert_util(
-                each_value ,
+                each_value,
                 backend_stanza[each_key],
                 "in",
                 msg="{} should be present in {}".format(
-                    each_value ,
+                    each_value,
                     backend_stanza[each_key]
                     )
                 )

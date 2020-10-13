@@ -385,10 +385,6 @@ class TestCustom(UccTester):
         custom = Custom(ucc_smartx_configs)
         go_to_link = "https://docs.splunk.com/Documentation"
         self.assert_util(
-            custom.test_help_link.go_to_link(),
-            go_to_link,
-            msg="Found : {} Expected : {}".format(
-                custom.test_help_link.go_to_link(),
-                go_to_link
-                )
+            custom.test_help_link.go_to_link,
+            go_to_link
             )
