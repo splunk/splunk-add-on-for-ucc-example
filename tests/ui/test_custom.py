@@ -27,6 +27,16 @@ def reset_configuration(ucc_smartx_configs):
 class TestCustom(UccTester):
 
     @pytest.mark.custom
+    # This test case checks whether help link redirects to the correct URL
+    def test_custom_help_link(self, ucc_smartx_configs):
+        custom = Custom(ucc_smartx_configs)
+        go_to_link = "https://docs.splunk.com/Documentation"
+        self.assert_util(
+            custom.test_help_link.go_to_link,
+            go_to_link
+            )
+            
+    @pytest.mark.custom
     # This test case checks the validates frontend save in custom tab
     def test_custom_frontend_validation(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
@@ -377,14 +387,4 @@ class TestCustom(UccTester):
                 custom.test_multiselect.get_values(),
                 ["Option B"]
                 )
-            )
-
-    @pytest.mark.custom
-    # This test case checks whether help link redirects to the correct URL
-    def test_custom_help_link(self, ucc_smartx_configs):
-        custom = Custom(ucc_smartx_configs)
-        go_to_link = "https://docs.splunk.com/Documentation"
-        self.assert_util(
-            custom.test_help_link.go_to_link,
-            go_to_link
             )

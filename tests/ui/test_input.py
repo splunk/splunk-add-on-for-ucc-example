@@ -123,6 +123,17 @@ class TestInput(UccTester):
     ##########################################
 
     @pytest.mark.input
+    # Verifies whether the help link redirects to the correct URL
+    def test_example_input_one_help_link(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        go_to_link = "https://docs.splunk.com/Documentation"
+        input_page.create_new_input.select("Example Input One")
+        self.assert_util(
+            input_page.entity1.help_link.go_to_link,
+            go_to_link
+            )
+            
+    @pytest.mark.input
     # Verifies required field name in example input one
     def test_example_input_one_required_field_name(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
@@ -585,17 +596,6 @@ class TestInput(UccTester):
                 input_page.entity1.limit.get_value(),
                 default_limit
                 )
-            )
-
-    @pytest.mark.input
-    # Verifies whether the help link redirects to the correct URL
-    def test_example_input_one_help_link(self, ucc_smartx_configs):
-        input_page = InputPage(ucc_smartx_configs)
-        go_to_link = "https://docs.splunk.com/Documentation"
-        input_page.create_new_input.select("Example Input One")
-        self.assert_util(
-            input_page.entity1.help_link.go_to_link,
-            go_to_link
             )
 
 
