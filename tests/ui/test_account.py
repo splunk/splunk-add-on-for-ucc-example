@@ -35,7 +35,7 @@ ACCOUNT_CONFIG = {
 
 @pytest.fixture
 def add_input(ucc_smartx_configs):
-    input_page = InputPage(ucc_smartx_configs)
+    input_page = InputPage(ucc_smartx_configs, open_page=False)
     url = input_page._get_input_endpoint()
     kwargs = {
         'name': 'example_input_one://dummy_input_one',
@@ -56,14 +56,14 @@ def add_input(ucc_smartx_configs):
 
 @pytest.fixture
 def add_account(ucc_smartx_configs):
-    account = AccountPage(ucc_smartx_configs)
+    account = AccountPage(ucc_smartx_configs, open_page=False)
     url = account._get_account_endpoint()
     kwargs = ACCOUNT_CONFIG
     yield account.backend_conf.post_stanza(url, kwargs)
 
 @pytest.fixture
 def add_multiple_account(ucc_smartx_configs):
-    account = AccountPage(ucc_smartx_configs)
+    account = AccountPage(ucc_smartx_configs, open_page=False)
     url = account._get_account_endpoint()
     for i in range(12):
         kwargs = copy.deepcopy(ACCOUNT_CONFIG)
@@ -86,17 +86,35 @@ class TestAccount(UccTester):
         account.table.sort_column("Name")
         sort_order = account.table.get_sort_order()
         column_values = list(account.table.get_column_values("Name"))
-        column_values = list(str(item) for item in column_values)
+        column_values = list(str(item)for item in column_values)
         sorted_values = sorted(column_values , key = str.lower)
-        assert sort_order["header"].lower() == "name"
-        assert column_values==sorted_values
+        self.assert_util(
+            sort_order["header"].lower(),
+            'name',
+            msg="Found : {} Expected : {}".format(
+                sort_order["header"].lower(),
+                'name'
+                )
+            )
+        self.assert_util(
+            column_values,
+            sorted_values,
+            msg="Found : {} Expected : {}".format(column_values, sorted_values)
+            )
         assert sort_order["ascending"]
         
     @pytest.mark.account
     # Verifies count on table
     def test_account_count(self, ucc_smartx_configs, add_multiple_account):
         account = AccountPage(ucc_smartx_configs)
-        assert account.table.get_count_title() == "{} Items".format(len(account.backend_conf.get_all_stanzas()))
+        self.assert_util(
+            account.table.get_count_title,
+            "{} Items".format(len(account.backend_conf.get_all_stanzas())),
+            msg="Found : {} Expected : {}".format(
+                account.table.get_count_title(),
+                "{} Items".format(len(account.backend_conf.get_all_stanzas()))
+                )
+            )
 
     @pytest.mark.account
     # Verifies the frontend after adding account
@@ -109,18 +127,36 @@ class TestAccount(UccTester):
         account.entity.password.set_value(ACCOUNT_CONFIG['password'])
         account.entity.security_token.set_value("TestToken")
         assert account.entity.save()
-        assert account.table.get_table()[ACCOUNT_CONFIG['name']] == {
+        self.assert_util(
+            account.table.get_table()[ACCOUNT_CONFIG['name']],
+            {
                 'name': ACCOUNT_CONFIG['name'],
                 'auth type': 'basic',
                 'actions': 'Edit | Clone | Delete'
-            }
+            },
+            msg="Found : {} Expected : {}".format(
+                account.table.get_table()[ACCOUNT_CONFIG['name']],
+                {
+                'name': ACCOUNT_CONFIG['name'],
+                'auth type': 'basic',
+                'actions': 'Edit | Clone | Delete'
+                }
+                )
+            )
 
     @pytest.mark.account
     # Verifies the filter functionality (Negative)
     def test_accounts_filter_functionality_negative(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.set_filter("heloo")
-        assert account.table.get_count_title() == "{} Items".format(account.table.get_row_count())
+        self.assert_util(
+            account.table.get_count_title,
+            "{} Items".format(account.table.get_row_count()),
+            msg="Found : {} Expected : {}".format(
+                account.table.get_count_title(),
+                "{} Items".format(account.table.get_row_count())
+                )
+            )
         account.table.clean_filter()
         
     @pytest.mark.account
@@ -128,57 +164,119 @@ class TestAccount(UccTester):
     def test_accounts_filter_functionality_positive(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.set_filter("TestAccount")
-        assert account.table.get_count_title() == "{} Items".format(account.table.get_row_count())
+        self.assert_util(
+            account.table.get_count_title,
+            "{} Items".format(account.table.get_row_count()),
+            msg="Found : {} Expected : {}".format(
+                account.table.get_count_title(),
+                "{} Items".format(account.table.get_row_count())
+                )
+            )
         account.table.clean_filter()
 
     @pytest.mark.account
     # Verifies the default number of rows in the table
     def test_account_default_rows_in_table(self, ucc_smartx_configs):
-        account = AccountPage(ucc_smartx_configs)   
-        number_of_rows = account.table.get_row_count()
-        assert number_of_rows == 0 
+        account = AccountPage(ucc_smartx_configs)
+        self.assert_util(
+            account.table.get_row_count,
+            0,
+            msg="Found : {} Expected : {}".format(
+                account.table.get_row_count(),
+                0
+                )
+            )
 
     @pytest.mark.account
     # Verifies the title and description of the page
     def test_account_title_and_description(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
-        assert account.title.wait_to_display() == "Configuration"
-        assert account.description.wait_to_display() == "Set up your add-on"
+        self.assert_util(
+            account.title.wait_to_display,
+            "Configuration",
+            msg="Found : {} Expected : {}".format(
+                account.title.wait_to_display(),
+                "Configuration"
+                )
+            )
+        self.assert_util(
+            account.description.wait_to_display,
+            "Set up your add-on",
+            msg="Found : {} Expected : {}".format(
+                account.description.wait_to_display(),
+                "Set up your add-on"
+                )
+            )
 
     @pytest.mark.account
     # Verifies the title of the 'Add Entity'
     def test_account_add_valid_title(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        assert account.entity.title.container.get_attribute('textContent').strip() == "Add Account"
+        self.assert_util(
+            account.entity.title.container.get_attribute('textContent').strip(),
+            "Add Account",
+            msg="Found : {} Expected : {}".format(
+                account.entity.title.container.get_attribute('textContent').strip(),
+                "Add Account"
+                )
+            )
 
     @pytest.mark.account
     # Verifies the title of the 'Edit Entity'
     def test_account_edit_valid_title(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.title.container.get_attribute('textContent').strip() == "Update Account"
+        self.assert_util(
+            account.entity.title.container.get_attribute('textContent').strip(),
+            "Update Account",
+            msg="Found : {} Expected : {}".format(
+                account.entity.title.container.get_attribute('textContent').strip(),
+                "Update Account"
+                )
+            )
 
     @pytest.mark.account
     # Verifies the title of the 'Clone Entity'
     def test_account_clone_valid_title(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.title.container.get_attribute('textContent').strip() == "Clone Account"
+        self.assert_util(
+            account.entity.title.container.get_attribute('textContent').strip(),
+            "Clone Account",
+            msg="Found : {} Expected : {}".format(
+                account.entity.title.container.get_attribute('textContent').strip(),
+                "Clone Account"
+                )
+            )
 
     @pytest.mark.account
     # Verifies the title of the 'Delete Entity'
     def test_account_delete_valid_title(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True)
-        assert account.entity.title.container.get_attribute('textContent').strip() == "Delete Confirmation"
+        self.assert_util(
+            account.entity.title.container.get_attribute('textContent').strip(),
+            "Delete Confirmation",
+            msg="Found : {} Expected : {}".format(
+                account.entity.title.container.get_attribute('textContent').strip(),
+                "Delete Confirmation"
+                )
+            )
 
     @pytest.mark.account
     # Verifies the prompt message of the 'Delete Entity'
     def test_account_delete_valid_prompt_message(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         prompt_message = account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True)
-        assert prompt_message == 'Are you sure you want to delete "{}" ? Ensure that no input is configured with "{}" as this will stop data collection for that input.'.format(ACCOUNT_CONFIG["name"],ACCOUNT_CONFIG["name"])
+        self.assert_util(
+            prompt_message,
+            'Are you sure you want to delete "{}" ? Ensure that no input is configured with "{}" as this will stop data collection for that input.'.format(ACCOUNT_CONFIG["name"],ACCOUNT_CONFIG["name"]),
+            msg="Found : {} Expected : {}".format(
+                prompt_message,
+                'Are you sure you want to delete "{}" ? Ensure that no input is configured with "{}" as this will stop data collection for that input.'.format(ACCOUNT_CONFIG["name"],ACCOUNT_CONFIG["name"])
+                )
+            )
 
     @pytest.mark.account
     # Verifies required field username
@@ -186,7 +284,15 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
-        assert account.entity.save(expect_error=True) == 'Field Username is required'
+        self.assert_util(
+            account.entity.save,
+            'Field Username is required',
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                account.entity.save(expect_error=True),
+                'Field Username is required'
+                )
+            )
 
     @pytest.mark.account
     # Verifies required field password
@@ -194,7 +300,15 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
-        assert account.entity.save(expect_error=True) == 'Field Password is required'
+        self.assert_util(
+            account.entity.save,
+            'Field Password is required',
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                account.entity.save(expect_error=True),
+                'Field Password is required'
+                )
+            )
 
     @pytest.mark.account
     # Verifies if the password field is masked or not in the Textbox
@@ -202,7 +316,14 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         textbox_type = account.entity.password.get_type()
-        assert textbox_type == 'password'
+        self.assert_util(
+            textbox_type,
+            'password',
+            msg="Found : {} Expected : {}".format(
+                textbox_type,
+                'password'
+                )
+            )
 
     @pytest.mark.account
     # Verifies required field name
@@ -211,7 +332,15 @@ class TestAccount(UccTester):
         account.entity.open()
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
-        assert account.entity.save(expect_error=True) == 'Field Name is required'
+        self.assert_util(
+            account.entity.save,
+            'Field Name is required',
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                account.entity.save(expect_error=True),
+                'Field Name is required'
+                )
+            )
 
     @pytest.mark.account
     # Verifies help text for the field name
@@ -219,7 +348,14 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         help_text = account.entity.name.get_help_text()
-        assert help_text == 'Enter a unique name for this account.'
+        self.assert_util(
+            help_text,
+            'Enter a unique name for this account.',
+            msg="Found : {} Expected : {}".format(
+                help_text,
+                'Enter a unique name for this account.'
+                )
+            )
 
     @pytest.mark.account
     # Verifies required field example environment
@@ -230,7 +366,15 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.environment.cancel_selected_value()
-        assert account.entity.save(expect_error=True) == 'Field Example Environment is required'
+        self.assert_util(
+            account.entity.save,
+            'Field Example Environment is required',
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                account.entity.save(expect_error=True),
+                'Field Example Environment is required'
+                )
+            )
 
     @pytest.mark.account
     # Verifies required field example multiple select
@@ -240,7 +384,15 @@ class TestAccount(UccTester):
         account.entity.name.set_value("TestMultiAccount")
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
-        assert account.entity.save(expect_error=True) == 'Field Example Multiple Select is required'
+        self.assert_util(
+            account.entity.save,
+            'Field Example Multiple Select is required',
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                account.entity.save(expect_error=True),
+                'Field Example Multiple Select is required'
+                )
+            )
     
     @pytest.mark.account
     # Verifies required field client id
@@ -248,7 +400,15 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.auth_key.select('OAuth 2.0 Authentication')
-        assert account.entity.save(expect_error=True) == 'Field Client Id is required'
+        self.assert_util(
+            account.entity.save,
+            'Field Client Id is required',
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                account.entity.save(expect_error=True),
+                'Field Client Id is required'
+                )
+            )
     
     @pytest.mark.account
     # Verifies required field client secret
@@ -259,7 +419,15 @@ class TestAccount(UccTester):
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
         account.entity.multiple_select.select("Option One")
         account.entity.client_id.set_value("TestClientId")
-        assert account.entity.save(expect_error=True) == 'Field Client Secret is required'
+        self.assert_util(
+            account.entity.save,
+            'Field Client Secret is required',
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                account.entity.save(expect_error=True),
+                'Field Client Secret is required'
+                )
+            )
 
     @pytest.mark.account
     # Verifies if the password field is masked or not in the Textbox
@@ -268,7 +436,14 @@ class TestAccount(UccTester):
         account.entity.open()
         account.entity.auth_key.select('OAuth 2.0 Authentication')
         textbox_type = account.entity.client_secret.get_type()
-        assert textbox_type == 'password'
+        self.assert_util(
+            textbox_type,
+            'password',
+            msg="Found : {} Expected : {}".format(
+                textbox_type,
+                'password'
+                )
+            )
 
     @pytest.mark.account
     # Verifies whether adding special characters, number in starting of name field displays validation error
@@ -278,8 +453,16 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.name.set_value("123TestAccount")
-        assert account.entity.save(expect_error=True) == 'Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.'
-    
+        self.assert_util(
+            account.entity.save,
+            'Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.',
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                account.entity.save(expect_error=True),
+                'Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.'
+                )
+            )
+
     @pytest.mark.account
     # Verifies the name field should not be more than 50 characters
     def test_account_valid_length_name(self, ucc_smartx_configs):
@@ -288,7 +471,15 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.name.set_value("TestUserTestUserTestUserTestUserTestUserTestUserTestUserTestUser")
-        assert account.entity.save(expect_error=True) == 'Length of ID should be between 1 and 50'
+        self.assert_util(
+            account.entity.save,
+            'Length of ID should be between 1 and 50',
+            left_args={'expect_error': True},
+            msg="Found : {} Expected : {}".format(
+                account.entity.save(expect_error=True),
+                'Length of ID should be between 1 and 50'
+                )
+            )
 
     @pytest.mark.account
     # Verifies default value of example environment
@@ -297,28 +488,56 @@ class TestAccount(UccTester):
         account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
-        assert account.entity.environment.get_value() == "Value1"
+        self.assert_util(
+            account.entity.environment.get_value,
+            "Value1",
+            msg="Found : {} Expected : {}".format(
+                account.entity.environment.get_value(),
+                "Value1"
+                )
+            )
 
     @pytest.mark.account
     # Verifies example environment list dropdown
     def test_account_list_example_environment(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        assert set(account.entity.environment.list_of_values()) == {"Value1", "Value2", "Other"}
+        self.assert_util(
+            set(account.entity.environment.list_of_values()),
+            {"Value1", "Value2", "Other"},
+            msg="Found : {} Expected : {}".format(
+                set(account.entity.environment.list_of_values()),
+                {"Value1", "Value2", "Other"}
+                )
+            )
 
     @pytest.mark.account
     # Verifies default value of auth type
     def test_account_default_value_auth_type(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        assert account.entity.auth_key.get_value() == "basic"
+        self.assert_util(
+            account.entity.auth_key.get_value,
+            "basic",
+            msg="Found : {} Expected : {}".format(
+                account.entity.auth_key.get_value(),
+                "basic"
+                )
+            )
 
     @pytest.mark.account
     # Verifies auth type list dropdown
     def test_account_list_auth_type(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        assert set(account.entity.auth_key.list_of_values()) == {"Basic Authentication", "OAuth 2.0 Authentication"}
+        self.assert_util(
+                    set(account.entity.auth_key.list_of_values()),
+                    {"Basic Authentication", "OAuth 2.0 Authentication"},
+                    msg="Found : {} Expected : {}".format(
+                        set(account.entity.auth_key.list_of_values()),
+                        {"Basic Authentication", "OAuth 2.0 Authentication"}
+                        )
+                    )
 
     @pytest.mark.account
     # Verifies Check/Uncheck in example checkbox
@@ -326,9 +545,23 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.example_checkbox.check()
-        assert account.entity.example_checkbox.is_checked() == True
+        self.assert_util(
+                    account.entity.example_checkbox.is_checked,
+                    True,
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.example_checkbox.is_checked(),
+                        True
+                        )
+                    )
         account.entity.example_checkbox.uncheck()
-        assert account.entity.example_checkbox.is_checked() == False
+        self.assert_util(
+                    account.entity.example_checkbox.is_checked,
+                    False,
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.example_checkbox.is_checked(),
+                        False
+                        )
+                    )
         
     @pytest.mark.account
     # Verifies example environment select value
@@ -336,14 +569,28 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
         account.entity.environment.select("Value2")
-        assert account.entity.environment.get_value() == "Value2"
+        self.assert_util(
+                    account.entity.environment.get_value,
+                    "Value2",
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.environment.get_value(),
+                        "Value2"
+                        )
+                    )
 
     @pytest.mark.account
-    # Verifies exampl multiple select list dropdown
+    # Verifies example multiple select list dropdown
     def test_account_list_example_multiple_select(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        assert set(account.entity.multiple_select.list_of_values()) == {"Option One", "Option Two"}
+        self.assert_util(
+                    set(account.entity.multiple_select.list_of_values()),
+                    {"Option One", "Option Two"},
+                    msg="Found : {} Expected : {}".format(
+                        set(account.entity.multiple_select.list_of_values()),
+                        {"Option One", "Option Two"}
+                        )
+                    )
 
     @pytest.mark.account
     # Verifies exampl multiple select value
@@ -352,21 +599,43 @@ class TestAccount(UccTester):
         account.entity.open()
         account.entity.multiple_select.select("Option One")
         account.entity.multiple_select.select("Option Two")
-        assert account.entity.multiple_select.get_values() == ['Option One', 'Option Two']
+        self.assert_util(
+                    account.entity.multiple_select.get_values,
+                    ['Option One', 'Option Two'],
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.multiple_select.get_values(),
+                        ['Option One', 'Option Two']
+                        )
+                    )
 
     @pytest.mark.account
     # Verifies exampl multiple select seach funtionality
     def test_account_search_value_example_multiple_select(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        assert account.entity.multiple_select.search_get_list("Option One") == ["Option One"]
+        self.assert_util(
+                    account.entity.multiple_select.search_get_list,
+                    ["Option One"],
+                    left_args={'value': "Option One"},
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.multiple_select.search_get_list("Option One"),
+                        ["Option One"]
+                        )
+                    )
         
     @pytest.mark.account
     # Verifies default value of example radio
     def test_account_default_value_example_radio(self, ucc_smartx_configs):
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        assert account.entity.account_radio.get_value() == "Yes"
+        self.assert_util(
+                    account.entity.account_radio.get_value,
+                    "Yes",
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.account_radio.get_value(),
+                        "Yes"
+                        )
+                    )
 
     @pytest.mark.account
     # Verifies close functionality at time of add
@@ -432,21 +701,42 @@ class TestAccount(UccTester):
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.account_radio.select("Yes")
-        assert account.entity.save(expect_error=True) == 'Name {} is already in use'.format(ACCOUNT_CONFIG["name"])
+        self.assert_util(
+                    account.entity.save,
+                    'Name {} is already in use'.format(ACCOUNT_CONFIG["name"]),
+                    left_args={'expect_error': True},
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.save(expect_error=True),
+                        'Name {} is already in use'.format(ACCOUNT_CONFIG["name"])
+                        )
+                    )
         
     @pytest.mark.account
     # Verifies the frontend delete functionlity
     def test_account_delete_row_frontend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
-        assert ACCOUNT_CONFIG["name"] not in account.table.get_table()
+        self.assert_util(ACCOUNT_CONFIG["name"],
+                         account.table.get_table(),
+                         "not in",
+                         msg="{} should not be present in {}".format(
+                             ACCOUNT_CONFIG["name"],
+                             account.table.get_table())
+                         )
 
     @pytest.mark.account
     # Verifies the frontend uneditable fields at time of edit of the account
     def test_account_edit_uneditable_field_name(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.name.is_editable() == False
+        self.assert_util(
+                    account.entity.name.is_editable,
+                    False,
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.name.is_editable(),
+                        False
+                        )
+                    )
 
     @pytest.mark.account
     # Verifies the frontend edit functionality
@@ -460,11 +750,22 @@ class TestAccount(UccTester):
         account.entity.security_token.set_value("TestEditToken")
         account.entity.account_radio.select("No")
         assert account.entity.save()
-        assert account.table.get_table()[ACCOUNT_CONFIG["name"]] == { 
-                'name': 'TestAccount', 
-                'auth type': 'basic',
-                'actions': 'Edit | Clone | Delete'
-        }
+        self.assert_util(
+                    account.table.get_table()[ACCOUNT_CONFIG["name"]] ,
+                    {
+                        'name': 'TestAccount', 
+                        'auth type': 'basic',
+                        'actions': 'Edit | Clone | Delete'
+                        },
+                    msg="Found : {} Expected : {}".format(
+                        account.table.get_table()[ACCOUNT_CONFIG["name"]] ,
+                        {
+                            'name': 'TestAccount', 
+                            'auth type': 'basic',
+                            'actions': 'Edit | Clone | Delete'
+                            }
+                        )
+                    )
         
     @pytest.mark.account
     # Verifies by saving an entity with duplicate name at time of clone it displays and error
@@ -472,35 +773,90 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
-        assert account.entity.save(expect_error=True) == 'Name {} is already in use'.format(ACCOUNT_CONFIG["name"])
+        self.assert_util(
+                    account.entity.save,
+                    'Name {} is already in use'.format(ACCOUNT_CONFIG["name"]),
+                    left_args={'expect_error': True},
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.save(expect_error=True),
+                        'Name {} is already in use'.format(ACCOUNT_CONFIG["name"])
+                        )
+                    )
 
     @pytest.mark.account
     # Verifies the frontend clone functionality
     def test_account_clone_frontend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.name.get_value() == ""
+        self.assert_util(
+                    account.entity.name.get_value,
+                    "",
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.name.get_value(),
+                        ""
+                        )
+                    )
         account.entity.name.set_value("TestAccount2")
         account.entity.username.set_value("TestUserClone")
         account.entity.password.set_value("TestPasswordClone")
         account.entity.security_token.set_value("TestTokenClone")
         account.entity.account_radio.select("Yes")
         assert account.entity.save()
-        assert account.table.get_table()["TestAccount2"] == { 
-                'name': 'TestAccount2', 
-                'auth type': 'basic',
-                'actions': 'Edit | Clone | Delete'
-            }
+        self.assert_util(
+                    account.table.get_table()["TestAccount2"],
+                    {
+                        'name': 'TestAccount2', 
+                        'auth type': 'basic',
+                        'actions': 'Edit | Clone | Delete'
+                    },
+                    msg="Found : {} Expected : {}".format(
+                        account.table.get_table()["TestAccount2"],
+                        {
+                            'name': 'TestAccount2', 
+                            'auth type': 'basic',
+                            'actions': 'Edit | Clone | Delete'
+                            }
+                        )
+                    )
+                        
 
     @pytest.mark.account
     # Verifies the frontend default fields at time of clone
     def test_account_clone_default_values(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.name.get_value() == ""
-        assert account.entity.username.get_value() == "TestUser"
-        assert account.entity.multiple_select.get_values() == ['Option One']
-        assert account.entity.auth_key.get_value() == "basic"
+        self.assert_util(
+                    account.entity.name.get_value,
+                    "",
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.name.get_value(),
+                        ""
+                        )
+                    )
+        self.assert_util(
+                    account.entity.username.get_value,
+                    "TestUser",
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.username.get_value(),
+                        "TestUser"
+                        )
+                    )
+        self.assert_util(
+                    account.entity.multiple_select.get_values,
+                    ['Option One'],
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.multiple_select.get_values(),
+                        ['Option One']
+                        )
+                    )
+        self.assert_util(
+                    account.entity.auth_key.get_value,
+                    "basic",
+                    msg="Found : {} Expected : {}".format(
+                        account.entity.auth_key.get_value(),
+                        "basic"
+                        )
+                    )
     
     @pytest.mark.account
     # Verifies the account in backend after adding account from frontend
@@ -513,17 +869,34 @@ class TestAccount(UccTester):
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.security_token.set_value(ACCOUNT_CONFIG["token"])
         assert account.entity.save()
-        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"]) == {
-                'account_checkbox': '0',
-                'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
-                'account_radio' : '1',
-                'auth_type' : ACCOUNT_CONFIG['auth_type'],
-                'username' : ACCOUNT_CONFIG["username"],
-                'custom_endpoint': ACCOUNT_CONFIG['custom_endpoint'],
-                'disabled': False,
-                'password': '******',
-                'token': '******'
-            }
+        self.assert_util(
+                    account.backend_conf.get_stanza,
+                    {'account_checkbox': '0',
+                        'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
+                        'account_radio' : '1',
+                        'auth_type' : ACCOUNT_CONFIG['auth_type'],
+                        'username' : ACCOUNT_CONFIG["username"],
+                        'custom_endpoint': ACCOUNT_CONFIG['custom_endpoint'],
+                        'disabled': False,
+                        'password': '******',
+                        'token': '******'
+                    },
+                    left_args={'stanza': ACCOUNT_CONFIG["name"]},
+                    msg="Found : {} Expected : {}".format(
+                        account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"]),
+                        {
+                            'account_checkbox': '0',
+                            'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
+                            'account_radio' : '1',
+                            'auth_type' : ACCOUNT_CONFIG['auth_type'],
+                            'username' : ACCOUNT_CONFIG["username"],
+                            'custom_endpoint': ACCOUNT_CONFIG['custom_endpoint'],
+                            'disabled': False,
+                            'password': '******',
+                            'token': '******'
+                            }
+                        )
+                    )
 
     @pytest.mark.account
     # Verifies the account in backend after editing account from frontend
@@ -536,18 +909,35 @@ class TestAccount(UccTester):
         account.entity.security_token.set_value("TestEditToken")
         account.entity.account_radio.select("No")
         account.entity.save()
-        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"]) == {
-                'account_checkbox': '1',
-                'account_multiple_select' : 'one,two',
-                'account_radio' : '0',
-                'auth_type' : 'basic',
-                'username' : 'TestEditUser',
-                'custom_endpoint': 'login.example.com',
-                'disabled': False,
-                'password': '******',
-                'token': '******'
-            }
-    
+        self.assert_util(
+                    account.backend_conf.get_stanza,
+                    {'account_checkbox': '1',
+                        'account_multiple_select' : 'one,two',
+                        'account_radio' : '0',
+                        'auth_type' : 'basic',
+                        'username' : 'TestEditUser',
+                        'custom_endpoint': 'login.example.com',
+                        'disabled': False,
+                        'password': '******',
+                        'token': '******'
+                    },
+                    left_args={'stanza': ACCOUNT_CONFIG["name"]},
+                    msg="Found : {} Expected : {}".format(
+                        account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"]),
+                        {
+                            'account_checkbox': '1',
+                            'account_multiple_select' : 'one,two',
+                            'account_radio' : '0',
+                            'auth_type' : 'basic',
+                            'username' : 'TestEditUser',
+                            'custom_endpoint': 'login.example.com',
+                            'disabled': False,
+                            'password': '******',
+                            'token': '******'
+                            }
+                        )
+                    )
+
     @pytest.mark.account
     # Verifies the account in backend after cloning account from frontend
     def test_account_clone_backend_validation(self, ucc_smartx_configs, add_account):
@@ -560,24 +950,48 @@ class TestAccount(UccTester):
         account.entity.security_token.set_value("TestCloneToken")
         account.entity.account_radio.select("No")
         account.entity.save()
-        assert account.backend_conf.get_stanza("TestAccountClone") == {
-                'account_checkbox': '1',
-                'account_multiple_select' : 'one,two',
-                'account_radio' : '0',
-                'auth_type' : 'basic',
-                'username' : 'TestCloneUser',
-                'custom_endpoint': 'login.example.com',
-                'disabled': False,
-                'password': '******',
-                'token': '******'
-            }
+        self.assert_util(
+                    account.backend_conf.get_stanza,
+                    {
+                        'account_checkbox': '1',
+                        'account_multiple_select' : 'one,two',
+                        'account_radio' : '0',
+                        'auth_type' : 'basic',
+                        'username' : 'TestCloneUser',
+                        'custom_endpoint': 'login.example.com',
+                        'disabled': False,
+                        'password': '******',
+                        'token': '******'
+                    },
+                    left_args={'stanza': "TestAccountClone"},
+                    msg="Found : {} Expected : {}".format(
+                        account.backend_conf.get_stanza("TestAccountClone"),
+                        {
+                            'account_checkbox': '1',
+                        'account_multiple_select' : 'one,two',
+                        'account_radio' : '0',
+                        'auth_type' : 'basic',
+                        'username' : 'TestCloneUser',
+                        'custom_endpoint': 'login.example.com',
+                        'disabled': False,
+                        'password': '******',
+                        'token': '******'
+                    }
+                        )
+                    )
     
     @pytest.mark.account
     # Verifies the account in backend after deleting the account from frontend
     def test_account_delete_row_backend_validation(self, ucc_smartx_configs, add_account):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
-        assert ACCOUNT_CONFIG["name"] not in account.backend_conf.get_all_stanzas().keys()
+        self.assert_util(ACCOUNT_CONFIG["name"],
+                         account.backend_conf.get_all_stanzas().keys(),
+                         "not in",
+                         msg="{} should not be present in {}".format(
+                             ACCOUNT_CONFIG["name"],
+                             account.backend_conf.get_all_stanzas().keys())
+                         )
     
     @pytest.mark.account
     # Verifies pagination list
@@ -586,7 +1000,13 @@ class TestAccount(UccTester):
         name_column_page1 = account.table.get_column_values("name")
         account.table.switch_to_next()
         name_column_page2 = account.table.get_column_values("name")
-        assert name_column_page1 != name_column_page2
+        self.assert_util(name_column_page1,
+                         name_column_page2,
+                         "!=",
+                         msg="{} should not be equal to {}".format(
+                             name_column_page1,
+                             name_column_page2)
+                         )
 
     @pytest.mark.account
     # Verifies whether the table help link redirects to the correct URL
@@ -594,12 +1014,27 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_configs)
         go_to_link = "https://docs.splunk.com/Documentation"
         account.entity.open()
-        assert account.entity.help_link.go_to_link() == go_to_link
+        self.assert_util(
+                account.entity.help_link.go_to_link(),
+                go_to_link,
+                msg="Found : {} Expected : {}".format(
+                    account.entity.help_link.go_to_link(),
+                    go_to_link
+                    )
+                )
 
     @pytest.mark.account
     # Verifies by deleting the input used account
-    @pytest.mark.skip(reason="This functionality is not working in Example addon")
     def test_account_delete_account_in_use(self, ucc_smartx_configs, add_account, add_input):
         account = AccountPage(ucc_smartx_configs)
         account.table.delete_row(ACCOUNT_CONFIG["name"])
-        assert account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True) == r'TestAccount cannot be deleted because it is in use'
+        self.assert_util(
+                    account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True),
+                    r'TestAccount cannot be deleted because it is in use',
+                    left_args={'name': ACCOUNT_CONFIG["name"], "prompt_msg": True},
+
+                    msg="Found : {} Expected : {}".format(
+                        account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True),
+                        r'TestAccount cannot be deleted because it is in use'
+                    )
+        )

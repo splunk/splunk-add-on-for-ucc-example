@@ -14,7 +14,7 @@ services:
       - splunk
       - sc4s
     volumes:
-      - results:/work/test-results
+      - results:/home/circleci/work/test-results
 
   sc4s:
     image: splunk/scs:latest
@@ -59,7 +59,7 @@ services:
       dockerfile: Dockerfile-splunk
       args:
         SPLUNK_APP_ID: ${SPLUNK_APP_ID}
-        SPLUNK_APP_PACKAGE: package
+        SPLUNK_APP_PACKAGE: ${SPLUNK_APP_PACKAGE}
         SPLUNK_VERSION: ${SPLUNK_VERSION}
     hostname: splunk
     ports:
