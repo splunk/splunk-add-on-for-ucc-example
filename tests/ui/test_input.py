@@ -123,6 +123,17 @@ class TestInput(UccTester):
     ##########################################
 
     @pytest.mark.input
+    # Verifies whether the help link redirects to the correct URL
+    def test_example_input_one_help_link(self, ucc_smartx_configs):
+        input_page = InputPage(ucc_smartx_configs)
+        go_to_link = "https://docs.splunk.com/Documentation"
+        input_page.create_new_input.select("Example Input One")
+        self.assert_util(
+            input_page.entity1.help_link.go_to_link,
+            go_to_link
+            )
+            
+    @pytest.mark.input
     # Verifies required field name in example input one
     def test_example_input_one_required_field_name(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
@@ -587,21 +598,6 @@ class TestInput(UccTester):
                 )
             )
 
-    @pytest.mark.input
-    # Verifies whether the help link redirects to the correct URL
-    def test_example_input_one_help_link(self, ucc_smartx_configs):
-        input_page = InputPage(ucc_smartx_configs)
-        go_to_link = "https://docs.splunk.com/Documentation"
-        input_page.create_new_input.select("Example Input One")
-        self.assert_util(
-            input_page.entity1.help_link.go_to_link(),
-            go_to_link,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.help_link.go_to_link(),
-                go_to_link
-                )
-            )
-
 
     ###################################
     #### TEST CASES FOR ENTITY ONE ####
@@ -754,10 +750,11 @@ class TestInput(UccTester):
         assert input_page.entity1.save()
         value_to_test = {
             'account': 'test_input',
+            'disabled': False,
+            'index': 'main',
             'input_one_checkbox': '0',
             'input_one_radio': '0',
             'interval': '3600',
-            'index': 'main',
             'limit': '2000',
             'multipleSelectTest': 'a',
             'object': 'edit_object',
@@ -765,15 +762,15 @@ class TestInput(UccTester):
             'order_by': 'LastDate',
             'singleSelectTest': 'four',
             'start_date': '2020-20-20T20:20:20.000z',
-            'disabled': 0,
             }
+
         backend_stanza = input_page.backend_conf.get_stanza("example_input_one://dummy_input_one")
         for each_key, each_value in value_to_test.items():
+            assert each_key in backend_stanza
             self.assert_util(
-                each_value,
+                each_value ,
                 backend_stanza[each_key],
-                "in",
-                msg="{} should be present un {}".format(
+                msg="Found : {} Expected : {}".format(
                     each_value ,
                     backend_stanza[each_key]
                     )
@@ -936,16 +933,17 @@ class TestInput(UccTester):
             'order_by': 'LastModifiedDate',
             'singleSelectTest': 'two',
             'start_date': '2020-12-11T20:00:32.000z',
-            'disabled': 0,
-            }
+            'disabled': False,
+        }
+
         backend_stanza = input_page.backend_conf.get_stanza("example_input_one://Clone_Test")
         for each_key, each_value in value_to_test.items():
+            assert each_key in backend_stanza
             self.assert_util(
                 each_value ,
                 backend_stanza[each_key],
-                "in",
-                msg="{} should be present in {}".format(
-                    each_value,
+                msg="Found : {} Expected : {}".format(
+                    each_value ,
                     backend_stanza[each_key]
                     )
                 )
@@ -1183,30 +1181,18 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         type_filter_list = ["All", "Example Input One", "Example Input Two"]
         self.assert_util(
-            input_page.type_filter.get_input_type_list(),
-            type_filter_list,
-            msg="Found : {} Expected : {}".format(
-                input_page.type_filter.get_input_type_list(),
-                type_filter_list
-                )
+            input_page.type_filter.get_input_type_list,
+            type_filter_list
             )
         input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)
         self.assert_util(
             input_page.table.get_row_count,
-            1,
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_row_count(),
-                1
-                )
+            1
             )
         input_page.type_filter.select_input_type("Example Input Two")
         self.assert_util(
             input_page.table.get_row_count,
-            1,
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_row_count(),
-                1
-                )
+            1
             )
 
     @pytest.mark.input
@@ -1228,12 +1214,8 @@ class TestInput(UccTester):
     def test_inputs_pagination_list(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
         self.assert_util(
-            input_page.pagination.get_pagination_list(),
-            ['10 Per Page','25 Per Page','50 Per Page'],
-            msg="Found : {} Expected : {}".format(
-                input_page.pagination.get_pagination_list(),
-                ['10 Per Page','25 Per Page','50 Per Page']
-                )
+            input_page.pagination.get_pagination_list,
+            ['10 Per Page','25 Per Page','50 Per Page']
             )
     
 
@@ -1758,14 +1740,14 @@ class TestInput(UccTester):
             'input_two_multiple_select': 'one,two',
             'start_date': '2020-12-11T20:00:32.000z',
             'disabled': 0,
-            }
+        }
         backend_stanza = input_page.backend_conf.get_stanza("example_input_two://Test_Add")
         for each_key, each_value in value_to_test.items():
+            assert each_key in backend_stanza
             self.assert_util(
                 each_value ,
                 backend_stanza[each_key],
-                "in",
-                msg="{} should be present in {}".format(
+                msg="Found : {} Expected : {}".format(
                     each_value ,
                     backend_stanza[each_key]
                     )
@@ -1835,13 +1817,14 @@ class TestInput(UccTester):
             'start_date': '2020-20-20T20:20:20.000z',
             'disabled': 0,
             }
+            
         backend_stanza = input_page.backend_conf.get_stanza("example_input_two://dummy_input_two")
         for each_key, each_value in value_to_test.items():
+            assert each_key in backend_stanza
             self.assert_util(
                 each_value ,
                 backend_stanza[each_key],
-                "in",
-                msg="{} should be present in {}".format(
+                msg="Found : {} Expected : {}".format(
                     each_value ,
                     backend_stanza[each_key]
                     )
@@ -1961,11 +1944,11 @@ class TestInput(UccTester):
             }
         backend_stanza = input_page.backend_conf.get_stanza("example_input_two://Clone_Test")
         for each_key, each_value in value_to_test.items():
+            assert each_key in backend_stanza
             self.assert_util(
                 each_value ,
                 backend_stanza[each_key],
-                "in",
-                msg="{} should be present in {}".format(
+                msg="Found : {} Expected : {}".format(
                     each_value ,
                     backend_stanza[each_key]
                     )

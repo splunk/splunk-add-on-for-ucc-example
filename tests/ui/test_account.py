@@ -1015,12 +1015,8 @@ class TestAccount(UccTester):
         go_to_link = "https://docs.splunk.com/Documentation"
         account.entity.open()
         self.assert_util(
-                account.entity.help_link.go_to_link(),
-                go_to_link,
-                msg="Found : {} Expected : {}".format(
-                    account.entity.help_link.go_to_link(),
-                    go_to_link
-                    )
+                account.entity.help_link.go_to_link,
+                go_to_link
                 )
 
     @pytest.mark.account
