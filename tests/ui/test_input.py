@@ -126,11 +126,11 @@ class TestInput(UccTester):
     # Verifies whether the help link redirects to the correct URL
     def test_example_input_one_help_link(self, ucc_smartx_configs):
         input_page = InputPage(ucc_smartx_configs)
-        help_link = "https://docs.splunk.com/Documentation"
+        go_to_link = "https://docs.splunk.com/Documentation"
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
             input_page.entity1.help_link.go_to_link,
-            help_link
+            go_to_link
             )
             
     @pytest.mark.input

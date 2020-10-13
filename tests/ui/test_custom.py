@@ -30,10 +30,10 @@ class TestCustom(UccTester):
     # This test case checks whether help link redirects to the correct URL
     def test_custom_help_link(self, ucc_smartx_configs):
         custom = Custom(ucc_smartx_configs)
-        help_link = "https://docs.splunk.com/Documentation"
+        go_to_link = "https://docs.splunk.com/Documentation"
         self.assert_util(
             custom.test_help_link.go_to_link,
-            help_link
+            go_to_link
             )
             
     @pytest.mark.custom
