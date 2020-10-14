@@ -51,5 +51,3 @@ src
 !deps/build
 !package/appserver/static/js/build
 *.log
-output
-.vscode/settings.json
