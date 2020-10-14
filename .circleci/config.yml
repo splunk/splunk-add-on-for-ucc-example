@@ -356,14 +356,22 @@ workflows:
           requires:
             - package
           steps:
-            - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome" 
+            - run: 
+              command: |
+                mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome" 
+                cd /home/circleci/work
+                pytest $@
           tunnel_identifier: chrome
       - sauce-connect/with_proxy:
           name: Safari Tests
           requires:
             - package
           steps:
-            - run: mvn verify -B -Dsauce.browser=safari  -Dsauce.tunnel="safari"
+            - run: 
+              command: |
+                mvn verify -B -Dsauce.browser=safari  -Dsauce.tunnel="safari"
+                cd /home/circleci/work
+                pytest $@
           tunnel_identifier: safari
       - splunk-release/tag:
           name: tag-alpha
