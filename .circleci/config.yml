@@ -7,6 +7,7 @@
 version: 2.1
 orbs:
   go: circleci/go@0.2.0
+  sauce-connect: saucelabs/sauce-connect@1.0.1
   splunk-app-package:
     executors:
       python27:
@@ -121,6 +122,15 @@ orbs:
                 pip install git+https://github.com/pixelb/crudini        
                 mkdir test-results
                 cp -r /tmp/workspace/output output
+          - run:
+              name: Install Sauce Labs and Set Up Tunnel
+              background: true
+              command: |
+                curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o saucelabs.tar.gz
+                tar -xzf saucelabs.tar.gz
+                cd sc-*
+                bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca
+                wget --retry-connrefused --no-check-certificate -T 60 localhost:4445 
           - run:
               name: Splunk Testing
               command: |
@@ -320,6 +330,18 @@ jobs:
             source ~/.venv/bin/activate
             reuse lint
 workflows:
+  browser_tests:
+    jobs:
+      - sauce-connect/with_proxy:
+          name: Chrome Tests
+          steps:
+            - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome"
+          tunnel_identifier: chrome
+      - sauce-connect/with_proxy:
+          name: Safari Tests
+          steps:
+            - run: mvn verify -B -Dsauce.browser=safari  -Dsauce.tunnel="safari"
+          tunnel_identifier: safari
   build:
     jobs:
       - reuse:
