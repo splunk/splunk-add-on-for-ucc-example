@@ -111,6 +111,10 @@ orbs:
             description: Image version
             type: string
             default: latest
+          test_set:
+            description: Test Set
+            type: string
+            default: knowledge
         steps:
           - attach_workspace:
               at: /tmp/workspace
@@ -125,10 +129,11 @@ orbs:
               name: Splunk Testing
               command: |
                 # Start Splunk
-                ls -l deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf
+                [ ! -d "tests/<<parameters.test_set>>" ] && exit 0
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
+                export TEST_SET=tests/<<parameters.test_set>>
                 docker-compose -f docker-compose-ci.yml build
                 docker-compose -f docker-compose-ci.yml up -d splunk                
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
@@ -143,12 +148,7 @@ orbs:
                 sleep 30
                 # Run the tests
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
-              no_output_timeout: 2h
-          - run:
-              name: Splunk Get Results
-              when: always
-              command: |
-                # Collect Results
+
                 docker container create --name dummy \
                                     -v project_results:/home/circleci/work/test-results \
                                     registry.access.redhat.com/ubi7/ubi
@@ -162,6 +162,10 @@ orbs:
             description: Image version
             type: string
             default: latest
+          test_set:
+            description: Test Set
+            type: string
+            default: knowledge
         executor: python37
         steps:
           - checkout
@@ -171,6 +175,7 @@ orbs:
               docker_layer_caching: true
           - aio:
               splunk_version: <<parameters.splunk_version>>
+              test_set: <<parameters.test_set>>
           - store_artifacts:
               path: /tmp/diag
               destination: test-diag
@@ -346,6 +351,7 @@ workflows:
           matrix:
             parameters:
               splunk_version: ["7.2", "7.3", "8.0"]
+              test_set: ["knowledge", "ui"]
           filters:
             branches:
               only: /.*/
