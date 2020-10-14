@@ -356,7 +356,6 @@ workflows:
           requires:
             - package
           steps:
-            - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome" 
             - run: cd /home/circleci/work
             - run: pytest $@
           tunnel_identifier: chrome
@@ -365,7 +364,8 @@ workflows:
           requires:
             - package
           steps:
-            - run: mvn verify -B -Dsauce.browser=safari  -Dsauce.tunnel="safari"
+            - run: cd /home/circleci/work
+            - run: pytest $@
           tunnel_identifier: safari
       - splunk-release/tag:
           name: tag-alpha
