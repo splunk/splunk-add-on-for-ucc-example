@@ -351,7 +351,7 @@ workflows:
           matrix:
             parameters:
               splunk_version: ["7.2", "7.3", "8.0"]
-              test_set: ["knowledge", "ui", "nope"]
+              test_set: ["knowledge", "ui"]
           filters:
             branches:
               only: /.*/
