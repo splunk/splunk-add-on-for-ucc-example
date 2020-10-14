@@ -152,6 +152,7 @@ orbs:
                 bin/sc -u ${SAUCELABS_USER} -k ${SAUCELABS_KEY}
                 wget --retry-connrefused --no-check-certificate -T 60 localhost:4445
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
+                kill -9 `cat /tmp/sc_client.pid`
               no_output_timeout: 2h
           - run:
               name: Splunk Get Results
@@ -333,11 +334,17 @@ workflows:
     jobs:
       - sauce-connect/with_proxy:
           name: Chrome Tests
+          environment:
+            SAUCE_USERNAME: ta-factory-01
+            SAUCE_ACCESS_KEY: be7beeab-8bba-420c-90b3-8eac2d16d3ca
           steps:
             - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome"
           tunnel_identifier: chrome
       - sauce-connect/with_proxy:
           name: Safari Tests
+          environment:
+            SAUCE_USERNAME: ta-factory-01
+            SAUCE_ACCESS_KEY: be7beeab-8bba-420c-90b3-8eac2d16d3ca
           steps:
             - run: mvn verify -B -Dsauce.browser=safari  -Dsauce.tunnel="safari"
           tunnel_identifier: safari
