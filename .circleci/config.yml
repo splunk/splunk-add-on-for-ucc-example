@@ -144,6 +144,12 @@ orbs:
                 docker-compose -f docker-compose-ci.yml up -d splunk
                 sleep 30
                 # Run the tests
+                curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o saucelabs.tar.gz
+                tar -xzf saucelabs.tar.gz
+                cd sc-*
+                bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca
+                wget --retry-connrefused --no-check-certificate -T 60 localhost:4445
+                
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
               no_output_timeout: 2h
           - run:
