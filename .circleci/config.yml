@@ -327,7 +327,7 @@ workflows:
       - sauce-connect/with_proxy:
           name: Chrome Tests
           steps:
-            - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome" -Dsauce.username=ta-factory-01
+            - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome" 
           tunnel_identifier: chrome
       - sauce-connect/with_proxy:
           name: Safari Tests
