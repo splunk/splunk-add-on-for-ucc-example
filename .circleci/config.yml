@@ -334,17 +334,11 @@ workflows:
     jobs:
       - sauce-connect/with_proxy:
           name: Chrome Tests
-          environment:
-            SAUCE_USERNAME: ta-factory-01
-            SAUCE_ACCESS_KEY: be7beeab-8bba-420c-90b3-8eac2d16d3ca
           steps:
-            - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome"
+            - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome" -Dsauce.username=ta-factory-01
           tunnel_identifier: chrome
       - sauce-connect/with_proxy:
           name: Safari Tests
-          environment:
-            SAUCE_USERNAME: ta-factory-01
-            SAUCE_ACCESS_KEY: be7beeab-8bba-420c-90b3-8eac2d16d3ca
           steps:
             - run: mvn verify -B -Dsauce.browser=safari  -Dsauce.tunnel="safari"
           tunnel_identifier: safari
