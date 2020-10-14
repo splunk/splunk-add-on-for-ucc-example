@@ -6,4 +6,5 @@
 ##
 
 cd /home/circleci/work
+echo Test Args $@
 pytest $@
