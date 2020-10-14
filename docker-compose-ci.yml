@@ -7,7 +7,8 @@ version: "3.7"
 
 services:
   test:
-    command: ${TEST_SET}
+    environment:
+      - TEST_SET=${TEST_SET}
     build:
       context: .
       dockerfile: Dockerfile-tests

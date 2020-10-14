@@ -6,5 +6,5 @@
 ##
 
 cd /home/circleci/work
-echo Test Args $@
-pytest $@
+echo Test Args $@ ${TEST_SET}
+pytest $@ ${TEST_SET}
