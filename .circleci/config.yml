@@ -129,7 +129,7 @@ orbs:
               name: Splunk Testing
               command: |
                 # Start Splunk
-                if [ !-d "tests/<<parameters.test_set>>" ]; then exit 0
+                [ !-d "tests/<<parameters.test_set>>" ] && exit 0
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
