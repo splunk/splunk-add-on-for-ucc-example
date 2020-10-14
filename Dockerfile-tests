@@ -22,5 +22,4 @@ RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.t
 RUN cd ../..
 COPY package /home/circleci/work/package
 
-CMD /entrypoint.sh
-
+ENTRYPOINT /entrypoint.sh
