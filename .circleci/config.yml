@@ -351,20 +351,20 @@ workflows:
           filters:
             branches:
               only: /.*/
-      # - sauce-connect/with_proxy:
-      #     name: Chrome Tests
-      #     requires:
-      #       - package
-      #     steps:
-      #       - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome" 
-      #     tunnel_identifier: chrome
-      # - sauce-connect/with_proxy:
-      #     name: Safari Tests
-      #     requires:
-      #       - package
-      #     steps:
-      #       - run: mvn verify -B -Dsauce.browser=safari  -Dsauce.tunnel="safari"
-      #     tunnel_identifier: safari
+      - sauce-connect/with_proxy:
+          name: Chrome Tests
+          requires:
+            - package
+          steps:
+            - run: mvn verify -B -Dsauce.browser=chrome  -Dsauce.tunnel="chrome" 
+          tunnel_identifier: chrome
+      - sauce-connect/with_proxy:
+          name: Safari Tests
+          requires:
+            - package
+          steps:
+            - run: mvn verify -B -Dsauce.browser=safari  -Dsauce.tunnel="safari"
+          tunnel_identifier: safari
       - splunk-release/tag:
           name: tag-alpha
           tag_level: alpha
