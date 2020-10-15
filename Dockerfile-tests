@@ -12,6 +12,7 @@ RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
 
 COPY tests/entrypoint.sh /
+COPY tests/entrypoint.sh /home/circleci/work/entrypoint.sh
 COPY tests/pytest-ci.ini /home/circleci/work/pytest.ini
 COPY .pytest.expect /home/circleci/work/.pytest.expect
 
@@ -28,5 +29,4 @@ RUN cd /home/circleci/work/tests/sc-*
 RUN /home/circleci/work/tests/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca --doctor
 RUN wget --retry-connrefused --no-check-certificate -T 6 -bqc localhost:4445
 
-CMD /entrypoint.sh
 
