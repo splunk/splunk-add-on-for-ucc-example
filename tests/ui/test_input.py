@@ -1338,7 +1338,7 @@ class TestInput(UccTester):
         """ Verifies the filter functionality (Positive)"""
         input_page = InputPage(ucc_smartx_configs)
         input_page.table.set_filter("dummy")
-        self.assert_util(input_page.table.get_row_count, 1)
+        self.assert_util(input_page.table.get_row_count, 2)
         self.assert_util(
             input_page.table.get_count_title,
             "{} Inputs".format(input_page.table.get_row_count()),

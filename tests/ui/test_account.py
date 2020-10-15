@@ -817,6 +817,7 @@ class TestAccount(UccTester):
         """ Verifies the frontend clone functionality"""
         account = AccountPage(ucc_smartx_configs)
         account.table.wait_for_rows_to_appear(1)
+        account.table.clone_row(ACCOUNT_CONFIG["name"])
         account.entity.name.set_value("TestAccount2")
         account.entity.username.set_value("TestUserClone")
         account.entity.password.set_value("TestPasswordClone")
