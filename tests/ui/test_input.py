@@ -595,8 +595,9 @@ class TestInput(UccTester):
             assert each_key in backend_stanza
             self.assert_util(
                 each_value ,
-                backend_stanza[each_key],   )
+                backend_stanza[each_key],  
                 )
+                
 
     @pytest.mark.input
     def test_example_input_one_edit_uneditable_field_name(self, ucc_smartx_configs, add_input_one):
