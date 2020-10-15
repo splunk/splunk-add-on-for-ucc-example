@@ -151,7 +151,7 @@ orbs:
               when: always
               command: |
                 ls -la /home/circleci/work/
-                sudo /home/circleci/work/entrypoint.sh
+                sudo ./entrypoint.sh
           - run:
               name: Splunk Get Results
               when: always
