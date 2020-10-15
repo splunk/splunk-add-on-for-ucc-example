@@ -22,7 +22,6 @@ RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.t
 RUN cd ../..
 COPY package /home/circleci/work/package
 
-RUN apt-get update
 RUN apt-get install -y curl
 RUN curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o saucelabs.tar.gz
 RUN tar -xzf saucelabs.tar.gz
