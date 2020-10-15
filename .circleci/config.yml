@@ -342,6 +342,22 @@ workflows:
               only: /.*/
           requires:
             - package
+      - sauce-connect/with_proxy:
+          name: Chrome Tests
+          requires:
+            - package
+          steps:
+            - run: cd /home/circleci/work
+            - run: pytest $@
+          tunnel_identifier: chrome
+      - sauce-connect/with_proxy:
+          name: Safari Tests
+          requires:
+            - package
+          steps:
+            - run: cd /home/circleci/work
+            - run: pytest $@
+          tunnel_identifier: safari
       - splunk-app-test/aio:
           requires:
             - package
@@ -351,22 +367,6 @@ workflows:
           filters:
             branches:
               only: /.*/
-      # - sauce-connect/with_proxy:
-      #     name: Chrome Tests
-      #     requires:
-      #       - package
-      #     steps:
-      #       - run: cd /home/circleci/work
-      #       - run: pytest $@
-      #     tunnel_identifier: chrome
-      # - sauce-connect/with_proxy:
-      #     name: Safari Tests
-      #     requires:
-      #       - package
-      #     steps:
-      #       - run: cd /home/circleci/work
-      #       - run: pytest $@
-      #     tunnel_identifier: safari
       - splunk-release/tag:
           name: tag-alpha
           tag_level: alpha
