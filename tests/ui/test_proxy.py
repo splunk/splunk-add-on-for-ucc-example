@@ -29,8 +29,8 @@ def reset_configuration(ucc_smartx_configs):
 class TestProxy(UccTester):
 
     @pytest.mark.proxy
-    # Verifies the default proxy configurations
     def test_proxy_default_configs(self, ucc_smartx_configs):
+        """ Verifies the default proxy configurations"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         self.assert_util(
             proxy.proxy_enable.is_checked,
@@ -90,10 +90,15 @@ class TestProxy(UccTester):
             )
 
     @pytest.mark.proxy
-    # Verifies whether the host field in proxy is required and displays an error if left empty
     def test_proxy_required_field_host(self, ucc_smartx_configs):
+        """ Verifies whether the host field in proxy is required and displays an error if left empty"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.proxy_enable.check()
+        proxy.type.select("http")
+        proxy.dns_enable.check()
+        proxy.port.set_value("3285")
+        proxy.username.set_value("Username")
+        proxy.password.set_value("Password")        
         self.assert_util(
             proxy.save,
             "Proxy Host can not be empty",
@@ -106,8 +111,8 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    # Verifies if host contains special characters displays an error
     def test_proxy_host_valid_input(self, ucc_smartx_configs):
+        """ Verifies if host contains special characters displays an error"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.host.set_value("abc$$")
         self.assert_util(
@@ -122,8 +127,8 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    # Verifies host field length validation
     def test_proxy_host_field_length_validation(self, ucc_smartx_configs):
+        """ Verifies host field length validation"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         host_value = "a" * 4097
         proxy.host.set_value(host_value)
@@ -139,11 +144,15 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    # Verifies whether the proxy field is required and displays an error if left empty
     def test_proxy_required_field_port(self, ucc_smartx_configs):
+        """ Verifies whether the proxy field is required and displays an error if left empty"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.proxy_enable.check()
-        proxy.host.set_value("abc")
+        proxy.type.select("http")
+        proxy.dns_enable.check()
+        proxy.host.set_value("host")
+        proxy.username.set_value("Username")
+        proxy.password.set_value("Password")
         self.assert_util(
             proxy.save,
             "Proxy Port can not be empty",
@@ -157,8 +166,8 @@ class TestProxy(UccTester):
 
 
     @pytest.mark.proxy
-    # Verifies whether the proxy field only allows numeric values
     def test_proxy_port_field_valid_range(self, ucc_smartx_configs):
+        """ Verifies whether the proxy field only allows numeric values"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.host.set_value("abc")
         proxy.port.set_value("abc")
@@ -174,8 +183,8 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    # verifies out of range port value
     def test_proxy_port_field_out_of_range(self, ucc_smartx_configs):
+        """ verifies out of range port value"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.host.set_value("abc")
         proxy.port.set_value("65536")
@@ -191,8 +200,8 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    # This test case checks list of proxy types present in the drop down
     def test_proxy_list_proxy_types(self, ucc_smartx_configs):
+        """ This test case checks list of proxy types present in the drop down"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         self.assert_util(
             set(proxy.type.list_of_values()) ,
@@ -204,12 +213,16 @@ class TestProxy(UccTester):
             )
 
     @pytest.mark.proxy
-    # Verifies whether proxy type is required and displays an error if left empty
     def test_proxy_required_field_proxy_type(self, ucc_smartx_configs):
+        """ Verifies whether proxy type is required and displays an error if left empty"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
-        proxy.host.set_value("abc")
-        proxy.port.set_value("1111")
         proxy.proxy_enable.check()
+        proxy.type.select("http")
+        proxy.dns_enable.check()
+        proxy.host.set_value("host")
+        proxy.port.set_value("3285")
+        proxy.username.set_value("Username")
+        proxy.password.set_value("Password")
         proxy.type.cancel_selected_value()
         self.assert_util(
             proxy.save,
@@ -242,8 +255,8 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    # Verifies if the password field is masked or not in the Textbox
     def test_proxy_encrypted_field_password(self, ucc_smartx_configs):
+        """ Verifies if the password field is masked or not in the Textbox"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         textbox_type = proxy.password.get_type()
         self.assert_util(
@@ -256,8 +269,8 @@ class TestProxy(UccTester):
             )
 
     @pytest.mark.proxy
-    # Verifies the proxy is saved properly in frontend after saving it
     def test_proxy_frontend_validation(self, ucc_smartx_configs):
+        """ Verifies the proxy is saved properly in frontend after saving it"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.proxy_enable.check()
         proxy.type.select("http")
@@ -269,8 +282,8 @@ class TestProxy(UccTester):
         assert proxy.save()
 
     @pytest.mark.proxy
-    # Verifies the proxy is saved properly in frontend after saving it
     def test_proxy_backend_validation(self, ucc_smartx_configs):
+        """ Verifies the proxy is saved properly in frontend after saving it"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         proxy.proxy_enable.check()
         proxy.type.select("http")
