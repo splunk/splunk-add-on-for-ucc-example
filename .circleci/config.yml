@@ -148,7 +148,9 @@ orbs:
               no_output_timeout: 2h
           - run:
               name: Splunk UI test
+              when: always
               command: |
+                ls -la /home/circleci/work/
                 sudo /home/circleci/work/entrypoint.sh
           - run:
               name: Splunk Get Results
