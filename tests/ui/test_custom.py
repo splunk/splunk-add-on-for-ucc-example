@@ -144,7 +144,7 @@ class TestCustom(UccTester):
     @pytest.mark.custom
     def test_custom_required_field_test_number(self, ucc_smartx_configs):
         """ This test case checks required field test number"""
-        custom = Custom(ucc_smartx_config)
+        custom = Custom(ucc_smartx_configs)
         custom.test_string.set_value("test_str")
         custom.test_regex.set_value("test_rex")
         custom.test_email.set_value("test@a.b")

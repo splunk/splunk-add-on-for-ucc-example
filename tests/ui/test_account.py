@@ -286,7 +286,6 @@ class TestAccount(UccTester):
         """ Verifies required field username"""
         account = AccountPage(ucc_smartx_configs)
         account.entity.open()
-        account.entity.open()
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
         account.entity.environment.select("Value2")
         account.entity.multiple_select.select("Option Two")
@@ -818,16 +817,6 @@ class TestAccount(UccTester):
         """ Verifies the frontend clone functionality"""
         account = AccountPage(ucc_smartx_configs)
         account.table.wait_for_rows_to_appear(1)
-        account.table.clone_row(ACCOUNT_CONFIG["name"])
-        account.table.wait_for_rows_to_appear(2)
-        self.assert_util(
-                    account.entity.name.get_value,
-                    "",
-                    msg="Found : {} Expected : {}".format(
-                        account.entity.name.get_value(),
-                        ""
-                        )
-                    )
         account.entity.name.set_value("TestAccount2")
         account.entity.username.set_value("TestUserClone")
         account.entity.password.set_value("TestPasswordClone")

@@ -134,7 +134,6 @@ class TestInput(UccTester):
         input_page.entity1.object.set_value("test_object")
         input_page.entity1.object_fields.set_value("test_field")
         input_page.entity1.query_start_date.set_value("2020-12-11T20:00:32.000z")        
-        input_page.create_new_input.select("Example Input One")
         self.assert_util(
             input_page.entity1.save,
             r"Field Name is required",
@@ -577,11 +576,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
             input_page.entity1.order_by.get_help_text,
-            'The datetime field by which to query results in ascending order for indexing.',
-            msg="Found : {} Expected : {}".format(
-                help_text ,
-                'The datetime field by which to query results in ascending order for indexing.'
-                )
+            'The datetime field by which to query results in ascending order for indexing.'
             )
 
     @pytest.mark.input
@@ -694,8 +689,8 @@ class TestInput(UccTester):
         input_page.entity1.object.set_value("test_object")
         input_page.entity1.object_fields.set_value("test_field")
         input_page.entity1.query_start_date.set_value("2020-12-11T20:00:32.000z")
-        input_page.table.wait_for_rows_to_appear(1)
         assert input_page.entity1.save()
+        input_page.table.wait_for_rows_to_appear(1)
         value_to_test = {
             'account': 'test_input',
             'input_one_checkbox': '1',
@@ -1840,7 +1835,6 @@ class TestInput(UccTester):
             self.assert_util(
                 each_value ,
                 backend_stanza[each_key],
-                "in",
                 msg="{} should be present in {}".format(
                     each_value ,
                     backend_stanza[each_key]
@@ -1918,7 +1912,6 @@ class TestInput(UccTester):
             self.assert_util(
                 each_value ,
                 backend_stanza[each_key],
-                "in",
                 msg="{} should be present in {}".format(
                     each_value ,
                     backend_stanza[each_key]
@@ -2046,7 +2039,6 @@ class TestInput(UccTester):
             self.assert_util(
                 each_value ,
                 backend_stanza[each_key],
-                "in",
                 msg="{} should be present in {}".format(
                     each_value ,
                     backend_stanza[each_key]
