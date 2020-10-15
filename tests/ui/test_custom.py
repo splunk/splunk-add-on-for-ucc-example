@@ -70,11 +70,7 @@ class TestCustom(UccTester):
                 'test_url': 'https://docs.splunk.com/Documentation',
                 'test_radio': '0',
                 'test_multiselect': 'Option A|Option B'
-            },
-            msg="Found : {} Expected : {}".format(
-                custom.backend_conf.get_stanza,
-                {
-                    'disabled': False,
+            }
                     'test_number': '7',
                     'test_regex': 'test_rex',
                     'test_string': 'test_str',
@@ -103,12 +99,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Field Test String is required",
-            left_args={'expect_error': True},
-
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Field Test String is required"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -119,11 +110,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Length of Test String should be greater than or equal to 5",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Length of Test String should be greater than or equal to 5"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -134,11 +121,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Length of Test String should be less than or equal to 10",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Length of Test String should be less than or equal to 10"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -156,11 +139,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Field Test Number is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Field Test Number is required"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -172,11 +151,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Field Test Number is not a number",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Field Test Number is not a number"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -188,11 +163,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Field Test Number should be within the range of [1 and 10]",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Field Test Number should be within the range of [1 and 10]"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -205,11 +176,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Characters of Name should match regex ^\w+$ .",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Characters of Name should match regex ^\w+$ ."
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -223,11 +190,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Field Test Email is not a valid email address",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Field Test Email is not a valid email address"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -242,11 +205,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Field Test Ipv4 is not a valid IPV4 address",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Field Test Ipv4 is not a valid IPV4 address"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -262,11 +221,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Field Test Date is not a valid date in ISO 8601 format",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Field Test Date is not a valid date in ISO 8601 format"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -283,11 +238,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.save,
             r"Field Test Url is not a valid URL",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                custom.save(expect_error=True),
-                r"Field Test Url is not a valid URL"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.custom
@@ -296,11 +247,7 @@ class TestCustom(UccTester):
         custom = Custom(ucc_smartx_configs)
         self.assert_util(
             custom.test_radio.get_value,
-            r"Yes",
-            msg="Found : {} Expected : {}".format(
-                custom.test_radio.get_value(),
-                r"Yes"
-                )
+            r"Yes"
             )
 
     @pytest.mark.custom
@@ -310,11 +257,7 @@ class TestCustom(UccTester):
         custom.test_radio.select("No")
         self.assert_util(
             custom.test_radio.get_value,
-            r"No",
-            msg="Found : {} Expected : {}".format(
-                custom.test_radio.get_value(),
-                r"No"
-                )
+            r"No"
             )
 
     @pytest.mark.custom
@@ -324,11 +267,7 @@ class TestCustom(UccTester):
         test_multiselect = ["Option A", "Option B"]
         self.assert_util(
             list(custom.test_multiselect.list_of_values()),
-            test_multiselect,
-            msg="Found : {} Expected : {}".format(
-                list(custom.test_multiselect.list_of_values()),
-                test_multiselect
-                )
+            test_multiselect
             )
 
     @pytest.mark.custom
@@ -340,11 +279,7 @@ class TestCustom(UccTester):
             custom.test_multiselect.select(each)
         self.assert_util(
             custom.test_multiselect.get_values,
-            selected_values,
-            msg="Found : {} Expected : {}".format(
-                custom.test_multiselect.get_values(),
-                selected_values
-                )
+            selected_values
             )
 
     @pytest.mark.custom
@@ -356,11 +291,7 @@ class TestCustom(UccTester):
             custom.test_multiselect.select(each)
         self.assert_util(
             custom.test_multiselect.get_values,
-            selected_values,
-            msg="Found : {} Expected : {}".format(
-                custom.test_multiselect.get_values(),
-                selected_values
-                )
+            selected_values
             )
 
     @pytest.mark.custom
@@ -370,11 +301,7 @@ class TestCustom(UccTester):
         self.assert_util(
             custom.test_multiselect.search_get_list,
             ["Option A"],
-            left_args={'value': "Option A"},
-            msg="Found : {} Expected : {}".format(
-                custom.test_multiselect.search_get_list("Option A"),
-                ["Option A"]
-                )
+            left_args={'value': "Option A"}
             )
 
     @pytest.mark.custom
@@ -387,11 +314,7 @@ class TestCustom(UccTester):
         custom.test_multiselect.deselect("Option A")
         self.assert_util(
             custom.test_multiselect.get_values,
-            ["Option B"],
-            msg="Found : {} Expected : {}".format(
-                custom.test_multiselect.get_values(),
-                ["Option B"]
-                )
+            ["Option B"]
             )
 
     @pytest.mark.custom
@@ -401,9 +324,5 @@ class TestCustom(UccTester):
         go_to_link = "https://docs.splunk.com/Documentation"
         self.assert_util(
             custom.test_help_link.go_to_link,
-            go_to_link,
-            msg="Found : {} Expected : {}".format(
-                custom.test_help_link.go_to_link(),
-                go_to_link
-                )
+            go_to_link
             )

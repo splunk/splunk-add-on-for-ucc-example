@@ -137,11 +137,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Field Name is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Field Name is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -155,11 +151,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Length of input name should be between 1 and 100",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Length of input name should be between 1 and 100"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -172,11 +164,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores."
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -188,11 +176,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
             list(input_page.entity1.single_select_group_test.list_of_values()),
-            single_select_group_test_list,
-            msg="Found : {} Expected : {}".format(
-                list(input_page.entity1.single_select_group_test.list_of_values()),
-                single_select_group_test_list
-                )
+            single_select_group_test_list
             )
 
     @pytest.mark.input
@@ -204,11 +188,7 @@ class TestInput(UccTester):
         input_page.entity1.single_select_group_test.select(selected_value)
         self.assert_util(
             input_page.entity1.single_select_group_test.get_value,
-            selected_value,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.single_select_group_test.get_value(),
-                selected_value
-                )
+            selected_value
             )
 
     @pytest.mark.input
@@ -219,11 +199,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.single_select_group_test.search_get_list,
             ["One"],
-            left_args={'value': 'One'},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.single_select_group_test.search_get_list("One"),
-                ["One"]
-                )
+            left_args={'value': 'One'}
             )
 
     @pytest.mark.input
@@ -234,11 +210,7 @@ class TestInput(UccTester):
         default_values = ["A", "B"]
         self.assert_util(
             input_page.entity1.multiple_select_test.get_values,
-            default_values,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.multiple_select_test.get_values(),
-                default_values
-                )
+            default_values
             )
 
     @pytest.mark.input
@@ -250,11 +222,7 @@ class TestInput(UccTester):
         multiple_select_test = ["A", "B"]
         self.assert_util(
             list(input_page.entity1.multiple_select_test.list_of_values()),
-            multiple_select_test,
-            msg="Found : {} Expected : {}".format(
-                list(input_page.entity1.multiple_select_test.list_of_values()),
-                multiple_select_test
-                )
+            multiple_select_test
             )
 
     @pytest.mark.input
@@ -268,11 +236,7 @@ class TestInput(UccTester):
             input_page.entity1.multiple_select_test.select(each)
         self.assert_util(
             input_page.entity1.multiple_select_test.get_values,
-            selected_value,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.multiple_select_test.get_values(),
-                selected_value
-                )
+            selected_value
             )
 
     @pytest.mark.input
@@ -286,11 +250,7 @@ class TestInput(UccTester):
             input_page.entity1.multiple_select_test.select(each)
         self.assert_util(
             input_page.entity1.multiple_select_test.get_values,
-            selected_values,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.multiple_select_test.get_values(),
-                selected_values
-                )
+            selected_values
             )
 
     @pytest.mark.input
@@ -305,11 +265,7 @@ class TestInput(UccTester):
         input_page.entity1.multiple_select_test.deselect("A")
         self.assert_util(
             input_page.entity1.multiple_select_test.get_values,
-            ["B"],
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.multiple_select_test.get_values(),
-                ["B"]
-                )
+            ["B"]
             )
 
     @pytest.mark.input
@@ -321,11 +277,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.multiple_select_test.search_get_list,
             ["A"],
-            left_args={'value': 'A'},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.multiple_select_test.search_get_list("A"),
-                ["A"]
-                )
+            left_args={'value': 'A'}
             )
 
     @pytest.mark.input
@@ -357,11 +309,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
             input_page.entity1.example_radio.get_value,
-            "Yes",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.example_radio.get_value(),
-                "Yes"
-                )
+            "Yes"
             )
 
     @pytest.mark.input
@@ -372,11 +320,7 @@ class TestInput(UccTester):
         input_page.entity1.example_radio.select("No")
         self.assert_util(
             input_page.entity1.example_radio.get_value,
-            "No",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.example_radio.get_value(),
-                "No"
-                )
+            "No"
             )
 
     @pytest.mark.input
@@ -394,11 +338,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Field Interval is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Field Interval is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -412,11 +352,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Interval must be an integer.",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Interval must be an integer."
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -437,11 +373,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Field Index is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Field Index is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -453,11 +385,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
             input_page.entity1.index.get_value,
-            default_index,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.index.get_value(),
-                default_index
-                )
+            default_index
             )
 
     @pytest.mark.input
@@ -475,11 +403,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Field Example Account is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Field Example Account is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -498,11 +422,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Field Object is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Field Object is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -521,11 +441,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Field Object Fields is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Field Object Fields is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -546,11 +462,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Field Order By is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Field Order By is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -562,11 +474,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
             input_page.entity1.order_by.get_value,
-            default_order_by,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.order_by.get_value(),
-                default_order_by
-                )
+            default_order_by
             )
 
     @pytest.mark.input
@@ -593,11 +501,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             r"Invalid date and time format",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                r"Invalid date and time format"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -609,11 +513,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
             input_page.entity1.limit.get_value,
-            default_limit,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.limit.get_value(),
-                default_limit
-                )
+            default_limit
             )
 
     @pytest.mark.input
@@ -624,11 +524,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
             input_page.entity1.help_link.go_to_link,
-            go_to_link,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.help_link.go_to_link(),
-                go_to_link
-                )
+            go_to_link
             )
 
 
@@ -660,11 +556,7 @@ class TestInput(UccTester):
                 'index': 'default',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            },
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_table()["Test_Add"] ,
-                {
-                    'name': 'Test_Add', 
+            }   'name': 'Test_Add', 
                     'account': 'test_input',
                     'interval': '90',
                     'index': 'default',
@@ -710,11 +602,7 @@ class TestInput(UccTester):
             assert each_key in backend_stanza
             self.assert_util(
                 each_value ,
-                backend_stanza[each_key],
-                msg="Found : {} Expected : {}".format(
-                    each_value ,
-                    backend_stanza[each_key]
-                    )
+                backend_stanza[each_key],   )
                 )
 
     @pytest.mark.input
@@ -752,18 +640,7 @@ class TestInput(UccTester):
                 'index': 'main',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete'
-            },
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_table()["dummy_input_one"] ,
-                {
-                    'name': "dummy_input_one", 
-                    'account': 'test_input',
-                    'interval': '3600',
-                    'index': 'main',
-                    'status': 'Enabled',
-                    'actions': 'Edit | Clone | Delete'
-                    }
-                )
+            }
             )
 
     @pytest.mark.input
@@ -804,11 +681,7 @@ class TestInput(UccTester):
         for each_key, each_value in value_to_test.items():
             self.assert_util(
                 each_value,
-                backend_stanza[each_key],
-                msg="{} should be present un {}".format(
-                    each_value ,
-                    backend_stanza[each_key]
-                    )
+                backend_stanza[each_key]
                 )
 
     @pytest.mark.input
@@ -818,100 +691,52 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_one")
         self.assert_util(
             input_page.entity1.name.get_value,
-            "",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.name.get_value(),
-                ""
-                )
+            ""
             )
         assert input_page.entity1.example_checkbox.is_checked()
         self.assert_util(
             input_page.entity1.example_radio.get_value,
-            "Yes",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.example_radio.get_value(),
-                "Yes"
-                )
+            "Yes"
             )
         self.assert_util(
             input_page.entity1.single_select_group_test.get_value,
-            "Two",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.single_select_group_test.get_value(),
-                "Two"
-                )
+            "Two"
             )
         self.assert_util(
             input_page.entity1.multiple_select_test.get_values,
-            ["A", "B"],
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.multiple_select_test.get_values(),
-                ["A", "B"]
-                )
+            ["A", "B"]
             )
         self.assert_util(
             input_page.entity1.interval.get_value,
-            "90",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.interval.get_value(),
-                "90"
-                )
+            "90"
             )
         self.assert_util(
             input_page.entity1.index.get_value,
-            "default",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.index.get_value(),
-                "default"
-                )
+            "default"
             )
         self.assert_util(
             input_page.entity1.example_account.get_value,
-            "test_input",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.example_account.get_value(),
-                "test_input"
-                )
+            "test_input"
             )
         self.assert_util(
             input_page.entity1.object.get_value,
-            "test_object",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.object.get_value(),
-                "test_object"
-                )
+            "test_object"
             )
         self.assert_util(
             input_page.entity1.object_fields.get_value,
-            "test_field",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.object_fields.get_value(),
-                "test_field"
-                )
+            "test_field"
             )
         self.assert_util(
             input_page.entity1.order_by.get_value,
-            "LastModifiedDate",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.order_by.get_value(),
-                "LastModifiedDate"
-                )
+            "LastModifiedDate"
             )
         self.assert_util(
             input_page.entity1.query_start_date.get_value,
-            "2020-12-11T20:00:32.000z",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.query_start_date.get_value(),
-                "2020-12-11T20:00:32.000z"
-                )
+            "2020-12-11T20:00:32.000z"
             )
         self.assert_util(
             input_page.entity1.limit.get_value,
-            "1000",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.limit.get_value(),
-                "1000"
-                )
+            "1000"
             )
 
     @pytest.mark.input
@@ -934,18 +759,7 @@ class TestInput(UccTester):
                 'index': 'default',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            },
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_table()["Clone_Test"] ,
-                {
-                    'name': 'Clone_Test', 
-                    'account': 'test_input',
-                    'interval': '180',
-                    'index': 'default',
-                    'status': 'Enabled',
-                    'actions': 'Edit | Clone | Delete'
-                    }
-                )
+            }
             )
 
     @pytest.mark.input
@@ -978,11 +792,7 @@ class TestInput(UccTester):
         for each_key, each_value in value_to_test.items():
             self.assert_util(
                 each_value ,
-                backend_stanza[each_key],
-                msg="{} should be present in {}".format(
-                    each_value,
-                    backend_stanza[each_key]
-                    )
+                backend_stanza[each_key]
                 )
 
     @pytest.mark.input
@@ -995,11 +805,7 @@ class TestInput(UccTester):
         self.assert_util(
             "dummy_input_one",
             input_page.table.get_table,
-            "not in",
-            msg="{} should not be present in {}".format(
-                "dummy_input_one",
-                input_page.table.get_table()
-                )
+            "not in"
             )
 
     @pytest.mark.input
@@ -1012,11 +818,7 @@ class TestInput(UccTester):
         self.assert_util(
             "example_input_one://dummy_input_one",
             input_page.backend_conf.get_all_stanzas().keys(),
-            "not in",
-            msg="{} should not be present in {}".format(
-                "example_input_one://dummy_input_one",
-                input_page.backend_conf.get_all_stanzas().keys()
-                )
+            "not in"
             )
 
     @pytest.mark.input
@@ -1083,11 +885,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             "Name {} is already in use".format(input_name),
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                "Name {} is already in use".format(input_name)
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -1101,11 +899,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity1.save,
             "Name {} is already in use".format(input_name),
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.save(expect_error=True),
-                "Name {} is already in use".format(input_name)
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity1.close_error()
 
@@ -1116,11 +910,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         self.assert_util(
             input_page.entity1.title.container.get_attribute('textContent').strip(),
-            "Add Example Input One",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.title.container.get_attribute('textContent').strip(),
-                "Add Example Input One"
-                )
+            "Add Example Input One"
             )
 
     @pytest.mark.input
@@ -1130,11 +920,7 @@ class TestInput(UccTester):
         input_page.table.edit_row("dummy_input_one")
         self.assert_util(
             input_page.entity1.title.container.get_attribute('textContent').strip(),
-            "Update Example Input One",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.title.container.get_attribute('textContent').strip(),
-                "Update Example Input One"
-                )
+            "Update Example Input One"
             )
 
     @pytest.mark.input
@@ -1144,11 +930,7 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_one")
         self.assert_util(
             input_page.entity1.title.container.get_attribute('textContent').strip(),
-            "Clone Example Input One",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.title.container.get_attribute('textContent').strip(),
-                "Clone Example Input One"
-                )
+            "Clone Example Input One"
             )
 
     @pytest.mark.input
@@ -1158,11 +940,7 @@ class TestInput(UccTester):
         input_page.table.delete_row("dummy_input_one", prompt_msg=True)
         self.assert_util(
             input_page.entity1.title.container.get_attribute('textContent').strip(),
-            "Delete Confirmation",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity1.title.container.get_attribute('textContent').strip(),
-                "Delete Confirmation"
-                )
+            "Delete Confirmation"
             )
 
     @pytest.mark.input
@@ -1173,11 +951,7 @@ class TestInput(UccTester):
         prompt_message = input_page.table.delete_row("dummy_input_one", prompt_msg=True)
         self.assert_util(
             prompt_message ,
-            'Are you sure you want to delete "{}" ?'.format(input_name),
-            msg="Found : {} Expected : {}".format(
-                prompt_message ,
-                'Are you sure you want to delete "{}" ?'.format(input_name)
-                )
+            'Are you sure you want to delete "{}" ?'.format(input_name)
             )
     
 
@@ -1193,11 +967,7 @@ class TestInput(UccTester):
         header_list = ["", "Name", "Account", "Interval", "Index", "Status", "Actions"]
         self.assert_util(
             list(input_page.table.get_headers()),
-            header_list,
-            msg="Found : {} Expected : {}".format(
-                list(input_page.table.get_headers()),
-                header_list
-                )
+            header_list
             )
 
     @pytest.mark.input
@@ -1207,11 +977,7 @@ class TestInput(UccTester):
         create_new_input_list = ["Example Input One", "Example Input Two"]
         self.assert_util(
             input_page.create_new_input.get_inputs_list,
-            create_new_input_list,
-            msg="Found : {} Expected : {}".format(
-                input_page.create_new_input.get_inputs_list(),
-                create_new_input_list
-                )
+            create_new_input_list
             )
 
     @pytest.mark.input
@@ -1221,29 +987,17 @@ class TestInput(UccTester):
         type_filter_list = ["All", "Example Input One", "Example Input Two"]
         self.assert_util(
             input_page.type_filter.get_input_type_list(),
-            type_filter_list,
-            msg="Found : {} Expected : {}".format(
-                input_page.type_filter.get_input_type_list(),
-                type_filter_list
-                )
+            type_filter_list
             )
         input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)
         self.assert_util(
             input_page.table.get_row_count,
-            1,
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_row_count(),
-                1
-                )
+            1
             )
         input_page.type_filter.select_input_type("Example Input Two")
         self.assert_util(
             input_page.table.get_row_count,
-            1,
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_row_count(),
-                1
-                )
+            1
             )
 
     @pytest.mark.input
@@ -1253,11 +1007,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.table.delete_row,
             r"Can't delete enabled input",
-            left_args={'name': "dummy_input_one"},
-            msg="Found : {} Expected : {}".format(
-                input_page.table.delete_row("dummy_input_one"),
-                r"Can't delete enabled input"
-                )
+            left_args={'name': "dummy_input_one"}
             )
 
     @pytest.mark.input
@@ -1266,11 +1016,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         self.assert_util(
             input_page.pagination.get_pagination_list(),
-            ['10 Per Page','25 Per Page','50 Per Page'],
-            msg="Found : {} Expected : {}".format(
-                input_page.pagination.get_pagination_list(),
-                ['10 Per Page','25 Per Page','50 Per Page']
-                )
+            ['10 Per Page','25 Per Page','50 Per Page']
             )
     
 
@@ -1292,22 +1038,7 @@ class TestInput(UccTester):
                 'Query Start Date': '2020-12-11T20:00:32.000z',
                 'Limit': '1000'
                 },
-            left_args={'name': 'dummy_input_one'},
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_more_info("dummy_input_one"),
-                {
-                    'Name': 'dummy_input_one', 
-                    'Interval': '90',
-                    'Index': 'default',
-                    'Status': 'Enabled',
-                    'Example Account': 'test_input',
-                    'Object': 'test_object',
-                    'Object Fields': 'test_field',
-                    'Order By': 'LastModifiedDate',
-                    'Query Start Date': '2020-12-11T20:00:32.000z',
-                    'Limit': '1000'
-                    }
-                )
+            left_args={'name': 'dummy_input_one'}
             )
 
     @pytest.mark.input
@@ -1325,11 +1056,7 @@ class TestInput(UccTester):
         self.assert_util(input_page.table.get_row_count, 0)
         self.assert_util(
             input_page.table.get_count_title,
-            "{} Inputs".format(input_page.table.get_row_count()),
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_count_title(),
-                "{} Inputs".format(input_page.table.get_row_count())
-                )
+            "{} Inputs".format(input_page.table.get_row_count())
             )
         input_page.table.clean_filter()
 
@@ -1341,11 +1068,7 @@ class TestInput(UccTester):
         self.assert_util(input_page.table.get_row_count, 2)
         self.assert_util(
             input_page.table.get_count_title,
-            "{} Inputs".format(input_page.table.get_row_count()),
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_count_title(),
-                "{} Inputs".format(input_page.table.get_row_count())
-                )
+            "{} Inputs".format(input_page.table.get_row_count())
             )
         input_page.table.clean_filter()
 
@@ -1355,11 +1078,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         self.assert_util(
             input_page.table.get_count_title,
-            "{} Inputs".format(input_page.table.get_row_count()),
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_count_title(),
-                "{} Inputs".format(input_page.table.get_row_count())
-                )
+            "{} Inputs".format(input_page.table.get_row_count())
             )
     
     @pytest.mark.input
@@ -1374,19 +1093,11 @@ class TestInput(UccTester):
         sorted_values = sorted(column_values , key = str.lower)
         self.assert_util(
             sort_order["header"].lower(),
-            "name",
-            msg="Found : {} Expected : {}".format(
-                sort_order["header"].lower(),
-                "name"
-                )
+            "name"
             )
         self.assert_util(
             column_values,
-            sorted_values,
-            msg="Found : {} Expected : {}".format(
-                column_values,
-                sorted_values
-                )
+            sorted_values
             )
         assert sort_order["ascending"]
 
@@ -1406,19 +1117,11 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         self.assert_util(
             input_page.title.wait_to_display,
-            "Inputs",
-            msg="Found : {} Expected : {}".format(
-                input_page.title.wait_to_display(),
-                "Inputs"
-                )
+            "Inputs"
             )
         self.assert_util(
             input_page.description.wait_to_display,
-            "Manage your data inputs",
-            msg="Found : {} Expected : {}".format(
-                input_page.description.wait_to_display(),
-                "Manage your data inputs"
-                )
+            "Manage your data inputs"
             )
 
     @pytest.mark.input
@@ -1427,11 +1130,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         self.assert_util(
             input_page.table.get_row_count,
-            0,
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_row_count(),
-                0
-                )
+            0
             )
 
     ##########################################
@@ -1453,11 +1152,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Field Name is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Field Name is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -1471,11 +1166,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Length of input name should be between 1 and 100",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Length of input name should be between 1 and 100"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -1488,11 +1179,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores."
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -1511,11 +1198,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Field Interval is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Field Interval is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -1529,11 +1212,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Interval must be an integer.",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Interval must be an integer."
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -1553,11 +1232,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Field Index is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Field Index is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -1569,11 +1244,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input Two")
         self.assert_util(
             input_page.entity2.index.get_value,
-            default_index,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.index.get_value(),
-                default_index
-                )
+            default_index
             )
 
     @pytest.mark.input
@@ -1591,11 +1262,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Field Example Account is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Field Example Account is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -1614,11 +1281,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Field Example Multiple Select is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Field Example Multiple Select is required"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -1630,11 +1293,7 @@ class TestInput(UccTester):
         example_multiple_select_list = ["Option One", "Option Two"]
         self.assert_util(
             list(input_page.entity2.example_multiple_select.list_of_values()),
-            example_multiple_select_list,
-            msg="Found : {} Expected : {}".format(
-                list(input_page.entity2.example_multiple_select.list_of_values()),
-                example_multiple_select_list
-                )
+            example_multiple_select_list
             )
 
     @pytest.mark.input
@@ -1647,11 +1306,7 @@ class TestInput(UccTester):
             input_page.entity2.example_multiple_select.select(each)
         self.assert_util(
             input_page.entity2.example_multiple_select.get_values,
-            selected_value,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.example_multiple_select.get_values(),
-                selected_value
-                )
+            selected_value
             )
 
     @pytest.mark.input
@@ -1664,11 +1319,7 @@ class TestInput(UccTester):
             input_page.entity2.example_multiple_select.select(each)
         self.assert_util(
             input_page.entity2.example_multiple_select.get_values,
-            selected_values,
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.example_multiple_select.get_values(),
-                selected_values
-                )
+            selected_values
             )
 
     @pytest.mark.input
@@ -1679,11 +1330,7 @@ class TestInput(UccTester):
         help_text = input_page.entity2.example_multiple_select.get_help_text()
         self.assert_util(
             help_text ,
-            'This is an example multipleSelect for input two entity',
-            msg="Found : {} Expected : {}".format(
-                help_text ,
-                'This is an example multipleSelect for input two entity'
-                )
+            'This is an example multipleSelect for input two entity'
             )
 
     @pytest.mark.input
@@ -1716,11 +1363,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Field Example Radio is required",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Field Example Radio is required"
-                )
+            left_args={'expect_error': True}
             )
 
     @pytest.mark.input
@@ -1731,11 +1374,7 @@ class TestInput(UccTester):
         input_page.entity2.example_radio.select("No")
         self.assert_util(
             input_page.entity2.example_radio.get_value,
-            "No",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.example_radio.get_value(),
-                "No"
-                )
+            "No"
             )
 
     @pytest.mark.input
@@ -1752,11 +1391,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             r"Invalid date and time format",
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                r"Invalid date and time format"
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -1789,18 +1424,7 @@ class TestInput(UccTester):
                 'index': 'main',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            },
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_table()["Test_Add"] ,
-                { 
-                    'name': 'Test_Add', 
-                    'account': 'test_input',
-                    'interval': '90',
-                    'index': 'main',
-                    'status': 'Enabled',
-                    'actions': 'Edit | Clone | Delete'
-                    }
-                )
+            }
             )
         url = input_page._get_input_endpoint()
 
@@ -1834,11 +1458,7 @@ class TestInput(UccTester):
         for each_key, each_value in value_to_test.items():
             self.assert_util(
                 each_value ,
-                backend_stanza[each_key],
-                msg="{} should be present in {}".format(
-                    each_value ,
-                    backend_stanza[each_key]
-                    )
+                backend_stanza[each_key]
                 )
 
     @pytest.mark.input
@@ -1870,18 +1490,7 @@ class TestInput(UccTester):
                 'index': 'main',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            },
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_table()["dummy_input_two"] ,
-                {
-                    'name': "dummy_input_two", 
-                    'account': 'test_input',
-                    'interval': '3600',
-                    'index': 'main',
-                    'status': 'Enabled',
-                    'actions': 'Edit | Clone | Delete',
-                    }
-                )
+            }
             )
     
     @pytest.mark.input
@@ -1911,11 +1520,7 @@ class TestInput(UccTester):
         for each_key, each_value in value_to_test.items():
             self.assert_util(
                 each_value ,
-                backend_stanza[each_key],
-                msg="{} should be present in {}".format(
-                    each_value ,
-                    backend_stanza[each_key]
-                    )
+                backend_stanza[each_key]
                 )
 
     @pytest.mark.input
@@ -1925,60 +1530,32 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_two")
         self.assert_util(
             input_page.entity2.name.get_value,
-            "",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.name.get_value(),
-                ""
-                )
+            ""
             )
         assert input_page.entity2.example_checkbox.is_checked()
         self.assert_util(
             input_page.entity2.example_radio.get_value,
-            "No",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.example_radio.get_value(),
-                "No"
-                )
+            "No"
             )
         self.assert_util(
             input_page.entity2.example_multiple_select.get_values,
-            ["Option One", "Option Two"],
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.example_multiple_select.get_values(),
-                ["Option One", "Option Two"]
-                )
+            ["Option One", "Option Two"]
             )
         self.assert_util(
             input_page.entity2.interval.get_value,
-            "100",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.interval.get_value(),
-                "100"
-                )
+            "100"
             )
         self.assert_util(
             input_page.entity2.index.get_value,
-            "main",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.index.get_value(),
-                "main"
-                )
+            "main"
             )
         self.assert_util(
             input_page.entity2.example_account.get_value,
-            "test_input",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.example_account.get_value(),
-                "test_input"
-                )
+            "test_input"
             )
         self.assert_util(
             input_page.entity2.query_start_date.get_value,
-            "2016-10-10T12:10:15.000z",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.query_start_date.get_value(),
-                "2016-10-10T12:10:15.000z"
-                )
+            "2016-10-10T12:10:15.000z"
             )
 
     @pytest.mark.input
@@ -2000,18 +1577,7 @@ class TestInput(UccTester):
                 'index': 'main',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            },
-            msg="Found : {} Expected : {}".format(
-                input_page.table.get_table()["Clone_Test"] ,
-                {
-                    'name': 'Clone_Test', 
-                    'account': 'test_input',
-                    'interval': '180',
-                    'index': 'main',
-                    'status': 'Enabled',
-                    'actions': 'Edit | Clone | Delete'
-                    }
-                )
+            }
             )
 
     @pytest.mark.input
@@ -2038,10 +1604,7 @@ class TestInput(UccTester):
         for each_key, each_value in value_to_test.items():
             self.assert_util(
                 each_value ,
-                backend_stanza[each_key],
-                msg="{} should be present in {}".format(
-                    each_value ,
-                    backend_stanza[each_key]
+                backend_stanza[each_key]
                     )
                 )
 
@@ -2055,11 +1618,7 @@ class TestInput(UccTester):
         self.assert_util(
                 "dummy_input_two",
                 input_page.table.get_table,
-                "not in",
-                msg="{} should not be present in {}".format(
-                    "dummy_input_two",
-                    input_page.table.get_table()
-                    )
+                "not in"
                 )
 
     @pytest.mark.input
@@ -2072,11 +1631,7 @@ class TestInput(UccTester):
         self.assert_util(
                 "example_input_two://dummy_input_two",
                 input_page.backend_conf.get_all_stanzas().keys(),
-                "not in",
-                msg="{} should not be present in {}".format(
-                    "example_input_two://dummy_input_two",
-                    input_page.backend_conf.get_all_stanzas().keys()
-                    )
+                "not in"
                 )
 
     @pytest.mark.input
@@ -2143,11 +1698,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             "Name {} is already in use".format(input_name),
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                "Name {} is already in use".format(input_name)
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -2161,11 +1712,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.entity2.save,
             "Name {} is already in use".format(input_name),
-            left_args={'expect_error': True},
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.save(expect_error=True),
-                "Name {} is already in use".format(input_name)
-                )
+            left_args={'expect_error': True}
             )
         assert input_page.entity2.close_error()
 
@@ -2177,11 +1724,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input Two")
         self.assert_util(
             input_page.entity2.title.container.get_attribute('textContent').strip(),
-            "Add Example Input Two",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.title.container.get_attribute('textContent').strip(),
-                "Add Example Input Two"
-                )
+            "Add Example Input Two"
             )
 
     @pytest.mark.input
@@ -2191,11 +1734,7 @@ class TestInput(UccTester):
         input_page.table.edit_row("dummy_input_two")
         self.assert_util(
             input_page.entity2.title.container.get_attribute('textContent').strip(),
-            "Update Example Input Two",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.title.container.get_attribute('textContent').strip(),
-                "Update Example Input Two"
-                )
+            "Update Example Input Two"
             )
 
     @pytest.mark.input
@@ -2205,11 +1744,7 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_two")
         self.assert_util(
             input_page.entity2.title.container.get_attribute('textContent').strip(),
-            "Clone Example Input Two",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.title.container.get_attribute('textContent').strip(),
-                "Clone Example Input Two"
-                )
+            "Clone Example Input Two"
             )
 
     @pytest.mark.input
@@ -2219,11 +1754,7 @@ class TestInput(UccTester):
         input_page.table.delete_row("dummy_input_two", prompt_msg=True)
         self.assert_util(
             input_page.entity2.title.container.get_attribute('textContent').strip(),
-            "Delete Confirmation",
-            msg="Found : {} Expected : {}".format(
-                input_page.entity2.title.container.get_attribute('textContent').strip(),
-                "Delete Confirmation"
-                )
+            "Delete Confirmation"
             )
 
     @pytest.mark.input
@@ -2234,9 +1765,5 @@ class TestInput(UccTester):
         prompt_message = input_page.table.delete_row("dummy_input_two", prompt_msg=True)
         self.assert_util(
             prompt_message ,
-            'Are you sure you want to delete "{}" ?'.format(input_name),
-            msg="Found : {} Expected : {}".format(
-                prompt_message ,
-                'Are you sure you want to delete "{}" ?'.format(input_name)
-                )
+            'Are you sure you want to delete "{}" ?'.format(input_name)
             )

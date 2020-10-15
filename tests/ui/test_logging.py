@@ -28,11 +28,7 @@ class TestLogging(UccTester):
         default_log_level = "INFO"
         self.assert_util(
             logging.log_level.get_value().lower() ,
-            default_log_level.lower(),
-            msg="Found : {} Expected : {}".format(
-                logging.log_level.get_value().lower() ,
-                default_log_level.lower()
-                )
+            default_log_level.lower()
             )
         
     @pytest.mark.logging
@@ -45,11 +41,7 @@ class TestLogging(UccTester):
         logging.save()
         self.assert_util(
             logging.log_level.get_value().lower() ,
-            level.lower(),
-            msg="Found : {} Expected : {}".format(
-                logging.log_level.get_value().lower() ,
-                level.lower()
-                )
+            level.lower()
             )
         
     @pytest.mark.logging
@@ -58,11 +50,7 @@ class TestLogging(UccTester):
         logging = Logging(ucc_smartx_configs, TA_NAME, TA_CONF)
         self.assert_util(
             set(logging.log_level.list_of_values()) ,
-            {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"},
-            msg="Found : {} Expected : {}".format(
-                set(logging.log_level.list_of_values()) ,
-                {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
-                )
+            {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
             )
         
     @pytest.mark.logging
@@ -74,11 +62,7 @@ class TestLogging(UccTester):
         logging.save()
         self.assert_util(
             logging.log_level.get_value().lower() ,
-            selection_log.lower(),
-            msg="Found : {} Expected : {}".format(
-                logging.log_level.get_value().lower() ,
-                selection_log.lower()
-                )
+            selection_log.lower()
             )
         
     @pytest.mark.logging
@@ -91,9 +75,5 @@ class TestLogging(UccTester):
         log_level = logging.backend_conf.get_parameter("loglevel")
         self.assert_util(
             log_level ,
-            selection_log,
-            msg="Found : {} Expected : {}".format(
-                log_level ,
-                selection_log
-                )
+            selection_log
             )
