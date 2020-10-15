@@ -147,7 +147,7 @@ orbs:
                 docker-compose -f docker-compose-ci.yml up -d splunk
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
                 # Run the tests
-                docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test || test_exit_code=$?
+                docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test || test_exit_code=$? || true
                 # Collect Results
                 docker container create --name dummy \
                                     -v project_results:/home/circleci/work/test-results \
