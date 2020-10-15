@@ -6,11 +6,6 @@
 ##
 
 cd /home/circleci/work
-if [ "${TEST_SET}"=="tests/ui" ] 
-then
-    cp /home/circleci/work/tests/ui/pytest-ci.ini /home/circleci/work/tests/pytest.ini
-else
-    cp /home/circleci/work/tests/knowledge/pytest-ci.ini /home/circleci/work/tests/pytest.ini
-fi
+if exists ${TEST_SET}/pytest-ci.ini cp -f ./pytest.ini
 echo Test Args $@ ${TEST_SET}
 pytest $@ ${TEST_SET}
