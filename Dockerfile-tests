@@ -26,7 +26,7 @@ RUN curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o /home/circlec
 RUN tar -xzf /home/circleci/work/tests/saucelabs.tar.gz --directory /home/circleci/work/tests/
 RUN cd /home/circleci/work/tests/sc-*
 RUN /home/circleci/work/tests/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca
-RUN wget --retry-connrefused --no-check-certificate -T 6  -bqc localhost:4445
+RUN wget --retry-connrefused --no-check-certificate -T 6 -bqc localhost:4445
 
 CMD /entrypoint.sh
 
