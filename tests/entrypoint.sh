@@ -6,6 +6,8 @@
 ##
 
 cd /home/circleci/work
-if exists ${TEST_SET}/pytest-ci.ini cp -f ./pytest.ini
+if [[ -f "${TEST_SET}/pytest-ci.ini" ]]; then
+    cp -f ./pytest.ini
+fi 
 echo Test Args $@ ${TEST_SET}
 pytest $@ ${TEST_SET}
