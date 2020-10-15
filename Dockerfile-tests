@@ -7,7 +7,6 @@
 #You should have received a copy of the CC0 legalcode along with this
 #work.  If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 FROM circleci/python:3.7-browsers
-USER circleci
 RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
 
@@ -21,4 +20,6 @@ RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.t
 RUN cd ../..
 COPY package /home/circleci/work/package
 RUN chown -R circleci /home/circleci/
+
+USER circleci
 ENTRYPOINT /entrypoint.sh
