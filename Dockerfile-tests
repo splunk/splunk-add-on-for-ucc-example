@@ -15,8 +15,6 @@ COPY tests/entrypoint.sh /
 COPY .pytest.expect /home/circleci/work/.pytest.expect
 RUN ls /home/circleci/work/
 COPY tests /home/circleci/work/tests
-COPY tests/pytest-ci.ini /home/circleci/work/tests/pytest-ci.ini
-COPY tests/pytest-ko.ini /home/circleci/work/tests/pytest-ko.ini
 RUN pip install -r /home/circleci/work/tests/requirements.txt
 RUN cd /home/circleci/work/tests && ls
 RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.tar.gz
