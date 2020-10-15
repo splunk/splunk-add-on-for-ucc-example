@@ -13,7 +13,7 @@ RUN mkdir -p /home/circleci/work/test-results/functional
 
 COPY tests/entrypoint.sh /
 COPY .pytest.expect /home/circleci/work/.pytest.expect
-
+RUN ls /home/circleci/work/
 COPY tests /home/circleci/work/tests
 COPY tests/pytest-ci.ini /home/circleci/work/tests/pytest-ci.ini
 COPY tests/pytest-ko.ini /home/circleci/work/tests/pytest-ko.ini
