@@ -313,7 +313,7 @@ class TestAccount(UccTester):
         account.entity.multiple_select.select("Option Two")
         account.entity.username.set_value("TestEditUser")
         account.entity.security_token.set_value("TestEditToken")
-        account.entity.account_radio.select("No"))
+        account.entity.account_radio.select("No")
         self.assert_util(
             account.entity.save,
             'Field Password is required',
