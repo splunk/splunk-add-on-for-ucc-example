@@ -1600,7 +1600,6 @@ class TestInput(UccTester):
                 each_value ,
                 backend_stanza[each_key]
                     )
-                )
 
     @pytest.mark.input
     def test_example_input_two_delete_row_frontend_validation(self, ucc_smartx_configs, add_input_two):
