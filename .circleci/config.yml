@@ -148,6 +148,11 @@ orbs:
                 sleep 30
                 # Run the tests
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
+          - run:	
+              name: Splunk Get Results	
+              when: always	
+              command: |	
+                # Collect Results
 
                 docker container create --name dummy \
                                     -v project_results:/home/circleci/work/test-results \
