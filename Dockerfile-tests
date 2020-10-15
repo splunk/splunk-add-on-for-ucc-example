@@ -7,7 +7,7 @@
 #You should have received a copy of the CC0 legalcode along with this
 #work.  If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 FROM circleci/python:3.7-browsers
-sudo chmod 666 /var/run/docker.sock
+RUN sudo chmod 666 /var/run/docker.sock
 USER circleci
 RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
@@ -23,8 +23,8 @@ RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.t
 RUN cd ../..
 COPY package /home/circleci/work/package
 
-RUN ls -la /home/circleci/work/tests
-RUN tar -xzf /home/circleci/work/tests/sc-4.4.12-linux.tar.gz
+RUN curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o saucelabs.tar.gz
+RUN tar -xzf /home/circleci/work/tests/saucelabs.tar.gz
 RUN cd sc-*
 RUN bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca
 RUN wget --retry-connrefused --no-check-certificate -T 60 localhost:4445
