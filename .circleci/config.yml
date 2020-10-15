@@ -147,6 +147,10 @@ orbs:
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
               no_output_timeout: 2h
           - run:
+              name: Splunk UI test
+              command: |
+                sudo /home/circleci/work/entrypoint.sh
+          - run:
               name: Splunk Get Results
               when: always
               command: |
