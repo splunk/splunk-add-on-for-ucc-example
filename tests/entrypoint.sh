@@ -6,7 +6,7 @@
 ##
 
 cd /home/circleci/work
-if [${TEST_SET} -eq "tests/ui"]; then
+if [ ${TEST_SET} -eq "tests/ui" ]; then
     echo "Hello1"
     cp /home/circleci/work/tests/pytest-ko.ini /home/circleci/work/tests/pytest.ini
     echo "Hello"
