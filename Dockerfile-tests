@@ -24,8 +24,8 @@ COPY package /home/circleci/work/package
 
 RUN curl -o /home/circleci/work/tests https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o saucelabs.tar.gz
 RUN tar -xzf /home/circleci/work/tests/saucelabs.tar.gz
-RUN cd sc-*
-RUN bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca
+RUN cd /home/circleci/work/tests/sc-*
+RUN /home/circleci/work/tests/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca
 RUN wget --retry-connrefused --no-check-certificate -T 60 localhost:4445
 
 CMD /entrypoint.sh
