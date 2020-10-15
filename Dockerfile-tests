@@ -25,7 +25,7 @@ COPY package /home/circleci/work/package
 RUN curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o /home/circleci/work/tests/saucelabs.tar.gz
 RUN tar -xzf /home/circleci/work/tests/saucelabs.tar.gz --directory /home/circleci/work/tests/
 RUN cd /home/circleci/work/tests/sc-*
-RUN /home/circleci/work/tests/sc-4.4.12-linux/bin/sc -bqc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca
+RUN /home/circleci/work/tests/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca
 
 CMD /entrypoint.sh
 
