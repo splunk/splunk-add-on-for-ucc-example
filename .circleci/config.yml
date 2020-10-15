@@ -132,7 +132,14 @@ orbs:
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
                 docker-compose -f docker-compose-ci.yml build
-                docker-compose -f docker-compose-ci.yml up -d splunk                
+                docker-compose -f docker-compose-ci.yml up -d splunk  
+                
+                curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o saucelabs.tar.gz
+                tar -xzf saucelabs.tar.gz
+                cd sc-*
+                bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca
+                wget --retry-connrefused --no-check-certificate -T 6 localhost:4445
+
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
                 # Run a Splunk Diag
                 mkdir /tmp/diag
