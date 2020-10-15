@@ -6,7 +6,6 @@
 ##
 
 cd /home/circleci/work
-echo ${TEST_SET}
 if [ "${TEST_SET}"=="tests/ui" ] 
 then
     cp /home/circleci/work/tests/pytest-ci.ini /home/circleci/work/tests/pytest.ini
