@@ -237,13 +237,4 @@ class TestProxy(UccTester):
                 'proxy_password': '******',
                 'proxy_username': 'Username'
             }
-                    'proxy_enabled': '1',
-                    'proxy_port': '3285', 
-                    'proxy_rdns': '1',
-                    'proxy_type': 'http',
-                    'proxy_url': 'host',
-                    'proxy_password': '******',
-                    'proxy_username': 'Username'
-                }
-                )
             )

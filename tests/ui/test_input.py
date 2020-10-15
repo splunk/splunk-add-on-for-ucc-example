@@ -556,14 +556,7 @@ class TestInput(UccTester):
                 'index': 'default',
                 'status': 'Enabled',
                 'actions': 'Edit | Clone | Delete',
-            }   'name': 'Test_Add', 
-                    'account': 'test_input',
-                    'interval': '90',
-                    'index': 'default',
-                    'status': 'Enabled',
-                    'actions': 'Edit | Clone | Delete'
-                    }
-                )
+            }
             )
 
         url = input_page._get_input_endpoint()
@@ -986,7 +979,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_configs)
         type_filter_list = ["All", "Example Input One", "Example Input Two"]
         self.assert_util(
-            input_page.type_filter.get_input_type_list(),
+            input_page.type_filter.get_input_type_list,
             type_filter_list
             )
         input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)

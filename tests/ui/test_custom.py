@@ -71,17 +71,6 @@ class TestCustom(UccTester):
                 'test_radio': '0',
                 'test_multiselect': 'Option A|Option B'
             }
-                    'test_number': '7',
-                    'test_regex': 'test_rex',
-                    'test_string': 'test_str',
-                    'test_email': 'test@a.b',
-                    'test_ipv4': '1.10.1.100',
-                    'test_date': '2020-09-18',
-                    'test_url': 'https://docs.splunk.com/Documentation',
-                    'test_radio': '0',
-                    'test_multiselect': 'Option A|Option B'
-                    }
-                )
             )
 
     @pytest.mark.custom
