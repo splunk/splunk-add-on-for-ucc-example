@@ -19,9 +19,9 @@ DEFAULT_CONFIGURATION = {
 }
 
 @pytest.fixture(autouse=True)
-def reset_configuration(ucc_smartx_configs):
+def reset_configuration(ucc_smartx_rest_helper):
     yield
-    custom = Custom(ucc_smartx_configs)
+    custom = Custom(ucc_smartx_rest_helper=ucc_smartx_rest_helper)
     custom.backend_conf.update_parameters(DEFAULT_CONFIGURATION)
 
 class TestCustom(UccTester):
@@ -255,7 +255,7 @@ class TestCustom(UccTester):
         custom = Custom(ucc_smartx_configs)
         test_multiselect = ["Option A", "Option B"]
         self.assert_util(
-            list(custom.test_multiselect.list_of_values()),
+            custom.test_multiselect.list_of_values(),
             test_multiselect
             )
 

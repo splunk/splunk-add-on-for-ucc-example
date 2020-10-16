@@ -21,9 +21,9 @@ DEFAULT_CONFIGURATION = {
 }
 
 @pytest.fixture(autouse=True)
-def reset_configuration(ucc_smartx_configs):
+def reset_configuration(ucc_smartx_rest_helper):
     yield
-    proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+    proxy = Proxy(ucc_smartx_rest_helper, TA_NAME, TA_CONF)
     proxy.backend_conf.update_parameters(DEFAULT_CONFIGURATION)
 
 class TestProxy(UccTester):
@@ -152,7 +152,7 @@ class TestProxy(UccTester):
         """ This test case checks list of proxy types present in the drop down"""
         proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
         self.assert_util(
-            set(proxy.type.list_of_values()) ,
+            proxy.type.list_of_values(),
             {"http", "socks4", "socks5"}
             )
 

@@ -81,26 +81,27 @@ class InputPage(Page):
     Page: Input page
     """
 
-    def __init__(self, ucc_smartx_configs, open_page=True):
+    def __init__(self, ucc_smartx_selenium_helper=None, ucc_smartx_rest_helper=None, open_page=True):
         """
             :param browser: The selenium webdriver
             :param urls: Splunk web & management url. {"web": , "mgmt": }
             :param session_key: session key to access the rest endpoints
         """
-        super(InputPage, self).__init__(ucc_smartx_configs, open_page)
+        super(InputPage, self).__init__(ucc_smartx_selenium_helper, ucc_smartx_rest_helper, open_page)
 
         input_container = Selector(select="div.inputsContainer")
+        if ucc_smartx_selenium_helper
+            self.title = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
+            self.description = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-description"))
+            self.create_new_input = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select=".add-button"))
+            self.table = InputTable(ucc_smartx_selenium_helper.browser, input_container, mapping={"status": "disabled", "input_type":3})
+            self.entity1 = ExampleInputOne(ucc_smartx_selenium_helper.browser, input_container)
+            self.entity2 = ExampleInputTwo(ucc_smartx_selenium_helper.browser, input_container)
+            self.pagination = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select="control btn-group shared-controls-syntheticselectcontrol control-default"))
+            self.type_filter = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select=" .type-filter"))
         
-        self.title = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
-        self.description = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-description"))
-        self.create_new_input = Dropdown(ucc_smartx_configs.browser, Selector(select=".add-button"))
-        self.table = InputTable(ucc_smartx_configs.browser, input_container, mapping={"status": "disabled", "input_type":3})
-        self.entity1 = ExampleInputOne(ucc_smartx_configs.browser, input_container)
-        self.entity2 = ExampleInputTwo(ucc_smartx_configs.browser, input_container)
-        self.backend_conf = ListBackendConf(self._get_input_endpoint(), ucc_smartx_configs.session_key)
-        self.pagination = Dropdown(ucc_smartx_configs.browser, Selector(select="control btn-group shared-controls-syntheticselectcontrol control-default"))
-        self.type_filter = Dropdown(ucc_smartx_configs.browser, Selector(select=" .type-filter"))
-
+        if ucc_smartx_rest_helper
+            self.backend_conf = ListBackendConf(self._get_input_endpoint(), ucc_smartx_rest_helper.session_key)
     def open(self):
         self.browser.get('{}/en-US/app/Splunk_TA_UCCExample/inputs'.format(self.splunk_web_url))
 
