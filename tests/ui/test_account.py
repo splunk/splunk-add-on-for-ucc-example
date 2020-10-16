@@ -73,7 +73,7 @@ def add_multiple_account(ucc_smartx_rest_helper):
 @pytest.fixture(autouse=True)
 def delete_accounts(ucc_smartx_rest_helper):
     yield
-    account = AccountPage(ucc_smartx_rest_helper, open_page=False)
+    account = AccountPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
     account.backend_conf.delete_all_stanzas()
     
 
