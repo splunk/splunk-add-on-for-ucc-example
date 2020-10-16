@@ -21,15 +21,15 @@ DEFAULT_CONFIGURATION = {
 @pytest.fixture(autouse=True)
 def reset_configuration(ucc_smartx_rest_helper):
     yield
-    custom = Custom(ucc_smartx_rest_helper=ucc_smartx_rest_helper)
+    custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
     custom.backend_conf.update_parameters(DEFAULT_CONFIGURATION)
 
 class TestCustom(UccTester):
 
     @pytest.mark.custom
-    def test_custom_frontend_validation(self, ucc_smartx_configs):
+    def test_custom_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks the validates frontend save in custom tab"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("7")
         custom.test_regex.set_value("test_rex")
@@ -43,9 +43,9 @@ class TestCustom(UccTester):
         assert custom.save()
 
     @pytest.mark.custom
-    def test_custom_backend_validation(self, ucc_smartx_configs):
+    def test_custom_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks the validates backend save in custom tab"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("7")
         custom.test_regex.set_value("test_rex")
@@ -74,9 +74,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_required_field_test_string(self, ucc_smartx_configs):
+    def test_custom_required_field_test_string(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks required field test string"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_number.set_value("7")
         custom.test_regex.set_value("test_rex")
         custom.test_email.set_value("test@a.b")
@@ -92,9 +92,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_valid_length_test_string_greater(self, ucc_smartx_configs):
+    def test_custom_valid_length_test_string_greater(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks length of test string field should be greater than 4"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test")
         self.assert_util(
             custom.save,
@@ -103,9 +103,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_valid_length_test_string_less(self, ucc_smartx_configs):
+    def test_custom_valid_length_test_string_less(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks length of test string field should be less than 11"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_string")
         self.assert_util(
             custom.save,
@@ -114,9 +114,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_required_field_test_number(self, ucc_smartx_configs):
+    def test_custom_required_field_test_number(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks required field test number"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_regex.set_value("test_rex")
         custom.test_email.set_value("test@a.b")
@@ -132,9 +132,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_valid_input_test_number(self, ucc_smartx_configs):
+    def test_custom_valid_input_test_number(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test number field should be interger"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("a")
         self.assert_util(
@@ -144,9 +144,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_valid_range_test_number(self, ucc_smartx_configs):
+    def test_custom_valid_range_test_number(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks range of test number field should be between 1 to 10"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("50")
         self.assert_util(
@@ -156,9 +156,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_valid_input_test_regex(self, ucc_smartx_configs):
+    def test_custom_valid_input_test_regex(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks regex of test regex field"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("5")
         custom.test_regex.set_value("$$")
@@ -169,9 +169,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_valid_input_test_email(self, ucc_smartx_configs):
+    def test_custom_valid_input_test_email(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test email field should be email"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("5")
         custom.test_regex.set_value("test_rex")
@@ -183,9 +183,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_valid_input_test_ipv4(self, ucc_smartx_configs):
+    def test_custom_valid_input_test_ipv4(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test ipv4 field should be valid ipv4"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("5")
         custom.test_regex.set_value("test_rex")
@@ -198,9 +198,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_valid_input_test_date(self, ucc_smartx_configs):
+    def test_custom_valid_input_test_date(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test date field should be in ISO 8601 format"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("5")
         custom.test_regex.set_value("test_rex")
@@ -214,9 +214,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_valid_input_test_url(self, ucc_smartx_configs):
+    def test_custom_valid_input_test_url(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test url field should be valid url"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_string.set_value("test_str")
         custom.test_number.set_value("5")
         custom.test_regex.set_value("test_rex")
@@ -231,18 +231,18 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_default_value_test_radio(self, ucc_smartx_configs):
+    def test_custom_default_value_test_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks default value of test radio"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
             custom.test_radio.get_value,
             r"Yes"
             )
 
     @pytest.mark.custom
-    def test_custom_select_value_test_radio(self, ucc_smartx_configs):
+    def test_custom_select_value_test_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks selected value of test radio"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         custom.test_radio.select("No")
         self.assert_util(
             custom.test_radio.get_value,
@@ -250,9 +250,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_list_test_multiselect(self, ucc_smartx_configs):
+    def test_custom_list_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks values of Multiple Select Test dropdown"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         test_multiselect = ["Option A", "Option B"]
         self.assert_util(
             custom.test_multiselect.list_of_values(),
@@ -260,9 +260,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_select_value_test_multiselect(self, ucc_smartx_configs):
+    def test_custom_select_value_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks selected single value of Multiple Select Test dropdown"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         selected_values = ["Option A"]
         for each in selected_values:
             custom.test_multiselect.select(each)
@@ -272,9 +272,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_select_multiple_values_test_multiselect(self, ucc_smartx_configs):
+    def test_custom_select_multiple_values_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks selected multiple values of Multiple Select Test dropdown"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         selected_values = ["Option A", "Option B"]
         for each in selected_values:
             custom.test_multiselect.select(each)
@@ -284,9 +284,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_search_value_test_multiselect(self, ucc_smartx_configs):
+    def test_custom_search_value_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks multiple select seach funtionality"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
             custom.test_multiselect.search_get_list,
             ["Option A"],
@@ -294,9 +294,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_deselect_test_multiselect(self, ucc_smartx_configs):
+    def test_custom_deselect_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks deselect funtionality of multiple select"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         selected_values = ["Option A", "Option B"]
         for each in selected_values:
             custom.test_multiselect.select(each)
@@ -307,9 +307,9 @@ class TestCustom(UccTester):
             )
 
     @pytest.mark.custom
-    def test_custom_help_link(self, ucc_smartx_configs):
+    def test_custom_help_link(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks whether help link redirects to the correct URL"""
-        custom = Custom(ucc_smartx_configs)
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         go_to_link = "https://docs.splunk.com/Documentation"
         self.assert_util(
             custom.test_help_link.go_to_link,

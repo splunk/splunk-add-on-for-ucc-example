@@ -24,7 +24,6 @@ ACCOUNT_CONFIG = {
     'username': 'TestUser',
     'password': 'TestPassword',
     'token': 'TestToken',
-    'disabled': 0,
     'client_id': '',
     'client_secret': '',
     'redirect_url': '',

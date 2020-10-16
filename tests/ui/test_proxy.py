@@ -23,15 +23,15 @@ DEFAULT_CONFIGURATION = {
 @pytest.fixture(autouse=True)
 def reset_configuration(ucc_smartx_rest_helper):
     yield
-    proxy = Proxy(ucc_smartx_rest_helper, TA_NAME, TA_CONF)
+    proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
     proxy.backend_conf.update_parameters(DEFAULT_CONFIGURATION)
 
 class TestProxy(UccTester):
 
     @pytest.mark.proxy
-    def test_proxy_default_configs(self, ucc_smartx_configs):
+    def test_proxy_default_configs(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the default proxy configurations"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
             proxy.proxy_enable.is_checked,
             False
@@ -62,9 +62,9 @@ class TestProxy(UccTester):
             )
 
     @pytest.mark.proxy
-    def test_proxy_required_field_host(self, ucc_smartx_configs):
+    def test_proxy_required_field_host(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether the host field in proxy is required and displays an error if left empty"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
         proxy.type.select("http")
         proxy.dns_enable.check()
@@ -79,9 +79,9 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    def test_proxy_host_valid_input(self, ucc_smartx_configs):
+    def test_proxy_host_valid_input(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies if host contains special characters displays an error"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.host.set_value("abc$$")
         self.assert_util(
             proxy.save,
@@ -91,9 +91,9 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    def test_proxy_host_field_length_validation(self, ucc_smartx_configs):
+    def test_proxy_host_field_length_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies host field length validation"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         host_value = "a" * 4097
         proxy.host.set_value(host_value)
         self.assert_util(
@@ -104,9 +104,9 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    def test_proxy_required_field_port(self, ucc_smartx_configs):
+    def test_proxy_required_field_port(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether the proxy field is required and displays an error if left empty"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
         proxy.type.select("http")
         proxy.dns_enable.check()
@@ -122,9 +122,9 @@ class TestProxy(UccTester):
 
 
     @pytest.mark.proxy
-    def test_proxy_port_field_valid_range(self, ucc_smartx_configs):
+    def test_proxy_port_field_valid_range(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether the proxy field only allows numeric values"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.host.set_value("abc")
         proxy.port.set_value("abc")
         self.assert_util(
@@ -135,9 +135,9 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    def test_proxy_port_field_out_of_range(self, ucc_smartx_configs):
+    def test_proxy_port_field_out_of_range(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ verifies out of range port value"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.host.set_value("abc")
         proxy.port.set_value("65536")
         self.assert_util(
@@ -148,18 +148,18 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    def test_proxy_list_proxy_types(self, ucc_smartx_configs):
+    def test_proxy_list_proxy_types(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks list of proxy types present in the drop down"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
             proxy.type.list_of_values(),
             {"http", "socks4", "socks5"}
             )
 
     @pytest.mark.proxy
-    def test_proxy_required_field_proxy_type(self, ucc_smartx_configs):
+    def test_proxy_required_field_proxy_type(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether proxy type is required and displays an error if left empty"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
         proxy.type.select("http")
         proxy.dns_enable.check()
@@ -176,9 +176,9 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    def test_proxy_username_field_length_validation(self, ucc_smartx_configs):
+    def test_proxy_username_field_length_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
     # Verifies username field length validation
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         username_value = "a" * 51
         proxy.host.set_value("abc")
         proxy.port.set_value("65535")
@@ -191,9 +191,9 @@ class TestProxy(UccTester):
         assert proxy.close_error()
 
     @pytest.mark.proxy
-    def test_proxy_encrypted_field_password(self, ucc_smartx_configs):
+    def test_proxy_encrypted_field_password(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies if the password field is masked or not in the Textbox"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         textbox_type = proxy.password.get_type()
         self.assert_util(
             textbox_type ,
@@ -201,9 +201,9 @@ class TestProxy(UccTester):
             )
 
     @pytest.mark.proxy
-    def test_proxy_frontend_validation(self, ucc_smartx_configs):
+    def test_proxy_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the proxy is saved properly in frontend after saving it"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
         proxy.type.select("http")
         proxy.dns_enable.check()
@@ -214,9 +214,9 @@ class TestProxy(UccTester):
         assert proxy.save()
 
     @pytest.mark.proxy
-    def test_proxy_backend_validation(self, ucc_smartx_configs):
+    def test_proxy_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the proxy is saved properly in frontend after saving it"""
-        proxy = Proxy(ucc_smartx_configs, TA_NAME, TA_CONF)
+        proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
         proxy.type.select("http")
         proxy.dns_enable.check()

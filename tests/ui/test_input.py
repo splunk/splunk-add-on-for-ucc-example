@@ -26,7 +26,6 @@ def add_account(ucc_smartx_rest_helper):
         'username': 'TestUser',
         'password': 'TestPassword',
         'token': 'TestToken',
-        'disabled': 0,
         'client_id': '',
         'client_secret': '',
         'redirect_url': '',

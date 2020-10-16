@@ -50,7 +50,7 @@ class TestLogging(UccTester):
         logging = Logging(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
             logging.log_level.list_of_values(),
-            {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
+            ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
             )
         
     @pytest.mark.logging
