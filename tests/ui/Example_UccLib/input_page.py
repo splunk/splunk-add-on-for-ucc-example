@@ -90,7 +90,7 @@ class InputPage(Page):
         super(InputPage, self).__init__(ucc_smartx_selenium_helper, ucc_smartx_rest_helper, open_page)
 
         input_container = Selector(select="div.inputsContainer")
-        if ucc_smartx_selenium_helper
+        if ucc_smartx_selenium_helper:
             self.title = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
             self.description = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-description"))
             self.create_new_input = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select=".add-button"))
@@ -100,7 +100,7 @@ class InputPage(Page):
             self.pagination = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select="control btn-group shared-controls-syntheticselectcontrol control-default"))
             self.type_filter = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select=" .type-filter"))
         
-        if ucc_smartx_rest_helper
+        if ucc_smartx_rest_helper:
             self.backend_conf = ListBackendConf(self._get_input_endpoint(), ucc_smartx_rest_helper.session_key)
     def open(self):
         self.browser.get('{}/en-US/app/Splunk_TA_UCCExample/inputs'.format(self.splunk_web_url))
