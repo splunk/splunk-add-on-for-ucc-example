@@ -347,7 +347,7 @@ workflows:
             - package
           matrix:
             parameters:
-              splunk_version: ["8.0"]
+              splunk_version: ["7.2", "7.3", "8.0"]
           filters:
             branches:
               only: /.*/
