@@ -15,6 +15,9 @@ services:
       - sc4s
     volumes:
       - results:/home/circleci/work/test-results
+    environment:
+      - SAUCE_USERNAME=ta-factory-01
+      - SAUCE_PASSWORD=Crest@123
 
   sc4s:
     image: splunk/scs:latest
