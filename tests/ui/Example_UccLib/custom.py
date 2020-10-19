@@ -37,7 +37,7 @@ class Custom(Entity):
 
         if ucc_smartx_rest_helper:
             self.backend_conf = SingleBackendConf(self._get_custom_url(), ucc_smartx_rest_helper.session_key)
-            self.splunk_mgmt_url = ucc_smartx_selenium_helper.splunk_mgmt_url   
+            self.splunk_mgmt_url = ucc_smartx_rest_helper.splunk_mgmt_url   
 
     def open(self):
         """
