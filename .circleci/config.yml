@@ -146,10 +146,9 @@ orbs:
                 # Run the tests
                 docker ps
                 docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1")
-                
-                CONTAINERIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1"))
+                export SPLUNK_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1"))
                 echo "====================="
-                echo $CONTAINERIP
+                echo $SPLUNK_IP
                 echo "====================="
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
               no_output_timeout: 2h
