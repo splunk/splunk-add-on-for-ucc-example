@@ -12,7 +12,7 @@ services:
       dockerfile: Dockerfile-tests
       args:
         SPLUNK_IP: ${SPLUNK_IP}
-        TESTVAL: ${SPLUNK_APP_ID}
+        TESTVAL: ${TESTVAL}
     links:
       - splunk
       - sc4s
