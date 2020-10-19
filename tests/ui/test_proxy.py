@@ -23,7 +23,7 @@ DEFAULT_CONFIGURATION = {
 @pytest.fixture(autouse=True)
 def reset_configuration(ucc_smartx_rest_helper):
     yield
-    proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+    proxy = Proxy(TA_NAME, TA_CONF,ucc_smartx_rest_helper = ucc_smartx_rest_helper)
     proxy.backend_conf.update_parameters(DEFAULT_CONFIGURATION)
 
 class TestProxy(UccTester):
@@ -153,7 +153,7 @@ class TestProxy(UccTester):
         proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
             proxy.type.list_of_values(),
-            {"http", "socks4", "socks5"}
+            ["http", "socks4", "socks5"]
             )
 
     @pytest.mark.proxy
