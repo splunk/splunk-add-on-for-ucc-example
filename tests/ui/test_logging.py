@@ -22,8 +22,8 @@ def reset_configuration(ucc_smartx_rest_helper):
 class TestLogging(UccTester):
 
     @pytest.mark.logging
-    #This test case checks verification of default log level
     def test_logging_default_log_level(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """This test case checks verification of default log level"""
         logging = Logging(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         default_log_level = "INFO"
         self.assert_util(
@@ -32,8 +32,8 @@ class TestLogging(UccTester):
             )
         
     @pytest.mark.logging
-    #This test cases checks the functionality of selecting random log level and verification of the same in UI
     def test_logging_select_random_log_level(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """This test cases checks the functionality of selecting random log level and verification of the same in UI"""
         levels = ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"]
         logging = Logging(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         level = random.choice(levels)
@@ -45,8 +45,8 @@ class TestLogging(UccTester):
             )
         
     @pytest.mark.logging
-    #This test case checks list of log levels present in the drop down
     def test_logging_list_log_levels(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """This test case checks list of log levels present in the drop down"""
         logging = Logging(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
             logging.log_level.list_of_values(),
@@ -54,8 +54,8 @@ class TestLogging(UccTester):
             )
         
     @pytest.mark.logging
-    #This test case checks the verification of selected log level
     def test_logging_selected_log_level_frontend(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """This test case checks the verification of selected log level"""
         selection_log = "WARNING"
         logging = Logging(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         logging.log_level.select(selection_log)
@@ -66,8 +66,8 @@ class TestLogging(UccTester):
             )
         
     @pytest.mark.logging
-    #This test case checks the verification of selected log level in backend
     def test_logging_selected_log_level_backend(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """This test case checks the verification of selected log level in backend"""
         selection_log = "DEBUG"
         logging = Logging(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         logging.log_level.select(selection_log)

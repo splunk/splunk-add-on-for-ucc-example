@@ -177,7 +177,7 @@ class TestProxy(UccTester):
 
     @pytest.mark.proxy
     def test_proxy_username_field_length_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-    # Verifies username field length validation
+        """Verifies username field length validation"""
         proxy = Proxy(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         username_value = "a" * 51
         proxy.host.set_value("abc")
