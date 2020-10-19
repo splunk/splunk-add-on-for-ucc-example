@@ -149,6 +149,7 @@ orbs:
                 echo "====================="
                 echo $CONTAINERID
                 echo $CONTAINERIP
+                echo docker ps -aqf "name=splunk-add-on-for-ucc-example_splunk_1"
                 echo "====================="
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
               no_output_timeout: 2h
