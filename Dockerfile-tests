@@ -7,6 +7,8 @@
 #You should have received a copy of the CC0 legalcode along with this
 #work.  If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 ARG SPLUNK_IP
+ENV SPLUNK_IP $SPLUNK_IP
+
 FROM circleci/python:3.7-browsers
 USER circleci
 RUN mkdir -p /home/circleci/work/tests
@@ -22,8 +24,9 @@ RUN cd /home/circleci/work/tests && ls
 RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.tar.gz
 RUN cd ../..
 COPY package /home/circleci/work/package
-
+RUN echo "================"
 RUN echo $SPLUNK_IP
 RUN echo ${SPLUNK_IP}
-CMD /entrypoint.sh ${SPLUNK_IP}
+RUN echo "================"
+CMD /entrypoint.sh $SPLUNK_IP
 
