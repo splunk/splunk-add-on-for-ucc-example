@@ -150,7 +150,7 @@ orbs:
                 echo ${CONTAINERID}
                 echo ${CONTAINERIP}
                 echo "====================="
-                docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test --CONTAINERIP=${CONTAINERIP}
+                docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
               no_output_timeout: 2h
           - run:
               name: Splunk Get Results
