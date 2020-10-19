@@ -421,8 +421,8 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.entity.open()
         self.assert_util(
-            account.entity.environment.list_of_values(),
-            {"Value1", "Value2", "Other"}
+            account.entity.environment.list_of_values,
+            ["Value1", "Value2", "Other"]
             )
 
     @pytest.mark.account
@@ -442,7 +442,7 @@ class TestAccount(UccTester):
         account.entity.open()
         self.assert_util(
                     account.entity.auth_key.list_of_values(),
-                    {"Basic Authentication", "OAuth 2.0 Authentication"}
+                    ["Basic Authentication", "OAuth 2.0 Authentication"]
                     )
 
     @pytest.mark.account
@@ -479,7 +479,7 @@ class TestAccount(UccTester):
         account.entity.open()
         self.assert_util(
                     account.entity.multiple_select.list_of_values(),
-                    {"Option One", "Option Two"}
+                    ["Option One", "Option Two"]
                     )
 
     @pytest.mark.account
