@@ -93,7 +93,7 @@ def add_input_one(ucc_smartx_rest_helper):
 
 @pytest.fixture
 def add_input_two(ucc_smartx_rest_helper):
-    input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper, open_page=False)
+    input_page = InputPage(ucc_smartx_rest_helper = ucc_smartx_rest_helper, open_page=False)
     url = input_page._get_input_endpoint()
     kwargs = {
         'name': 'example_input_two://dummy_input_two',
