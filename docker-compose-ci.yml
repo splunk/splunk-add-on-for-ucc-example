@@ -67,7 +67,7 @@ services:
         SPLUNK_APP_PACKAGE: ${SPLUNK_APP_PACKAGE}
         SPLUNK_VERSION: ${SPLUNK_VERSION}
         SPLUNK_IP: ${SPLUNK_IP}
-    hostname: ${SPLUNK_IP}
+    hostname: splunk
     ports:
       - "8000"
       - "8088"
