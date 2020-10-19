@@ -79,6 +79,10 @@ def delete_accounts(ucc_smartx_rest_helper):
 
 class TestAccount(UccTester):
     
+    ############################
+    ### TEST CASES FOR TABLE ###
+    ############################
+
     @pytest.mark.account
     def test_account_sort_functionality(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
         """ Verifies sorting functionality for name column"""
@@ -106,27 +110,6 @@ class TestAccount(UccTester):
             account.table.get_count_title,
             
             "{} Items".format(len(account.backend_conf.get_all_stanzas()))
-            )
-
-    @pytest.mark.account
-    def test_account_add_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies the frontend after adding account"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.entity.open()
-        account.entity.name.set_value(ACCOUNT_CONFIG['name'])
-        account.entity.username.set_value(ACCOUNT_CONFIG['username'])
-        account.entity.multiple_select.select("Option One")
-        account.entity.password.set_value(ACCOUNT_CONFIG['password'])
-        account.entity.security_token.set_value("TestToken")
-        assert account.entity.save()
-        account.table.wait_for_rows_to_appear(1)
-        self.assert_util(
-            account.table.get_table()[ACCOUNT_CONFIG['name']],
-            {
-                'name': ACCOUNT_CONFIG['name'],
-                'auth type': 'basic',
-                'actions': 'Edit | Clone | Delete'
-            }
             )
 
     @pytest.mark.account
@@ -161,6 +144,23 @@ class TestAccount(UccTester):
             account.table.get_row_count,
             0
             )
+
+    @pytest.mark.account
+    def test_account_pagination(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
+        """ Verifies pagination list"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        name_column_page1 = account.table.get_column_values("name")
+        account.table.switch_to_next()
+        name_column_page2 = account.table.get_column_values("name")
+        self.assert_util(name_column_page1,
+                         name_column_page2,
+                         "!="
+                         )
+
+    ###################################
+    #### TEST CASES FOR ENTITY     ####
+    ###################################
+
 
     @pytest.mark.account
     def test_account_title_and_description(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -214,6 +214,61 @@ class TestAccount(UccTester):
             account.entity.title.container.get_attribute('textContent').strip(),
             "Delete Confirmation"
             )
+
+    @pytest.mark.account
+    def test_account_add_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies close functionality at time of add"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.entity.open()
+        assert account.entity.close()
+
+    @pytest.mark.account
+    def test_account_add_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies cancel functionality at time of add"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.entity.open()
+        assert account.entity.cancel()
+
+    @pytest.mark.account
+    def test_account_delete_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+        """ Verifies close functionality at time of delete"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        assert account.table.delete_row(ACCOUNT_CONFIG["name"], close=True)
+        
+    @pytest.mark.account
+    def test_account_delete_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+        """ Verifies cancel functionality at time of delete"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        assert account.table.delete_row(ACCOUNT_CONFIG["name"], cancel=True)
+    
+    @pytest.mark.account
+    def test_account_edit_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+        """ Verifies close functionality at time of edit"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.table.edit_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.close()
+        
+    @pytest.mark.account
+    def test_account_edit_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+        """ Verifies cancel functionality at time of edit"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.table.edit_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.cancel()
+    
+    @pytest.mark.account
+    def test_account_clone_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+        """ Verifies close functionality at time of clone"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.table.clone_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.close()
+
+    @pytest.mark.account
+    def test_account_clone_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+        """ Verifies cancel functionality at time of clone"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.table.clone_row(ACCOUNT_CONFIG["name"])
+        assert account.entity.cancel()
+
 
     @pytest.mark.account
     def test_account_delete_valid_prompt_message(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
@@ -513,59 +568,6 @@ class TestAccount(UccTester):
                     account.entity.account_radio.get_value,
                     "Yes")
 
-    @pytest.mark.account
-    def test_account_add_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies close functionality at time of add"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.entity.open()
-        assert account.entity.close()
-
-    @pytest.mark.account
-    def test_account_add_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies cancel functionality at time of add"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.entity.open()
-        assert account.entity.cancel()
-
-    @pytest.mark.account
-    def test_account_delete_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
-        """ Verifies close functionality at time of delete"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert account.table.delete_row(ACCOUNT_CONFIG["name"], close=True)
-        
-    @pytest.mark.account
-    def test_account_delete_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
-        """ Verifies cancel functionality at time of delete"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert account.table.delete_row(ACCOUNT_CONFIG["name"], cancel=True)
-    
-    @pytest.mark.account
-    def test_account_edit_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
-        """ Verifies close functionality at time of edit"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.table.edit_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.close()
-        
-    @pytest.mark.account
-    def test_account_edit_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
-        """ Verifies cancel functionality at time of edit"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.table.edit_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.cancel()
-    
-    @pytest.mark.account
-    def test_account_clone_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
-        """ Verifies close functionality at time of clone"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.table.clone_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.close()
-
-    @pytest.mark.account
-    def test_account_clone_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
-        """ Verifies cancel functionality at time of clone"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.table.clone_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.cancel()
         
     @pytest.mark.account
     def test_add_account_duplicate_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
@@ -601,6 +603,27 @@ class TestAccount(UccTester):
         self.assert_util(
                     account.entity.name.is_editable,
                     False)
+
+    @pytest.mark.account
+    def test_account_add_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies the frontend after adding account"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.entity.open()
+        account.entity.name.set_value(ACCOUNT_CONFIG['name'])
+        account.entity.username.set_value(ACCOUNT_CONFIG['username'])
+        account.entity.multiple_select.select("Option One")
+        account.entity.password.set_value(ACCOUNT_CONFIG['password'])
+        account.entity.security_token.set_value("TestToken")
+        assert account.entity.save()
+        account.table.wait_for_rows_to_appear(1)
+        self.assert_util(
+            account.table.get_table()[ACCOUNT_CONFIG['name']],
+            {
+                'name': ACCOUNT_CONFIG['name'],
+                'auth type': 'basic',
+                'actions': 'Edit | Clone | Delete'
+            }
+            )
 
     @pytest.mark.account
     def test_account_edit_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
@@ -696,8 +719,8 @@ class TestAccount(UccTester):
                         'username' : ACCOUNT_CONFIG["username"],
                         'custom_endpoint': ACCOUNT_CONFIG['custom_endpoint'],
                         'disabled': False,
-                        'password': '******',
-                        'token': '******'
+                        'password': ACCOUNT_CONFIG['password'],
+                        'token': ACCOUNT_CONFIG['token']
                     },
                     left_args={'stanza': ACCOUNT_CONFIG["name"]}
                     )
@@ -723,8 +746,8 @@ class TestAccount(UccTester):
                         'username' : 'TestEditUser',
                         'custom_endpoint': 'login.example.com',
                         'disabled': False,
-                        'password': '******',
-                        'token': '******'
+                        'password': ACCOUNT_CONFIG['password'],
+                        'token': ACCOUNT_CONFIG['token']
                     },
                     left_args={'stanza': ACCOUNT_CONFIG["name"]}
                     )
@@ -753,8 +776,8 @@ class TestAccount(UccTester):
                         'username' : 'TestCloneUser',
                         'custom_endpoint': 'login.example.com',
                         'disabled': False,
-                        'password': '******',
-                        'token': '******'
+                        'password': ACCOUNT_CONFIG['password'],
+                        'token': ACCOUNT_CONFIG['token']
                     },
                     left_args={'stanza': "TestAccountClone"}
                     )
@@ -770,17 +793,6 @@ class TestAccount(UccTester):
                          "not in"
                          )
     
-    @pytest.mark.account
-    def test_account_pagination(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
-        """ Verifies pagination list"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        name_column_page1 = account.table.get_column_values("name")
-        account.table.switch_to_next()
-        name_column_page2 = account.table.get_column_values("name")
-        self.assert_util(name_column_page1,
-                         name_column_page2,
-                         "!="
-                         )
 
     @pytest.mark.account
     def test_account_helplink(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):

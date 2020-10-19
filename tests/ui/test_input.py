@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 import configparser
 import os
 import json
+import copy
 from base64 import b64decode 
 
 
@@ -117,6 +118,185 @@ def delete_inputs(ucc_smartx_rest_helper):
     
 
 class TestInput(UccTester):
+
+    ############################
+    ### TEST CASES FOR TABLE ###
+    ############################
+
+    @pytest.mark.input
+    def test_inputs_default_rows_in_table(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies the default number of rows in the table"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            input_page.table.get_row_count,
+            0
+            )
+
+    @pytest.mark.input
+    def test_inputs_displayed_columns(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies headers of input table"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        header_list = ["", "Name", "Account", "Interval", "Index", "Status", "Actions"]
+        self.assert_util(
+            list(input_page.table.get_headers()),
+            header_list
+            )
+
+    @pytest.mark.input
+    def test_inputs_pagination_list(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies pagination list"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            input_page.pagination.get_pagination_list(),
+            ['10 Per Page','25 Per Page','50 Per Page']
+            )
+
+    @pytest.mark.input
+    def test_inputs_pagination(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_inputs):
+        """ Verifies pagination functionality by creating 100 accounts"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        input_page.open()
+        assert input_page.pagination.select_page_option("50 Per Page")
+        assert input_page.table.switch_to_page(2)
+        assert input_page.table.switch_to_prev()
+        assert input_page.table.switch_to_next()
+
+    @pytest.mark.input
+    def test_inputs_sort_functionality(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
+        """ Verifies sorting functionality for name column"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        input_page.pagination.select_page_option("50 Per Page")
+        input_page.table.sort_column("Name")
+        sort_order = input_page.table.get_sort_order()
+        column_values = list(input_page.table.get_column_values("Name"))
+        column_values = list(str(item)for item in column_values)
+        sorted_values = sorted(column_values , key = str.lower)
+        self.assert_util(
+            sort_order["header"].lower(),
+            "name"
+            )
+        self.assert_util(
+            column_values,
+            sorted_values
+            )
+        assert sort_order["ascending"]
+
+    @pytest.mark.input
+    def test_inputs_filter_functionality_negative(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
+        """ Verifies the filter functionality (Negative)"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        input_page.table.set_filter("hello")
+        self.assert_util(input_page.table.get_row_count, 0)
+        self.assert_util(
+            input_page.table.get_count_title,
+            "{} Inputs".format(input_page.table.get_row_count())
+            )
+        input_page.table.clean_filter()
+
+    @pytest.mark.input
+    def test_inputs_filter_functionality_positive(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
+        """ Verifies the filter functionality (Positive)"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        input_page.table.set_filter("dummy")
+        self.assert_util(input_page.table.get_row_count, 2)
+        self.assert_util(
+            input_page.table.get_count_title,
+            "{} Inputs".format(input_page.table.get_row_count())
+            )
+        input_page.table.clean_filter()
+
+
+    @pytest.mark.input
+    def test_inputs_create_new_input_list_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies input list dropdown"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        create_new_input_list = ["Example Input One", "Example Input Two"]
+        self.assert_util(
+            input_page.create_new_input.get_inputs_list,
+            create_new_input_list
+            )
+
+    @pytest.mark.input
+    def test_inputs_input_type_list_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
+        """ Verifies input type filter list"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        type_filter_list = ["All", "Example Input One", "Example Input Two"]
+        self.assert_util(
+            input_page.type_filter.get_input_type_list,
+            type_filter_list
+            )
+        input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)
+        self.assert_util(
+            input_page.table.get_row_count,
+            1
+            )
+        input_page.type_filter.select_input_type("Example Input Two")
+        self.assert_util(
+            input_page.table.get_row_count,
+            1
+            )
+
+    @pytest.mark.input
+    def test_inputs_delete_enabled_input(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
+        """ Verifies enabled input should not delete"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            input_page.table.delete_row,
+            r"Can't delete enabled input",
+            left_args={'name': "dummy_input_one"}
+            )
+
+    @pytest.mark.input
+    def test_inputs_more_info(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
+        """ Verifies the expand functionality of the inputs table"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            input_page.table.get_more_info,
+            {
+                'Name': 'dummy_input_one', 
+                'Interval': '90',
+                'Index': 'default',
+                'Status': 'Enabled',
+                'Example Account': 'test_input',
+                'Object': 'test_object',
+                'Object Fields': 'test_field',
+                'Order By': 'LastModifiedDate',
+                'Query Start Date': '2020-12-11T20:00:32.000z',
+                'Limit': '1000'
+                },
+            left_args={'name': 'dummy_input_one'}
+            )
+
+    @pytest.mark.input
+    def test_inputs_enable_disable(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
+        """ Verifies the enable and disable functionality of the input"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        assert input_page.table.input_status_toggle("dummy_input_one", enable=False)
+        assert input_page.table.input_status_toggle("dummy_input_one", enable=True)
+
+
+    @pytest.mark.input
+    def test_inputs_count(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
+        """ Verifies count on table"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            input_page.table.get_count_title,
+            "{} Inputs".format(input_page.table.get_row_count())
+            )
+
+
+    @pytest.mark.input
+    def test_inputs_title_and_description(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies the title and description of the page"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            input_page.title.wait_to_display,
+            "Inputs"
+            )
+        self.assert_util(
+            input_page.description.wait_to_display,
+            "Manage your data inputs"
+            )
 
     ##########################################
     #### TEST CASES FOR EXAMPLE INPUT ONE ####
@@ -954,178 +1134,6 @@ class TestInput(UccTester):
     ### TEST CASES FOR TABLE ###
     ############################
 
-    @pytest.mark.input
-    def test_inputs_displayed_columns(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies headers of input table"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        header_list = ["", "Name", "Account", "Interval", "Index", "Status", "Actions"]
-        self.assert_util(
-            list(input_page.table.get_headers()),
-            header_list
-            )
-
-    @pytest.mark.input
-    def test_inputs_create_new_input_list_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies input list dropdown"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        create_new_input_list = ["Example Input One", "Example Input Two"]
-        self.assert_util(
-            input_page.create_new_input.get_inputs_list,
-            create_new_input_list
-            )
-
-    @pytest.mark.input
-    def test_inputs_input_type_list_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
-        """ Verifies input type filter list"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        type_filter_list = ["All", "Example Input One", "Example Input Two"]
-        self.assert_util(
-            input_page.type_filter.get_input_type_list,
-            type_filter_list
-            )
-        input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)
-        self.assert_util(
-            input_page.table.get_row_count,
-            1
-            )
-        input_page.type_filter.select_input_type("Example Input Two")
-        self.assert_util(
-            input_page.table.get_row_count,
-            1
-            )
-
-    @pytest.mark.input
-    def test_inputs_delete_enabled_input(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
-        """ Verifies enabled input should not delete"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            input_page.table.delete_row,
-            r"Can't delete enabled input",
-            left_args={'name': "dummy_input_one"}
-            )
-
-    @pytest.mark.input
-    def test_inputs_pagination_list(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies pagination list"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            input_page.pagination.get_pagination_list(),
-            ['10 Per Page','25 Per Page','50 Per Page']
-            )
-    
-
-    @pytest.mark.input
-    def test_inputs_more_info(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
-        """ Verifies the expand functionality of the inputs table"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            input_page.table.get_more_info,
-            {
-                'Name': 'dummy_input_one', 
-                'Interval': '90',
-                'Index': 'default',
-                'Status': 'Enabled',
-                'Example Account': 'test_input',
-                'Object': 'test_object',
-                'Object Fields': 'test_field',
-                'Order By': 'LastModifiedDate',
-                'Query Start Date': '2020-12-11T20:00:32.000z',
-                'Limit': '1000'
-                },
-            left_args={'name': 'dummy_input_one'}
-            )
-
-    @pytest.mark.input
-    def test_inputs_enable_disable(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
-        """ Verifies the enable and disable functionality of the input"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert input_page.table.input_status_toggle("dummy_input_one", enable=False)
-        assert input_page.table.input_status_toggle("dummy_input_one", enable=True)
-
-    @pytest.mark.input
-    def test_inputs_filter_functionality_negative(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
-        """ Verifies the filter functionality (Negative)"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        input_page.table.set_filter("hello")
-        self.assert_util(input_page.table.get_row_count, 0)
-        self.assert_util(
-            input_page.table.get_count_title,
-            "{} Inputs".format(input_page.table.get_row_count())
-            )
-        input_page.table.clean_filter()
-
-    @pytest.mark.input
-    def test_inputs_filter_functionality_positive(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
-        """ Verifies the filter functionality (Positive)"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        input_page.table.set_filter("dummy")
-        self.assert_util(input_page.table.get_row_count, 2)
-        self.assert_util(
-            input_page.table.get_count_title,
-            "{} Inputs".format(input_page.table.get_row_count())
-            )
-        input_page.table.clean_filter()
-
-    @pytest.mark.input
-    def test_inputs_count(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
-        """ Verifies count on table"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            input_page.table.get_count_title,
-            "{} Inputs".format(input_page.table.get_row_count())
-            )
-    
-    @pytest.mark.input
-    def test_inputs_sort_functionality(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
-        """ Verifies sorting functionality for name column"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        input_page.pagination.select_page_option("50 Per Page")
-        input_page.table.sort_column("Name")
-        sort_order = input_page.table.get_sort_order()
-        column_values = list(input_page.table.get_column_values("Name"))
-        column_values = list(str(item)for item in column_values)
-        sorted_values = sorted(column_values , key = str.lower)
-        self.assert_util(
-            sort_order["header"].lower(),
-            "name"
-            )
-        self.assert_util(
-            column_values,
-            sorted_values
-            )
-        assert sort_order["ascending"]
-
-    @pytest.mark.input
-    def test_inputs_pagination(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_inputs):
-        """ Verifies pagination functionality by creating 100 accounts"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        input_page.open()
-        assert input_page.pagination.select_page_option("50 Per Page")
-        assert input_page.table.switch_to_page(2)
-        assert input_page.table.switch_to_prev()
-        assert input_page.table.switch_to_next()
-
-    @pytest.mark.input
-    def test_inputs_title_and_description(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies the title and description of the page"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            input_page.title.wait_to_display,
-            "Inputs"
-            )
-        self.assert_util(
-            input_page.description.wait_to_display,
-            "Manage your data inputs"
-            )
-
-    @pytest.mark.input
-    def test_inputs_default_rows_in_table(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies the default number of rows in the table"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            input_page.table.get_row_count,
-            0
-            )
 
     ##########################################
     #### TEST CASES FOR EXAMPLE INPUT TWO ####
