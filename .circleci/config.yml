@@ -145,8 +145,10 @@ orbs:
                 sleep 30
                 # Run the tests
                 export CONTAINERID=$(docker ps -aqf "name=splunk-add-on-for-ucc-example_splunk_1")
-                export CONTAINERIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${CONTAINERID})
+                export CONTAINERIP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $CONTAINERID)
                 echo "====================="
+                echo $(docker ps -aqf "name=splunk-add-on-for-ucc-example_splunk_1")
+                echo $(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $CONTAINERID)
                 echo $CONTAINERID
                 echo $CONTAINERIP
                 echo "====================="
