@@ -21,7 +21,7 @@ DEFAULT_CONFIGURATION = {
 @pytest.fixture(autouse=True)
 def reset_configuration(ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
     yield
-    custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+    custom = Custom(ucc_smartx_rest_helper=ucc_smartx_rest_helper)
     custom.backend_conf.update_parameters(DEFAULT_CONFIGURATION)
 
 class TestCustom(UccTester):

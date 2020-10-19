@@ -36,8 +36,8 @@ class Custom(Entity):
             self.test_help_link = LearnMore(ucc_smartx_selenium_helper.browser, Selector(select=".test_help_link a"))
 
         if ucc_smartx_rest_helper:
-            self.backend_conf = SingleBackendConf(self._get_custom_url(), ucc_smartx_rest_helper.session_key)
             self.splunk_mgmt_url = ucc_smartx_rest_helper.splunk_mgmt_url   
+            self.backend_conf = SingleBackendConf(self._get_custom_url(), ucc_smartx_rest_helper.session_key)
 
     def open(self):
         """
