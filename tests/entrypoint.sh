@@ -14,4 +14,4 @@ wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
 echo "ip arg: $1"
 cd /home/circleci/work
 ls -la
-pytest $@
+pytest $@ 
