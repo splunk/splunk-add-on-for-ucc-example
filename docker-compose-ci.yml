@@ -10,8 +10,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-tests
-    args:
-      SPLUNK_IP: ${SPLUNK_IP}
+      args:
+        SPLUNK_IP: ${SPLUNK_IP}
     links:
       - splunk
       - sc4s
