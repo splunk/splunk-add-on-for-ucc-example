@@ -133,6 +133,10 @@ orbs:
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
                 docker-compose -f docker-compose-ci.yml build
                 docker-compose -f docker-compose-ci.yml up -d splunk  
+                export SPLUNK_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1"))
+                echo "====================="
+                echo $SPLUNK_IP
+                echo "====================="
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
                 # Run a Splunk Diag
                 mkdir /tmp/diag
@@ -142,14 +146,13 @@ orbs:
                 # Check with btool
                 docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
                 docker-compose -f docker-compose-ci.yml up -d splunk
-                sleep 30
-                # Run the tests
                 docker ps
-                docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1")
                 export SPLUNK_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1"))
                 echo "====================="
                 echo $SPLUNK_IP
                 echo "====================="
+                sleep 30
+                # Run the tests
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
               no_output_timeout: 2h
           - run:
