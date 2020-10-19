@@ -12,6 +12,7 @@ import os
 import requests
 import urllib
 import copy
+from base64 import b64decode 
 
 
 ACCOUNT_CONFIG = {

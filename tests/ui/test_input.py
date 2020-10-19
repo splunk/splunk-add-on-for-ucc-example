@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 import configparser
 import os
 import json
+from base64 import b64decode 
 
 
 @pytest.fixture(scope="session", autouse=True)
