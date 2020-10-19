@@ -18,13 +18,12 @@ class Custom(Entity):
             :param ucc_smartx_selenium_helper: fixture contains browser, urls and session key
         """
         entity_container = Selector(select="#customized-tab-tab")
-        super(Custom, self).__init__(ucc_smartx_selenium_helper.browser, entity_container)
-        self.splunk_web_url = ucc_smartx_selenium_helper.splunk_web_url
-        self.splunk_mgmt_url = ucc_smartx_selenium_helper.splunk_mgmt_url
-        self.open()
 
         # Components
         if ucc_smartx_selenium_helper:
+            super(Custom, self).__init__(ucc_smartx_selenium_helper.browser, entity_container)
+            self.splunk_web_url = ucc_smartx_selenium_helper.splunk_web_url
+            self.open()    
             self.test_string = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_string"))
             self.test_number = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_number"))
             self.test_regex = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_regex"))
@@ -35,8 +34,10 @@ class Custom(Entity):
             self.test_radio = Toggle(ucc_smartx_selenium_helper.browser, Selector(select=".test_radio"))
             self.test_multiselect = MultiSelect(ucc_smartx_selenium_helper.browser, Selector(select=".test_multiselect"))
             self.test_help_link = LearnMore(ucc_smartx_selenium_helper.browser, Selector(select=".test_help_link a"))
+
         if ucc_smartx_rest_helper:
             self.backend_conf = SingleBackendConf(self._get_custom_url(), ucc_smartx_rest_helper.session_key)
+            self.splunk_mgmt_url = ucc_smartx_selenium_helper.splunk_mgmt_url   
 
     def open(self):
         """
