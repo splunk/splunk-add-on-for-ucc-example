@@ -722,7 +722,7 @@ class TestAccount(UccTester):
                         'password': ACCOUNT_CONFIG['password'],
                         'token': ACCOUNT_CONFIG['token']
                     },
-                    left_args={'stanza': ACCOUNT_CONFIG["name"]}
+                    left_args={'stanza': ACCOUNT_CONFIG["name"],'encrypted':False}
                     )
 
     @pytest.mark.account
@@ -749,7 +749,7 @@ class TestAccount(UccTester):
                         'password': ACCOUNT_CONFIG['password'],
                         'token': ACCOUNT_CONFIG['token']
                     },
-                    left_args={'stanza': ACCOUNT_CONFIG["name"]}
+                    left_args={'stanza': ACCOUNT_CONFIG["name"],'encrypted':False}
                     )
 
     @pytest.mark.account
@@ -779,7 +779,7 @@ class TestAccount(UccTester):
                         'password': ACCOUNT_CONFIG['password'],
                         'token': ACCOUNT_CONFIG['token']
                     },
-                    left_args={'stanza': "TestAccountClone"}
+                    left_args={'stanza': "TestAccountClone",'encrypted':False}
                     )
     
     @pytest.mark.account
