@@ -710,9 +710,8 @@ class TestAccount(UccTester):
         account.entity.security_token.set_value(ACCOUNT_CONFIG["token"])
         assert account.entity.save()
         account.table.wait_for_rows_to_appear(1)
-        self.assert_util(
-                    account.backend_conf.get_stanza,
-                    {'account_checkbox': '0',
+        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], encrypted=False) =={
+                        'account_checkbox': '0',
                         'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
                         'account_radio' : '1',
                         'auth_type' : ACCOUNT_CONFIG['auth_type'],
@@ -721,9 +720,7 @@ class TestAccount(UccTester):
                         'disabled': False,
                         'password': ACCOUNT_CONFIG['password'],
                         'token': ACCOUNT_CONFIG['token']
-                    },
-                    left_args={'stanza': ACCOUNT_CONFIG["name"],'encrypted':False}
-                    )
+                    }
 
     @pytest.mark.account
     def test_account_edit_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
@@ -737,9 +734,8 @@ class TestAccount(UccTester):
         account.entity.account_radio.select("No")
         account.entity.save()
         account.table.wait_for_rows_to_appear(1)
-        self.assert_util(
-                    account.backend_conf.get_stanza,
-                    {'account_checkbox': '1',
+        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], encrypted=False) == {
+                        'account_checkbox': '1',
                         'account_multiple_select' : 'one,two',
                         'account_radio' : '0',
                         'auth_type' : 'basic',
@@ -748,9 +744,7 @@ class TestAccount(UccTester):
                         'disabled': False,
                         'password': ACCOUNT_CONFIG['password'],
                         'token': ACCOUNT_CONFIG['token']
-                    },
-                    left_args={'stanza': ACCOUNT_CONFIG["name"],'encrypted':False}
-                    )
+                    }
 
     @pytest.mark.account
     def test_account_clone_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
@@ -766,9 +760,7 @@ class TestAccount(UccTester):
         account.entity.account_radio.select("No")
         account.entity.save()
         account.table.wait_for_rows_to_appear(2)
-        self.assert_util(
-                    account.backend_conf.get_stanza,
-                    {
+        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], encrypted=False) == {
                         'account_checkbox': '1',
                         'account_multiple_select' : 'one,two',
                         'account_radio' : '0',
@@ -778,9 +770,7 @@ class TestAccount(UccTester):
                         'disabled': False,
                         'password': ACCOUNT_CONFIG['password'],
                         'token': ACCOUNT_CONFIG['token']
-                    },
-                    left_args={'stanza': "TestAccountClone",'encrypted':False}
-                    )
+                    }
     
     @pytest.mark.account
     def test_account_delete_row_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
