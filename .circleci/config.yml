@@ -147,7 +147,7 @@ orbs:
                 sleep 30
                 
                 # Run the tests
-                docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
+                docker-compose -f docker-compose-ci.yml up  test
                 docker ps
                 echo "====================="
                 echo $SPLUNK_IP

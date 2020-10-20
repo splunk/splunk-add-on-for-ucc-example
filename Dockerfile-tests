@@ -25,5 +25,5 @@ RUN cd /home/circleci/work/tests && ls
 RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.tar.gz
 RUN cd ../..
 COPY package /home/circleci/work/package
-CMD /entrypoint.sh $SPLUNK_IP
+
 
