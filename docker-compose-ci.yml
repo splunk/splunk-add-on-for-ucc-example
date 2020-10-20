@@ -18,7 +18,7 @@ services:
       - sc4s
     volumes:
       - results:/home/circleci/work/test-results
-      - /tmp:/tmp
+      - tmp:/tmp
     environment:
       - SAUCE_USERNAME=ta-factory-01
       - SAUCE_PASSWORD=be7beeab-8bba-420c-90b3-8eac2d16d3ca
@@ -75,7 +75,7 @@ services:
       - "8089"
       - "9997"
     volumes:
-      - /tmp:/tmp
+      - tmp:/tmp
     environment:
       - SPLUNK_PASSWORD=Chang3d!
       - SPLUNK_START_ARGS=--accept-license
