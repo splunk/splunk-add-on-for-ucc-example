@@ -778,9 +778,9 @@ class TestAccount(UccTester):
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         account.entity.name.set_value("TestAccountClone")
         account.entity.multiple_select.select("Option Two")
-        account.entity.username.set_value("TestEditUser")
+        account.entity.username.set_value("TestCloneUser")
         account.entity.password.set_value("TestEditPassword")
-        account.entity.security_token.set_value("TestCloneToken")
+        account.entity.security_token.set_value("TestEditToken")
         account.entity.account_radio.select("No")
         account.entity.save()
         account.table.wait_for_rows_to_appear(2)
@@ -792,8 +792,8 @@ class TestAccount(UccTester):
                         'username' : 'TestCloneUser',
                         'custom_endpoint': 'login.example.com',
                         'disabled': False,
-                        'password': ACCOUNT_CONFIG['password'],
-                        'token': ACCOUNT_CONFIG['token']
+                        'password': ACCOUNT_CONFIG_1['password'],
+                        'token': ACCOUNT_CONFIG_1['token']
                     }
     
     @pytest.mark.account
@@ -823,9 +823,8 @@ class TestAccount(UccTester):
     def test_account_delete_account_in_use(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account, add_input):
         """ Verifies by deleting the input used account"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.table.delete_row(ACCOUNT_CONFIG["name"])
         self.assert_util(
-                    account.table.delete_row(ACCOUNT_CONFIG["name"], prompt_msg=True),
+                    account.table.delete_row,
                     r'TestAccount cannot be deleted because it is in use',
                     left_args={'name': ACCOUNT_CONFIG["name"], "prompt_msg": True},
      )
