@@ -17,7 +17,9 @@ services:
       - results:/home/circleci/work/test-results
     environment:
       - token=${TOKEN}
-      - password=${PASSWORD}  
+      - password=${PASSWORD}
+      - token_1=${TOKEN_1}
+      - password_1=${PASSWORD_1}  
   sc4s:
     image: splunk/scs:latest
     hostname: sc4s

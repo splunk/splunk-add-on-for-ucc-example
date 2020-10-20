@@ -33,6 +33,10 @@ ACCOUNT_CONFIG = {
     'example_help_link': ''
 }
 
+ACCOUNT_CONFIG_1={
+    'password': b64decode(os.getenv("password_1")).decode("ascii")
+    'token':    b64decode(os.getenv("token_1")).decode("ascii")  
+}
 @pytest.fixture
 def add_input(ucc_smartx_rest_helper):
     input_page = InputPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
@@ -83,6 +87,15 @@ class TestAccount(UccTester):
     ### TEST CASES FOR TABLE ###
     ############################
 
+    @pytest.mark.account
+    def test_account_default_rows_in_table(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies the default number of rows in the table"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            account.table.get_row_count,
+            0
+            )
+            
     @pytest.mark.account
     def test_account_sort_functionality(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
         """ Verifies sorting functionality for name column"""
@@ -136,14 +149,6 @@ class TestAccount(UccTester):
             )
         account.table.clean_filter()
 
-    @pytest.mark.account
-    def test_account_default_rows_in_table(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies the default number of rows in the table"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            account.table.get_row_count,
-            0
-            )
 
     @pytest.mark.account
     def test_account_pagination(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
@@ -742,8 +747,8 @@ class TestAccount(UccTester):
                         'username' : 'TestEditUser',
                         'custom_endpoint': 'login.example.com',
                         'disabled': False,
-                        'password': ACCOUNT_CONFIG['password'],
-                        'token': ACCOUNT_CONFIG['token']
+                        'password': ACCOUNT_CONFIG_1['password'],
+                        'token': ACCOUNT_CONFIG_1['token']
                     }
 
     @pytest.mark.account
@@ -754,13 +759,13 @@ class TestAccount(UccTester):
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         account.entity.name.set_value("TestAccountClone")
         account.entity.multiple_select.select("Option Two")
-        account.entity.username.set_value("TestCloneUser")
-        account.entity.password.set_value("TestClonePassword")
+        account.entity.username.set_value("TestEditUser")
+        account.entity.password.set_value("TestEditPassword")
         account.entity.security_token.set_value("TestCloneToken")
         account.entity.account_radio.select("No")
         account.entity.save()
         account.table.wait_for_rows_to_appear(2)
-        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], encrypted=False) == {
+        assert account.backend_conf.get_stanza("TestAccountClone", encrypted=False) == {
                         'account_checkbox': '1',
                         'account_multiple_select' : 'one,two',
                         'account_radio' : '0',
