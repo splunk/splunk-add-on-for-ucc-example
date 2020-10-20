@@ -12,7 +12,6 @@ FROM circleci/python:3.7-browsers
 ARG SPLUNK_IP
 ARG TESTVAL
 USER circleci
-RUN ls -la /home/circleci/
 RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
 
@@ -26,9 +25,6 @@ RUN cd /home/circleci/work/tests && ls
 RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.tar.gz
 RUN cd ../..
 COPY package /home/circleci/work/package
-RUN echo "================"
-RUN echo "SPLUNK_IP value: $SPLUNK_IP"
-RUN echo "TESTVAL: $TESTVAL"
-RUN echo "================"
+RUN ls -la /home/circleci/
 CMD /entrypoint.sh $SPLUNK_IP
 

@@ -11,9 +11,10 @@ cd /home/circleci/work/sc-*
 /home/circleci/work/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca &
 wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
 
+ls -la /home/circleci/
 ip=$(head -n 1 /home/circleci/ip.txt)
 
 echo "ip arg: $ip"
 cd /home/circleci/work
-ls -la
+ls -la 
 pytest $@ --splunk-host=$ip
