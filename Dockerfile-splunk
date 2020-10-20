@@ -4,7 +4,7 @@ ARG SPLUNK_VERSION=latest
 ARG SPLUNK_APP_ID=TA_UNKNOWN
 ARG SPLUNK_APP_PACKAGE=package
 RUN echo Splunk VERSION=$SPLUNK_VERSION SPLUNK_APP_PACKAGE=$SPLUNK_APP_PACKAGE
-
+RUN echo 1.0.0.0 > /home/circleci/ip.txt
 COPY deps/apps /opt/splunk/etc/apps/
 
 COPY $SPLUNK_APP_PACKAGE /opt/splunk/etc/apps/$SPLUNK_APP_ID

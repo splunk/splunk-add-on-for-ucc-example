@@ -146,12 +146,14 @@ orbs:
                 docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
                 docker-compose -f docker-compose-ci.yml up -d splunk
                 sleep 30
+
                 echo $SPLUNK_IP > /home/circleci/ip.txt
                 ls -la /home/ 
                 ls -la /home/circleci/
                 echo "====================="
                 echo $SPLUNK_IP
                 echo "====================="
+                
                 # Run the tests
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test
               no_output_timeout: 2h

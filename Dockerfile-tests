@@ -8,7 +8,6 @@
 #work.  If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 ARG SPLUNK_IP
 ARG TESTVAL
-RUN ls -la /home/circleci/
 FROM circleci/python:3.7-browsers
 ARG SPLUNK_IP
 ARG TESTVAL
