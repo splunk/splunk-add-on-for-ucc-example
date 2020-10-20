@@ -12,13 +12,11 @@ services:
       dockerfile: Dockerfile-tests
       args:
         SPLUNK_IP: ${SPLUNK_IP}
-        TESTVAL: ${TESTVAL}
     links:
       - splunk
       - sc4s
     volumes:
       - results:/home/circleci/work/test-results
-      - tmp:/tmp
     environment:
       - SAUCE_USERNAME=ta-factory-01
       - SAUCE_PASSWORD=be7beeab-8bba-420c-90b3-8eac2d16d3ca
@@ -74,14 +72,11 @@ services:
       - "8088"
       - "8089"
       - "9997"
-    volumes:
-      - tmp:/tmp
     environment:
       - SPLUNK_PASSWORD=Chang3d!
       - SPLUNK_START_ARGS=--accept-license
       - SPLUNK_HEC_TOKEN=9b741d03-43e9-4164-908b-e09102327d22
 
 volumes:
-  tmp:
   results:
     external: false

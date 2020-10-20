@@ -17,4 +17,4 @@ ip=$(head -n 1 /tmp/ip.txt)
 echo "ip arg: $ip"
 cd /home/circleci/work
 ls -la 
-pytest $@ --splunk-host=$ip
+pytest $@ 
