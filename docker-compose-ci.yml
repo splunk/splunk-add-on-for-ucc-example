@@ -82,5 +82,6 @@ services:
       - SPLUNK_HEC_TOKEN=9b741d03-43e9-4164-908b-e09102327d22
 
 volumes:
+  tmp:
   results:
     external: false
