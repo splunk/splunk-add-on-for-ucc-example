@@ -734,7 +734,7 @@ class TestAccount(UccTester):
         account.entity.security_token.set_value(ACCOUNT_CONFIG["token"])
         assert account.entity.save()
         account.table.wait_for_rows_to_appear(1)
-        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], encrypted=False) =={
+        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], decrypt=True) =={
                         'account_checkbox': '0',
                         'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
                         'account_radio' : '1',
@@ -758,7 +758,7 @@ class TestAccount(UccTester):
         account.entity.account_radio.select("No")
         account.entity.save()
         account.table.wait_for_rows_to_appear(1)
-        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], encrypted=False) == {
+        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], decrypt=True) == {
                         'account_checkbox': '1',
                         'account_multiple_select' : 'one,two',
                         'account_radio' : '0',
@@ -784,7 +784,7 @@ class TestAccount(UccTester):
         account.entity.account_radio.select("No")
         account.entity.save()
         account.table.wait_for_rows_to_appear(2)
-        assert account.backend_conf.get_stanza("TestAccountClone", encrypted=False) == {
+        assert account.backend_conf.get_stanza("TestAccountClone", decrypt=True) == {
                         'account_checkbox': '1',
                         'account_multiple_select' : 'one,two',
                         'account_radio' : '0',
