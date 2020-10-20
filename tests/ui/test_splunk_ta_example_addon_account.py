@@ -34,7 +34,7 @@ ACCOUNT_CONFIG = {
 }
 
 ACCOUNT_CONFIG_1={
-    'password': b64decode(os.getenv("password_1")).decode("ascii")
+    'password': b64decode(os.getenv("password_1")).decode("ascii"),
     'token':    b64decode(os.getenv("token_1")).decode("ascii")  
 }
 @pytest.fixture
@@ -95,7 +95,7 @@ class TestAccount(UccTester):
             account.table.get_row_count,
             0
             )
-            
+
     @pytest.mark.account
     def test_account_sort_functionality(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
         """ Verifies sorting functionality for name column"""
@@ -609,6 +609,25 @@ class TestAccount(UccTester):
                     account.entity.name.is_editable,
                     False)
 
+
+    @pytest.mark.account
+    def test_account_masked_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+        """ Verifies the default number of rows in the table"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.table.wait_for_rows_to_appear(1)
+        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"]) =={
+                        'account_checkbox': '1',
+                        'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
+                        'account_radio' : '1',
+                        'auth_type' : ACCOUNT_CONFIG['auth_type'],
+                        'username' : ACCOUNT_CONFIG["username"],
+                        'custom_endpoint': ACCOUNT_CONFIG['custom_endpoint'],
+                        'disabled': False,
+                        'password': '******',
+                        'token': '******'               
+                        }
+
+            
     @pytest.mark.account
     def test_account_add_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the frontend after adding account"""
