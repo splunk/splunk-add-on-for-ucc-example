@@ -12,7 +12,7 @@ cd /home/circleci/work/sc-*
 wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
 
 ls -la /home/circleci/
-ip=$(head -n 1 /home/circleci/ip.txt)
+ip=$(head -n 1 /tmp/ip.txt)
 
 echo "ip arg: $ip"
 cd /home/circleci/work
