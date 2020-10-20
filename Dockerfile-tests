@@ -15,6 +15,9 @@ USER circleci
 RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
 
+RUN ls -la tests/
+COPY tests/ip.txt /home/circleci/work/ip.txt
+
 COPY tests/entrypoint.sh /
 COPY tests/pytest-ci.ini /home/circleci/work/pytest.ini
 COPY .pytest.expect /home/circleci/work/.pytest.expect
@@ -25,6 +28,5 @@ RUN cd /home/circleci/work/tests && ls
 RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.tar.gz
 RUN cd ../..
 COPY package /home/circleci/work/package
-RUN ls -la /home/circleci/
 CMD /entrypoint.sh $SPLUNK_IP
 
