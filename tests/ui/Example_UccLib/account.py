@@ -66,7 +66,7 @@ class AccountPage(Page):
             self.entity = AccountEntity(ucc_smartx_selenium_helper.browser, account_container)
         
         if ucc_smartx_rest_helper:
-            self.backend_conf = ListBackendConf(self._get_account_endpoint(), ucc_smartx_rest_helper.session_key)
+            self.backend_conf = ListBackendConf(self._get_account_endpoint(), ucc_smartx_rest_helper.username, ucc_smartx_rest_helper.password)
 
     def open(self):
         """

@@ -101,7 +101,7 @@ class InputPage(Page):
             self.type_filter = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select=" .type-filter"))
         
         if ucc_smartx_rest_helper:
-            self.backend_conf = ListBackendConf(self._get_input_endpoint(), ucc_smartx_rest_helper.session_key)
+            self.backend_conf = ListBackendConf(self._get_input_endpoint(), ucc_smartx_rest_helper.username, ucc_smartx_rest_helper.password)
     def open(self):
         self.browser.get('{}/en-US/app/Splunk_TA_UCCExample/inputs'.format(self.splunk_web_url))
 
