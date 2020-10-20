@@ -4,9 +4,7 @@ ARG SPLUNK_VERSION=latest
 ARG SPLUNK_APP_ID=TA_UNKNOWN
 ARG SPLUNK_APP_PACKAGE=package
 RUN echo Splunk VERSION=$SPLUNK_VERSION SPLUNK_APP_PACKAGE=$SPLUNK_APP_PACKAGE
-
-RUN docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1")
-RUN echo docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1") > /tmp/ip.txt
+RUN echo 1.0.0.0 > /tmp/ip.txt
 RUN ls -la /tmp/
 VOLUME /tmp
 
