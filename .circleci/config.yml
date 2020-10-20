@@ -131,9 +131,10 @@ orbs:
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
-                export TESTVAL=ta-fact
                 docker-compose -f docker-compose-ci.yml build
+                export TESTVAL=ta-fact
                 docker-compose -f docker-compose-ci.yml up -d splunk  
+
                 ls -la /home/ 
                 ls -la /home/circleci/
                 ls -la /home/circleci/work/

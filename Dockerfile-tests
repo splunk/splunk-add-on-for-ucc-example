@@ -28,6 +28,7 @@ COPY package /home/circleci/work/package
 RUN echo "================"
 RUN echo "SPLUNK_IP value: $SPLUNK_IP"
 RUN echo "TESTVAL: $TESTVAL"
+RUN echo "TESTVALENV: $TESTVALENV"
 RUN echo "================"
 CMD /entrypoint.sh $SPLUNK_IP
 
