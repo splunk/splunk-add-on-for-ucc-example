@@ -19,7 +19,6 @@ services:
     volumes:
       - results:/home/circleci/work/test-results
     environment:
-      - TESTVALENV=${TESTVAL}
       - SAUCE_USERNAME=ta-factory-01
       - SAUCE_PASSWORD=be7beeab-8bba-420c-90b3-8eac2d16d3ca
 
