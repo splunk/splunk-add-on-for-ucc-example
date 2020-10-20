@@ -15,9 +15,7 @@ USER circleci
 RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
 
-COPY tests/ip.txt /home/circleci/work/ip.txt
-
-RUN ls -la /home/circleci/work/
+RUN ls -la tests/
 COPY tests/entrypoint.sh /
 COPY tests/pytest-ci.ini /home/circleci/work/pytest.ini
 COPY .pytest.expect /home/circleci/work/.pytest.expect
