@@ -146,9 +146,9 @@ orbs:
                 docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
                 docker-compose -f docker-compose-ci.yml up -d splunk
                 sleep 30
-                echo $SPLUNK_IP > /home/circleci/project/tests/ip.txt
+                echo $SPLUNK_IP > /home/circleci/ip.txt
                 ls -la /home/ 
-                ls -la /home/circleci/project/tests/
+                ls -la /home/circleci/
                 echo "====================="
                 echo $SPLUNK_IP
                 echo "====================="

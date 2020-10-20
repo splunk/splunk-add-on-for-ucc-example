@@ -73,6 +73,8 @@ services:
       - "8088"
       - "8089"
       - "9997"
+    volumes:
+      - results:/home/circleci
     environment:
       - SPLUNK_PASSWORD=Chang3d!
       - SPLUNK_START_ARGS=--accept-license

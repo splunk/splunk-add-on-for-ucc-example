@@ -8,6 +8,7 @@
 #work.  If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
 ARG SPLUNK_IP
 ARG TESTVAL
+RUN ls -la /home/circleci/
 FROM circleci/python:3.7-browsers
 ARG SPLUNK_IP
 ARG TESTVAL
@@ -15,7 +16,7 @@ USER circleci
 RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
 
-RUN ls -la tests/
+RUN ls -la /home/circleci/
 COPY tests/entrypoint.sh /
 COPY tests/pytest-ci.ini /home/circleci/work/pytest.ini
 COPY .pytest.expect /home/circleci/work/.pytest.expect
