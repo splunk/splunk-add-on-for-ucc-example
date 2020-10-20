@@ -137,7 +137,6 @@ orbs:
 
                 ls -la /home/ 
                 ls -la /home/circleci/
-                ls -la /home/circleci/work/
                 docker ps
                 export SPLUNK_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1"))
                 echo "====================="

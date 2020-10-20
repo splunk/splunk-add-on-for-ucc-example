@@ -12,6 +12,7 @@ FROM circleci/python:3.7-browsers
 ARG SPLUNK_IP
 ARG TESTVAL
 USER circleci
+RUN ls -la /home/circleci/
 RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
 
