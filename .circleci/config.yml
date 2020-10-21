@@ -163,8 +163,9 @@ orbs:
 
                 docker-compose -f docker-compose-ci.yml exec -d test /entrypoint.sh $MACHINE_IP $SPLUNKWEB_PORT 8089
                 echo "Starting the tailing...."
-                docker-compose -f docker-compose-ci.yml exec -d test sleep 20; find . -name pytest_splunk_addon.log
-                docker-compose -f docker-compose-ci.yml exec -d test sleep 20; tail -f $(find . -name pytest_splunk_addon.log)
+                docker-compose -f docker-compose-ci.yml exec test sleep 20; tail -f $(find . -name pytest_splunk_addon.log)
+                echo "tailing ended...."
+                
                 docker-compose -f docker-compose-ci.yml down
               no_output_timeout: 2h
           - run:
