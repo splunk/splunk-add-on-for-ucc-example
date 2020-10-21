@@ -12,7 +12,8 @@ cd /home/circleci/work/sc-*
 wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
 
 echo "ip arg: $1"
+echo "port arg: $2"
 cd /home/circleci/work
 ls -la 
-pytest --splunk-host=$1
+pytest --splunk-host=$1 --splunk-port=$2
 touch /home/circleci/work/docker_exit

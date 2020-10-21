@@ -143,6 +143,8 @@ orbs:
                 docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
                 docker-compose -f docker-compose-ci.yml up -d splunk
                 export SPLUNK_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1"))
+                export SPLUNK_PORT=$(docker inspect -f '{{(index (index .NetworkSettings.Ports "8000/tcp") 0).HostPort}}' $(docker ps -aqf "name=project_splunk_1"))
+
 
                 sleep 30
                 # Run the tests
@@ -150,8 +152,9 @@ orbs:
                 docker ps -a
                 echo "====================="
                 echo $SPLUNK_IP
+                echo $SPLUNK_PORT
                 echo "====================="
-                docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh $SPLUNK_IP
+                docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh $SPLUNK_IP $SPLUNK_PORT
                 docker-compose -f docker-compose-ci.yml down
               no_output_timeout: 2h
           - run:
