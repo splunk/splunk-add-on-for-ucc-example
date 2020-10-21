@@ -14,6 +14,5 @@ wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
 echo "ip arg: $1"
 cd /home/circleci/work
 ls -la 
-cat /home/circleci/work/pytest.ini
 pytest --splunk-host=$1
 touch /home/circleci/work/docker_exit
