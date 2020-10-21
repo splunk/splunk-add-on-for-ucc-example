@@ -152,7 +152,7 @@ orbs:
                 echo $SPLUNK_IP
                 echo "====================="
                 docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh $SPLUNK_IP
-                
+                docker-compose -f docker-compose-ci.yml down
               no_output_timeout: 2h
           - run:
               name: Splunk Get Results

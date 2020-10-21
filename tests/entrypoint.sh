@@ -16,4 +16,3 @@ cd /home/circleci/work
 ls -la 
 cat /home/circleci/work/pytest.ini
 pytest $@ --splunk-host=$1
-touch /docker_exit
