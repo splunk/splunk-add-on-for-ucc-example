@@ -155,10 +155,9 @@ orbs:
 
                 curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o /home/circleci/saucelabs.tar.gz
                 tar -xzf /home/circleci/saucelabs.tar.gz --directory /home/circleci/
-                cd /home/circleci/sc-*
                 /home/circleci/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca &
                 wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
-
+                
                 docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh $SPLUNK_IP $SPLUNKWEB_PORT
                 docker-compose -f docker-compose-ci.yml down
               no_output_timeout: 2h
