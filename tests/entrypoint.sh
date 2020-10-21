@@ -16,3 +16,4 @@ echo "port arg: $2"
 cd /home/circleci/work
 ls -la 
 pytest --splunk-host=$1 --splunk-port=$2
+touch /home/circleci/work/docker_exit
