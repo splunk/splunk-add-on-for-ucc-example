@@ -10,8 +10,10 @@ tar -xzf /home/circleci/work/saucelabs.tar.gz --directory /home/circleci/work/
 cd /home/circleci/work/sc-*
 /home/circleci/work/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca &
 wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
+
 echo "ip arg: $1"
 cd /home/circleci/work
 ls -la 
 cat /home/circleci/work/pytest.ini
 pytest $@ --splunk-host=$1
+touch /docker_exit
