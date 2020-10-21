@@ -161,10 +161,10 @@ orbs:
                 /home/circleci/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca -i myTunnelO1 --no-remove-colliding-tunnels -v &
                 wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
 
-                docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh $MACHINE_IP $SPLUNKWEB_PORT 8089 &
+                docker-compose -f docker-compose-ci.yml exec -d test /entrypoint.sh $MACHINE_IP $SPLUNKWEB_PORT 8089
                 echo "Starting the tailing...."
-                docker-compose -f docker-compose-ci.yml exec test sleep 20; find . -name pytest_splunk_addon.log
-                docker-compose -f docker-compose-ci.yml exec test sleep 20; tail -f $(find . -name pytest_splunk_addon.log)
+                docker-compose -f docker-compose-ci.yml exec -d test sleep 20; find . -name pytest_splunk_addon.log
+                docker-compose -f docker-compose-ci.yml exec -d test sleep 20; tail -f $(find . -name pytest_splunk_addon.log)
                 docker-compose -f docker-compose-ci.yml down
               no_output_timeout: 2h
           - run:
