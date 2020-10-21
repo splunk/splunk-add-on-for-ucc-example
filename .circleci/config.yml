@@ -158,7 +158,7 @@ orbs:
                 echo "====================="
                 curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o /home/circleci/saucelabs.tar.gz
                 tar -xzf /home/circleci/saucelabs.tar.gz --directory /home/circleci/
-                /home/circleci/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca -v &
+                /home/circleci/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca -i myTunnelO1 -v &
                 wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
 
                 docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh $MACHINE_IP $SPLUNKWEB_PORT $SPLUNK_PORT
