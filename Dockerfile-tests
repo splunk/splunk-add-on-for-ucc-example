@@ -13,3 +13,15 @@ USER circleci
 RUN mkdir -p /home/circleci/work/tests
 RUN mkdir -p /home/circleci/work/test-results/functional
 
+COPY tests/entrypoint.sh /
+COPY tests/pytest-ci.ini /home/circleci/work/pytest.ini
+COPY .pytest.expect /home/circleci/work/.pytest.expect
+
+COPY tests /home/circleci/work/tests
+RUN pip install -r /home/circleci/work/tests/requirements.txt
+RUN cd /home/circleci/work/tests && ls
+RUN pip install /home/circleci/work/tests/addon-factory-smartx-ui-test-library.tar.gz
+RUN cd ../..
+COPY package /home/circleci/work/package
+
+
