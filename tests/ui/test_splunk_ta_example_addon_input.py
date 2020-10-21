@@ -123,14 +123,6 @@ class TestInput(UccTester):
     ### TEST CASES FOR TABLE ###
     ############################
 
-    @pytest.mark.input
-    def test_inputs_default_rows_in_table(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies the default number of rows in the table"""
-        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            input_page.table.get_row_count,
-            0
-            )
 
     @pytest.mark.input
     def test_inputs_displayed_columns(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -205,6 +197,14 @@ class TestInput(UccTester):
             )
         input_page.table.clean_filter()
 
+    @pytest.mark.input
+    def test_inputs_default_rows_in_table(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies the default number of rows in the table"""
+        input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            input_page.table.get_row_count,
+            0
+            )
 
     @pytest.mark.input
     def test_inputs_create_new_input_list_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
