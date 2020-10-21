@@ -156,7 +156,7 @@ orbs:
                 echo $SPLUNKWEB_PORT
                 echo $SPLUNK_PORT
                 echo "====================="
-                docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh $SPLUNK_IP $SPLUNKWEB_PORT $SPLUNK_PORT
+                docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh $SPLUNK_IP $SPLUNKWEB_PORT
                 docker-compose -f docker-compose-ci.yml down
               no_output_timeout: 2h
           - run:
