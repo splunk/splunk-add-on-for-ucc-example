@@ -17,4 +17,8 @@ echo "port arg: $3"
 cd /home/circleci/work
 ls -la 
 pytest --splunk-host=$1 --splunkweb-port=$2 --splunk-port=$3 --splunk-password=Chang3d!
+echo "===log==========="
+tail -f /home/circleci/work/pytest_splunk_addon.log &
+echo "===log end==========="
+
 touch /home/circleci/work/docker_exit
