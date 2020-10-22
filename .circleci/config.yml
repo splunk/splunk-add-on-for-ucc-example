@@ -145,7 +145,7 @@ orbs:
                 export SPLUNK_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1"))
                 export SPLUNKWEB_PORT=$(docker inspect -f '{{(index (index .NetworkSettings.Ports "8000/tcp") 0).HostPort}}' $(docker ps -aqf "name=project_splunk_1"))
                 export SPLUNK_PORT=$(docker inspect -f '{{(index (index .NetworkSettings.Ports "8089/tcp") 0).HostPort}}' $(docker ps -aqf "name=project_splunk_1"))
-                export MACHINE_IP=$(ip route get 1.2.3.4 | awk '{print $7}')
+                export MACHINE_IP=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
                 sleep 30
                 # Run the tests
                 docker-compose -f docker-compose-ci.yml up -d test
