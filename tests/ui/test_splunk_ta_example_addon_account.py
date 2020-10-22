@@ -640,7 +640,7 @@ class TestAccount(UccTester):
         """ Verifies the default number of rows in the table"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.table.wait_for_rows_to_appear(1)
-        self.assert_util(account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"]) =={
+        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"]) =={
                         'account_checkbox': '1',
                         'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
                         'account_radio' : '1',
