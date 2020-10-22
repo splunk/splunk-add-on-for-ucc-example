@@ -130,7 +130,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         header_list = ["", "Name", "Account", "Interval", "Index", "Status", "Actions"]
         self.assert_util(
-            list(input_page.table.get_headers()),
+            input_page.table.get_headers,
             header_list
             )
 
@@ -139,7 +139,7 @@ class TestInput(UccTester):
         """ Verifies pagination list"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
-            input_page.pagination.get_pagination_list(),
+            input_page.pagination.get_pagination_list,
             ['10 Per Page','25 Per Page','50 Per Page']
             )
 
@@ -148,10 +148,10 @@ class TestInput(UccTester):
         """ Verifies pagination functionality by creating 100 accounts"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.open()
-        assert input_page.pagination.select_page_option("50 Per Page")
-        assert input_page.table.switch_to_page(2)
-        assert input_page.table.switch_to_prev()
-        assert input_page.table.switch_to_next()
+        self.assert_util(input_page.pagination.select_page_option, True,left_args={'value':"50 Per Page"})
+        self.assert_util(input_page.table.switch_to_page, True,left_args={'value': 2})
+        self.assert_util(input_page.table.switch_to_prev, True)
+        self.assert_util(input_page.table.switch_to_next, True)
 
     @pytest.mark.input
     def test_inputs_sort_functionality(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
@@ -171,7 +171,7 @@ class TestInput(UccTester):
             column_values,
             sorted_values
             )
-        assert sort_order["ascending"]
+        self.assert_util(sort_order["ascending"], True)
 
     @pytest.mark.input
     def test_inputs_filter_functionality_negative(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
@@ -271,8 +271,8 @@ class TestInput(UccTester):
     def test_inputs_enable_disable(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies the enable and disable functionality of the input"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert input_page.table.input_status_toggle("dummy_input_one", enable=False)
-        assert input_page.table.input_status_toggle("dummy_input_one", enable=True)
+        self.assert_util(input_page.table.input_status_toggle, True, left_args={"name":"example_input", "enable":False})
+        self.assert_util(input_page.table.input_status_toggle, True, left_args={"name":"example_input", "enable":True})
 
 
     @pytest.mark.input
@@ -319,7 +319,7 @@ class TestInput(UccTester):
             r"Field Name is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_valid_length_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -333,7 +333,7 @@ class TestInput(UccTester):
             r"Length of input name should be between 1 and 100",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_valid_input_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -346,7 +346,7 @@ class TestInput(UccTester):
             r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_list_single_select_group_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -465,14 +465,14 @@ class TestInput(UccTester):
         """ Verifies default value of example checkbox in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.example_checkbox.is_checked()
+        self.assert_util(input_page.entity1.example_checkbox.is_checked, True)
 
     @pytest.mark.input
     def test_example_input_one_unchecked_example_checkbox(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies Uncheck in example checkbox in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.example_checkbox.uncheck()
+        self.assert_util(input_page.entity1.example_checkbox.uncheck, True)
 
     @pytest.mark.input
     def test_example_input_one_checked_example_checkbox(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -480,7 +480,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_checkbox.uncheck()
-        assert input_page.entity1.example_checkbox.check()
+        self.assert_util(input_page.entity1.example_checkbox.check, True)
 
     @pytest.mark.input
     def test_example_input_one_default_value_example_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -520,7 +520,7 @@ class TestInput(UccTester):
             r"Field Interval is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_valid_input_interval(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -534,7 +534,7 @@ class TestInput(UccTester):
             r"Interval must be an integer.",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_required_field_index(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -555,7 +555,7 @@ class TestInput(UccTester):
             r"Field Index is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_default_value_index(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -585,7 +585,7 @@ class TestInput(UccTester):
             r"Field Example Account is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_required_field_object(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -604,7 +604,7 @@ class TestInput(UccTester):
             r"Field Object is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_required_field_object_fields(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -623,7 +623,7 @@ class TestInput(UccTester):
             r"Field Object Fields is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_required_field_order_by(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -644,7 +644,7 @@ class TestInput(UccTester):
             r"Field Order By is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_default_value_order_by(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -658,10 +658,42 @@ class TestInput(UccTester):
             )
 
     @pytest.mark.input
-    def test_example_input_one_help_text_order_by(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+    def test_example_input_one_help_text_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies help text for the field name"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        self.assert_util(
+            input_page.entity1.name.get_help_text,
+            'A unique name for the data input.'
+            )
+        self.assert_util(
+            input_page.entity1.example_checkbox.get_help_text,
+            'This is an example checkbox for the input one entity'
+            )
+        self.assert_util(
+            input_page.entity1.example_radio.get_help_text,
+            'This is an example radio button for the input one entity'
+            )
+        self.assert_util(
+            input_page.entity1.interval.get_help_text,
+            'Time interval of the data input, in seconds.'
+            )
+        self.assert_util(
+            input_page.entity1.object.get_help_text,
+            'The name of the object to query for.'
+            )
+        self.assert_util(
+            input_page.entity1.object_fields.get_help_text,
+            'Object fields from which to collect data. Delimit multiple fields using a comma.'
+            )
+        self.assert_util(
+            input_page.entity1.query_start_date.get_help_text,
+            'The datetime after which to query and index records, in this format: "YYYY-MM-DDThh:mm:ss.000z". Defaults to 90 days earlier from now.'
+            )
+        self.assert_util(
+            input_page.entity1.limit.get_help_text,
+            'The maximum number of results returned by the query.'
+            )
         self.assert_util(
             input_page.entity1.order_by.get_help_text,
             'The datetime field by which to query results in ascending order for indexing.'
@@ -683,7 +715,7 @@ class TestInput(UccTester):
             r"Invalid date and time format",
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_default_value_limit(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -725,7 +757,7 @@ class TestInput(UccTester):
         input_page.entity1.object.set_value("test_object")
         input_page.entity1.object_fields.set_value("test_field")
         input_page.entity1.query_start_date.set_value("2020-12-11T20:00:32.000z")
-        assert input_page.entity1.save()
+        self.assert_util(input_page.entity1.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         self.assert_util(
             input_page.table.get_table()["Test_Add"] ,
@@ -754,7 +786,7 @@ class TestInput(UccTester):
         input_page.entity1.object.set_value("test_object")
         input_page.entity1.object_fields.set_value("test_field")
         input_page.entity1.query_start_date.set_value("2020-12-11T20:00:32.000z")
-        assert input_page.entity1.save()
+        self.assert_util(input_page.entity1.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         value_to_test = {
             'account': 'test_input',
@@ -784,7 +816,7 @@ class TestInput(UccTester):
         """ Verifies the frontend uneditable fields at time of edit of the example input one entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_one")
-        assert not input_page.entity1.name.is_editable()
+        self.assert_util(not input_page.entity1.name.is_editable, True)
 
     @pytest.mark.input
     def test_example_input_one_edit_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -803,7 +835,7 @@ class TestInput(UccTester):
         input_page.entity1.order_by.set_value("LastDate")
         input_page.entity1.limit.set_value("2000")
         input_page.entity1.query_start_date.set_value("2020-20-20T20:20:20.000z")
-        assert input_page.entity1.save()
+        self.assert_util(input_page.entity1.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         self.assert_util(
             input_page.table.get_table()["dummy_input_one"] ,
@@ -834,7 +866,7 @@ class TestInput(UccTester):
         input_page.entity1.order_by.set_value("LastDate")
         input_page.entity1.limit.set_value("2000")
         input_page.entity1.query_start_date.set_value("2020-20-20T20:20:20.000z")
-        assert input_page.entity1.save()
+        self.assert_util(input_page.entity1.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         value_to_test = {
             'account': 'test_input',
@@ -867,7 +899,7 @@ class TestInput(UccTester):
             input_page.entity1.name.get_value,
             ""
             )
-        assert input_page.entity1.example_checkbox.is_checked()
+        self.assert_util(input_page.entity1.example_checkbox.is_checked, True)
         self.assert_util(
             input_page.entity1.example_radio.get_value,
             "Yes"
@@ -922,7 +954,7 @@ class TestInput(UccTester):
         input_page.entity1.name.set_value("Clone_Test")
         input_page.entity1.interval.set_value("180")
         input_page.entity1.limit.set_value("500")
-        assert input_page.entity1.save()
+        self.assert_util(input_page.entity1.save, True)
         input_page.table.wait_for_rows_to_appear(2)
         self.assert_util(
             input_page.table.get_table()["Clone_Test"] ,
@@ -945,7 +977,7 @@ class TestInput(UccTester):
         input_page.entity1.name.set_value("Clone_Test")
         input_page.entity1.interval.set_value("180")
         input_page.entity1.limit.set_value("500")
-        assert input_page.entity1.save()
+        self.assert_util(input_page.entity1.save, True)
         input_page.table.wait_for_rows_to_appear(2)
         value_to_test = {
             'account': 'test_input',
@@ -1000,54 +1032,54 @@ class TestInput(UccTester):
         """ Verifies close functionality at time of add"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.close()
+        self.assert_util(input_page.entity1.close, True)
 
     @pytest.mark.input
     def test_example_input_one_edit_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies close functionality at time of edit"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_one")
-        assert input_page.entity1.close()
+        self.assert_util(input_page.entity1.close, True)
 
     @pytest.mark.input
     def test_example_input_one_clone_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies close functionality at time of clone"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.clone_row("dummy_input_one")
-        assert input_page.entity1.close()
+        self.assert_util(input_page.entity1.close, True)
 
     @pytest.mark.input
     def test_example_input_one_delete_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies close functionality at time of delete"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert input_page.table.delete_row("dummy_input_one", close=True)
+        self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_one", "close":True})
 
     @pytest.mark.input
     def test_example_input_one_add_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies cancel functionality at time of add"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
-        assert input_page.entity1.cancel()
+        self.assert_util(input_page.entity1.cancel, True)
 
     @pytest.mark.input
     def test_example_input_one_edit_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies cancel functionality at time of edit"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_one")
-        assert input_page.entity1.cancel()
+        self.assert_util(input_page.entity1.cancel, True)
 
     @pytest.mark.input
     def test_example_input_one_clone_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies cancel functionality at time of clone"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.clone_row("dummy_input_one")
-        assert input_page.entity1.cancel()
+        self.assert_util(input_page.entity1.cancel, True)
 
     @pytest.mark.input
     def test_example_input_one_delete_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies cancel functionality at time of delete"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert input_page.table.delete_row("dummy_input_one", cancel=True)
+        self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_one", "cancel":True})
 
     @pytest.mark.input
     def test_example_input_one_add_duplicate_names(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1061,7 +1093,7 @@ class TestInput(UccTester):
             "Name {} is already in use".format(input_name),
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_clone_duplicate_names(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1075,7 +1107,7 @@ class TestInput(UccTester):
             "Name {} is already in use".format(input_name),
             left_args={'expect_error': True}
             )
-        assert input_page.entity1.close_error()
+        self.assert_util(input_page.entity1.close_error, True)
 
     @pytest.mark.input
     def test_example_input_one_add_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1156,7 +1188,7 @@ class TestInput(UccTester):
             r"Field Name is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     @pytest.mark.input
     def test_example_input_two_valid_length_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1170,7 +1202,7 @@ class TestInput(UccTester):
             r"Length of input name should be between 1 and 100",
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     @pytest.mark.input
     def test_example_input_two_valid_input_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1183,7 +1215,7 @@ class TestInput(UccTester):
             r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     @pytest.mark.input
     def test_example_input_two_required_field_interval(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1202,7 +1234,7 @@ class TestInput(UccTester):
             r"Field Interval is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     @pytest.mark.input
     def test_example_input_two_valid_input_interval(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1216,7 +1248,7 @@ class TestInput(UccTester):
             r"Interval must be an integer.",
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     @pytest.mark.input
     def test_example_input_two_required_field_index(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1236,7 +1268,7 @@ class TestInput(UccTester):
             r"Field Index is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     @pytest.mark.input
     def test_example_input_two_default_value_index(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1266,7 +1298,7 @@ class TestInput(UccTester):
             r"Field Example Account is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     @pytest.mark.input
     def test_example_input_two_required_field_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1285,7 +1317,7 @@ class TestInput(UccTester):
             r"Field Example Multiple Select is required",
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     @pytest.mark.input
     def test_example_input_two_list_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1325,14 +1357,29 @@ class TestInput(UccTester):
             )
 
     @pytest.mark.input
-    def test_example_input_two_help_text_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+    def test_example_input_two_help_text_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies help text for the field name"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
-        help_text = input_page.entity2.example_multiple_select.get_help_text()
         self.assert_util(
-            help_text ,
+            input_page.entity2.example_multiple_select.get_help_text,
             'This is an example multipleSelect for input two entity'
+            )
+        self.assert_util(
+            input_page.entity2.name.get_help_text,
+            'A unique name for the data input.'
+            )
+        self.assert_util(
+            input_page.entity2.interval.get_help_text,
+            'Time interval of the data input, in seconds .'
+            )
+        self.assert_util(
+            input_page.entity2.example_checkbox.get_help_text,
+            'This is an example checkbox for the input two entity'
+            )
+        self.assert_util(
+            input_page.entity2.example_radio.get_help_text,
+            'This is an example radio button for the input two entity'
             )
 
     @pytest.mark.input
@@ -1340,7 +1387,7 @@ class TestInput(UccTester):
         """ Verifies Check in example checkbox in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
-        assert input_page.entity2.example_checkbox.check()
+        self.assert_util(input_page.entity2.example_checkbox.check, True)
 
     @pytest.mark.input
     def test_example_input_two_unchecked_example_checkbox(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1348,7 +1395,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.example_checkbox.check()
-        assert input_page.entity2.example_checkbox.uncheck()
+        self.assert_util(input_page.entity2.example_checkbox.uncheck, True)
 
     @pytest.mark.input
     def test_example_input_two_required_field_example_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1395,7 +1442,7 @@ class TestInput(UccTester):
             r"Invalid date and time format",
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     ###################################
     #### TEST CASES FOR ENTITY TWO ####
@@ -1415,7 +1462,7 @@ class TestInput(UccTester):
         input_page.entity2.interval.set_value("90")
         input_page.entity2.example_account.select("test_input")
         input_page.entity2.query_start_date.set_value("2020-12-11T20:00:32.000z")
-        assert input_page.entity2.save()
+        self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         self.assert_util(
             input_page.table.get_table()["Test_Add"] ,
@@ -1444,7 +1491,7 @@ class TestInput(UccTester):
         input_page.entity2.interval.set_value("90")
         input_page.entity2.example_account.select("test_input")
         input_page.entity2.query_start_date.set_value("2020-12-11T20:00:32.000z")
-        assert input_page.entity2.save()
+        self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         value_to_test = {
             'account': 'test_input',
@@ -1468,7 +1515,7 @@ class TestInput(UccTester):
         """ Verifies the frontend uneditable fields at time of edit of the Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_two")
-        assert not input_page.entity2.name.is_editable()
+        self.assert_util(not input_page.entity2.name.is_editable, True)
 
     @pytest.mark.input
     def test_example_input_two_edit_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -1481,7 +1528,7 @@ class TestInput(UccTester):
         input_page.entity2.interval.set_value("3600")
         input_page.entity2.example_account.select("test_input")
         input_page.entity2.query_start_date.set_value("2020-20-20T20:20:20.000z")
-        assert input_page.entity2.save()
+        self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         self.assert_util(
             input_page.table.get_table()["dummy_input_two"] ,
@@ -1506,7 +1553,7 @@ class TestInput(UccTester):
         input_page.entity2.interval.set_value("3600")
         input_page.entity2.example_account.select("test_input")
         input_page.entity2.query_start_date.set_value("2020-20-20T20:20:20.000z")
-        assert input_page.entity2.save()
+        self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         value_to_test = {
             'account': 'test_input',
@@ -1534,7 +1581,7 @@ class TestInput(UccTester):
             input_page.entity2.name.get_value,
             ""
             )
-        assert input_page.entity2.example_checkbox.is_checked()
+        self.assert_util(input_page.entity2.example_checkbox.is_checked, True)
         self.assert_util(
             input_page.entity2.example_radio.get_value,
             "No"
@@ -1568,7 +1615,7 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_two")
         input_page.entity2.name.set_value("Clone_Test")
         input_page.entity2.interval.set_value("180")
-        assert input_page.entity2.save()
+        self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(2)
         self.assert_util(
             input_page.table.get_table()["Clone_Test"] ,
@@ -1590,7 +1637,7 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_two")
         input_page.entity2.name.set_value("Clone_Test")
         input_page.entity2.interval.set_value("180")
-        assert input_page.entity2.save()
+        self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(2)
         value_to_test = {
             'account': 'test_input',
@@ -1640,54 +1687,54 @@ class TestInput(UccTester):
         """ Verifies close functionality at time of add"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
-        assert input_page.entity2.close()
+        self.assert_util(input_page.entity2.close, True)
 
     @pytest.mark.input
     def test_example_input_two_edit_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies close functionality at time of edit"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_two")
-        assert input_page.entity2.close()
+        self.assert_util(input_page.entity2.close, True)
 
     @pytest.mark.input
     def test_example_input_two_clone_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies close functionality at time of clone"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.clone_row("dummy_input_two")
-        assert input_page.entity2.close()
+        self.assert_util(input_page.entity2.close, True)
 
     @pytest.mark.input
     def test_example_input_two_delete_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies close functionality at time of delete"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert input_page.table.delete_row("dummy_input_two", close=True)
+        self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_one", "close":True})
 
     @pytest.mark.input
     def test_example_input_two_add_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies cancel functionality at time of add"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
-        assert input_page.entity2.cancel()
+        self.assert_util(input_page.entity2.cancel, True)
 
     @pytest.mark.input
     def test_example_input_two_edit_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies cancel functionality at time of edit"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_two")
-        assert input_page.entity2.cancel()
+        self.assert_util(input_page.entity2.cancel, True)
 
     @pytest.mark.input
     def test_example_input_two_clone_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies cancel functionality at time of clone"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.clone_row("dummy_input_two")
-        assert input_page.entity2.cancel()
+        self.assert_util(input_page.entity2.cancel, True)
 
     @pytest.mark.input
     def test_example_input_two_delete_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies cancel functionality at time of delete"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert input_page.table.delete_row("dummy_input_two", cancel=True)
+        self.assert_util(input_page.table.delete_row, True, left_args={"name":"example_input", "cancel":True})
 
     @pytest.mark.input
     def test_example_input_two_add_duplicate_names(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -1701,7 +1748,7 @@ class TestInput(UccTester):
             "Name {} is already in use".format(input_name),
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
     @pytest.mark.input
     def test_example_input_two_clone_duplicate_names(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -1715,7 +1762,7 @@ class TestInput(UccTester):
             "Name {} is already in use".format(input_name),
             left_args={'expect_error': True}
             )
-        assert input_page.entity2.close_error()
+        self.assert_util(input_page.entity2.close_error, True)
 
 
     @pytest.mark.input

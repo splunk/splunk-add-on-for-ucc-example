@@ -113,7 +113,7 @@ class TestAccount(UccTester):
             column_values,
             sorted_values
             )
-        assert sort_order["ascending"]
+        self.assert_util(sort_order["ascending"], True)
         
     @pytest.mark.account
     def test_account_count(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
@@ -225,54 +225,55 @@ class TestAccount(UccTester):
         """ Verifies close functionality at time of add"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.entity.open()
-        assert account.entity.close()
+        self.assert_util(account.entity.close, True)
 
     @pytest.mark.account
     def test_account_add_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies cancel functionality at time of add"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.entity.open()
-        assert account.entity.cancel()
+        self.assert_util(account.entity.cancel, True)
 
     @pytest.mark.account
     def test_account_delete_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies close functionality at time of delete"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert account.table.delete_row(ACCOUNT_CONFIG["name"], close=True)
+        self.assert_util(account.table.delete_row, True, left_args={"name":ACCOUNT_CONFIG["name"], "close":True})
         
     @pytest.mark.account
     def test_account_delete_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies cancel functionality at time of delete"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert account.table.delete_row(ACCOUNT_CONFIG["name"], cancel=True)
+        
+        self.assert_util(account.table.delete_row, left_args={"name":ACCOUNT_CONFIG["name"], "cancel":True})
     
     @pytest.mark.account
     def test_account_edit_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies close functionality at time of edit"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.close()
+        self.assert_util(account.entity.close, True)
         
     @pytest.mark.account
     def test_account_edit_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies cancel functionality at time of edit"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.table.edit_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.cancel()
+        self.assert_util(account.entity.cancel, True)
     
     @pytest.mark.account
     def test_account_clone_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies close functionality at time of clone"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.close()
+        self.assert_util(account.entity.close, True)
 
     @pytest.mark.account
     def test_account_clone_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies cancel functionality at time of clone"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.table.clone_row(ACCOUNT_CONFIG["name"])
-        assert account.entity.cancel()
+        self.assert_util(account.entity.cancel, True)
 
 
     @pytest.mark.account
@@ -348,15 +349,39 @@ class TestAccount(UccTester):
             )
 
     @pytest.mark.account
-    def test_account_help_text_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+    def test_account_help_text_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies help text for the field name"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.entity.open()
-        help_text = account.entity.name.get_help_text()
         self.assert_util(
-            help_text,
+            account.entity.name.get_help_text,
             'Enter a unique name for this account.'
             )
+        self.assert_util(
+            account.entity.example_checkbox.get_help_text,
+            'This is an example checkbox for the account entity'
+            )
+        self.assert_util(
+            account.entity.account_radio.get_help_text,
+            'This is an example radio button for the account entity'
+            )            
+        self.assert_util(
+            account.entity.multiple_select.get_help_text,
+            'This is an example multipleSelect for account entity'
+            )
+        self.assert_util(
+            account.entity.username.get_help_text,
+            'Enter the username for this account.'
+            )
+        self.assert_util(
+            account.entity.password.get_help_text,
+            'Enter the password for this account.'
+            )
+        self.assert_util(
+            account.entity.security_token.get_help_text,
+            'Enter the security token.'
+            )            
+
 
     @pytest.mark.account
     def test_account_required_field_example_environment(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -457,7 +482,7 @@ class TestAccount(UccTester):
         account.entity.open()
         account.entity.username.set_value(ACCOUNT_CONFIG["username"])
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
-        account.entity.name.set_value("TestUserTestUserTestUserTestUserTestUserTestUserTestUserTestUser")
+        account.entity.name.set_value("t"*51)
         self.assert_util(
             account.entity.save,
             'Length of ID should be between 1 and 50',
@@ -615,7 +640,7 @@ class TestAccount(UccTester):
         """ Verifies the default number of rows in the table"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.table.wait_for_rows_to_appear(1)
-        assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"]) =={
+        self.assert_util(account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"]) =={
                         'account_checkbox': '1',
                         'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
                         'account_radio' : '1',
@@ -638,7 +663,7 @@ class TestAccount(UccTester):
         account.entity.multiple_select.select("Option One")
         account.entity.password.set_value(ACCOUNT_CONFIG['password'])
         account.entity.security_token.set_value("TestToken")
-        assert account.entity.save()
+        self.assert_util(account.entity.save, True)
         account.table.wait_for_rows_to_appear(1)
         self.assert_util(
             account.table.get_table()[ACCOUNT_CONFIG['name']],
@@ -660,7 +685,7 @@ class TestAccount(UccTester):
         account.entity.password.set_value("TestEditPassword")
         account.entity.security_token.set_value("TestEditToken")
         account.entity.account_radio.select("No")
-        assert account.entity.save()
+        self.assert_util(account.entity.save, True)
         account.table.wait_for_rows_to_appear(1)
         self.assert_util(
                     account.table.get_table()[ACCOUNT_CONFIG["name"]] ,
@@ -693,7 +718,7 @@ class TestAccount(UccTester):
         account.entity.password.set_value("TestPasswordClone")
         account.entity.security_token.set_value("TestTokenClone")
         account.entity.account_radio.select("Yes")
-        assert account.entity.save()
+        self.assert_util(account.entity.save, True)
         self.assert_util(
                     account.table.get_table()["TestAccount2"],
                     {
@@ -732,7 +757,7 @@ class TestAccount(UccTester):
         account.entity.multiple_select.select("Option One")
         account.entity.password.set_value(ACCOUNT_CONFIG["password"])
         account.entity.security_token.set_value(ACCOUNT_CONFIG["token"])
-        assert account.entity.save()
+        self.assert_util(account.entity.save, True)
         account.table.wait_for_rows_to_appear(1)
         assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], decrypt=True) =={
                         'account_checkbox': '0',

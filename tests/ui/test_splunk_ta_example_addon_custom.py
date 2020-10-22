@@ -40,7 +40,7 @@ class TestCustom(UccTester):
         custom.test_radio.select("No")
         custom.test_multiselect.select("Option A")
         custom.test_multiselect.select("Option B")
-        assert custom.save()
+        self.assert_util(custom.save, True)
 
     @pytest.mark.custom
     def test_custom_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):

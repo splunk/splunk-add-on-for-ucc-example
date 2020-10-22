@@ -76,7 +76,7 @@ class TestProxy(UccTester):
             "Proxy Host can not be empty",
             left_args={'expect_error': True}
             )
-        assert proxy.close_error()
+        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.proxy
     def test_proxy_host_valid_input(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -88,7 +88,7 @@ class TestProxy(UccTester):
             "Proxy Host should not have special characters",
             left_args={'expect_error': True}
             )
-        assert proxy.close_error()
+        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.proxy
     def test_proxy_host_field_length_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -101,7 +101,7 @@ class TestProxy(UccTester):
             "Max host length is 4096",
             left_args={'expect_error': True}
             )
-        assert proxy.close_error()
+        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.proxy
     def test_proxy_required_field_port(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -118,7 +118,7 @@ class TestProxy(UccTester):
             "Proxy Port can not be empty",
             left_args={'expect_error': True}
             )
-        assert proxy.close_error()
+        self.assert_util(proxy.close_error, True)
 
 
     @pytest.mark.proxy
@@ -132,7 +132,7 @@ class TestProxy(UccTester):
             "Field Port is not a number",
             left_args={'expect_error': True}
             )
-        assert proxy.close_error()
+        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.proxy
     def test_proxy_port_field_out_of_range(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -145,7 +145,7 @@ class TestProxy(UccTester):
             "Field Port should be within the range of [1 and 65535]",
             left_args={'expect_error': True}
             )
-        assert proxy.close_error()
+        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.proxy
     def test_proxy_list_proxy_types(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -173,7 +173,7 @@ class TestProxy(UccTester):
             "Proxy type can not be empty",
             left_args={'expect_error': True}
             )
-        assert proxy.close_error()
+        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.proxy
     def test_proxy_username_field_length_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -188,7 +188,7 @@ class TestProxy(UccTester):
             "Max length of username is 50",
             left_args={'expect_error': True}
             )
-        assert proxy.close_error()
+        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.proxy
     def test_proxy_encrypted_field_password(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -211,7 +211,7 @@ class TestProxy(UccTester):
         proxy.port.set_value("3285")
         proxy.username.set_value("Username")
         proxy.password.set_value("Password")
-        assert proxy.save()
+        self.assert_util(proxy.save, True)
 
     @pytest.mark.proxy
     def test_proxy_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
