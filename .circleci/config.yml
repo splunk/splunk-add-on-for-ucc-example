@@ -142,26 +142,11 @@ orbs:
                 # Check with btool
                 docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
                 docker-compose -f docker-compose-ci.yml up -d splunk
-                export SPLUNK_IP=$(docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aqf "name=project_splunk_1"))
-                export SPLUNKWEB_PORT=$(docker inspect -f '{{(index (index .NetworkSettings.Ports "8000/tcp") 0).HostPort}}' $(docker ps -aqf "name=project_splunk_1"))
-                export SPLUNK_PORT=$(docker inspect -f '{{(index (index .NetworkSettings.Ports "8089/tcp") 0).HostPort}}' $(docker ps -aqf "name=project_splunk_1"))
-                export MACHINE_IP=$(ip route get 1.2.3.4 | awk '{print $7}')
                 sleep 30
                 # Run the tests
                 docker-compose -f docker-compose-ci.yml up -d test
                 docker ps -a
-                echo "====================="
-                echo $SPLUNK_IP
-                echo $SPLUNKWEB_PORT
-                echo $MACHINE_IP
-                echo $SPLUNK_PORT
-                echo "====================="
-                curl https://saucelabs.com/downloads/sc-4.4.12-linux.tar.gz -o /home/circleci/saucelabs.tar.gz
-                tar -xzf /home/circleci/saucelabs.tar.gz --directory /home/circleci/
-                /home/circleci/sc-4.4.12-linux/bin/sc -u ta-factory-01 -k be7beeab-8bba-420c-90b3-8eac2d16d3ca -i myTunnelO1 --no-remove-colliding-tunnels -v &
-                wget --retry-connrefused --no-check-certificate -T 10 localhost:4445
-
-                docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh $MACHINE_IP $SPLUNKWEB_PORT $SPLUNK_PORT                
+                docker-compose -f docker-compose-ci.yml exec test /entrypoint.sh               
                 docker-compose -f docker-compose-ci.yml down
               no_output_timeout: 2h
           - run:
