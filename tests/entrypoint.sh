@@ -12,4 +12,5 @@ cd /home/circleci/work
 ls -la 
 pip install pytest-timeout
 pytest --splunk-host=$1 --splunkweb-port=$2 --splunk-port=$3 --splunk-password=Chang3d!  --timeout=300
+tail -n 100 $(find /home/circleci/work/tests -name pytest_splunk_addon.log)
 touch /home/circleci/work/docker_exit
