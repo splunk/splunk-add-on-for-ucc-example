@@ -10,5 +10,6 @@ echo "web port arg: $2"
 echo "port arg: $3"
 cd /home/circleci/work
 ls -la 
-pytest --splunk-host=$1 --splunkweb-port=$2 --splunk-port=$3 --splunk-password=Chang3d!
+pip install pytest-timeout
+pytest --splunk-host=$1 --splunkweb-port=$2 --splunk-port=$3 --splunk-password=Chang3d!  --timeout=300
 touch /home/circleci/work/docker_exit
