@@ -271,8 +271,8 @@ class TestInput(UccTester):
     def test_inputs_enable_disable(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies the enable and disable functionality of the input"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(input_page.table.input_status_toggle, True, left_args={"name":"example_input", "enable":False})
-        self.assert_util(input_page.table.input_status_toggle, True, left_args={"name":"example_input", "enable":True})
+        self.assert_util(input_page.table.input_status_toggle, True, left_args={"name":"dummy_input_one", "enable":False})
+        self.assert_util(input_page.table.input_status_toggle, True, left_args={"name":"dummy_input_one", "enable":True})
 
 
     @pytest.mark.input
@@ -816,7 +816,7 @@ class TestInput(UccTester):
         """ Verifies the frontend uneditable fields at time of edit of the example input one entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_one")
-        self.assert_util(not input_page.entity1.name.is_editable, True)
+        self.assert_util(input_page.entity1.name.is_editable, False)
 
     @pytest.mark.input
     def test_example_input_one_edit_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1515,7 +1515,7 @@ class TestInput(UccTester):
         """ Verifies the frontend uneditable fields at time of edit of the Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_two")
-        self.assert_util(not input_page.entity2.name.is_editable, True)
+        self.assert_util(input_page.entity2.name.is_editable, False)
 
     @pytest.mark.input
     def test_example_input_two_edit_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -1707,7 +1707,7 @@ class TestInput(UccTester):
     def test_example_input_two_delete_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies close functionality at time of delete"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_one", "close":True})
+        self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_two", "close":True})
 
     @pytest.mark.input
     def test_example_input_two_add_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1734,7 +1734,7 @@ class TestInput(UccTester):
     def test_example_input_two_delete_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies cancel functionality at time of delete"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(input_page.table.delete_row, True, left_args={"name":"example_input", "cancel":True})
+        self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_two", "cancel":True})
 
     @pytest.mark.input
     def test_example_input_two_add_duplicate_names(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):

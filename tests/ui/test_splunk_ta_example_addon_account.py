@@ -245,7 +245,7 @@ class TestAccount(UccTester):
         """ Verifies cancel functionality at time of delete"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         
-        self.assert_util(account.table.delete_row, left_args={"name":ACCOUNT_CONFIG["name"], "cancel":True})
+        self.assert_util(account.table.delete_row, True, left_args={"name":ACCOUNT_CONFIG["name"], "cancel":True})
     
     @pytest.mark.account
     def test_account_edit_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
