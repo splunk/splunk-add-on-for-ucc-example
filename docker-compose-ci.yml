@@ -9,6 +9,10 @@ services:
   test:
     environment:
       - TEST_SET=${TEST_SET}
+      - token=${TOKEN}
+      - password=${PASSWORD}
+      - token_1=${TOKEN_1}
+      - password_1=${PASSWORD_1} 
     build:
       context: .
       dockerfile: Dockerfile-tests

@@ -52,17 +52,21 @@ class AccountPage(Page):
     """
     Page: Server page
     """
-    def __init__(self, ucc_smartx_configs, open_page=True):
+    def __init__(self, ucc_smartx_selenium_helper=None, ucc_smartx_rest_helper=None, open_page=True):
         """
-            :param ucc_smartx_configs: smartx configuration fixture
+            :param ucc_smartx_selenium_helper: smartx configuration fixture
         """
-        super(AccountPage, self).__init__(ucc_smartx_configs, open_page)
+        super(AccountPage, self).__init__(ucc_smartx_selenium_helper, ucc_smartx_rest_helper, open_page)
         account_container = Selector(select="div#account-tab")
-        self.title = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
-        self.description = Message(ucc_smartx_configs.browser, Selector(by=By.CLASS_NAME, select="tool-description"))
-        self.table = ConfigurationTable(ucc_smartx_configs.browser, account_container)
-        self.entity = AccountEntity(ucc_smartx_configs.browser, account_container)
-        self.backend_conf = ListBackendConf(self._get_account_endpoint(), ucc_smartx_configs.session_key)
+        
+        if ucc_smartx_selenium_helper:
+            self.title = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
+            self.description = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-description"))
+            self.table = ConfigurationTable(ucc_smartx_selenium_helper.browser, account_container)
+            self.entity = AccountEntity(ucc_smartx_selenium_helper.browser, account_container)
+        
+        if ucc_smartx_rest_helper:
+            self.backend_conf = ListBackendConf(self._get_account_endpoint(), ucc_smartx_rest_helper.username, ucc_smartx_rest_helper.password)
 
     def open(self):
         """
@@ -77,4 +81,4 @@ class AccountPage(Page):
         """
         Get rest endpoint for the configuration
         """
-        return '{}/servicesNS/nobody/Splunk_TA_UCCExample/configs/conf-splunk_ta_uccexample_account'.format(self.splunk_mgmt_url)
+        return '{}/servicesNS/nobody/Splunk_TA_UCCExample/splunk_ta_uccexample_account'.format(self.splunk_mgmt_url)
