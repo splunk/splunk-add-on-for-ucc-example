@@ -16,14 +16,17 @@ orbs:
     commands:
       package:
         steps:
-          - run:
-              name: Generating package
-              command: |
-                sudo ./build.sh
-          - save_cache:
-              key: example-ta-package-2
-              paths:
-                - output
+          - restore_cache:
+              keys:
+                - example-ta-package-2
+#           - run:
+#               name: Generating package
+#               command: |
+#                 sudo ./build.sh
+#           - save_cache:
+#               key: example-ta-package-2
+#               paths:
+#                 - output
 
     jobs:
       package:
@@ -132,6 +135,9 @@ orbs:
               command: |
                 # Start Splunk
                 ls -l deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf
+                pwd
+                ls -l
+                
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
