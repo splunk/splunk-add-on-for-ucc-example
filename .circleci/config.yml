@@ -125,7 +125,7 @@ orbs:
           - run:
               name: Setup for testing
               command: |
-              pyenv install -v 3.7.8
+                pyenv install -v 3.7.8
                 pyenv global 3.7.8
                 pip install -r requirements_dev.txt
                 pip install git+https://github.com/pixelb/crudini        
