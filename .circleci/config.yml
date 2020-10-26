@@ -20,6 +20,10 @@ orbs:
               name: Generating package
               command: |
                 sudo ./build.sh
+          - save_cache:
+              key: example-ta-package-2
+              paths:
+                - output
 
     jobs:
       package:
