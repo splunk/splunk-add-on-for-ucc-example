@@ -109,7 +109,7 @@ orbs:
   splunk-app-test:
     executors:
       python37:
-        docker:
+        machine:
           - image: circleci/python:3.7
         resource_class: xlarge
     commands:
