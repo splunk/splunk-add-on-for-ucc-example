@@ -110,7 +110,7 @@ orbs:
     executors:
       python37:
         machine:
-          - image: circleci/python:3.7
+          - image: ubuntu-2004:202010-01
         resource_class: xlarge
     commands:
       aio:
