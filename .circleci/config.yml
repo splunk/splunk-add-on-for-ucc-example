@@ -127,7 +127,7 @@ orbs:
               command: |
                 pyenv install 3.7.8
                 pyenv global 3.7.8
-                sudo pip install -r requirements_dev.txt
+                pip install -r requirements_dev.txt
                 pip install git+https://github.com/pixelb/crudini        
                 mkdir test-results
                 cp -r /tmp/workspace/output output
