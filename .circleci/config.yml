@@ -172,8 +172,6 @@ orbs:
           - checkout
           - run: git submodule sync
           - run: git submodule update --init
-          - setup_remote_docker:
-              docker_layer_caching: true
           - aio:
               splunk_version: <<parameters.splunk_version>>
           - store_artifacts:
@@ -267,8 +265,6 @@ jobs:
     docker:
       - image: circleci/python:3.7
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
       - attach_workspace:
           at: /tmp/workspace
       - checkout
@@ -286,8 +282,6 @@ jobs:
     docker:
       - image: circleci/python:3.7
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
       - attach_workspace:
           at: /tmp/workspace
       - checkout
@@ -308,8 +302,6 @@ jobs:
     docker:
       - image: circleci/python:3.7
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
       - attach_workspace:
           at: /tmp/workspace
       - checkout
