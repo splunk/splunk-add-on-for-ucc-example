@@ -3,7 +3,7 @@
 ## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
 ##
 -r tests/requirements.txt
-splunk-add-on-ucc-framework==4.1.3
+splunk-add-on-ucc-framework==4.1.4a1
 lovely-pytest-docker
 reuse
 https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz
