@@ -322,6 +322,7 @@ class TestInput(UccTester):
         """ Verifies required field name in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
         input_page.entity1.interval.set_value("90")
@@ -420,6 +421,7 @@ class TestInput(UccTester):
         """ Verifies values of Multiple Select Test dropdown in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.multiple_select_test.deselect_all()
         multiple_select_test = ["A", "B"]
         self.assert_util(
@@ -434,6 +436,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         selected_value = ["A"]
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.multiple_select_test.deselect_all()
         for each in selected_value:
             input_page.entity1.multiple_select_test.select(each)
@@ -449,6 +452,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         selected_values = ["A", "B"]
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.multiple_select_test.deselect_all()
         for each in selected_values:
             input_page.entity1.multiple_select_test.select(each)
@@ -464,6 +468,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         selected_values = ["A", "B"]
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.multiple_select_test.deselect_all()
         for each in selected_values:
             input_page.entity1.multiple_select_test.select(each)
@@ -479,6 +484,7 @@ class TestInput(UccTester):
         """ Verifies multiple select seach funtionality properly"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.multiple_select_test.deselect_all()
         self.assert_util(
             input_page.entity1.multiple_select_test.search_get_list,
@@ -528,6 +534,7 @@ class TestInput(UccTester):
         """ Verifies selected value of example radio in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.example_radio.select("No")
         self.assert_util(
             input_page.entity1.example_radio.get_value,
@@ -540,6 +547,7 @@ class TestInput(UccTester):
         """ Verifies required field interval in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Test_Add")
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
@@ -575,6 +583,7 @@ class TestInput(UccTester):
         """ Verifies required field index in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Test_Add")
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
@@ -609,6 +618,7 @@ class TestInput(UccTester):
         """ Verifies required field Salesforce Account in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Test_Add")
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
@@ -629,6 +639,7 @@ class TestInput(UccTester):
         """ Verifies required field Object in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Test_Add")
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
@@ -649,6 +660,7 @@ class TestInput(UccTester):
         """ Verifies required field Object Fields in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Test_Add")
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
@@ -669,6 +681,7 @@ class TestInput(UccTester):
         """ Verifies required field Order By in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Test_Add")
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
@@ -794,6 +807,7 @@ class TestInput(UccTester):
         """ Verifies the frontend after adding a Example Input One"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Test_Add")
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
@@ -824,6 +838,7 @@ class TestInput(UccTester):
         """ Verifies the backend after adding a example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Test_Add")
         input_page.entity1.example_radio.select("No")
         input_page.entity1.single_select_group_test.select("Two")
@@ -1506,6 +1521,7 @@ class TestInput(UccTester):
         """ Verifies default value of example radio in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.example_radio.select("No")
         self.assert_util(
             input_page.entity2.example_radio.get_value,
