@@ -61,7 +61,7 @@ def get_account_credentials():
     try:
         ACCOUNT_CONFIG["password"] = b64decode(os.getenv("password")).decode("ascii")
         ACCOUNT_CONFIG["token"] =  b64decode(os.getenv("token")).decode("ascii")
-        ACCOUNT_CONFIG_1['password'] = b64decode(os.getenv("password_1")).decode("ascii"), 
+        ACCOUNT_CONFIG_1['password'] = b64decode(os.getenv("password_1")).decode("ascii") 
         ACCOUNT_CONFIG_1['token'] = b64decode(os.getenv("token_1")).decode("ascii")          
     except:
         print("Password and Token should be added as environment variables.")
