@@ -28,8 +28,8 @@ ACCOUNT_CONFIG = {
     'auth_type': 'basic',
     'custom_endpoint': 'login.example.com',
     'username': 'TestUser',
-    'password': b64decode(os.getenv("password")).decode("ascii"),
-    'token': b64decode(os.getenv("token")).decode("ascii"),
+    'password': None,
+    'token': None,
     'client_id': '',
     'client_secret': '',
     'redirect_url': '',
@@ -39,9 +39,33 @@ ACCOUNT_CONFIG = {
 }
 
 ACCOUNT_CONFIG_1={
-    'password': b64decode(os.getenv("password_1")).decode("ascii"),
-    'token':    b64decode(os.getenv("token_1")).decode("ascii")  
+    'name': 'TestAccount',
+    'account_checkbox': 1,
+    'account_multiple_select': 'one',
+    'account_radio': 'yes',
+    'auth_type': 'basic',
+    'custom_endpoint': 'login.example.com',
+    'username': 'TestUser',
+    'password': None,
+    'token': None,
+    'client_id': '',
+    'client_secret': '',
+    'redirect_url': '',
+    'endpoint': '',
+    'oauth_state_enabled': '',
+    'example_help_link': ''
 }
+
+@pytest.fixture(scope="session", autouse=True)
+def get_account_credentials():
+    try:
+        ACCOUNT_CONFIG["password"] = b64decode(os.getenv("password")).decode("ascii")
+        ACCOUNT_CONFIG["token"] =  b64decode(os.getenv("token")).decode("ascii")
+        ACCOUNT_CONFIG_1['password'] = b64decode(os.getenv("password_1")).decode("ascii"), 
+        ACCOUNT_CONFIG_1['token'] = b64decode(os.getenv("token_1")).decode("ascii")          
+    except:
+        print("Password and Token should be added as environment variables.")
+
 
 @pytest.fixture
 def add_input(ucc_smartx_rest_helper):
