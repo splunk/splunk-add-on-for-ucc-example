@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+# SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+#
+#
 from pytest_splunk_addon_ui_smartx.base_test import UccTester
 from pytest_splunk_addon_ui_smartx.pages.logging import Logging
 from .Example_UccLib.account import AccountPage
@@ -343,6 +348,7 @@ class TestInput(UccTester):
         """ Verifies the name field should not be more than 100 characters"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         name_value = "a"* 101
         input_page.entity1.name.set_value(name_value)
         self.assert_util(
@@ -358,6 +364,7 @@ class TestInput(UccTester):
         """ Verifies whether adding special characters, name field displays validation error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         input_page.entity1.name.set_value("$$test_name")
         self.assert_util(
             input_page.entity1.save,
@@ -373,6 +380,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         single_select_group_test_list = ["One", "Two", "Three", "Four"]
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
             input_page.entity1.single_select_group_test.list_of_values(),
             single_select_group_test_list
@@ -385,6 +393,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         selected_value = "Two"
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         input_page.entity1.single_select_group_test.select(selected_value)
         self.assert_util(
             input_page.entity1.single_select_group_test.get_value,
@@ -397,9 +406,10 @@ class TestInput(UccTester):
         """ Verifies singleselect seach funtionality properly"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
             input_page.entity1.single_select_group_test.search_get_list,
-            ["One"],
+            ["One","One"],
             left_args={'value': 'One'}
             )
 
@@ -409,6 +419,7 @@ class TestInput(UccTester):
         """ Verifies default values of Multiple Select Test dropdown in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         default_values = ["A", "B"]
         self.assert_util(
             input_page.entity1.multiple_select_test.get_values,
@@ -498,6 +509,7 @@ class TestInput(UccTester):
         """ Verifies default value of example checkbox in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(input_page.entity1.example_checkbox.is_checked, True)
 
     @pytest.mark.forwarder
@@ -506,6 +518,7 @@ class TestInput(UccTester):
         """ Verifies Uncheck in example checkbox in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(input_page.entity1.example_checkbox.uncheck, True)
 
     @pytest.mark.forwarder
@@ -514,6 +527,7 @@ class TestInput(UccTester):
         """ Verifies checked in example checkbox in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         input_page.entity1.example_checkbox.uncheck()
         self.assert_util(input_page.entity1.example_checkbox.check, True)
 
@@ -523,6 +537,7 @@ class TestInput(UccTester):
         """ Verifies default value of example radio in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
             input_page.entity1.example_radio.get_value,
             "Yes"
@@ -568,6 +583,7 @@ class TestInput(UccTester):
         """ Verifies whether adding non numeric values, intreval field displays validation error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         input_page.entity1.name.set_value("test_name")
         input_page.entity1.interval.set_value("abc")
         self.assert_util(
@@ -607,6 +623,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         default_index = "default"
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
             input_page.entity1.index.get_value,
             default_index
@@ -705,6 +722,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         default_order_by = "LastModifiedDate"
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
             input_page.entity1.order_by.get_value,
             default_order_by
@@ -716,6 +734,7 @@ class TestInput(UccTester):
         """ Verifies help text for the field name"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
             input_page.entity1.name.get_help_text,
             'A unique name for the data input.'
@@ -759,6 +778,7 @@ class TestInput(UccTester):
         """ Verifies whether adding wrong format, Query Start Date field displays validation error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         input_page.entity1.name.set_value("test_name")
         input_page.entity1.interval.set_value("120")
         input_page.entity1.example_account.select("test_input")
@@ -779,6 +799,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         default_limit = "1000"
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
             input_page.entity1.limit.get_value,
             default_limit
@@ -791,6 +812,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         go_to_link = "https://docs.splunk.com/Documentation"
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
             input_page.entity1.help_link.go_to_link,
             go_to_link
@@ -886,6 +908,7 @@ class TestInput(UccTester):
         """ Verifies the frontend edit functionality of the example input one entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_one")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.example_checkbox.uncheck()
         input_page.entity1.example_radio.select("No")
         input_page.entity1.single_select_group_test.select("Four")
@@ -918,6 +941,7 @@ class TestInput(UccTester):
         """ Verifies the backend edit functionality of the example input one entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_one")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.example_checkbox.uncheck()
         input_page.entity1.example_radio.select("No")
         input_page.entity1.single_select_group_test.select("Four")
@@ -960,6 +984,7 @@ class TestInput(UccTester):
         """ Verifies the frontend default fields at time of clone for example input one entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.clone_row("dummy_input_one")
+        input_page.entity1.example_account.wait_for_values()
         self.assert_util(
             input_page.entity1.name.get_value,
             ""
@@ -1017,6 +1042,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.wait_for_rows_to_appear(1)
         input_page.table.clone_row("dummy_input_one")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Clone_Test")
         input_page.entity1.interval.set_value("180")
         input_page.entity1.limit.set_value("500")
@@ -1041,6 +1067,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.wait_for_rows_to_appear(1)
         input_page.table.clone_row("dummy_input_one")
+        input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("Clone_Test")
         input_page.entity1.interval.set_value("180")
         input_page.entity1.limit.set_value("500")
@@ -1102,6 +1129,7 @@ class TestInput(UccTester):
         """ Verifies close functionality at time of add"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(input_page.entity1.close, True)
 
     @pytest.mark.forwarder
@@ -1133,6 +1161,7 @@ class TestInput(UccTester):
         """ Verifies cancel functionality at time of add"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(input_page.entity1.cancel, True)
 
     @pytest.mark.forwarder
@@ -1164,6 +1193,7 @@ class TestInput(UccTester):
         """ Verifies by saving an entity with duplicate name it displays and error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         input_name = "dummy_input_one"
         input_page.entity1.name.set_value(input_name)
         self.assert_util(
@@ -1179,6 +1209,7 @@ class TestInput(UccTester):
         """ Verifies by saving an entity with duplicate name at time of clone it displays and error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.clone_row("dummy_input_one")
+        input_page.entity1.example_account.wait_for_values()
         input_name = "dummy_input_one"
         input_page.entity1.name.set_value(input_name)
         self.assert_util(
@@ -1194,6 +1225,7 @@ class TestInput(UccTester):
         """ Verifies the title of the 'Add Entity'"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
+        input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
             input_page.entity1.title.container.get_attribute('textContent').strip(),
             "Add Example Input One"
@@ -1245,12 +1277,6 @@ class TestInput(UccTester):
             )
     
 
-
-    ############################
-    ### TEST CASES FOR TABLE ###
-    ############################
-
-
     ##########################################
     #### TEST CASES FOR EXAMPLE INPUT TWO ####
     ##########################################
@@ -1261,6 +1287,7 @@ class TestInput(UccTester):
         """ Verifies required field name in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_radio.select("No")
         input_page.entity2.example_multiple_select.select("Option One")
@@ -1281,6 +1308,7 @@ class TestInput(UccTester):
         """ Verifies the name field should not be more than 100 characters"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         name_value = "a"* 101
         input_page.entity2.name.set_value(name_value)
         self.assert_util(
@@ -1296,6 +1324,7 @@ class TestInput(UccTester):
         """ Verifies whether adding special characters, name field displays validation error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("$$test_name_two")
         self.assert_util(
             input_page.entity2.save,
@@ -1310,6 +1339,7 @@ class TestInput(UccTester):
         """ Verifies required field interval in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("Test_Add")
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_radio.select("No")
@@ -1330,6 +1360,7 @@ class TestInput(UccTester):
         """ Verifies whether adding non numeric values, intreval field displays validation error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("test_name_two")
         input_page.entity2.interval.set_value("abc")
         self.assert_util(
@@ -1345,6 +1376,7 @@ class TestInput(UccTester):
         """ Verifies required field index in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("Test_Add")
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_radio.select("No")
@@ -1367,6 +1399,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         default_index = "default"
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(
             input_page.entity2.index.get_value,
             default_index
@@ -1378,6 +1411,7 @@ class TestInput(UccTester):
         """ Verifies required field Account in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("Test_Add")
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_radio.select("No")
@@ -1398,6 +1432,7 @@ class TestInput(UccTester):
         """ Verifies required field Example Multiple Select in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("Test_Add")
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_radio.select("No")
@@ -1418,6 +1453,7 @@ class TestInput(UccTester):
         """ Verifies values of Multiple Select Test dropdown in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         example_multiple_select_list = ["Option One", "Option Two"]
         self.assert_util(
             input_page.entity2.example_multiple_select.list_of_values(),
@@ -1431,6 +1467,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         selected_value = ["Option One"]
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         for each in selected_value:
             input_page.entity2.example_multiple_select.select(each)
         self.assert_util(
@@ -1445,6 +1482,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         selected_values = ["Option One", "Option Two"]
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         for each in selected_values:
             input_page.entity2.example_multiple_select.select(each)
         self.assert_util(
@@ -1458,6 +1496,7 @@ class TestInput(UccTester):
         """ Verifies help text for the field name"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(
             input_page.entity2.example_multiple_select.get_help_text,
             'This is an example multipleSelect for input two entity'
@@ -1485,6 +1524,7 @@ class TestInput(UccTester):
         """ Verifies Check in example checkbox in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(input_page.entity2.example_checkbox.check, True)
 
     @pytest.mark.forwarder
@@ -1493,6 +1533,7 @@ class TestInput(UccTester):
         """ Verifies Uncheck in example checkbox in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.example_checkbox.check()
         self.assert_util(input_page.entity2.example_checkbox.uncheck, True)
 
@@ -1502,6 +1543,7 @@ class TestInput(UccTester):
         """ Verifies default value of example radio in Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("Test_Add")
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_multiple_select.select("Option One")
@@ -1534,6 +1576,7 @@ class TestInput(UccTester):
         """ Verifies whether adding wrong format, Query Start Date field displays validation error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("test_name_two")
         input_page.entity2.interval.set_value("120")
         input_page.entity2.example_account.select("test_input")
@@ -1547,16 +1590,13 @@ class TestInput(UccTester):
             )
         self.assert_util(input_page.entity2.close_error, True)
 
-    ###################################
-    #### TEST CASES FOR ENTITY TWO ####
-    ###################################
-
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_add_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the frontend after adding a Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("Test_Add")
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_radio.select("No")
@@ -1580,13 +1620,14 @@ class TestInput(UccTester):
             }
             )
         url = input_page._get_input_endpoint()
-
+        
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_add_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the backend after adding a Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("Test_Add")
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_radio.select("No")
@@ -1621,6 +1662,7 @@ class TestInput(UccTester):
         """ Verifies the frontend uneditable fields at time of edit of the Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(input_page.entity2.name.is_editable, False)
 
     @pytest.mark.forwarder
@@ -1629,6 +1671,7 @@ class TestInput(UccTester):
         """ Verifies the frontend edit functionality of the Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.example_checkbox.uncheck()
         input_page.entity2.example_radio.select("Yes")
         input_page.entity2.example_multiple_select.deselect("Option One")
@@ -1655,6 +1698,7 @@ class TestInput(UccTester):
         """ Verifies the backend edit functionality of the Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.example_checkbox.uncheck()
         input_page.entity2.example_radio.select("Yes")
         input_page.entity2.example_multiple_select.deselect("Option One")
@@ -1686,6 +1730,7 @@ class TestInput(UccTester):
         """ Verifies the frontend default fields at time of clone for Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.clone_row("dummy_input_two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(
             input_page.entity2.name.get_value,
             ""
@@ -1723,6 +1768,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.wait_for_rows_to_appear(1)
         input_page.table.clone_row("dummy_input_two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("Clone_Test")
         input_page.entity2.interval.set_value("180")
         self.assert_util(input_page.entity2.save, True)
@@ -1746,6 +1792,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.wait_for_rows_to_appear(1)
         input_page.table.clone_row("dummy_input_two")
+        input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("Clone_Test")
         input_page.entity2.interval.set_value("180")
         self.assert_util(input_page.entity2.save, True)
@@ -1801,6 +1848,7 @@ class TestInput(UccTester):
         """ Verifies close functionality at time of add"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(input_page.entity2.close, True)
 
     @pytest.mark.forwarder
@@ -1832,6 +1880,7 @@ class TestInput(UccTester):
         """ Verifies cancel functionality at time of add"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(input_page.entity2.cancel, True)
 
     @pytest.mark.forwarder
@@ -1863,6 +1912,7 @@ class TestInput(UccTester):
         """ Verifies by saving an entity with duplicate name it displays and error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         input_name = "dummy_input_two"
         input_page.entity2.name.set_value(input_name)
         self.assert_util(
@@ -1878,6 +1928,7 @@ class TestInput(UccTester):
         """ Verifies by saving an entity with duplicate name at time of clone it displays and error"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.clone_row("dummy_input_two")
+        input_page.entity2.example_account.wait_for_values()
         input_name = "dummy_input_two"
         input_page.entity2.name.set_value(input_name)
         self.assert_util(
@@ -1894,6 +1945,7 @@ class TestInput(UccTester):
         """ Verifies the title of the 'Add Entity'"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(
             input_page.entity2.title.container.get_attribute('textContent').strip(),
             "Add Example Input Two"
@@ -1905,6 +1957,7 @@ class TestInput(UccTester):
         """ Verifies the title of the 'Edit Entity'"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.edit_row("dummy_input_two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(
             input_page.entity2.title.container.get_attribute('textContent').strip(),
             "Update Example Input Two"
@@ -1916,6 +1969,7 @@ class TestInput(UccTester):
         """ Verifies the title of the 'Clone Entity'"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.table.clone_row("dummy_input_two")
+        input_page.entity2.example_account.wait_for_values()
         self.assert_util(
             input_page.entity2.title.container.get_attribute('textContent').strip(),
             "Clone Example Input Two"

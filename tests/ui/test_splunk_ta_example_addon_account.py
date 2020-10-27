@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+# SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+#
+#
 from pytest_splunk_addon_ui_smartx.base_test import UccTester
 from pytest_splunk_addon_ui_smartx.backend_confs import BackendConf
 from .Example_UccLib.account import AccountPage
@@ -37,6 +42,7 @@ ACCOUNT_CONFIG_1={
     'password': b64decode(os.getenv("password_1")).decode("ascii"),
     'token':    b64decode(os.getenv("token_1")).decode("ascii")  
 }
+
 @pytest.fixture
 def add_input(ucc_smartx_rest_helper):
     input_page = InputPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
@@ -682,7 +688,7 @@ class TestAccount(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.account
-    def test_account_masked_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+    def test_account_credentials_encrypted_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the default number of rows in the table"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.table.wait_for_rows_to_appear(1)
