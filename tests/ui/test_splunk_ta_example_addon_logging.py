@@ -22,6 +22,15 @@ def reset_configuration(ucc_smartx_rest_helper):
 class TestLogging(UccTester):
 
     @pytest.mark.logging
+    def test_logging_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies logging field label"""
+        logging = Logging(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            logging.log_level.get_input_label,
+            'Log level'
+            )
+
+    @pytest.mark.logging
     def test_logging_default_log_level(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """This test case checks verification of default log level"""
         logging = Logging(TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
