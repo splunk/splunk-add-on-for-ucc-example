@@ -150,9 +150,11 @@ orbs:
                 docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test || test_exit_code=$?
                 # Collect Results
                 docker container create --name dummy \
-                                    -v project_results:/home/circleci/work/test-results \
+                                    -v project_results:/home/circleci/work \
                                     registry.access.redhat.com/ubi7/ubi
                 docker cp dummy:/home/circleci/work/test-results/test.xml test-results/  || true
+                docker cp dummy:/home/circleci/work/assets test-results/assets  || true
+                docker cp dummy:/home/circleci/work/report.html test-results/report.html  || true
                 docker cp dummy:/home/circleci/work/test-results/cim-compliance-report.md test-results/ || true
                 exit "$test_exit_code"
     jobs:
