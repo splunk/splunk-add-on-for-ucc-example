@@ -337,7 +337,8 @@ class TestCustom(UccTester):
         """ This test case checks whether help link redirects to the correct URL"""
         custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         go_to_link = "https://docs.splunk.com/Documentation"
-        self.assert_util(
-            custom.test_help_link.go_to_link,
-            go_to_link
-            )
+        with custom.test_help_link.open_link() as link_url:
+            self.assert_util(
+                    custom.test_help_link.get_current_url,
+                    go_to_link
+                    )

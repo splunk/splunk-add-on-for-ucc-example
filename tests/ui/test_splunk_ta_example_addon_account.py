@@ -901,10 +901,12 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         go_to_link = "https://docs.splunk.com/Documentation"
         account.entity.open()
-        self.assert_util(
-                account.entity.help_link.go_to_link,
-                go_to_link,
-                )
+        with account.entity.help_link.open_link() as link_url:
+            self.assert_util(
+                    account.entity.help_link.get_current_url,
+                    go_to_link
+                    )
+
 
     @pytest.mark.forwarder
     @pytest.mark.account

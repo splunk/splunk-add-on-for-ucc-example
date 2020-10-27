@@ -813,10 +813,11 @@ class TestInput(UccTester):
         go_to_link = "https://docs.splunk.com/Documentation"
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()       
-        self.assert_util(
-            input_page.entity1.help_link.go_to_link,
-            go_to_link
-            )
+        with input_page.entity1.help_link.open_link() as link_url:
+            self.assert_util(
+                    input_page.entity1.help_link.get_current_url,
+                    go_to_link
+                    )            
 
 
     ###################################
