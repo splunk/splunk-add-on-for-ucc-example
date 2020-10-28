@@ -18,6 +18,7 @@ services:
       - SAUCE_TUNNEL_ID=${SAUCE_IDENTIFIER}
       - JOB_NAME=${JOB_NAME}
       - SAUCE_TUNNEL_PARENT=none
+      - TEST_BROWSER=${TEST_BROWSER}
     build:
       context: .
       dockerfile: Dockerfile-tests

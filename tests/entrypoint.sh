@@ -14,5 +14,15 @@ echo "Check Saucelab connection..."
 wget --retry-connrefused --no-check-certificate -T 10 sauceconnect:4445
 
 echo "Executing Tests..."
-echo Test Args $@ ${TEST_SET}
-pytest $@ ${TEST_SET}
+
+if [ -z ${TEST_BROWSER} ] 
+then
+    echo Test Args $@ ${TEST_SET}
+    pytest $@ ${TEST_SET}
+    test_exit_code=$?
+else
+    echo Test Args $@ --browser=${TEST_BROWSER} ${TEST_SET}
+    pytest $@ --browser=${TEST_BROWSER} ${TEST_SET}
+    test_exit_code=$?
+fi
+exit "$test_exit_code"

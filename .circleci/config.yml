@@ -136,7 +136,9 @@ orbs:
               name: Splunk Testing
               command: |
                 # Start Splunk
-                [ ! -d "tests/<<parameters.test_set>>" ] && exit 0
+                TEST_SET=$(echo "<<parameters.test_set>>" | cut -d "-" -f 1 )
+                BROWSER=$(echo "<<parameters.test_set>>" | cut -d "-" -f 2 )
+                [ ! -d "tests/$TEST_SET" ] && exit 0
 
                 ls -l deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf
                 pwd
@@ -146,7 +148,8 @@ orbs:
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
-                export TEST_SET=tests/<<parameters.test_set>>
+                export TEST_SET=tests/$TEST_SET
+                export TEST_BROWSER=$BROWSER
                 # JOB_NAME: For Saucelabs integration. Used as a build-name.
                 export JOB_NAME="$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
 
@@ -175,7 +178,6 @@ orbs:
                 docker ps -a
                 test_exit_code=0
                 docker-compose -f docker-compose-ci.yml up --abort-on-container-exit test || test_exit_code=$?
-
                 # Collect Results
                 docker container create --name dummy \
                                     -v project_results:/home/circleci/work \
@@ -380,8 +382,8 @@ workflows:
             - package
           matrix:
             parameters:
-              splunk_version: ["8.0"]
-              test_set: ["knowledge", "ui"]
+              splunk_version: ["8.0", "7.2"]
+              test_set: ["knowledge", "ui-firefox", "ui-chrome"]
           filters:
             branches:
               only: /.*/
