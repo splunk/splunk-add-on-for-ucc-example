@@ -13,6 +13,11 @@ services:
       - password=${PASSWORD}
       - token_1=${TOKEN_1}
       - password_1=${PASSWORD_1} 
+      - SAUCE_USERNAME=${SAUCE_USERNAME}
+      - SAUCE_PASSWORD=${SAUCE_PASSWORD}
+      - SAUCE_TUNNEL_ID=${SAUCE_IDENTIFIER}
+      - JOB_NAME=${JOB_NAME}
+      - SAUCE_TUNNEL_PARENT=none
     build:
       context: .
       dockerfile: Dockerfile-tests
@@ -77,6 +82,20 @@ services:
       - SPLUNK_PASSWORD=Chang3d!
       - SPLUNK_START_ARGS=--accept-license
       - SPLUNK_HEC_TOKEN=9b741d03-43e9-4164-908b-e09102327d22
+
+  sauceconnect:
+    build:
+      context: .
+      dockerfile: Dockerfile-saucelabs
+    environment:
+      - SAUCE_USERNAME=${SAUCE_USERNAME}
+      - SAUCE_PASSWORD=${SAUCE_PASSWORD}
+      - SAUCE_TUNNEL_ID=${SAUCE_IDENTIFIER}
+      - SAUCE_TUNNEL_PARENT=none
+    hostname: sauceconnect
+    ports:
+      - "4445"
+
 
 volumes:
   results:

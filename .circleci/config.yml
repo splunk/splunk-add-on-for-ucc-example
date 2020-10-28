@@ -15,11 +15,17 @@ orbs:
     commands:
       package:
         steps:
-          - run:
-              name: Generating package
-              command: |
-                sudo ./build.sh
-
+          - restore_cache:
+              keys:
+                - example-ta-package-2
+#           - run:
+#               name: Generating package
+#               command: |
+#                 sudo ./build.sh
+#           - save_cache:
+#               key: example-ta-package-2
+#               paths:
+#                 - output
     jobs:
       package:
         executor: python27
@@ -125,29 +131,51 @@ orbs:
                 pip install git+https://github.com/pixelb/crudini        
                 mkdir test-results
                 cp -r /tmp/workspace/output output
+          
           - run:
               name: Splunk Testing
               command: |
                 # Start Splunk
                 [ ! -d "tests/<<parameters.test_set>>" ] && exit 0
+
+                ls -l deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf
+                pwd
+                ls -l
+                
+                # ENV variables
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
                 export TEST_SET=tests/<<parameters.test_set>>
+                # JOB_NAME: For Saucelabs integration. Used as a build-name.
+                export JOB_NAME="$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
+
+                # Build
                 docker-compose -f docker-compose-ci.yml build
-                docker-compose -f docker-compose-ci.yml up -d splunk                
+
+                # Start Splunk
+                docker-compose -f docker-compose-ci.yml up -d splunk  
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+
                 # Run a Splunk Diag
                 mkdir /tmp/diag
                 diag=$(docker-compose -f docker-compose-ci.yml exec splunk sudo -u splunk /opt/splunk/bin/splunk diag | grep "Splunk diagnosis file created" | sed -n 's/.* \(\/.*\.gz\)/\1/p') 
                 docker-compose -f docker-compose-ci.yml exec splunk sudo chmod +r ${diag//[$'\t\r\n']}
                 docker cp project_splunk_1:${diag//[$'\t\r\n']} /tmp/diag
+
                 # Check with btool
                 docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
                 docker-compose -f docker-compose-ci.yml up -d splunk
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+
+                # Saucelab connection
+                docker-compose -f docker-compose-ci.yml up -d sauceconnect
+
                 # Run the tests
-                docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test || test_exit_code=$?
+                docker ps -a
+                test_exit_code=0
+                docker-compose -f docker-compose-ci.yml up --abort-on-container-exit test || test_exit_code=$?
+
                 # Collect Results
                 docker container create --name dummy \
                                     -v project_results:/home/circleci/work \
@@ -352,7 +380,7 @@ workflows:
             - package
           matrix:
             parameters:
-              splunk_version: ["7.2", "7.3", "8.0"]
+              splunk_version: ["8.0"]
               test_set: ["knowledge", "ui"]
           filters:
             branches:
