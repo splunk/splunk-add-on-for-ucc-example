@@ -780,7 +780,7 @@ class TestInput(UccTester):
             )
         self.assert_util(
             input_page.entity1.query_start_date.get_input_label,
-            'Query Start Date'
+            'Query Start Date ?'
             )
         self.assert_util(
             input_page.entity1.limit.get_input_label,
@@ -823,7 +823,7 @@ class TestInput(UccTester):
             )
         self.assert_util(
             input_page.entity1.query_start_date.get_input_label,
-            'Query Start Date'
+            'Query Start Date ?'
             )
             
     @pytest.mark.forwarder
