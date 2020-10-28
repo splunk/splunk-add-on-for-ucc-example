@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+# SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+#
+#
 from pytest_splunk_addon_ui_smartx.base_test import UccTester
 from pytest_splunk_addon_ui_smartx.pages.logging import Logging
 import pytest
@@ -21,6 +26,7 @@ def reset_configuration(ucc_smartx_rest_helper):
 
 class TestLogging(UccTester):
 
+    @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies logging field label"""
@@ -30,6 +36,7 @@ class TestLogging(UccTester):
             'Log level'
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_default_log_level(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """This test case checks verification of default log level"""
@@ -40,6 +47,7 @@ class TestLogging(UccTester):
             default_log_level.lower()
             )
         
+    @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_select_random_log_level(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """This test cases checks the functionality of selecting random log level and verification of the same in UI"""
@@ -53,6 +61,7 @@ class TestLogging(UccTester):
             level.lower()
             )
         
+    @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_list_log_levels(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """This test case checks list of log levels present in the drop down"""
@@ -62,6 +71,7 @@ class TestLogging(UccTester):
             ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
             )
         
+    @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_selected_log_level_frontend(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """This test case checks the verification of selected log level"""
@@ -74,6 +84,7 @@ class TestLogging(UccTester):
             selection_log.lower()
             )
         
+    @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_selected_log_level_backend(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """This test case checks the verification of selected log level in backend"""

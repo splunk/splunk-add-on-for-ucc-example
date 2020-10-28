@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+# SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+#
+#
 from pytest_splunk_addon_ui_smartx.base_test import UccTester
 from pytest_splunk_addon_ui_smartx.backend_confs import BackendConf
 from .Example_UccLib.account import AccountPage
@@ -37,6 +42,7 @@ ACCOUNT_CONFIG_1={
     'password': b64decode(os.getenv("password_1")).decode("ascii"),
     'token':    b64decode(os.getenv("token_1")).decode("ascii") 
 }
+
 @pytest.fixture
 def add_input(ucc_smartx_rest_helper):
     input_page = InputPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
@@ -87,6 +93,7 @@ class TestAccount(UccTester):
     ### TEST CASES FOR TABLE ###
     ############################
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_default_rows_in_table(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the default number of rows in the table"""
@@ -96,6 +103,7 @@ class TestAccount(UccTester):
             0
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_sort_functionality(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
         """ Verifies sorting functionality for name column"""
@@ -115,6 +123,7 @@ class TestAccount(UccTester):
             )
         self.assert_util(sort_order["ascending"], True)
         
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_count(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
         """ Verifies count on table"""
@@ -125,6 +134,7 @@ class TestAccount(UccTester):
             "{} Items".format(len(account.backend_conf.get_all_stanzas()))
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_accounts_filter_functionality_negative(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the filter functionality (Negative)"""
@@ -137,6 +147,7 @@ class TestAccount(UccTester):
             )
         account.table.clean_filter()
         
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_accounts_filter_functionality_positive(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the filter functionality (Positive)"""
@@ -150,6 +161,7 @@ class TestAccount(UccTester):
         account.table.clean_filter()
 
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_pagination(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account):
         """ Verifies pagination list"""
@@ -167,6 +179,7 @@ class TestAccount(UccTester):
     ###################################
 
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_title_and_description(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the title and description of the page"""
@@ -180,6 +193,7 @@ class TestAccount(UccTester):
             "Set up your add-on"
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_add_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the title of the 'Add Entity'"""
@@ -190,6 +204,7 @@ class TestAccount(UccTester):
             "Add Account"
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_edit_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the title of the 'Edit Entity'"""
@@ -200,6 +215,7 @@ class TestAccount(UccTester):
             "Update Account"
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_clone_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the title of the 'Clone Entity'"""
@@ -210,6 +226,7 @@ class TestAccount(UccTester):
             "Clone Account"
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_delete_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the title of the 'Delete Entity'"""
@@ -220,6 +237,7 @@ class TestAccount(UccTester):
             "Delete Confirmation"
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_add_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies close functionality at time of add"""
@@ -227,6 +245,7 @@ class TestAccount(UccTester):
         account.entity.open()
         self.assert_util(account.entity.close, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_add_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies cancel functionality at time of add"""
@@ -234,12 +253,14 @@ class TestAccount(UccTester):
         account.entity.open()
         self.assert_util(account.entity.cancel, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_delete_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies close functionality at time of delete"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(account.table.delete_row, True, left_args={"name":ACCOUNT_CONFIG["name"], "close":True})
         
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_delete_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies cancel functionality at time of delete"""
@@ -247,6 +268,7 @@ class TestAccount(UccTester):
         
         self.assert_util(account.table.delete_row, True, left_args={"name":ACCOUNT_CONFIG["name"], "cancel":True})
     
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_edit_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies close functionality at time of edit"""
@@ -254,6 +276,7 @@ class TestAccount(UccTester):
         account.table.edit_row(ACCOUNT_CONFIG["name"])
         self.assert_util(account.entity.close, True)
         
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_edit_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies cancel functionality at time of edit"""
@@ -261,6 +284,7 @@ class TestAccount(UccTester):
         account.table.edit_row(ACCOUNT_CONFIG["name"])
         self.assert_util(account.entity.cancel, True)
     
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_clone_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies close functionality at time of clone"""
@@ -268,6 +292,7 @@ class TestAccount(UccTester):
         account.table.clone_row(ACCOUNT_CONFIG["name"])
         self.assert_util(account.entity.close, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_clone_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies cancel functionality at time of clone"""
@@ -276,6 +301,7 @@ class TestAccount(UccTester):
         self.assert_util(account.entity.cancel, True)
 
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_delete_valid_prompt_message(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the prompt message of the 'Delete Entity'"""
@@ -286,6 +312,7 @@ class TestAccount(UccTester):
             'Are you sure you want to delete "{}" ? Ensure that no input is configured with "{}" as this will stop data collection for that input.'.format(ACCOUNT_CONFIG["name"],ACCOUNT_CONFIG["name"])
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_required_field_username(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies required field username"""
@@ -303,6 +330,7 @@ class TestAccount(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_required_field_password(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies required field password"""
@@ -320,6 +348,7 @@ class TestAccount(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_encrypted_field_password(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies if the password field is masked or not in the Textbox"""
@@ -331,6 +360,7 @@ class TestAccount(UccTester):
             'password'
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_required_field_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies required field name"""
@@ -348,6 +378,7 @@ class TestAccount(UccTester):
             left_args={'expect_error': True}
             )
     
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_basic_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies basic account field label"""
@@ -390,6 +421,7 @@ class TestAccount(UccTester):
             'Security Token'
             )   
     
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_oauth_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies oauth account field label"""
@@ -433,6 +465,7 @@ class TestAccount(UccTester):
             'Redirect url'
             )   
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_fields_placeholder_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies account field placeholder value"""
@@ -478,6 +511,7 @@ class TestAccount(UccTester):
             )            
 
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_required_field_example_environment(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies required field example environment"""
@@ -496,6 +530,7 @@ class TestAccount(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_required_field_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies required field example multiple select"""
@@ -513,6 +548,7 @@ class TestAccount(UccTester):
             left_args={'expect_error': True}
             )
     
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_required_field_client_id(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies required field client id"""
@@ -528,6 +564,7 @@ class TestAccount(UccTester):
             left_args={'expect_error': True}
             )
     
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_required_field_client_secret(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies required field client secret"""
@@ -544,6 +581,7 @@ class TestAccount(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_encrypted_field_client_secret(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies if the password field is masked or not in the Textbox"""
@@ -556,6 +594,7 @@ class TestAccount(UccTester):
             'password'
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_valid_account_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether adding special characters, number in starting of name field displays validation error"""
@@ -570,6 +609,7 @@ class TestAccount(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_valid_length_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the name field should not be more than 50 characters"""
@@ -584,6 +624,7 @@ class TestAccount(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_default_value_example_environment(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies default value of example environment"""
@@ -596,6 +637,7 @@ class TestAccount(UccTester):
             "Value1"
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_list_example_environment(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies example environment list dropdown"""
@@ -606,6 +648,7 @@ class TestAccount(UccTester):
             ["Value1", "Value2", "Other"]
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_default_value_auth_type(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies default value of auth type"""
@@ -616,6 +659,7 @@ class TestAccount(UccTester):
             "basic"
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_list_auth_type(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies auth type list dropdown"""
@@ -626,6 +670,7 @@ class TestAccount(UccTester):
                     ["Basic Authentication", "OAuth 2.0 Authentication"]
                     )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_checked_example_checkbox(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies Check/Uncheck in example checkbox"""
@@ -642,6 +687,7 @@ class TestAccount(UccTester):
                     False
                     )
         
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_select_value_example_environment(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies example environment select value"""
@@ -653,6 +699,7 @@ class TestAccount(UccTester):
                     "Value2"
                     )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_list_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies example multiple select list dropdown"""
@@ -663,6 +710,7 @@ class TestAccount(UccTester):
                     ["Option One", "Option Two"]
                     )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_select_value_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies exampl multiple select value"""
@@ -674,6 +722,7 @@ class TestAccount(UccTester):
                     account.entity.multiple_select.get_values,
                     ['Option One', 'Option Two'])
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_search_value_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies exampl multiple select seach funtionality"""
@@ -684,6 +733,7 @@ class TestAccount(UccTester):
                     ["Option One"],
                     left_args={'value': "Option One"})
         
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_default_value_example_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies default value of example radio"""
@@ -694,6 +744,7 @@ class TestAccount(UccTester):
                     "Yes")
 
         
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_add_account_duplicate_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies by saving an entity with duplicate name at time of add it displays and error"""
@@ -709,6 +760,7 @@ class TestAccount(UccTester):
                     'Name {} is already in use'.format(ACCOUNT_CONFIG["name"]),
                     left_args={'expect_error': True})
         
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_delete_row_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the frontend delete functionlity"""
@@ -720,6 +772,7 @@ class TestAccount(UccTester):
                          "not in"
                          )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_edit_uneditable_field_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the frontend uneditable fields at time of edit of the account"""
@@ -730,8 +783,9 @@ class TestAccount(UccTester):
                     False)
 
 
+    @pytest.mark.forwarder
     @pytest.mark.account
-    def test_account_masked_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+    def test_account_credentials_encrypted_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the default number of rows in the table"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.table.wait_for_rows_to_appear(1)
@@ -748,6 +802,7 @@ class TestAccount(UccTester):
                         }
 
             
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_add_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the frontend after adding account"""
@@ -769,6 +824,7 @@ class TestAccount(UccTester):
             }
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_edit_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the frontend edit functionality"""
@@ -791,6 +847,7 @@ class TestAccount(UccTester):
                         }
                     )
         
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_clone_account_duplicate_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies by saving an entity with duplicate name at time of clone it displays and error"""
@@ -802,6 +859,7 @@ class TestAccount(UccTester):
                     'Name {} is already in use'.format(ACCOUNT_CONFIG["name"]),
                     left_args={'expect_error': True})
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_clone_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the frontend clone functionality"""
@@ -824,6 +882,7 @@ class TestAccount(UccTester):
                     )
                         
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_clone_default_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the frontend default fields at time of clone"""
@@ -842,6 +901,7 @@ class TestAccount(UccTester):
                     account.entity.auth_key.get_value,
                     "basic")
     
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_add_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the account in backend after adding account from frontend"""
@@ -866,6 +926,7 @@ class TestAccount(UccTester):
                         'token': ACCOUNT_CONFIG['token']
                     }
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_edit_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the account in backend after editing account from frontend"""
@@ -890,6 +951,7 @@ class TestAccount(UccTester):
                         'token': ACCOUNT_CONFIG_1['token']
                     }
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_clone_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the account in backend after cloning account from frontend"""
@@ -916,6 +978,7 @@ class TestAccount(UccTester):
                         'token': ACCOUNT_CONFIG_1['token']
                     }
     
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_delete_row_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the account in backend after deleting the account from frontend"""
@@ -928,6 +991,7 @@ class TestAccount(UccTester):
                          )
     
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_helplink(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether the table help link redirects to the correct URL"""
@@ -939,6 +1003,7 @@ class TestAccount(UccTester):
                 go_to_link,
                 )
 
+    @pytest.mark.forwarder
     @pytest.mark.account
     def test_account_delete_account_in_use(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account, add_input):
         """ Verifies by deleting the input used account"""

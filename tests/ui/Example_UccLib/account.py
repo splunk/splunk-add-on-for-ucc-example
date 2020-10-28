@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+# SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+#
+#
 from pytest_splunk_addon_ui_smartx.pages.page import Page
 from pytest_splunk_addon_ui_smartx.components.base_component import Selector
 from pytest_splunk_addon_ui_smartx.components.base_component import BaseComponent

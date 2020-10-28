@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+# SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+#
+#
 from pytest_splunk_addon_ui_smartx.base_test import UccTester
 from pytest_splunk_addon_ui_smartx.pages.proxy import Proxy
 import pytest
@@ -8,7 +13,7 @@ import os
 
 TA_NAME = "Splunk_TA_UCCExample"
 TA_CONF = "splunk_ta_uccexample_settings"
-TA_PROXY_URL = "servicesNS/nobody/Splunk_TA_UCCExample/splunk_ta_snow_settings/proxy"
+TA_PROXY_URL = "/servicesNS/nobody/Splunk_TA_UCCExample/splunk_ta_uccexample_settings/proxy"
 
 DEFAULT_CONFIGURATION = {
     'proxy_enabled': 0,
@@ -29,6 +34,7 @@ def reset_configuration(ucc_smartx_rest_helper):
 
 class TestProxy(UccTester):
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies proxy field label"""
@@ -62,6 +68,7 @@ class TestProxy(UccTester):
             'Reverse DNS resolution'
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_fields_placeholder_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies proxy input field placeholder value"""
@@ -83,6 +90,7 @@ class TestProxy(UccTester):
             'optional'
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_default_configs(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the default proxy configurations"""
@@ -116,6 +124,7 @@ class TestProxy(UccTester):
             ""
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_required_field_host(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether the host field in proxy is required and displays an error if left empty"""
@@ -133,6 +142,7 @@ class TestProxy(UccTester):
             )
         self.assert_util(proxy.close_error, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_host_valid_input(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies if host contains special characters displays an error"""
@@ -145,6 +155,7 @@ class TestProxy(UccTester):
             )
         self.assert_util(proxy.close_error, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_host_field_length_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies host field length validation"""
@@ -158,6 +169,7 @@ class TestProxy(UccTester):
             )
         self.assert_util(proxy.close_error, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_required_field_port(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether the proxy field is required and displays an error if left empty"""
@@ -176,6 +188,7 @@ class TestProxy(UccTester):
         self.assert_util(proxy.close_error, True)
 
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_port_field_valid_range(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether the proxy field only allows numeric values"""
@@ -189,6 +202,7 @@ class TestProxy(UccTester):
             )
         self.assert_util(proxy.close_error, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_port_field_out_of_range(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ verifies out of range port value"""
@@ -202,6 +216,7 @@ class TestProxy(UccTester):
             )
         self.assert_util(proxy.close_error, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_list_proxy_types(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks list of proxy types present in the drop down"""
@@ -211,6 +226,7 @@ class TestProxy(UccTester):
             ["http", "socks4", "socks5"]
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_required_field_proxy_type(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies whether proxy type is required and displays an error if left empty"""
@@ -230,6 +246,7 @@ class TestProxy(UccTester):
             )
         self.assert_util(proxy.close_error, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_username_field_length_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """Verifies username field length validation"""
@@ -245,6 +262,7 @@ class TestProxy(UccTester):
             )
         self.assert_util(proxy.close_error, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_encrypted_field_password(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies if the password field is masked or not in the Textbox"""
@@ -255,6 +273,7 @@ class TestProxy(UccTester):
             'password'
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the proxy is saved properly in frontend after saving it"""
@@ -268,6 +287,7 @@ class TestProxy(UccTester):
         proxy.password.set_value("Password")
         self.assert_util(proxy.save, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the proxy is saved properly in frontend after saving it"""
@@ -281,7 +301,7 @@ class TestProxy(UccTester):
         proxy.password.set_value("Password")
         proxy.save()
         self.assert_util(
-            proxy.backend_conf.get_stanza,
+            proxy.backend_conf_get.get_stanza(decrypt=True),
             {
                 'disabled': False,
                 'proxy_enabled': '1',
@@ -289,7 +309,7 @@ class TestProxy(UccTester):
                 'proxy_rdns': '1',
                 'proxy_type': 'http',
                 'proxy_url': 'host',
-                'proxy_password': '******',
+                'proxy_password': 'Password',
                 'proxy_username': 'Username'
             }
             )

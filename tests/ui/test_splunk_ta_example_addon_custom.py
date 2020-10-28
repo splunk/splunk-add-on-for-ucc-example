@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+# SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+#
+#
 from pytest_splunk_addon_ui_smartx.base_test import UccTester
 from .Example_UccLib.custom import Custom
 import pytest
@@ -26,6 +31,7 @@ def reset_configuration(ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
 
 class TestCustom(UccTester):
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies custom fields label"""
@@ -67,6 +73,7 @@ class TestCustom(UccTester):
             'Test Multiselect'
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_fields_placeholder_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies custom fields placeholder value"""
@@ -100,6 +107,7 @@ class TestCustom(UccTester):
             'optional'
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks the validates frontend save in custom tab"""
@@ -116,6 +124,7 @@ class TestCustom(UccTester):
         custom.test_multiselect.select("Option B")
         self.assert_util(custom.save, True)
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks the validates backend save in custom tab"""
@@ -147,6 +156,7 @@ class TestCustom(UccTester):
             }
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_required_field_test_string(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks required field test string"""
@@ -165,6 +175,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_valid_length_test_string_greater(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks length of test string field should be greater than 4"""
@@ -176,6 +187,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_valid_length_test_string_less(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks length of test string field should be less than 11"""
@@ -187,6 +199,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_required_field_test_number(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks required field test number"""
@@ -205,6 +218,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_valid_input_test_number(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test number field should be interger"""
@@ -217,6 +231,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_valid_range_test_number(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks range of test number field should be between 1 to 10"""
@@ -229,6 +244,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_valid_input_test_regex(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks regex of test regex field"""
@@ -242,6 +258,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_valid_input_test_email(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test email field should be email"""
@@ -256,6 +273,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_valid_input_test_ipv4(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test ipv4 field should be valid ipv4"""
@@ -271,6 +289,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_valid_input_test_date(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test date field should be in ISO 8601 format"""
@@ -287,6 +306,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_valid_input_test_url(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks test url field should be valid url"""
@@ -304,6 +324,7 @@ class TestCustom(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_default_value_test_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks default value of test radio"""
@@ -313,6 +334,7 @@ class TestCustom(UccTester):
             r"Yes"
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_select_value_test_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks selected value of test radio"""
@@ -323,6 +345,7 @@ class TestCustom(UccTester):
             r"No"
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_list_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks values of Multiple Select Test dropdown"""
@@ -333,6 +356,7 @@ class TestCustom(UccTester):
             test_multiselect
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_select_value_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks selected single value of Multiple Select Test dropdown"""
@@ -345,6 +369,7 @@ class TestCustom(UccTester):
             selected_values
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_select_multiple_values_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks selected multiple values of Multiple Select Test dropdown"""
@@ -357,6 +382,7 @@ class TestCustom(UccTester):
             selected_values
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_search_value_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks multiple select seach funtionality"""
@@ -367,6 +393,7 @@ class TestCustom(UccTester):
             left_args={'value': "Option A"}
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_deselect_test_multiselect(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks deselect funtionality of multiple select"""
@@ -380,6 +407,7 @@ class TestCustom(UccTester):
             ["Option B"]
             )
 
+    @pytest.mark.forwarder
     @pytest.mark.custom
     def test_custom_help_link(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks whether help link redirects to the correct URL"""
