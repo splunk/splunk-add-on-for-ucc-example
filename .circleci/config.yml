@@ -384,6 +384,8 @@ workflows:
           requires:
             - package
       - splunk-app-test/aio:
+          context:
+            - gdi-saucelabs
           requires:
             - package
           matrix:
