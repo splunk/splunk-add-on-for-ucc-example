@@ -19,7 +19,7 @@ import copy
 from base64 import b64decode 
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="module", autouse=True)
 def add_account(ucc_smartx_rest_helper):
     account = AccountPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
     url = account._get_account_endpoint()
