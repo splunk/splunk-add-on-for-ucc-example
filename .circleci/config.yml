@@ -144,7 +144,7 @@ orbs:
                 TEST_SET=$(echo "<<parameters.test_set>>" | cut -d "-" -f 1 )
                 BROWSER=$(echo "<<parameters.test_set>>" | cut -d "-" -f 2 )
                 [ ! -d "tests/$TEST_SET" ] && exit 0
-
+                [ "$BROWSER" = "safari" ] && [ "$UI_TEST_HEADLESS" = "true" ] && exit 0
                 
                 # ENV variables
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)

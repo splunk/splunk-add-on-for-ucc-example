@@ -21,8 +21,16 @@ then
     pytest $@ ${TEST_SET}
     test_exit_code=$?
 else
-    echo Test Args $@ --browser=${TEST_BROWSER} ${TEST_SET}
-    pytest $@ --browser=${TEST_BROWSER} ${TEST_SET}
-    test_exit_code=$?
+    # Execute the tests on Headless mode in local if UI_TEST_HEADLESS environment is set to "true"
+    if [ "${UI_TEST_HEADLESS}" = "true" ]
+    then
+        echo Test Args $@ --local --persist-browser --headless  --browser=${TEST_BROWSER} ${TEST_SET}
+        pytest $@ --local --persist-browser --headless --browser=${TEST_BROWSER} ${TEST_SET}
+        test_exit_code=$?
+    else
+        echo Test Args $@ --browser=${TEST_BROWSER} ${TEST_SET}
+        pytest $@ --browser=${TEST_BROWSER} ${TEST_SET}
+        test_exit_code=$?
+    fi
 fi
 exit "$test_exit_code"
