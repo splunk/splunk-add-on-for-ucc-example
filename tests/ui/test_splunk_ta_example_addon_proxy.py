@@ -36,6 +36,62 @@ class TestProxy(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
+    def test_proxy_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies proxy field label"""
+        proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            proxy.proxy_enable.get_input_label,
+            'Enable'
+            )
+        self.assert_util(
+            proxy.type.get_input_label,
+            'Proxy Type'
+            )
+        self.assert_util(
+            proxy.host.get_input_label,
+            'Host'
+            )
+        self.assert_util(
+            proxy.port.get_input_label,
+            'Port'
+            )
+        self.assert_util(
+            proxy.username.get_input_label,
+            'Username'
+            )
+        self.assert_util(
+            proxy.password.get_input_label,
+            'Password'
+            )
+        self.assert_util(
+            proxy.dns_enable.get_input_label,
+            'Reverse DNS resolution'
+            )
+
+    @pytest.mark.forwarder
+    @pytest.mark.proxy
+    def test_proxy_fields_placeholder_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies proxy input field placeholder value"""
+        proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            proxy.host.get_placeholder_value,
+            'optional'
+            )
+        self.assert_util(
+            proxy.port.get_placeholder_value,
+            'optional'
+            )
+        self.assert_util(
+            proxy.username.get_placeholder_value,
+            'optional'
+            )
+        self.assert_util(
+            proxy.password.get_placeholder_value,
+            'optional'
+            )
+
+    @pytest.mark.forwarder
+    @pytest.mark.proxy
     def test_proxy_default_configs(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the default proxy configurations"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)

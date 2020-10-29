@@ -400,8 +400,105 @@ class TestAccount(UccTester):
             'Field Name is required',
             left_args={'expect_error': True}
             )
+    
+    @pytest.mark.forwarder
+    @pytest.mark.account
+    def test_account_basic_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies basic account field label"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.entity.open()
+        self.assert_util(
+            account.entity.name.get_input_label,
+            'Name'
+            )
+        self.assert_util(
+            account.entity.environment.get_input_label,
+            'Example Environment'
+            )
+        self.assert_util(
+            account.entity.example_checkbox.get_input_label,
+            'Example Checkbox'
+            )
+        self.assert_util(
+            account.entity.account_radio.get_input_label,
+            'Example Radio'
+            )            
+        self.assert_util(
+            account.entity.multiple_select.get_input_label,
+            'Example Multiple Select'
+            )
+        self.assert_util(
+            account.entity.auth_key.get_input_label,
+            'Auth Type'
+            )
+        self.assert_util(
+            account.entity.username.get_input_label,
+            'Username'
+            )
+        self.assert_util(
+            account.entity.password.get_input_label,
+            'Password'
+            )
+        self.assert_util(
+            account.entity.security_token.get_input_label,
+            'Security Token'
+            )   
+    
+    @pytest.mark.forwarder
+    @pytest.mark.account
+    def test_account_oauth_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies oauth account field label"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.entity.open()
+        account.entity.auth_key.select('OAuth 2.0 Authentication')    
+        self.assert_util(
+            account.entity.name.get_input_label,
+            'Name'
+            )
+        self.assert_util(
+            account.entity.environment.get_input_label,
+            'Example Environment'
+            )
+        self.assert_util(
+            account.entity.example_checkbox.get_input_label,
+            'Example Checkbox'
+            )
+        self.assert_util(
+            account.entity.account_radio.get_input_label,
+            'Example Radio'
+            )            
+        self.assert_util(
+            account.entity.multiple_select.get_input_label,
+            'Example Multiple Select'
+            )
+        self.assert_util(
+            account.entity.auth_key.get_input_label,
+            'Auth Type'
+            )
+        self.assert_util(
+            account.entity.client_id.get_input_label,
+            'Client Id'
+            )
+        self.assert_util(
+            account.entity.client_secret.get_input_label,
+            'Client Secret'
+            )
+        self.assert_util(
+            account.entity.redirect_url.get_input_label,
+            'Redirect url'
+            )   
 
     @pytest.mark.forwarder
+    @pytest.mark.account
+    def test_account_fields_placeholder_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies account field placeholder value"""
+        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        account.entity.open()
+        self.assert_util(
+            account.entity.name.get_placeholder_value,
+            'Required'
+            )
+            
     @pytest.mark.account
     def test_account_help_text_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies help text for the field name"""

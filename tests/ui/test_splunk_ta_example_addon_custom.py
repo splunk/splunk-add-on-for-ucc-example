@@ -33,6 +33,82 @@ class TestCustom(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.custom
+    def test_custom_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies custom fields label"""
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            custom.test_string.get_input_label,
+            'Test String'
+            )
+        self.assert_util(
+            custom.test_number.get_input_label,
+            'Test Number'
+            )
+        self.assert_util(
+            custom.test_regex.get_input_label,
+            'Test Regex'
+            )
+        self.assert_util(
+            custom.test_email.get_input_label,
+            'Test Email'
+            )
+        self.assert_util(
+            custom.test_ipv4.get_input_label,
+            'Test Ipv4'
+            )
+        self.assert_util(
+            custom.test_date.get_input_label,
+            'Test Date'
+            )
+        self.assert_util(
+            custom.test_url.get_input_label,
+            'Test Url'
+            )
+        self.assert_util(
+            custom.test_radio.get_input_label,
+            'Test Radio'
+            )
+        self.assert_util(
+            custom.test_multiselect.get_input_label,
+            'Test Multiselect'
+            )
+
+    @pytest.mark.forwarder
+    @pytest.mark.custom
+    def test_custom_fields_placeholder_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies custom fields placeholder value"""
+        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+        self.assert_util(
+            custom.test_string.get_placeholder_value,
+            'Required'
+            )
+        self.assert_util(
+            custom.test_number.get_placeholder_value,
+            'Required'
+            )
+        self.assert_util(
+            custom.test_regex.get_placeholder_value,
+            'optional'
+            )
+        self.assert_util(
+            custom.test_email.get_placeholder_value,
+            'optional'
+            )
+        self.assert_util(
+            custom.test_ipv4.get_placeholder_value,
+            'optional'
+            )
+        self.assert_util(
+            custom.test_date.get_placeholder_value,
+            'optional'
+            )
+        self.assert_util(
+            custom.test_url.get_placeholder_value,
+            'optional'
+            )
+
+    @pytest.mark.forwarder
+    @pytest.mark.custom
     def test_custom_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks the validates frontend save in custom tab"""
         custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
