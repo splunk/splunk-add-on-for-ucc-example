@@ -66,7 +66,6 @@ def get_account_credentials():
     except:
         print("Password and Token should be added as environment variables.")
 
-
 @pytest.fixture
 def add_input(ucc_smartx_rest_helper):
     input_page = InputPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
