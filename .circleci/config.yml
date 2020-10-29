@@ -154,9 +154,13 @@ orbs:
                 export TEST_BROWSER=$BROWSER
                 # JOB_NAME: For Saucelabs integration. Used as a build-name.
                 export JOB_NAME="$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
+                export SAUCE_IDENTIFIER=$SAUCE_IDENTIFIER-$(cat /proc/sys/kernel/random/uuid)
 
                 # Build
                 docker-compose -f docker-compose-ci.yml build
+
+                # Saucelab connection
+                docker-compose -f docker-compose-ci.yml up -d sauceconnect
 
                 # Start Splunk
                 docker-compose -f docker-compose-ci.yml up -d splunk  
@@ -173,11 +177,11 @@ orbs:
                 docker-compose -f docker-compose-ci.yml up -d splunk
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
 
-                # Saucelab connection
-                docker-compose -f docker-compose-ci.yml up -d sauceconnect
+                # Normal Inspecting 
+                docker ps -a
+                docker-compose -f docker-compose-ci.yml logs sauceconnect
 
                 # Run the tests
-                docker ps -a
                 test_exit_code=0
                 docker-compose -f docker-compose-ci.yml up --abort-on-container-exit test || test_exit_code=$?
                 # Collect Results
@@ -384,7 +388,7 @@ workflows:
             - package
           matrix:
             parameters:
-              splunk_version: ["8.0", "7.3", "7.2"]
+              splunk_version: ["8.0"]
               test_set: ["knowledge", "ui-firefox", "ui-chrome", "ui-safari"]
           filters:
             branches:
