@@ -19,6 +19,7 @@ services:
       - JOB_NAME=${JOB_NAME}
       - SAUCE_TUNNEL_PARENT=none
       - TEST_BROWSER=${TEST_BROWSER}
+      - UI_TEST_HEADLESS=${UI_TEST_HEADLESS}
     build:
       context: .
       dockerfile: Dockerfile-tests
