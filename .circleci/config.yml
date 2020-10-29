@@ -15,11 +15,23 @@ orbs:
     commands:
       package:
         steps:
+          # Uncomment restore_cache to skip the packaing.
+          # Make sure the save_cache has been called once in 15 days to save the cache
+          # - restore_cache:
+          #     keys:
+          #       - example-ta-package
+
+          # Generate the add-on package
           - run:
               name: Generating package
               command: |
                 sudo ./build.sh
 
+          # Call save_cache once to save the cache in period of 15 days
+          # - save_cache:
+          #     key: example-ta-package
+          #     paths:
+          #       - output
     jobs:
       package:
         executor: python27
@@ -121,33 +133,57 @@ orbs:
           - run:
               name: Setup for testing
               command: |
-                pip install -r requirements_dev.txt
                 pip install git+https://github.com/pixelb/crudini        
                 mkdir test-results
                 cp -r /tmp/workspace/output output
+          
           - run:
               name: Splunk Testing
               command: |
                 # Start Splunk
-                [ ! -d "tests/<<parameters.test_set>>" ] && exit 0
+                TEST_SET=$(echo "<<parameters.test_set>>" | cut -d "-" -f 1 )
+                BROWSER=$(echo "<<parameters.test_set>>" | cut -d "-" -f 2 )
+                [ ! -d "tests/$TEST_SET" ] && exit 0
+                [ "$BROWSER" = "safari" ] && [ "$UI_TEST_HEADLESS" = "true" ] && exit 0
+                
+                # ENV variables
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
                 export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
-                export TEST_SET=tests/<<parameters.test_set>>
+                export TEST_SET=tests/$TEST_SET
+                export TEST_BROWSER=$BROWSER
+                # JOB_NAME: For Saucelabs integration. Used as a build-name.
+                export JOB_NAME="$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
+                export SAUCE_IDENTIFIER=$SAUCE_IDENTIFIER-$(cat /proc/sys/kernel/random/uuid)
+
+                # Build
                 docker-compose -f docker-compose-ci.yml build
-                docker-compose -f docker-compose-ci.yml up -d splunk                
+
+                # Saucelab connection
+                docker-compose -f docker-compose-ci.yml up -d sauceconnect
+
+                # Start Splunk
+                docker-compose -f docker-compose-ci.yml up -d splunk  
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+
                 # Run a Splunk Diag
                 mkdir /tmp/diag
                 diag=$(docker-compose -f docker-compose-ci.yml exec splunk sudo -u splunk /opt/splunk/bin/splunk diag | grep "Splunk diagnosis file created" | sed -n 's/.* \(\/.*\.gz\)/\1/p') 
                 docker-compose -f docker-compose-ci.yml exec splunk sudo chmod +r ${diag//[$'\t\r\n']}
                 docker cp project_splunk_1:${diag//[$'\t\r\n']} /tmp/diag
+
                 # Check with btool
                 docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
                 docker-compose -f docker-compose-ci.yml up -d splunk
                 until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+
+                # Normal Inspecting 
+                docker ps -a
+                docker-compose -f docker-compose-ci.yml logs sauceconnect
+
                 # Run the tests
-                docker-compose -f docker-compose-ci.yml up  --abort-on-container-exit test || test_exit_code=$?
+                test_exit_code=0
+                docker-compose -f docker-compose-ci.yml up --abort-on-container-exit test || test_exit_code=$?
                 # Collect Results
                 docker container create --name dummy \
                                     -v project_results:/home/circleci/work \
@@ -348,12 +384,14 @@ workflows:
           requires:
             - package
       - splunk-app-test/aio:
+          context:
+            - gdi-saucelabs
           requires:
             - package
           matrix:
             parameters:
-              splunk_version: ["7.2", "7.3", "8.0"]
-              test_set: ["knowledge", "ui"]
+              splunk_version: ["8.0"]
+              test_set: ["knowledge", "ui-firefox", "ui-chrome", "ui-safari"]
           filters:
             branches:
               only: /.*/
