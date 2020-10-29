@@ -15,17 +15,23 @@ orbs:
     commands:
       package:
         steps:
-          - restore_cache:
-              keys:
-                - example-ta-package-2
-#           - run:
-#               name: Generating package
-#               command: |
-#                 sudo ./build.sh
-#           - save_cache:
-#               key: example-ta-package-2
-#               paths:
-#                 - output
+          # Uncomment restore_cache to skip the packaing.
+          # Make sure the save_cache has been called once in 15 days to save the cache
+          # - restore_cache:
+          #     keys:
+          #       - example-ta-package
+
+          # Generate the add-on package
+          - run:
+              name: Generating package
+              command: |
+                sudo ./build.sh
+
+          # Call save_cache once to save the cache in period of 15 days
+          # - save_cache:
+          #     key: example-ta-package
+          #     paths:
+          #       - output
     jobs:
       package:
         executor: python27
@@ -140,9 +146,6 @@ orbs:
                 BROWSER=$(echo "<<parameters.test_set>>" | cut -d "-" -f 2 )
                 [ ! -d "tests/$TEST_SET" ] && exit 0
 
-                ls -l deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf
-                pwd
-                ls -l
                 
                 # ENV variables
                 export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
@@ -382,8 +385,8 @@ workflows:
             - package
           matrix:
             parameters:
-              splunk_version: ["8.0", "7.2"]
-              test_set: ["knowledge", "ui-firefox", "ui-chrome"]
+              splunk_version: ["8.0", "7.3", "7.2"]
+              test_set: ["knowledge", "ui-firefox", "ui-chrome", "ui-safari"]
           filters:
             branches:
               only: /.*/
