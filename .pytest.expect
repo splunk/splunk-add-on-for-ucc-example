@@ -1,4 +1,6 @@
 pytest-expect file v1
 (3, 7, 7, 'final', 0)
-u'tests/ui/test_splunk_ta_example_addon_account.py::TestAccount::test_account_delete_account_in_use': FAIL
-u'tests/ui/test_splunk_ta_example_addon_input.py::TestInput::test_inputs_delete_enabled_input': FAIL
+u'tests/test_addon.py::Test_App::test_tags[eventtype="UCC_NOT_GENERATED"::tag::notalert]': FAIL
+u'tests/test_addon.py::Test_App::test_eventtype[eventtype::UCC_NOT_GENERATED]': FAIL
+u'tests/ui/test_account.py::TestAccount::test_account_delete_account_in_use': FAIL
+u'tests/ui/test_input.py::TestInput::test_inputs_delete_enabled_input': FAIL
