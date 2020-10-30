@@ -65,7 +65,7 @@ class TestAlertActions(UccTester):
         self.assert_util(alert_page.action_entity.account.get_value, "test_input") 
         alert_page.action_entity.account.cancel_selected_value()
         self.assert_util(alert_page.action_entity.account.get_value, "test_input", "!=")
-        self.assert_util(alert_page.action_entity.account.list_of_values, ["test_input", ""])
+        self.assert_util("test_input", alert_page.action_entity.account.list_of_values, "in")
 
     def test_checkbox(self, ucc_smartx_selenium_helper):
         alert_page = AlertPage(ucc_smartx_selenium_helper, None)
