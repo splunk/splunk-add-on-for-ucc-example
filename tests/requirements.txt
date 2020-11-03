@@ -1,5 +1,5 @@
 pytest-xdist
 splunk-appinspect==2.3.0
 pytest-splunk-addon==1.3.6
-pytest-splunk-addon-ui-smartx==0.2.1a11
+pytest-splunk-addon-ui-smartx==0.2.1a15
 pytest-expect
