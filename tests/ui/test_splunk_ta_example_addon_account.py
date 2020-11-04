@@ -63,7 +63,7 @@ def get_account_credentials():
         ACCOUNT_CONFIG["token"] =  b64decode(os.getenv("token")).decode("ascii")
         ACCOUNT_CONFIG_1['password'] = b64decode(os.getenv("password_1")).decode("ascii") 
         ACCOUNT_CONFIG_1['token'] = b64decode(os.getenv("token_1")).decode("ascii")          
-    except:
+    except TypeError:
         print("Password and Token should be added as environment variables.")
 
 @pytest.fixture
@@ -86,6 +86,7 @@ def add_input(ucc_smartx_rest_helper):
         'disabled': 0,
     }
     yield input_page.backend_conf.post_stanza(url, kwargs)
+    input_page.backend_conf.delete_all_stanzas("search=dummy_input_one")
 
 @pytest.fixture
 def add_account(ucc_smartx_rest_helper):

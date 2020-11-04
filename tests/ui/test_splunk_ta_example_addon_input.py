@@ -40,14 +40,14 @@ def add_account(ucc_smartx_rest_helper):
         'oauth_state_enabled': '',
         'example_help_link': ''
     }
+    get_account_credentials(kwargs)
     yield account.backend_conf.post_stanza(url, kwargs)
     account.backend_conf.delete_all_stanzas()
 
-@pytest.fixture(scope="session", autouse=True)
-def get_account_credentials():
+def get_account_credentials(account_counfig):
     try:
-        ACCOUNT_CONFIG["password"] = b64decode(os.getenv("password")).decode("ascii")
-        ACCOUNT_CONFIG["token"] =  b64decode(os.getenv("token")).decode("ascii")
+        account_counfig["password"] = b64decode(os.getenv("password")).decode("ascii")
+        account_counfig["token"] =  b64decode(os.getenv("token")).decode("ascii")
     except:
         print("Password and Token should be added as environment variables.")
 
