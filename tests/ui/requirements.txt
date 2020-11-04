@@ -2,5 +2,6 @@ pytest-xdist
 splunk-appinspect==2.3.0
 pytest-splunk-addon==1.3.6
 pytest-splunk-addon-ui-smartx==0.2.1a15
-lovely-pytest-docker
 pytest-expect
+lovely-pytest-docker
+pytest-rerunfailures

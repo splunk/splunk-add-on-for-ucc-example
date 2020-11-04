@@ -9,10 +9,13 @@ cd /home/circleci/work
 if [ -f "${TEST_SET}/pytest-ci.ini" ]; then
     cp -f ${TEST_SET}/pytest-ci.ini ${TEST_SET}/pytest.ini
 fi
+
+# Installing the requirements 
+pip install -r ${TEST_SET}/requirements.txt
+
 cp -f .pytest.expect ${TEST_SET}
 echo "Check Saucelab connection..."
 wget --retry-connrefused --no-check-certificate -T 10 sauceconnect:4445
-
 
 echo "Executing Tests..."
 RERUN_COUNT=${RERUN_COUNT:-1}
