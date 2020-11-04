@@ -14,7 +14,6 @@ COPY tests/entrypoint.sh /
 COPY .pytest.expect /home/circleci/work/.pytest.expect
 RUN ls /home/circleci/work/
 COPY tests /home/circleci/work/tests
-RUN pip install -r /home/circleci/work/tests/requirements.txt
 RUN cd /home/circleci/work/tests && ls
 RUN cd ../..
 COPY package /home/circleci/work/package

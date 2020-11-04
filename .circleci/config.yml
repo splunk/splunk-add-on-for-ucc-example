@@ -19,7 +19,7 @@ orbs:
           # Make sure the save_cache has been called once in 15 days to save the cache
           # - restore_cache:
           #     keys:
-          #       - example-ta-package
+          #       - example-ta-package-2
 
           # Generate the add-on package
           - run:
@@ -141,8 +141,8 @@ orbs:
               name: Splunk Testing
               command: |
                 # Start Splunk
-                TEST_SET=$(echo "<<parameters.test_set>>" | cut -d "-" -f 1 )
-                BROWSER=$(echo "<<parameters.test_set>>" | cut -d "-" -f 2 )
+                TEST_SET=$(echo "<<parameters.test_set>>" | awk -F- '{print $1}' )
+                BROWSER=$(echo "<<parameters.test_set>>" | awk -F- '{print $2}' )
                 [ ! -d "tests/$TEST_SET" ] && exit 0
                 [ "$BROWSER" = "safari" ] && [ "$UI_TEST_HEADLESS" = "true" ] && exit 0
                 
@@ -152,8 +152,9 @@ orbs:
                 export SPLUNK_APP_PACKAGE=output/$(ls output/)
                 export TEST_SET=tests/$TEST_SET
                 export TEST_BROWSER=$BROWSER
+                
                 # JOB_NAME: For Saucelabs integration. Used as a build-name.
-                export JOB_NAME="$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
+                export JOB_NAME="CircleCI::$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
                 export SAUCE_IDENTIFIER=$SAUCE_IDENTIFIER-$(cat /proc/sys/kernel/random/uuid)
 
                 # Build
@@ -188,10 +189,10 @@ orbs:
                 docker container create --name dummy \
                                     -v project_results:/home/circleci/work \
                                     registry.access.redhat.com/ubi7/ubi
-                docker cp dummy:/home/circleci/work/test-results/test.xml test-results/  || true
-                docker cp dummy:/home/circleci/work/assets test-results/assets  || true
-                docker cp dummy:/home/circleci/work/report.html test-results/report.html  || true
-                docker cp dummy:/home/circleci/work/test-results/cim-compliance-report.md test-results/ || true
+                docker cp dummy:/home/circleci/work/test-results/test.xml test-results/  || echo "ignoring..."
+                docker cp dummy:/home/circleci/work/assets test-results/assets  || echo "ignoring..."
+                docker cp dummy:/home/circleci/work/report.html test-results/report.html  || echo "ignoring..."
+                docker cp dummy:/home/circleci/work/test-results/cim-compliance-report.md test-results/ || echo "ignoring..."
                 exit "$test_exit_code"
     jobs:
       aio:
@@ -391,7 +392,7 @@ workflows:
           matrix:
             parameters:
               splunk_version: ["8.0"]
-              test_set: ["knowledge", "ui-firefox", "ui-chrome", "ui-safari"]
+              test_set: ["knowledge", "ui-firefox", "ui-safari", "ui-chrome", "ui-edge"]
           filters:
             branches:
               only: /.*/
