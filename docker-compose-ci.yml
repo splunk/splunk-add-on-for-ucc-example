@@ -20,6 +20,7 @@ services:
       - SAUCE_TUNNEL_PARENT=none
       - TEST_BROWSER=${TEST_BROWSER}
       - UI_TEST_HEADLESS=${UI_TEST_HEADLESS}
+      - RERUN_COUNT=${RERUN_COUNT}
     build:
       context: .
       dockerfile: Dockerfile-tests

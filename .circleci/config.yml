@@ -17,15 +17,15 @@ orbs:
         steps:
           # Uncomment restore_cache to skip the packaing.
           # Make sure the save_cache has been called once in 15 days to save the cache
-          # - restore_cache:
-          #     keys:
-          #       - example-ta-package
+          - restore_cache:
+              keys:
+                - example-ta-package-2
 
           # Generate the add-on package
-          - run:
-              name: Generating package
-              command: |
-                sudo ./build.sh
+          # - run:
+          #     name: Generating package
+          #     command: |
+          #       sudo ./build.sh
 
           # Call save_cache once to save the cache in period of 15 days
           # - save_cache:
@@ -391,7 +391,7 @@ workflows:
           matrix:
             parameters:
               splunk_version: ["8.0"]
-              test_set: ["knowledge", "ui-firefox", "ui-chrome", "ui-safari"]
+              test_set: ["knowledge", "ui-firefox"]
           filters:
             branches:
               only: /.*/
