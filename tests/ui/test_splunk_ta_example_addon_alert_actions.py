@@ -99,7 +99,7 @@ class TestAlertActions(UccTester):
         alert_page.action_entity.action.select("Update")
         assert alert_page.action_entity.action.get_value() == "Update"
 
-
+    @pytest.mark.sanity_test
     def test_alert_action_save(self, ucc_smartx_selenium_helper, clean_alert):
         alert_page = AlertPage(ucc_smartx_selenium_helper, None)
         alert_page.alert_entity.open()
