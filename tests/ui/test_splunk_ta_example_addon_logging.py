@@ -73,6 +73,7 @@ class TestLogging(UccTester):
         
     @pytest.mark.forwarder
     @pytest.mark.logging
+    @pytest.mark.sanity_test
     def test_logging_selected_log_level_frontend(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """This test case checks the verification of selected log level"""
         selection_log = "WARNING"
@@ -86,6 +87,7 @@ class TestLogging(UccTester):
         
     @pytest.mark.forwarder
     @pytest.mark.logging
+    @pytest.mark.sanity_test
     def test_logging_selected_log_level_backend(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """This test case checks the verification of selected log level in backend"""
         selection_log = "DEBUG"

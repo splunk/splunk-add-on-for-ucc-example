@@ -786,6 +786,7 @@ class TestAccount(UccTester):
         
     @pytest.mark.forwarder
     @pytest.mark.account
+    @pytest.mark.sanity_test
     def test_account_delete_row_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the frontend delete functionlity"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -828,6 +829,7 @@ class TestAccount(UccTester):
             
     @pytest.mark.forwarder
     @pytest.mark.account
+    @pytest.mark.sanity_test
     def test_account_add_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the frontend after adding account"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -850,6 +852,7 @@ class TestAccount(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.account
+    @pytest.mark.sanity_test
     def test_account_edit_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the frontend edit functionality"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -885,6 +888,7 @@ class TestAccount(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.account
+    @pytest.mark.sanity_test
     def test_account_clone_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the frontend clone functionality"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -927,6 +931,7 @@ class TestAccount(UccTester):
     
     @pytest.mark.forwarder
     @pytest.mark.account
+    @pytest.mark.sanity_test
     def test_account_add_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the account in backend after adding account from frontend"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -952,6 +957,7 @@ class TestAccount(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.account
+    @pytest.mark.sanity_test
     def test_account_edit_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the account in backend after editing account from frontend"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -977,6 +983,7 @@ class TestAccount(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.account
+    @pytest.mark.sanity_test
     def test_account_clone_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the account in backend after cloning account from frontend"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1004,6 +1011,7 @@ class TestAccount(UccTester):
     
     @pytest.mark.forwarder
     @pytest.mark.account
+    @pytest.mark.sanity_test
     def test_account_delete_row_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the account in backend after deleting the account from frontend"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)

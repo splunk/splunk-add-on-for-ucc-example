@@ -954,6 +954,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_one_add_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the frontend after adding a Example Input One"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -985,6 +986,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_one_add_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the backend after adding a example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1033,6 +1035,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_one_edit_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies the frontend edit functionality of the example input one entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1066,6 +1069,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_one_edit_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies the backend edit functionality of the example input one entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1166,6 +1170,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_one_clone_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies the frontend clone functionality of the example input one entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1191,6 +1196,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_one_clone_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies the backend clone functionality of the example input one entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1226,6 +1232,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_one_delete_row_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies the frontend delete functionlity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1240,6 +1247,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_one_delete_row_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
         """ Verifies the backend delete functionlity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1721,6 +1729,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_two_add_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the frontend after adding a Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1752,6 +1761,7 @@ class TestInput(UccTester):
         
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_two_add_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the backend after adding a Example Input Two"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1796,6 +1806,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_two_edit_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies the frontend edit functionality of the Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1823,6 +1834,7 @@ class TestInput(UccTester):
     
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_two_edit_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies the backend edit functionality of the Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1892,6 +1904,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_two_clone_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies the frontend clone functionality of the Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1916,6 +1929,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_two_clone_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies the backend clone functionality of the Example Input Two entity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1945,6 +1959,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_two_delete_row_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies the frontend delete functionlity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -1959,6 +1974,7 @@ class TestInput(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.input
+    @pytest.mark.sanity_test
     def test_example_input_two_delete_row_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
         """ Verifies the backend delete functionlity"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)

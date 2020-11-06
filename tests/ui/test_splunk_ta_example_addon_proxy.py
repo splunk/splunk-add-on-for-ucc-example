@@ -275,6 +275,7 @@ class TestProxy(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
+    @pytest.mark.sanity_test
     def test_proxy_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the proxy is saved properly in frontend after saving it"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -289,6 +290,7 @@ class TestProxy(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
+    @pytest.mark.sanity_test
     def test_proxy_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies the proxy is saved properly in frontend after saving it"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)

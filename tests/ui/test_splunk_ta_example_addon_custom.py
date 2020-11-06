@@ -109,6 +109,7 @@ class TestCustom(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.custom
+    @pytest.mark.sanity_test
     def test_custom_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks the validates frontend save in custom tab"""
         custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
@@ -126,6 +127,7 @@ class TestCustom(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.custom
+    @pytest.mark.sanity_test
     def test_custom_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks the validates backend save in custom tab"""
         custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
