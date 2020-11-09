@@ -154,7 +154,7 @@ orbs:
                 export TEST_BROWSER=$BROWSER
                 
                 # JOB_NAME: For Saucelabs integration. Used as a build-name.
-                export JOB_NAME="CircleCI::$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH] #$CIRCLE_BUILD_NUM"
+                export JOB_NAME="CircleCI::$CIRCLE_PROJECT_REPONAME[$CIRCLE_BRANCH][TEST_BROWSER] #$CIRCLE_BUILD_NUM"
                 export SAUCE_IDENTIFIER=$SAUCE_IDENTIFIER-$(cat /proc/sys/kernel/random/uuid)
 
                 # Build
@@ -392,7 +392,7 @@ workflows:
           matrix:
             parameters:
               splunk_version: ["8.0"]
-              test_set: ["knowledge", "ui-firefox", "ui-safari", "ui-chrome", "ui-edge"]
+              test_set: ["knowledge", "ui-edge"]
           filters:
             branches:
               only: /.*/
