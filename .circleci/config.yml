@@ -392,7 +392,7 @@ workflows:
           matrix:
             parameters:
               splunk_version: ["8.0"]
-              test_set: ["knowledge", "ui-edge"]
+              test_set: ["knowledge", "ui-firefox", "ui-safari", "ui-chrome", "ui-edge"]
           filters:
             branches:
               only: /.*/
