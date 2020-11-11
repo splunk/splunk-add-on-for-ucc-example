@@ -12,9 +12,10 @@ RUN mkdir -p /home/circleci/work/test-results/functional
 
 COPY tests/entrypoint.sh /
 COPY .pytest.expect /home/circleci/work/.pytest.expect
-RUN ls /home/circleci/work/
+COPY requirements_dev.txt /home/circleci/work/
 COPY tests /home/circleci/work/tests
 RUN cd /home/circleci/work/tests && ls
+
 RUN cd ../..
 COPY package /home/circleci/work/package
 RUN sudo chown -R circleci /home/circleci/
