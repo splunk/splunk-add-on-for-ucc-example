@@ -36,6 +36,7 @@ else
     else
         echo "Check Saucelab connection..."
         wget --retry-connrefused --no-check-certificate -T 10 sauceconnect:4445 
+        [ "$?" == "4" ] && echo "SauceConnect is not running. exiting the tests..." && exit 1
         echo Test Args $@ --reruns=${RERUN_COUNT} --browser=${TEST_BROWSER} ${TEST_SET}
         pytest $@ --reruns=${RERUN_COUNT} --browser=${TEST_BROWSER} \
         --reportportal -o "rp_endpoint=${RP_ENDPOINT}" -o "rp_launch_attributes=${RP_LAUNCH_ATTRIBUTES}" \
