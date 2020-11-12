@@ -31,8 +31,8 @@ def add_account(ucc_smartx_rest_helper):
         'auth_type': 'basic',
         'custom_endpoint': 'login.example.com',
         'username': 'TestUser',
-        'password': None,
-        'token': None,
+        'password': "TestPassword",
+        'token': "TestToken",
         'client_id': '',
         'client_secret': '',
         'redirect_url': '',
@@ -40,16 +40,9 @@ def add_account(ucc_smartx_rest_helper):
         'oauth_state_enabled': '',
         'example_help_link': ''
     }
-    get_account_credentials(kwargs)
     yield account.backend_conf.post_stanza(url, kwargs)
     account.backend_conf.delete_all_stanzas()
 
-def get_account_credentials(account_counfig):
-    try:
-        account_counfig["password"] = b64decode(os.getenv("password")).decode("ascii")
-        account_counfig["token"] =  b64decode(os.getenv("token")).decode("ascii")
-    except:
-        print("Password and Token should be added as environment variables.")
 
 @pytest.fixture
 def add_multiple_inputs(ucc_smartx_rest_helper):
