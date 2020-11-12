@@ -38,24 +38,6 @@ ACCOUNT_CONFIG = {
     'example_help_link': ''
 }
 
-ACCOUNT_CONFIG_1={
-    'name': 'TestAccount',
-    'account_checkbox': 1,
-    'account_multiple_select': 'one',
-    'account_radio': 'yes',
-    'auth_type': 'basic',
-    'custom_endpoint': 'login.example.com',
-    'username': 'TestUser',
-    'password': "TestPassword2",
-    'token': "TestToken2",
-    'client_id': '',
-    'client_secret': '',
-    'redirect_url': '',
-    'endpoint': '',
-    'oauth_state_enabled': '',
-    'example_help_link': ''
-}
-
 @pytest.fixture
 def add_input(ucc_smartx_rest_helper):
     input_page = InputPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
@@ -967,8 +949,8 @@ class TestAccount(UccTester):
                         'username' : 'TestEditUser',
                         'custom_endpoint': 'login.example.com',
                         'disabled': False,
-                        'password': ACCOUNT_CONFIG_1['password'],
-                        'token': ACCOUNT_CONFIG_1['token']
+                        'password': "TestEditPassword",
+                        'token': "TestEditToken"
                     }
 
     @pytest.mark.forwarder
@@ -995,8 +977,8 @@ class TestAccount(UccTester):
                         'username' : 'TestCloneUser',
                         'custom_endpoint': 'login.example.com',
                         'disabled': False,
-                        'password': ACCOUNT_CONFIG_1['password'],
-                        'token': ACCOUNT_CONFIG_1['token']
+                        'password': "TestEditPassword",
+                        'token': "TestEditToken"
                     }
     
     @pytest.mark.forwarder
