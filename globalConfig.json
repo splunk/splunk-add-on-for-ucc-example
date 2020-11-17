@@ -12,11 +12,11 @@
                         ],
                         "header": [
                             {
-                                "label": "Account Name",
+                                "label": "Name",
                                 "field": "name"
                             },
                             {
-                                "label": "Authentication Type",
+                                "label": "Auth Type",
                                 "field": "auth_type"
                             }
                         ]
@@ -24,7 +24,7 @@
                     "entity": [
                         {
                             "type": "text",
-                            "label": "Account Name",
+                            "label": "Name",
                             "validators": [
                                 {
                                     "type": "string",
@@ -34,7 +34,7 @@
                                 },
                                 {
                                     "type": "regex",
-                                    "errorMsg": "Account Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
+                                    "errorMsg": "Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
                                     "pattern": "^[a-zA-Z]\\w*$"
                                 }
                             ],
@@ -47,17 +47,17 @@
                         },
                         {
                             "type": "singleSelect",
-                            "label": "Salesforce Environment",
+                            "label": "Example Environment",
                             "options": {
                                 "disableSearch": true,
                                 "autoCompleteFields": [
                                     {
-                                        "value": "login.salesforce.com",
-                                        "label": "Production"
+                                        "value": "login.example.com",
+                                        "label": "Value1"
                                     },
                                     {
-                                        "value": "test.salesforce.com",
-                                        "label": "Sandbox"
+                                        "value": "test.example.com",
+                                        "label": "Value2"
                                     },
                                     {
                                         "value": "other",
@@ -68,7 +68,7 @@
                             },
                             "help": "",
                             "field": "custom_endpoint",
-                            "defaultValue": "login.salesforce.com",
+                            "defaultValue": "login.example.com",
                             "required": true
                         },
                         {
@@ -78,6 +78,52 @@
                             "field": "endpoint",
                             "options": {
                                 "display": false
+                            }
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Example Checkbox",
+                            "field": "account_checkbox",
+                            "help": "This is an example checkbox for the account entity"
+                        },
+                        {
+                            "type": "radio",
+                            "label": "Example Radio",
+                            "field": "account_radio",
+                            "defaultValue": "yes",
+                            "help": "This is an example radio button for the account entity",
+                            "required": true,
+                            "options": {
+                                "items": [
+                                    {
+                                        "value": "yes",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "value": "no",
+                                        "label": "No"
+                                    }
+                                ],
+                                "display": true
+                            }
+                        },
+                        {
+                            "type": "multipleSelect",
+                            "label": "Example Multiple Select",
+                            "field": "account_multiple_select",
+                            "help": "This is an example multipleSelect for account entity",
+                            "required": true,
+                            "options": {
+                                "items": [
+                                    {
+                                        "value": "one",
+                                        "label": "Option One"
+                                    },
+                                    {
+                                        "value": "two",
+                                        "label": "Option Two"
+                                    }
+                                ]
                             }
                         },
                         {
@@ -116,7 +162,7 @@
                                         "oauth_field": "security_token",
                                         "label": "Security Token",
                                         "encrypted": true,
-                                        "help": "Enter the Salesforce security token.",
+                                        "help": "Enter the security token.",
                                         "field": "token"
                                     }
                                 ],
@@ -125,25 +171,34 @@
                                         "oauth_field": "client_id",
                                         "label": "Client Id",
                                         "field": "client_id",
-                                        "help": "Enter the Salesforce Client Id for this account."
+                                        "help": "Enter the Client Id for this account."
                                     },
                                     {
                                         "oauth_field": "client_secret",
                                         "label": "Client Secret",
                                         "field": "client_secret",
                                         "encrypted": true,
-                                        "help": "Enter the Salesforce Client Secret key for this account."
+                                        "help": "Enter the Client Secret key for this account."
                                     },
                                     {
                                         "oauth_field": "redirect_url",
                                         "label": "Redirect url",
                                         "field": "redirect_url",
-                                        "help": "Copy and paste this URL into your Salesforce app."
+                                        "help": "Copy and paste this URL into your app."
                                     }
                                 ],
                                 "auth_code_endpoint": "/services/oauth2/authorize",
                                 "access_token_endpoint": "/services/oauth2/token",
                                 "oauth_timeout": 30
+                            }
+                        },
+                        {
+                            "field": "example_help_link",
+                            "label": "",
+                            "type": "helpLink",
+                            "options": {
+                                "text": "Help Link",
+                                "link": "https://docs.splunk.com/Documentation"
                             }
                         }
                     ],
@@ -184,6 +239,11 @@
                             "type": "text",
                             "label": "Host",
                             "validators": [
+                                {
+                                    "type": "regex",
+                                    "errorMsg": "Proxy Host should not have special characters",
+                                    "pattern": "^[a-zA-Z]\\w*$"
+                                },
                                 {
                                     "type": "string",
                                     "errorMsg": "Max host length is 4096",
@@ -241,7 +301,7 @@
                         }
                     ],
                     "options": {
-                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } return true; }"
+                        "saveValidator": "function(formData) { if(!formData.proxy_enabled || formData.proxy_enabled === '0') {return true; } if(!formData.proxy_url) { return 'Proxy Host can not be empty'; } if(!formData.proxy_port) { return 'Proxy Port can not be empty'; } if(!formData.proxy_type) {return 'Proxy type can not be empty'; } return true; }"
                     },
                     "title": "Proxy"
                 },
@@ -283,11 +343,11 @@
                     "title": "Logging"
                 },
                 {
-                    "name": "custom_abc",
-                    "title": "Customized tab",
+                    "name": "custom_tab",
+                    "title": "Customized Tab",
                     "entity": [
                         {
-                            "field": "testString",
+                            "field": "test_string",
                             "label": "Test String",
                             "type": "text",
                             "validators": [
@@ -296,11 +356,15 @@
                                     "maxLength": 10,
                                     "minLength": 5
                                 }
-                            ]
+                            ],
+                            "required": true,
+                            "options": {
+                                "placeholder": "Required"
+                            }
                         },
                         {
-                            "field": "testNumber",
-                            "label": "Test number",
+                            "field": "test_number",
+                            "label": "Test Number",
                             "type": "text",
                             "validators": [
                                 {
@@ -310,11 +374,15 @@
                                         10
                                     ]
                                 }
-                            ]
+                            ],
+                            "required": true,
+                            "options": {
+                                "placeholder": "Required"
+                            }
                         },
                         {
-                            "field": "testRegex",
-                            "label": "Test regex",
+                            "field": "test_regex",
+                            "label": "Test Regex",
                             "type": "text",
                             "validators": [
                                 {
@@ -325,7 +393,7 @@
                             ]
                         },
                         {
-                            "field": "testEmail",
+                            "field": "test_email",
                             "label": "Test Email",
                             "type": "text",
                             "validators": [
@@ -335,8 +403,8 @@
                             ]
                         },
                         {
-                            "field": "testIpv4",
-                            "label": "Test ipv4",
+                            "field": "test_ipv4",
+                            "label": "Test Ipv4",
                             "type": "text",
                             "validators": [
                                 {
@@ -345,8 +413,8 @@
                             ]
                         },
                         {
-                            "field": "testDate",
-                            "label": "Test date",
+                            "field": "test_date",
+                            "label": "Test Date",
                             "type": "text",
                             "validators": [
                                 {
@@ -355,14 +423,61 @@
                             ]
                         },
                         {
-                            "field": "testUrl",
-                            "label": "Test url",
+                            "field": "test_url",
+                            "label": "Test Url",
                             "type": "text",
                             "validators": [
                                 {
                                     "type": "url"
                                 }
                             ]
+                        },
+                        {
+                            "field": "test_radio",
+                            "label": "Test Radio",
+                            "type": "radio",
+                            "defaultValue": "Yes",
+                            "required": false,
+                            "options": {
+                                "items": [
+                                    {
+                                        "value": "Yes",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "value": "No",
+                                        "label": "No"
+                                    }
+                                ],
+                                "display": true
+                            }
+                        },
+                        {
+                            "field": "test_multiselect",
+                            "label": "Test Multiselect",
+                            "type": "multipleSelect",
+                            "options": {
+                                "delimiter": "|",
+                                "items": [
+                                    {
+                                        "value": "Option A",
+                                        "label": "Option A"
+                                    },
+                                    {
+                                        "value": "Option B",
+                                        "label": "Option B"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "field": "test_help_link",
+                            "label": "",
+                            "type": "helpLink",
+                            "options": {
+                                "text": "Test Help Link",
+                                "link": "https://docs.splunk.com/Documentation"
+                            }
                         }
                     ]
                 }
@@ -376,7 +491,7 @@
                     "hook": {
                         "src": "Hook"
                     },
-                    "name": "sfdc_object",
+                    "name": "example_input_one",
                     "entity": [
                         {
                             "type": "text",
@@ -397,6 +512,34 @@
                             "field": "name",
                             "help": "A unique name for the data input.",
                             "required": true
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Example Checkbox",
+                            "field": "input_one_checkbox",
+                            "help": "This is an example checkbox for the input one entity",
+                            "defaultValue": true
+                        },
+                        {
+                            "type": "radio",
+                            "label": "Example Radio",
+                            "field": "input_one_radio",
+                            "defaultValue": "yes",
+                            "help": "This is an example radio button for the input one entity",
+                            "required": false,
+                            "options": {
+                                "items": [
+                                    {
+                                        "value": "yes",
+                                        "label": "Yes"
+                                    },
+                                    {
+                                        "value": "no",
+                                        "label": "No"
+                                    }
+                                ],
+                                "display": true
+                            }
                         },
                         {
                             "field": "singleSelectTest",
@@ -438,6 +581,7 @@
                             "field": "multipleSelectTest",
                             "label": "Multiple Select Test",
                             "type": "multipleSelect",
+                            "defaultValue": "a|b",
                             "options": {
                                 "delimiter": "|",
                                 "items": [
@@ -488,7 +632,7 @@
                         },
                         {
                             "type": "singleSelect",
-                            "label": "Salesforce Account",
+                            "label": "Example Account",
                             "options": {
                                 "referenceName": "account"
                             },
@@ -543,27 +687,6 @@
                             "required": true
                         },
                         {
-                            "type": "radio",
-                            "label": "Use existing data input?",
-                            "field": "use_existing_checkpoint",
-                            "defaultValue": "yes",
-                            "help": "Data input already exists. Select `No` if you want to reset the data collection.",
-                            "required": false,
-                            "options": {
-                                "items": [
-                                    {
-                                        "value": "yes",
-                                        "label": "Yes"
-                                    },
-                                    {
-                                        "value": "no",
-                                        "label": "No"
-                                    }
-                                ],
-                                "display": false
-                            }
-                        },
-                        {
                             "type": "text",
                             "label": "Query Start Date",
                             "validators": [
@@ -593,12 +716,21 @@
                             "field": "limit",
                             "help": "The maximum number of results returned by the query.",
                             "required": false
+                        },
+                        {
+                            "field": "example_help_link",
+                            "label": "",
+                            "type": "helpLink",
+                            "options": {
+                                "text": "Help Link",
+                                "link": "https://docs.splunk.com/Documentation"
+                            }
                         }
                     ],
-                    "title": "Salesforce Object"
+                    "title": "Example Input One"
                 },
                 {
-                    "name": "sfdc_event_log",
+                    "name": "example_input_two",
                     "entity": [
                         {
                             "type": "text",
@@ -656,7 +788,7 @@
                         },
                         {
                             "type": "singleSelect",
-                            "label": "Salesforce Account",
+                            "label": "Example Account",
                             "options": {
                                 "referenceName": "account"
                             },
@@ -665,12 +797,36 @@
                             "required": true
                         },
                         {
+                            "type": "multipleSelect",
+                            "label": "Example Multiple Select",
+                            "field": "input_two_multiple_select",
+                            "help": "This is an example multipleSelect for input two entity",
+                            "required": true,
+                            "options": {
+                                "items": [
+                                    {
+                                        "value": "one",
+                                        "label": "Option One"
+                                    },
+                                    {
+                                        "value": "two",
+                                        "label": "Option Two"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "type": "checkbox",
+                            "label": "Example Checkbox",
+                            "field": "input_two_checkbox",
+                            "help": "This is an example checkbox for the input two entity"
+                        },
+                        {
                             "type": "radio",
-                            "label": "Use existing data input?",
-                            "field": "use_existing_checkpoint",
-                            "defaultValue": "yes",
-                            "help": "Data input already exists. Select `No` if you want to reset the data collection.",
-                            "required": false,
+                            "label": "Example Radio",
+                            "field": "input_two_radio",
+                            "help": "This is an example radio button for the input two entity",
+                            "required": true,
                             "options": {
                                 "items": [
                                     {
@@ -682,7 +838,7 @@
                                         "label": "No"
                                     }
                                 ],
-                                "display": false
+                                "display": true
                             }
                         },
                         {
@@ -699,9 +855,18 @@
                             "help": "The date and time, in \"YYYY-MM-DDThh:mm:ss.000z\" format, after which to query and index records. \nThe default is 90 days before today.",
                             "tooltip": "Changing this parameter may result in gaps or duplication in data collection.",
                             "required": false
+                        },
+                        {
+                            "field": "example_help_link",
+                            "label": "",
+                            "type": "helpLink",
+                            "options": {
+                                "text": "Help Link",
+                                "link": "https://docs.splunk.com/Documentation"
+                            }
                         }
                     ],
-                    "title": "Salesforce Event Log"
+                    "title": "Example Input Two"
                 }
             ],
             "title": "Inputs",
@@ -719,7 +884,7 @@
                         "field": "name"
                     },
                     {
-                        "label": "Account Name",
+                        "label": "Account",
                         "field": "account"
                     },
                     {
@@ -757,7 +922,7 @@
                         }
                     },
                     {
-                        "label": "Salesforce Account",
+                        "label": "Example Account",
                         "field": "account"
                     },
                     {
@@ -875,7 +1040,7 @@
                     "type": "singleSelectSplunkSearch",
                     "label": "Select Account",
                     "field": "account",
-                    "search": "| rest /servicesNS/nobody/TA-SNOW/admin/TA_SNOW_account | dedup title",
+                    "search": "| rest /servicesNS/nobody/Splunk_TA_UCCExample/splunk_ta_uccexample_account | dedup title",
                     "valueField": "title",
                     "labelField": "title",
                     "help": "Select the account from the dropdown",
@@ -888,7 +1053,7 @@
         "apiVersion": "3.2.0",
         "name": "Splunk_TA_UCCExample",
         "restRoot": "splunk_ta_uccexample",
-        "version": "1.0.0",
+        "version": "4.0.2ac400e0a",
         "displayName": "Splunk UCC test Add-on"
     }
 }
