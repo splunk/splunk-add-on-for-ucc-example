@@ -56,3 +56,7 @@ License: LicenseRef-Splunk-1-2020
 Files: globalConfig.json
 Copyright: $YEAR $NAME <$CONTACT>
 License: LicenseRef-Splunk-1-2020
+
+Files: package/appserver/static/test_alert.png
+Copyright: $YEAR $NAME <$CONTACT>
+License: LicenseRef-Splunk-1-2020
