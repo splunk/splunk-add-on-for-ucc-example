@@ -111,4 +111,4 @@ class InputPage(Page):
         self.browser.get('{}/en-US/app/Splunk_TA_UCCExample/inputs'.format(self.splunk_web_url))
 
     def _get_input_endpoint(self):
-        return '{}/servicesNS/nobody/Splunk_TA_UCCExample/configs/inputs'.format(self.splunk_mgmt_url)
+        return '{}/servicesNS/nobody/Splunk_TA_UCCExample/configs/conf-inputs'.format(self.splunk_mgmt_url)
