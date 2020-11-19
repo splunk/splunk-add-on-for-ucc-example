@@ -120,7 +120,7 @@ def add_input_two(ucc_smartx_rest_helper):
 def delete_inputs(ucc_smartx_rest_helper):
     yield
     input_page = InputPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
-    input_page.backend_conf.delete_all_stanzas("search=example_input")
+    input_page.backend_conf.delete_all_stanzas("search=dummy_input")
     
 
 class TestInput(UccTester):
