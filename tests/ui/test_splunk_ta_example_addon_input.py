@@ -120,7 +120,7 @@ def add_input_two(ucc_smartx_rest_helper):
 def delete_inputs(ucc_smartx_rest_helper):
     yield
     input_page = InputPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
-    input_page.backend_conf.delete_all_stanzas("search=dummy_input")
+    input_page.backend_conf.delete_all_stanzas("search=example_input")
     
 
 class TestInput(UccTester):
@@ -953,7 +953,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()
-        input_page.entity1.name.set_value("Test_Add")
+        input_page.entity1.name.set_value("dummy_input")
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
         input_page.entity1.interval.set_value("90")
@@ -964,9 +964,9 @@ class TestInput(UccTester):
         self.assert_util(input_page.entity1.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         self.assert_util(
-            input_page.table.get_table()["Test_Add"] ,
+            input_page.table.get_table()["dummy_input"] ,
             {
-                'name': 'Test_Add', 
+                'name': 'dummy_input', 
                 'account': 'test_input',
                 'interval': '90',
                 'index': 'default',
@@ -1742,7 +1742,7 @@ class TestInput(UccTester):
         self.assert_util(
             input_page.table.get_table()["dummy_input"] ,
             {
-                'name': 'Test_Add', 
+                'name': 'dummy_input', 
                 'account': 'test_input',
                 'interval': '90',
                 'index': 'main',
