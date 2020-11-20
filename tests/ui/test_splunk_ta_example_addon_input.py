@@ -117,6 +117,7 @@ def add_input_two(ucc_smartx_rest_helper):
     yield input_page.backend_conf.post_stanza(url, kwargs)
 
 @pytest.fixture(autouse=True)
+#All the inputs created shoud start with dummy_input as prefix
 def delete_inputs(ucc_smartx_rest_helper):
     yield
     input_page = InputPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
@@ -953,7 +954,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()
-        input_page.entity1.name.set_value("Test_Add")
+        input_page.entity1.name.set_value("dummy_input")
         input_page.entity1.example_radio.select("Yes")
         input_page.entity1.single_select_group_test.select("Two")
         input_page.entity1.interval.set_value("90")
@@ -964,9 +965,9 @@ class TestInput(UccTester):
         self.assert_util(input_page.entity1.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         self.assert_util(
-            input_page.table.get_table()["Test_Add"] ,
+            input_page.table.get_table()["dummy_input"] ,
             {
-                'name': 'Test_Add', 
+                'name': 'dummy_input', 
                 'account': 'test_input',
                 'interval': '90',
                 'index': 'default',
@@ -985,7 +986,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()
-        input_page.entity1.name.set_value("Test_Add")
+        input_page.entity1.name.set_value("dummy_input")
         input_page.entity1.example_radio.select("No")
         input_page.entity1.single_select_group_test.select("Two")
         input_page.entity1.interval.set_value("90")
@@ -1009,7 +1010,7 @@ class TestInput(UccTester):
             'start_date': '2020-12-11T20:00:32.000z',
             'disabled': 0,
             }
-        backend_stanza = input_page.backend_conf.get_stanza("example_input_one://Test_Add")
+        backend_stanza = input_page.backend_conf.get_stanza("example_input_one://dummy_input")
         for each_key, each_value in value_to_test.items():
             assert each_key in backend_stanza
             self.assert_util(
@@ -1170,15 +1171,15 @@ class TestInput(UccTester):
         input_page.table.wait_for_rows_to_appear(1)
         input_page.table.clone_row("dummy_input_one")
         input_page.entity1.example_account.wait_for_values()
-        input_page.entity1.name.set_value("Clone_Test")
+        input_page.entity1.name.set_value("dummy_input_one_Clone_Test")
         input_page.entity1.interval.set_value("180")
         input_page.entity1.limit.set_value("500")
         self.assert_util(input_page.entity1.save, True)
         input_page.table.wait_for_rows_to_appear(2)
         self.assert_util(
-            input_page.table.get_table()["Clone_Test"] ,
+            input_page.table.get_table()["dummy_input_one_Clone_Test"] ,
             {
-                'name': 'Clone_Test', 
+                'name': 'dummy_input_one_Clone_Test', 
                 'account': 'test_input',
                 'interval': '180',
                 'index': 'default',
@@ -1196,7 +1197,7 @@ class TestInput(UccTester):
         input_page.table.wait_for_rows_to_appear(1)
         input_page.table.clone_row("dummy_input_one")
         input_page.entity1.example_account.wait_for_values()
-        input_page.entity1.name.set_value("Clone_Test")
+        input_page.entity1.name.set_value("dummy_input_one_Clone_Test")
         input_page.entity1.interval.set_value("180")
         input_page.entity1.limit.set_value("500")
         self.assert_util(input_page.entity1.save, True)
@@ -1216,7 +1217,7 @@ class TestInput(UccTester):
             'start_date': '2020-12-11T20:00:32.000z',
             'disabled': 0,
             }
-        backend_stanza = input_page.backend_conf.get_stanza("example_input_one://Clone_Test")
+        backend_stanza = input_page.backend_conf.get_stanza("example_input_one://dummy_input_one_Clone_Test")
         for each_key, each_value in value_to_test.items():
             self.assert_util(
                 each_value ,
@@ -1728,7 +1729,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.example_account.wait_for_values()
-        input_page.entity2.name.set_value("Test_Add")
+        input_page.entity2.name.set_value("dummy_input")
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_radio.select("No")
         input_page.entity2.example_multiple_select.select("Option One")
@@ -1740,9 +1741,9 @@ class TestInput(UccTester):
         self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(1)
         self.assert_util(
-            input_page.table.get_table()["Test_Add"] ,
+            input_page.table.get_table()["dummy_input"] ,
             {
-                'name': 'Test_Add', 
+                'name': 'dummy_input', 
                 'account': 'test_input',
                 'interval': '90',
                 'index': 'main',
@@ -1760,7 +1761,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.example_account.wait_for_values()
-        input_page.entity2.name.set_value("Test_Add")
+        input_page.entity2.name.set_value("dummy_input")
         input_page.entity2.example_checkbox.check()
         input_page.entity2.example_radio.select("No")
         input_page.entity2.example_multiple_select.select("Option One")
@@ -1781,7 +1782,7 @@ class TestInput(UccTester):
             'start_date': '2020-12-11T20:00:32.000z',
             'disabled': 0,
             }
-        backend_stanza = input_page.backend_conf.get_stanza("example_input_two://Test_Add")
+        backend_stanza = input_page.backend_conf.get_stanza("example_input_two://dummy_input")
         for each_key, each_value in value_to_test.items():
             self.assert_util(
                 each_value ,
@@ -1904,14 +1905,14 @@ class TestInput(UccTester):
         input_page.table.wait_for_rows_to_appear(1)
         input_page.table.clone_row("dummy_input_two")
         input_page.entity2.example_account.wait_for_values()
-        input_page.entity2.name.set_value("Clone_Test")
+        input_page.entity2.name.set_value("dummy_input_two_Clone_Test")
         input_page.entity2.interval.set_value("180")
         self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(2)
         self.assert_util(
-            input_page.table.get_table()["Clone_Test"] ,
+            input_page.table.get_table()["dummy_input_two_Clone_Test"] ,
             {
-                'name': 'Clone_Test', 
+                'name': 'dummy_input_two_Clone_Test', 
                 'account': 'test_input',
                 'interval': '180',
                 'index': 'main',
