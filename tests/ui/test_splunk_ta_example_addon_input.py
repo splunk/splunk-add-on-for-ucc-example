@@ -117,10 +117,11 @@ def add_input_two(ucc_smartx_rest_helper):
     yield input_page.backend_conf.post_stanza(url, kwargs)
 
 @pytest.fixture(autouse=True)
+#All the inputs created shoud start with dummy_input as prefix
 def delete_inputs(ucc_smartx_rest_helper):
     yield
     input_page = InputPage(ucc_smartx_rest_helper=ucc_smartx_rest_helper, open_page=False)
-    input_page.backend_conf.delete_all_stanzas("search=example_input")
+    input_page.backend_conf.delete_all_stanzas("search=dummy_input")
     
 
 class TestInput(UccTester):
