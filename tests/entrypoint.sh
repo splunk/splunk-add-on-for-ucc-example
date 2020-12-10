@@ -10,7 +10,8 @@ if [ -f "${TEST_SET}/pytest-ci.ini" ]; then
     cp -f ${TEST_SET}/pytest-ci.ini pytest.ini
 fi
 
-pip install -r requirements_dev.txt
+pip install pip --upgrade
+pip install -r requirements_dev.txt --use-deprecated=legacy-resolver
 pip install six>=1.15
 pip install git+https://github.com/rfaircloth-splunk/agent-python-pytest.git
 
