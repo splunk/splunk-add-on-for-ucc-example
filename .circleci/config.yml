@@ -296,6 +296,13 @@ jobs:
       - store_test_results:
           path: test-results
 
+  release:
+    docker:
+      - image: circleci/node:11
+    steps:
+      - checkout
+      - run: npx semantic-release
+
   publish-gh:
     docker:
       - image: circleci/python:3.7
@@ -395,85 +402,6 @@ workflows:
           filters:
             branches:
               only: /.*/
-      - splunk-release/tag:
-          name: tag-alpha
-          context:
-            - gdi-github
-          tag_level: alpha
-          filters:
-            branches:
-              only: develop
-      - approval-tag-beta:
-          requires:
-            - tag-alpha
-          type: approval
-          filters:
-            branches:
-              only: develop
-      - splunk-release/tag:
-          name: tag-beta
-          context:
-            - gdi-github
-          tag_level: beta
-          requires:
-            - approval-tag-beta
-      - approval-merge-beta-to-master:
-          requires:
-            - tag-beta
-          type: approval
-          filters:
-            branches:
-              only: develop
-      - splunk-release/merge-to-master:
-          name: merge-beta-to-master
-          context:
-            - gdi-github
-          requires:
-            - approval-merge-beta-to-master
-          filters:
-            branches:
-              only: develop
-      - splunk-release/tag:
-          name: tag-candidate
-          tag_level: candidate
-          context:
-            - gdi-github
-          filters:
-            branches:
-              only: master
-      - approval-tag-final-major:
-          type: approval
-          requires:
-            - tag-candidate
-      - splunk-release/tag:
-          name: tag-final-major
-          tag_level: final -s major
-          context:
-            - gdi-github
-          requires:
-            - approval-tag-final-major
-      - approval-tag-final-minor:
-          type: approval
-          requires:
-            - tag-candidate
-      - splunk-release/tag:
-          name: tag-final-minor
-          tag_level: final -s minor
-          context:
-            - gdi-github
-          requires:
-            - approval-tag-final-minor
-      - approval-tag-final-patch:
-          type: approval
-          requires:
-            - tag-candidate
-      - splunk-release/tag:
-          name: tag-final-patch
-          tag_level: final -s patch
-          context:
-            - gdi-github
-          requires:
-            - approval-tag-final-patch
   publish:
     jobs:
       - splunk-app-package/package:
