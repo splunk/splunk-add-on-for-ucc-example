@@ -796,35 +796,35 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input Two")
         self.assert_util(
-            input_page.entity1.name.get_input_label,
+            input_page.entity2.name.get_input_label,
             'Name'
             )
         self.assert_util(
-            input_page.entity1.interval.get_input_label,
+            input_page.entity2.interval.get_input_label,
             'Interval'
             )
         self.assert_util(
-            input_page.entity1.index.get_input_label,
+            input_page.entity2.index.get_input_label,
             'Index'
             )
         self.assert_util(
-            input_page.entity1.example_account.get_input_label,
+            input_page.entity2.example_account.get_input_label,
             'Example Account'
             )
         self.assert_util(
-            input_page.entity1.multiple_select_test.get_input_label,
-            'Multiple Select Test'
+            input_page.entity2.example_multiple_select.get_input_label,
+            'Example Multiple Select'
             )
         self.assert_util(
-            input_page.entity1.example_checkbox.get_input_label,
+            input_page.entity2.example_checkbox.get_input_label,
             'Example Checkbox'
             )
         self.assert_util(
-            input_page.entity1.example_radio.get_input_label,
+            input_page.entity2.example_radio.get_input_label,
             'Example Radio'
             )
         self.assert_util(
-            input_page.entity1.query_start_date.get_input_label,
+            input_page.entity2.query_start_date.get_input_label,
             'Query Start Date ?'
             )
             
