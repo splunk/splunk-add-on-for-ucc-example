@@ -328,16 +328,6 @@ class TestCustom(UccTester):
 
     @pytest.mark.forwarder
     @pytest.mark.custom
-    def test_custom_default_value_test_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ This test case checks default value of test radio"""
-        custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            custom.test_radio.get_value,
-            r"Yes"
-            )
-
-    @pytest.mark.forwarder
-    @pytest.mark.custom
     def test_custom_select_value_test_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ This test case checks selected value of test radio"""
         custom = Custom(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
