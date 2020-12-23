@@ -296,24 +296,12 @@ jobs:
       - store_test_results:
           path: test-results
 
-  publish-gh:
+  release:
     docker:
-      - image: circleci/python:3.7
+      - image: circleci/node:11
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - attach_workspace:
-          at: /tmp/workspace
       - checkout
-      - go/install
-      - run:
-          name: "Publish on GitHub"
-          command: |
-            PATH=$PATH:/usr/local/go/bin
-            go get -v -u github.com/tcnksm/ghr            
-            [[ << pipeline.git.tag >> =~ ^v[0-9]*.[0-9]*.[0-9]*$ ]] || export ISPRE=-prerelease
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} -delete "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
+      - run: npx semantic-release
 
   publish-sbase:
     docker:
@@ -395,99 +383,15 @@ workflows:
           filters:
             branches:
               only: /.*/
-      - splunk-release/tag:
-          name: tag-alpha
+      - release:
+          requires:
+            - package
           context:
             - gdi-github
-          tag_level: alpha
-          filters:
-            branches:
-              only: develop
-      - approval-tag-beta:
-          requires:
-            - tag-alpha
-          type: approval
-          filters:
-            branches:
-              only: develop
-      - splunk-release/tag:
-          name: tag-beta
-          context:
-            - gdi-github
-          tag_level: beta
-          requires:
-            - approval-tag-beta
-      - approval-merge-beta-to-master:
-          requires:
-            - tag-beta
-          type: approval
-          filters:
-            branches:
-              only: develop
-      - splunk-release/merge-to-master:
-          name: merge-beta-to-master
-          context:
-            - gdi-github
-          requires:
-            - approval-merge-beta-to-master
-          filters:
-            branches:
-              only: develop
-      - splunk-release/tag:
-          name: tag-candidate
-          tag_level: candidate
-          context:
-            - gdi-github
-          filters:
-            branches:
-              only: master
-      - approval-tag-final-major:
-          type: approval
-          requires:
-            - tag-candidate
-      - splunk-release/tag:
-          name: tag-final-major
-          tag_level: final -s major
-          context:
-            - gdi-github
-          requires:
-            - approval-tag-final-major
-      - approval-tag-final-minor:
-          type: approval
-          requires:
-            - tag-candidate
-      - splunk-release/tag:
-          name: tag-final-minor
-          tag_level: final -s minor
-          context:
-            - gdi-github
-          requires:
-            - approval-tag-final-minor
-      - approval-tag-final-patch:
-          type: approval
-          requires:
-            - tag-candidate
-      - splunk-release/tag:
-          name: tag-final-patch
-          tag_level: final -s patch
-          context:
-            - gdi-github
-          requires:
-            - approval-tag-final-patch
   publish:
     jobs:
       - splunk-app-package/package:
           name: package
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v\d*\.\d*\.\d*.*$/
-      - publish-gh:
-          context:
-            - gdi-github
-          requires:
-            - package
           filters:
             branches:
               ignore: /.*/
