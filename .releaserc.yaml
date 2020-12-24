@@ -10,5 +10,5 @@ plugins:
   - "@semantic-release/release-notes-generator"
   - - "@semantic-release/github"
     - assets:
-      - /tmp/workspace/build/package/splunkbase*
-      - /tmp/workspace/build/package/deployment*
+      - /tmp/workspace/build/package/splunkbase/*
+      - /tmp/workspace/build/package/deployment/*
