@@ -300,9 +300,13 @@ jobs:
     docker:
       - image: circleci/node:11
     steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - attach_workspace:
+          at: /tmp/workspace
       - checkout
       - run:
-          name: Releasing the Package
+          name: "Publish on GitHub"
           command: |
             npm install @semantic-release/git -D        
             npx semantic-release
