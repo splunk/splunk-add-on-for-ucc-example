@@ -302,10 +302,10 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Releasing the Package
-        command: |
-          npm install @semantic-release/git -D        
-          npx semantic-release
+          name: Releasing the Package
+          command: |
+            npm install @semantic-release/git -D        
+            npx semantic-release
 
   publish-sbase:
     docker:
