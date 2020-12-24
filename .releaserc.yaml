@@ -1,11 +1,14 @@
 ---
 branches:
   - "+([0-9])?(.{+([0-9]),x}).x"
-  - main
+  - master
   - name: develop
     channel: beta
     prerelease: true
 plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
+  - "@semantic-release/git"
+    - assets:
+      - /home/circleci/project/build/package/splunkbase/*
   - "@semantic-release/github"
