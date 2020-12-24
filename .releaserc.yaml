@@ -8,4 +8,8 @@ branches:
 plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
+  - - "@semantic-release/git"
+    - assets:
+      - /home/circleci/project/build/package/splunkbase/*
+      - /home/circleci/project/build/package/deployment/*
   - "@semantic-release/github"
