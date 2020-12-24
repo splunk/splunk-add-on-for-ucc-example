@@ -11,4 +11,4 @@ plugins:
   - - "@semantic-release/github"
     - assets:
       - /home/circleci/project/build/package/splunkbase/*.{tar.gz}
-      - /home/circleci/project/build/package/deployment/*.{tar.gz, json}
+      - /home/circleci/project/build/package/deployment/*.{tar.gz, json} 
