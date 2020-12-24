@@ -301,7 +301,11 @@ jobs:
       - image: circleci/node:11
     steps:
       - checkout
-      - run: npx semantic-release
+      - run:
+        name: Releasing the Package
+        command: |
+          npm install @semantic-release/git -D        
+          npx semantic-release
 
   publish-sbase:
     docker:
