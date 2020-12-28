@@ -29,8 +29,11 @@ orbs:
               name: Generate Addon
               command: |
                 sudo apt install npm
-                npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'Version=$(grep "Release note" | grep -Po "(\d+.)+[develop]*.[\d]*")'
+                echo "" > nextRelease.txt
+                npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
+                cat nextRelease.txt
                 echo "============"
+                Version=$(cat nextRelease.txt)
                 echo "$Version"
                 echo "============"
                 source ~/.venv/bin/activate
@@ -312,8 +315,7 @@ jobs:
       - checkout
       - run:
           name: "Publish on GitHub"
-          command: |
-            npm install @semantic-release/git -D        
+          command: |     
             npx semantic-release
 
   publish-sbase:
