@@ -28,8 +28,11 @@ orbs:
           - run:
               name: Generate Addon
               command: |
+                sudo apt install npm
+                npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'Version=$(echo ${nextRelease.version})'
+                echo "$Version"
                 source ~/.venv/bin/activate
-                ucc-gen
+                ucc-gen --ta-version="$Version"
           - run:
               name: Generating package
               command: |
