@@ -393,15 +393,20 @@ workflows:
           filters:
             branches:
               only: /.*/
+  publish:
+    jobs:
+      - splunk-app-package/package:
+          name: package
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d*\.\d*\.\d*.*$/
       - release:
           requires:
             - package
           context:
             - gdi-github
-  publish:
-    jobs:
-      - splunk-app-package/package:
-          name: package
           filters:
             branches:
               ignore: /.*/
