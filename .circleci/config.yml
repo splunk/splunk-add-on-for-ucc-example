@@ -29,13 +29,8 @@ orbs:
               name: Generate Addon
               command: |
                 sudo apt install npm
-                echo "" > nextRelease.txt
-                npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
-                cat nextRelease.txt
-                echo "============"
-                Version=$(cat nextRelease.txt)
+                npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'Version=$(echo ${nextRelease.version})'
                 echo "$Version"
-                echo "============"
                 source ~/.venv/bin/activate
                 ucc-gen --ta-version="$Version"
           - run:
@@ -398,15 +393,20 @@ workflows:
           filters:
             branches:
               only: /.*/
+  publish:
+    jobs:
+      - splunk-app-package/package:
+          name: package
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d*\.\d*\.\d*.*$/
       - release:
           requires:
             - package
           context:
             - gdi-github
-  publish:
-    jobs:
-      - splunk-app-package/package:
-          name: package
           filters:
             branches:
               ignore: /.*/
