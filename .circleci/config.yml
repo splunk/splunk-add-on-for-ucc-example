@@ -28,8 +28,16 @@ orbs:
           - run:
               name: Generate Addon
               command: |
+                sudo apt install npm
+                echo "" > nextRelease.txt
+                npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
+                cat nextRelease.txt
+                echo "============"
+                Version=$(cat nextRelease.txt)
+                echo "$Version"
+                echo "============"
                 source ~/.venv/bin/activate
-                ucc-gen
+                ucc-gen --ta-version="$Version"
           - run:
               name: Generating package
               command: |
@@ -307,8 +315,7 @@ jobs:
       - checkout
       - run:
           name: "Publish on GitHub"
-          command: |
-            npm install @semantic-release/git -D        
+          command: |     
             npx semantic-release
 
   publish-sbase:
