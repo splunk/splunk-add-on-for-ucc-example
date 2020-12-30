@@ -32,7 +32,7 @@ orbs:
                 echo "" > nextRelease.txt
                 npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
                 Version=$(cat nextRelease.txt)
-                echo "$Version"
+                echo "Addon Version : $Version"
                 source ~/.venv/bin/activate
                 ucc-gen --ta-version="$Version"
           - run:
