@@ -31,10 +31,10 @@ orbs:
               command: |
                 touch nextRelease.txt
                 npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
-                Version=$(cat nextRelease.txt)
-                echo "Addon Version : $Version"
+                VERSION=$(cat nextRelease.txt)
+                echo "Addon Version : $VERSION"
                 source ~/.venv/bin/activate
-                ucc-gen --ta-version="$Version"
+                ucc-gen --ta-version="$VERSION"
           - run:
               name: Generating package
               command: |
