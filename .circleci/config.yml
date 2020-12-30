@@ -25,10 +25,10 @@ orbs:
                 pip install pip --upgrade
                 pip install -r requirements_dev.txt --use-deprecated=legacy-resolver || true
                 pip install semantic_version==2.6.0
+                sudo apt install npm
           - run:
               name: Generate Addon
               command: |
-                sudo apt install npm
                 echo "" > nextRelease.txt
                 npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
                 Version=$(cat nextRelease.txt)
