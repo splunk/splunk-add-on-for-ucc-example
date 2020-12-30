@@ -25,24 +25,22 @@ orbs:
                 pip install pip --upgrade
                 pip install -r requirements_dev.txt --use-deprecated=legacy-resolver || true
                 pip install semantic_version==2.6.0
+                sudo apt install npm
           - run:
               name: Generate Addon
               command: |
-                sudo apt install npm
-                echo "" > nextRelease.txt
+                touch nextRelease.txt
                 npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
-                Version=$(cat nextRelease.txt)
-                echo "============"
-                echo "$Version"
-                echo "============"
+                VERSION=$(cat nextRelease.txt)
+                echo "$VERSION"
                 source ~/.venv/bin/activate
-                ucc-gen --ta-version="$Version"
+                ucc-gen --ta-version="$VERSION"
           - run:
               name: Generating package
               command: |
                 PACKAGE_ID=$(ls output/)
-                BUILD_DIR=output/$PACKAGE_ID              
-                source ~/.venv/bin/activate                
+                BUILD_DIR=output/$PACKAGE_ID
+                source ~/.venv/bin/activate
                 slim generate-manifest $BUILD_DIR --update >/tmp/app.manifest   || true
                 cp  /tmp/app.manifest  $BUILD_DIR/app.manifest
                 mkdir -p build/package/splunkbase
@@ -314,7 +312,7 @@ jobs:
       - checkout
       - run:
           name: "Publish on GitHub"
-          command: |     
+          command: |
             npx semantic-release
 
   publish-sbase:
