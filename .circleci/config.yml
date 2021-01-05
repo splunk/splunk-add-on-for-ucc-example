@@ -398,6 +398,7 @@ workflows:
       - release:
           requires:
             - package
+            - splunk-app-inspect
           context:
             - gdi-github
   publish:

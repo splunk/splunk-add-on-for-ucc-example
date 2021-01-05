@@ -2,7 +2,7 @@
 ## SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
 ## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
 ##
-https://673-287085785-gh.circle-artifacts.com/0/dist/splunk_add_on_ucc_framework-4.1.12.post3.dev0%2B594723ed.tar.gz
+https://679-287085785-gh.circle-artifacts.com/0/dist/splunk_add_on_ucc_framework-4.1.12.post5.dev0%2B8c9766de.tar.gz
 lovely-pytest-docker
 reuse
 pytest
