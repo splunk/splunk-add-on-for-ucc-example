@@ -22,26 +22,20 @@ orbs:
                 sudo apt-get install -y python2 python-pip python-virtualenv python3 python3.7 python3-pip python3-virtualenv
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
-                pip install pip --upgrade
-                pip install -r requirements_dev.txt --use-deprecated=legacy-resolver || true
+                pip install pip==20.2
+                pip install -r requirements_dev.txt || true
                 pip install semantic_version==2.6.0
-                sudo apt install npm
           - run:
               name: Generate Addon
               command: |
-                touch nextRelease.txt
-                npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
-                sed -i "s/-develop./develop/g" nextRelease.txt
-                VERSION=$(cat nextRelease.txt)
-                echo "$VERSION"
                 source ~/.venv/bin/activate
-                ucc-gen --ta-version="$VERSION"
+                ucc-gen
           - run:
               name: Generating package
               command: |
                 PACKAGE_ID=$(ls output/)
-                BUILD_DIR=output/$PACKAGE_ID
-                source ~/.venv/bin/activate
+                BUILD_DIR=output/$PACKAGE_ID              
+                source ~/.venv/bin/activate                
                 slim generate-manifest $BUILD_DIR --update >/tmp/app.manifest   || true
                 cp  /tmp/app.manifest  $BUILD_DIR/app.manifest
                 mkdir -p build/package/splunkbase
@@ -302,19 +296,24 @@ jobs:
       - store_test_results:
           path: test-results
 
-  release:
+  publish-gh:
     docker:
-      - image: circleci/node:11
+      - image: circleci/python:3.7
     steps:
       - setup_remote_docker:
           docker_layer_caching: true
       - attach_workspace:
           at: /tmp/workspace
       - checkout
+      - go/install
       - run:
           name: "Publish on GitHub"
           command: |
-            npx semantic-release
+            PATH=$PATH:/usr/local/go/bin
+            go get -v -u github.com/tcnksm/ghr            
+            [[ << pipeline.git.tag >> =~ ^v[0-9]*.[0-9]*.[0-9]*$ ]] || export ISPRE=-prerelease
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} -delete "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
 
   publish-sbase:
     docker:
@@ -390,22 +389,105 @@ workflows:
             - package
           matrix:
             parameters:
-              splunk_version: ["8.0"]
+              splunk_version: ["7.3","8.0","8.1"]
               test_set:
                 ["knowledge", "ui-firefox", "ui-chrome", "ui-safari", "ui-edge"]
           filters:
             branches:
               only: /.*/
-      - release:
-          requires:
-            - package
-            - splunk-app-inspect
+      - splunk-release/tag:
+          name: tag-alpha
           context:
             - gdi-github
+          tag_level: alpha
+          filters:
+            branches:
+              only: develop
+      - approval-tag-beta:
+          requires:
+            - tag-alpha
+          type: approval
+          filters:
+            branches:
+              only: develop
+      - splunk-release/tag:
+          name: tag-beta
+          context:
+            - gdi-github
+          tag_level: beta
+          requires:
+            - approval-tag-beta
+      - approval-merge-beta-to-master:
+          requires:
+            - tag-beta
+          type: approval
+          filters:
+            branches:
+              only: develop
+      - splunk-release/merge-to-master:
+          name: merge-beta-to-master
+          context:
+            - gdi-github
+          requires:
+            - approval-merge-beta-to-master
+          filters:
+            branches:
+              only: develop
+      - splunk-release/tag:
+          name: tag-candidate
+          tag_level: candidate
+          context:
+            - gdi-github
+          filters:
+            branches:
+              only: master
+      - approval-tag-final-major:
+          type: approval
+          requires:
+            - tag-candidate
+      - splunk-release/tag:
+          name: tag-final-major
+          tag_level: final -s major
+          context:
+            - gdi-github
+          requires:
+            - approval-tag-final-major
+      - approval-tag-final-minor:
+          type: approval
+          requires:
+            - tag-candidate
+      - splunk-release/tag:
+          name: tag-final-minor
+          tag_level: final -s minor
+          context:
+            - gdi-github
+          requires:
+            - approval-tag-final-minor
+      - approval-tag-final-patch:
+          type: approval
+          requires:
+            - tag-candidate
+      - splunk-release/tag:
+          name: tag-final-patch
+          tag_level: final -s patch
+          context:
+            - gdi-github
+          requires:
+            - approval-tag-final-patch
   publish:
     jobs:
       - splunk-app-package/package:
           name: package
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v\d*\.\d*\.\d*.*$/
+      - publish-gh:
+          context:
+            - gdi-github
+          requires:
+            - package
           filters:
             branches:
               ignore: /.*/
