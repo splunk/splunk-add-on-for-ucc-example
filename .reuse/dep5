@@ -49,10 +49,6 @@ Files: semtag
 Copyright: $YEAR $NAME <$CONTACT>
 License: LicenseRef-Splunk-1-2020
 
-Files: CLA.md
-Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
-
 Files: README.*
 Copyright: $YEAR $NAME <$CONTACT>
 License: LicenseRef-Splunk-1-2020
