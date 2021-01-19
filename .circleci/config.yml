@@ -278,7 +278,7 @@ jobs:
             # Normal Inspecting
             [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
             docker ps -a
-                            
+
             # Run the tests
             test_exit_code=0
 
