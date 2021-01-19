@@ -396,7 +396,7 @@ workflows:
           filters:
             branches:
               only: /.*/
-      - approval-release-develop:
+      - approval-release:
           requires:
             - package
           context:
@@ -404,28 +404,13 @@ workflows:
           type: approval
           filters:
             branches:
-              only: develop
+              only: 
+                - master
+                - develop
       - release:
-          name: release-develop
           requires:
             - splunk-app-inspect
-            - approval-release-develop
-          context:
-            - gdi-github
-      - approval-release-master:
-          requires:
-            - package
-          context:
-            - gdi-github
-          type: approval
-          filters:
-            branches:
-              only: master
-      - release:
-          name: release-master
-          requires:
-            - splunk-app-inspect
-            - approval-release-master
+            - approval-release
           context:
             - gdi-github
   publish:
