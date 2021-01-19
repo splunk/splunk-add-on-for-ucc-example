@@ -709,7 +709,7 @@ class TestInput(UccTester):
         input_page.entity1.object.set_value("test_object")
         input_page.entity1.object_fields.set_value("test_field")
         input_page.entity1.query_start_date.set_value("2020-12-11T20:00:32.000z")
-        input_page.entity1.order_by.clear_text()
+        input_page.entity1.order_by.set_value(" ")
         self.assert_util(
             input_page.entity1.save,
             r"Field Order By is required",
