@@ -261,9 +261,9 @@ jobs:
             docker-compose -f docker-compose-ci.yml build
 
             # Saucelab connection
-            [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml up -d sauceconnect                
+            [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml up -d sauceconnect
             # Start Splunk
-            docker-compose -f docker-compose-ci.yml up -d splunk                
+            docker-compose -f docker-compose-ci.yml up -d splunk
             until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
             # Run a Splunk Diag
             mkdir /tmp/diag
@@ -396,10 +396,21 @@ workflows:
           filters:
             branches:
               only: /.*/
-      - release:
+      - approval-release:
           requires:
             - package
+          context:
+            - gdi-github
+          type: approval
+          filters:
+            branches:
+              only: 
+                - master
+                - develop
+      - release:
+          requires:
             - splunk-app-inspect
+            - approval-release
           context:
             - gdi-github
   publish:
