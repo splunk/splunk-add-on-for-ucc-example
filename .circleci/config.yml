@@ -583,6 +583,7 @@ workflows:
           requires:
             - package
           matrix:
+            alias: splunk-app-test-ui
             parameters:
               splunk_version: ["7.3","8.0","8.1"]
               sc4s_version: ["1"]
@@ -596,6 +597,7 @@ workflows:
           requires:
             - package
           matrix:
+            alias: splunk-app-test-modinput
             parameters:
               splunk_version: ["7.3","8.0","8.1"]
               sc4s_version: ["1"]
@@ -630,6 +632,12 @@ workflows:
       - approval-release:
           requires:
             - package
+            - splunk-app-inspect
+            - splunk-app-test-knowledge
+            - splunk-app-test-ui
+            - splunk-app-test-modinput
+            - splunk-app-unit-test
+            - splunk-app-backend-test
           context:
             - gdi-github
           type: approval
@@ -641,10 +649,6 @@ workflows:
       - release:
           requires:
             - approval-release
-            - splunk-app-inspect
-            - splunk-app-test-knowledge
-            - splunk-app-unit-test
-            - splunk-app-backend-test
           context:
             - gdi-github
   publish:
