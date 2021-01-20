@@ -562,13 +562,13 @@ workflows:
           requires:
             - package
       - splunk-app-test:
-          alias: splunk-app-test-knowledge
           context:
             - gdi-saucelabs
             - gdi-reportportal
           requires:
             - package
           matrix:
+            alias: splunk-app-test-knowledge
             parameters:
               splunk_version: ["7.2","7.3","8.0","8.1"]
               sc4s_version: ["1"]
