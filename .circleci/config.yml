@@ -33,9 +33,15 @@ orbs:
                 npx -p @semantic-release/exec -p semantic-release semantic-release --dry-run --plugins "@semantic-release/commit-analyzer,@semantic-release/exec" --analyzeCommits @semantic-release/commit-analyzer --verifyRelease @semantic-release/exec --verifyReleaseCmd 'echo ${nextRelease.version} > nextRelease.txt'
                 sed -i "s/-develop./develop/g" nextRelease.txt
                 VERSION=$(cat nextRelease.txt)
-                echo "$VERSION"
+                echo VERSION="$VERSION"
+                echo CIRCLE_TAG=$CIRCLE_TAG
                 source ~/.venv/bin/activate
-                ucc-gen --ta-version="$VERSION"
+                if [ -z "$CIRCLE_TAG" ]
+                then
+                  ucc-gen --ta-version="$VERSION"
+                else
+                  ucc-gen --ta-version="$CIRCLE_TAG"
+                fi
           - run:
               name: Generating package
               command: |
@@ -632,12 +638,12 @@ workflows:
       - approval-release:
           requires:
             - package
-            # - splunk-app-inspect
-            # - splunk-app-test-knowledge
-            # - splunk-app-test-ui
-            # - splunk-app-test-modinput
-            # - splunk-app-unit-test
-            # - splunk-app-backend-test
+            - splunk-app-inspect
+            - splunk-app-test-knowledge
+            - splunk-app-test-ui
+            - splunk-app-test-modinput
+            - splunk-app-unit-test
+            - splunk-app-backend-test
           context:
             - gdi-github
           type: approval
