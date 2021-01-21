@@ -500,9 +500,9 @@ jobs:
           at: /tmp/workspace
       - checkout
       - run:
-          name: "Publish on GitHub"
+          name: "Apply Release Tag"
           command: |
-            npx semantic-release
+            npx semantic-release --plugins "@semantic-release/github" --success @semantic-release/github
 
   publish-gh:
     docker:
