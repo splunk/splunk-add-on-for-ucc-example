@@ -1,0 +1,10 @@
+##
+## SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+##
+## Python2 Addon Requirements for Testing
+lovely-pytest-docker
+pytest
+pytest-xdist
+pytest-expect
+mock==3.0.5
