@@ -54,8 +54,6 @@ services:
       - "6514"
     stdin_open: true
     tty: true
-    links:
-      - splunk
     environment:
       - SPLUNK_HEC_URL=https://splunk:8088
       - SPLUNK_HEC_TOKEN=9b741d03-43e9-4164-908b-e09102327d22
@@ -118,6 +116,8 @@ services:
       - test_credentials.env
     volumes:
       - backend_results:/home/circleci/work_backend
+    links:
+      - sc4s
 
   sauceconnect:
     build:
