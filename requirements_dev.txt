@@ -18,7 +18,7 @@ mock==3.0.5
 requests==2.25.1
 u-msgpack-python==2.5.0
 six==1.12.0
-coverage==4.0.3
+coverage==5.4
 splunk-sdk==1.6.14
 future==0.18.2
 -r requirements_addon_specific.txt
