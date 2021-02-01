@@ -129,3 +129,54 @@ class TestAlertActions(UccTester):
         alert_page = AlertPage(ucc_smartx_selenium_helper, None)
         alert_page.alert_table.wait_for_rows_to_appear()
         assert "test_alert" in alert_page.alert_table.get_column_values("name")
+
+    @pytest.mark.alert_action
+    def test_alert_help_text_entity(self, ucc_smartx_selenium_helper):
+        alert_page = AlertPage(ucc_smartx_selenium_helper, None)
+        alert_page.alert_entity.open()
+        alert_page.alert_entity.add_action_dropdown.wait_for_values()
+        alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
+        self.assert_util(
+            alert_page.action_entity.name.get_help_text,
+            'Please enter your name'
+            )
+        self.assert_util(
+            alert_page.action_entity.all_incident.get_help_text,
+            'Tick if you want to update all incidents/problems'
+            )
+        self.assert_util(
+            alert_page.action_entity.table_list.get_help_text,
+            'Please select the table'
+            )
+        self.assert_util(
+            alert_page.action_entity.action.get_help_text,
+            'Select the action you want to perform'
+            )
+        self.assert_util(
+            alert_page.action_entity.account.get_help_text,
+            'Select the account from the dropdown'
+            )
+
+    @pytest.mark.alert_action
+    def test_alert_action_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
+        """ Verifies the alert field labels"""
+        alert_page = AlertPage(ucc_smartx_selenium_helper, None)
+        alert_page.alert_entity.open()
+        alert_page.alert_entity.add_action_dropdown.wait_for_values()
+        alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
+        self.assert_util(
+            alert_page.action_entity.name.get_input_label,
+            'Name *'
+            )
+        self.assert_util(
+            alert_page.action_entity.table_list.get_input_label,
+            'Table List'
+            )
+        self.assert_util(
+            alert_page.action_entity.action.get_input_label,
+            'Action:'
+            )
+        self.assert_util(
+            alert_page.action_entity.account.get_input_label,
+            'Select Account *'
+            ) 
