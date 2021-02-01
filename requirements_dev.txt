@@ -4,21 +4,21 @@
 ##
 ## Addon Requirements for Testing
 splunk-add-on-ucc-framework==4.2.0
-lovely-pytest-docker==0.2.0
-reuse==0.12.1
-pytest==6.2.1
+lovely-pytest-docker
+reuse
+pytest
 https://download.splunk.com/misc/packaging-toolkit/splunk-packaging-toolkit-1.0.1.tar.gz
-pytest-xdist==2.2.0
-pytest-ordering==0.6
+pytest-xdist
+pytest-ordering
 pytest-splunk-addon==1.4.0
-pytest-expect==1.1.0
+pytest-expect
 pytest-splunk-addon-ui-smartx==1.1.1
-pytest-rerunfailures==9.1.1
-mock==3.0.5
-requests==2.25.1
-u-msgpack-python==2.5.0
-six==1.12.0
-coverage==4.0.3
-splunk-sdk==1.6.14
-future==0.18.2
+pytest-rerunfailures
+mock
+requests
+u-msgpack-python
+six
+coverage
+splunk-sdk
+future
 -r requirements_addon_specific.txt
