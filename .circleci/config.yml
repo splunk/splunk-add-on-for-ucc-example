@@ -302,7 +302,7 @@ jobs:
 
             # Normal Inspecting
             [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
-
+            docker-compose -f docker-compose-ci.yml logs sc4s
             docker ps -a
                             
             # Run the tests
@@ -374,6 +374,7 @@ jobs:
             export SPLUNK_VERSION=$(crudini --get deps/build/addonfactory_test_matrix_splunk/splunk_matrix.conf "<<parameters.splunk_version>>" VERSION)
             export SPLUNK_APP_ID=$(crudini --get package/default/app.conf id name)
             export SPLUNK_APP_PACKAGE=output/$(ls output/)
+            export SC4S_VERSION=latest
             export TEST_SET=tests/$TEST_TYPE
             export TEST_TYPE=$TEST_TYPE
             #export env credentials
@@ -598,7 +599,7 @@ workflows:
           matrix:
             alias: splunk-app-test-knowledge
             parameters:
-              splunk_version: ["7.2","7.3","8.0","8.1"]
+              splunk_version: ["7.2","8.1"]
               sc4s_version: ["1"]
               test_set: ["knowledge"]
           filters:
@@ -613,9 +614,9 @@ workflows:
           matrix:
             alias: splunk-app-test-ui
             parameters:
-              splunk_version: ["7.3","8.0","8.1"]
+              splunk_version: ["7.2","8.1"]
               sc4s_version: ["1"]
-              test_set: ["ui-firefox", "ui-chrome", "ui-safari", "ui-edge"]
+              test_set: ["ui-chrome"]
           filters:
             branches:
               only: /.*/
@@ -627,7 +628,7 @@ workflows:
           matrix:
             alias: splunk-app-test-modinput
             parameters:
-              splunk_version: ["7.3","8.0","8.1"]
+              splunk_version: ["7.2","8.1"]
               sc4s_version: ["1"]
               test_set: ["modinput_functional", "modinput_others"]
           filters:
@@ -652,7 +653,7 @@ workflows:
             - package
           matrix:
             parameters:
-              splunk_version: ["7.3", "8.0", "8.1"]
+              splunk_version: ["7.2","8.1"]
               test_set: ["backend"]
           filters:
             branches:
@@ -660,15 +661,12 @@ workflows:
       - approval-release:
           requires:
             - package
-            # - splunk-app-inspect
-            # - splunk-app-test-knowledge
-            # - splunk-app-test-ui
-            # - splunk-app-test-modinput
-            # - splunk-app-unit-test
-            # - splunk-app-backend-test
-
-
-
+            - splunk-app-inspect
+            - splunk-app-test-knowledge
+            - splunk-app-test-ui
+            - splunk-app-test-modinput
+            - splunk-app-unit-test
+            - splunk-app-backend-test
           context:
             - gdi-github
           type: approval
@@ -711,6 +709,3 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v\d*\.\d*\.\d*.*$/
-              
-              
-              
