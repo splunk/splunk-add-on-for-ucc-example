@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+# SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+#
+#
 import pytest
 from time import sleep
 from pytest_splunk_addon_ui_smartx.base_test import UccTester
