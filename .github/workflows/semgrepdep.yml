@@ -1,0 +1,18 @@
+name: Semgrepdep
+
+on:
+  pull_request:
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    name: Check
+    steps:
+      - uses: actions/checkout@v1
+      - name: Semgrep
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        id: semgrep
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/r2c
