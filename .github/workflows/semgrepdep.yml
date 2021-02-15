@@ -10,8 +10,8 @@ jobs:
       - uses: actions/checkout@v1
       - name: Semgrep
         id: semgrep
+        env:
+          GITHUB_TOKEN: ${{ secrets.semgrep_test }}
         uses: returntocorp/semgrep-action@v1
-          env:
-            GITHUB_TOKEN: ${{ secrets.semgrep_test }}
         with:
           config: p/r2c
