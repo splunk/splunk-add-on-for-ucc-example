@@ -1,12 +1,11 @@
 name: Semgrepdep
 
 on: [pull_request]
-
+auditOn: push
 
 jobs:
   semgrep:
     runs-on: ubuntu-latest
-    auditOn: push
     name: Check
     steps:
       - uses: actions/checkout@v1
