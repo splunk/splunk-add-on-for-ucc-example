@@ -1,7 +1,6 @@
 name: Semgrepdep
 
 on: [pull_request]
-auditOn: push
 
 jobs:
   semgrep:
