@@ -1,11 +1,12 @@
 name: Semgrepdep
 
-on:
-  pull_request:
+on: [pull_request]
+
 
 jobs:
   semgrep:
     runs-on: ubuntu-latest
+    auditOn: push
     name: Check
     steps:
       - uses: actions/checkout@v1
@@ -15,4 +16,4 @@ jobs:
         id: semgrep
         uses: returntocorp/semgrep-action@v1
         with:
-          config: p/r2c
+          config: r/all
