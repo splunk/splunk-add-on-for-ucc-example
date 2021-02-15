@@ -14,7 +14,5 @@ class Test_App(Basic):
             pass
 
     def dummy_method(self):
-        url="https://splunk.com/this/is/dummy/url/to/test"
-        res = requests.get(url)
-        print(res)
+        r = requests.post("http://www.github.com", auth=('user', 'pass'))
 
