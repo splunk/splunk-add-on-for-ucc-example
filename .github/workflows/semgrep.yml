@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: returntocorp/semgrep-action@v1
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.semgrep_test }}
       with:
         # auditOn: push
         publishToken: 780ae019b720f69cec1b99e05d88f1dfb09c7b6346e977ccbf50735c6500c26c
