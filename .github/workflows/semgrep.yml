@@ -18,4 +18,4 @@ jobs:
         auditOn: push
         publishToken: 780ae019b720f69cec1b99e05d88f1dfb09c7b6346e977ccbf50735c6500c26c
         publishDeployment: 342
-        config: p/ci
+        config: p/r2c-ci
