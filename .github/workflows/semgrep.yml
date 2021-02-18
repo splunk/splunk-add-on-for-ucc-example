@@ -1,5 +1,8 @@
 on:
-  pull_request: {}
+  pull_request:
+    branches: [main, develop]
+  issue_comment:
+    types: [edited]
 
 name: Semgrep
 jobs:
