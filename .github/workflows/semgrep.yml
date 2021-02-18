@@ -2,7 +2,7 @@ on:
   pull_request: {}
   push:
     branches:
-    - main
+    - test/semgrep-dashboard
 name: Semgrep
 jobs:
   semgrep:
