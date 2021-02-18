@@ -2,6 +2,7 @@ on:
   pull_request: {}
   push:
     branches:
+    - main
     - test/semgrep-dashboard
 name: Semgrep
 jobs:
@@ -15,6 +16,6 @@ jobs:
         auditOn: push
         publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
         publishDeployment: 342
-        config: p/r2c
+        config: p/ci
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
