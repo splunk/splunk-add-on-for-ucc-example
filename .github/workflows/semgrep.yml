@@ -1,8 +1,6 @@
 on:
   pull_request: {}
-  push:
-    branches:
-    - main
+
 name: Semgrep
 jobs:
   semgrep:
@@ -10,11 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: returntocorp/semgrep-action@v1
-      with:
-        auditOn: push
-        publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
-        publishDeployment: 342
-        config: p/ci
+    - uses: returntocorp/semgrep-action@develop
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        # auditOn: push
+        publishToken: 780ae019b720f69cec1b99e05d88f1dfb09c7b6346e977ccbf50735c6500c26c
+        publishDeployment: 342
+        config: p/r2c-ci
