@@ -24,9 +24,10 @@ jobs:
         ucc-gen
         cd output/*/
         ls -la
-        tar -cvzf ${{ github.event.repository.name }}.tar.gz
+        cp output/ ${{ github.workspace }}/Artifacts
     - name: Semgrep Scan
       run: |
+        ls -la
         semgrep --config=p/ci . --strict --verbose --timeout=0 --exclude lib/ --junit-xml -o ${{ github.workspace }}/Artifacts/semgrep-scan.xml
     - name: Publish Artifact
       uses: actions/upload-artifact@v2
