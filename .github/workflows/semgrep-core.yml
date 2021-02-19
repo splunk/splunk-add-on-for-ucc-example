@@ -22,13 +22,13 @@ jobs:
     - name: Generate Addon
       run: |
         ucc-gen
-        cd output/*/
+        cd output/
         ls -la
-        cp output/ ${{ github.workspace }}/Artifacts
+        cp . ${{ github.workspace }}/Artifacts
     - name: Semgrep Scan
       run: |
         ls -la
-        semgrep --config=p/ci . --strict --verbose --timeout=0 --exclude lib/ --junit-xml -o ${{ github.workspace }}/Artifacts/semgrep-scan.xml
+        semgrep --config=p/ci . --strict --verbose --timeout=0 --exclude */lib/ --junit-xml -o ${{ github.workspace }}/Artifacts/semgrep-scan.xml
     - name: Publish Artifact
       uses: actions/upload-artifact@v2
       with:
