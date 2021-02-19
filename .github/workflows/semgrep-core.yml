@@ -9,13 +9,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: returntocorp/semgrep-agent@v1
     - run: |
-      pip3 install splunk-add-on-ucc-framework
-      ucc-gen
-      semgrep --config=p/ci output/*/ --strict --verbose --timeout=0 --exclude output/*/lib --junit-xml -o ${{ github.workspace }}/Artifacts/semgrep-scan.xml
-  - name: Publish Artifact
-    uses: actions/upload-artifact@v2
-    with:
-     path: ${{ github.workspace }}/Artifacts
-     name: Semgrep-scan
+        pip3 install splunk-add-on-ucc-framework
+        ucc-gen
+        pip3 install semgrep
+        ls -la
+        semgrep --config=p/ci output/*/ --strict --verbose --timeout=0 --exclude output/*/lib --junit-xml -o ${{ github.workspace }}/Artifacts/semgrep-scan.xml
+    - name: Publish Artifact
+      uses: actions/upload-artifact@v2
+      with:
+      path: ${{ github.workspace }}/Artifacts
+      name: Semgrep-scan
