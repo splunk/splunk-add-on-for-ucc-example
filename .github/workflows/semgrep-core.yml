@@ -1,5 +1,4 @@
 on:
-  pull_request: {}
   push: {}
 
 name: Semgrep Core
@@ -23,12 +22,9 @@ jobs:
       run: |
         ucc-gen
         cp -r output/ ${{ github.workspace }}/Artifacts
-        cd output/*/
-        ls -la
     - name: Semgrep Scan
       run: |
-        ls -la
-        semgrep --config=p/ci . --strict --verbose --timeout=0 --exclude lib/ --junit-xml -o ${{ github.workspace }}/Artifacts/semgrep-scan.xml
+        semgrep --config=p/ci output/*/ --strict --verbose --timeout=0 --exclude output/*/lib --junit-xml -o ${{ github.workspace }}/Artifacts/semgrep-scan.xml
     - name: Publish Artifact
       uses: actions/upload-artifact@v2
       with:
