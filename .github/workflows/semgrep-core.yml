@@ -9,11 +9,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - name: Set up Python
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install Dependencies
     - run: |
         pip3 install splunk-add-on-ucc-framework
-        ucc-gen
         pip3 install semgrep
+    - name: Generate Addon
+    - run: |
+        ucc-gen
         ls -la
+    - name: Semgrep Scan
+    - run: |
         semgrep --config=p/ci output/*/ --strict --verbose --timeout=0 --exclude output/*/lib --junit-xml -o ${{ github.workspace }}/Artifacts/semgrep-scan.xml
     - name: Publish Artifact
       uses: actions/upload-artifact@v2
