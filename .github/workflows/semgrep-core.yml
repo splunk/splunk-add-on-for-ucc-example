@@ -22,7 +22,7 @@ jobs:
     - name: Generate Addon
       run: |
         ucc-gen
-        cp -r . ${{ github.workspace }}/Artifacts
+        cp -r output/ ${{ github.workspace }}/Artifacts
         cd output/*/
         ls -la
     - name: Semgrep Scan
