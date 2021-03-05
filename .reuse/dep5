@@ -49,14 +49,6 @@ Files: semtag
 Copyright: $YEAR $NAME <$CONTACT>
 License: LicenseRef-Splunk-1-2020
 
-Files: README.*
-Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
-
-Files: globalConfig.json
-Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
-
-Files: package/appserver/static/test_alert.png
+Files: README*
 Copyright: $YEAR $NAME <$CONTACT>
 License: LicenseRef-Splunk-1-2020

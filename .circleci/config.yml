@@ -297,8 +297,9 @@ jobs:
             docker cp project_splunk_1:${diag//[$'\t\r\n']} /tmp/diag
             # Check with btool
             docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
-            docker-compose -f docker-compose-ci.yml up -d splunk
+            docker-compose -f docker-compose-ci.yml up -d splunk uf
             until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
+            until docker-compose -f docker-compose-ci.yml logs uf | grep "Ansible playbook complete" ; do sleep 1; done
 
             # Normal Inspecting
             [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
@@ -491,9 +492,47 @@ jobs:
       - store_test_results:
           path: test-results
 
+  semgrep:
+    environment:
+        SEMGREP_REPO_URL: << pipeline.project.git_url >>
+        SEMGREP_BRANCH: << pipeline.git.branch >>
+    docker:
+      - image: returntocorp/semgrep-agent:v1
+        user: root
+    steps:
+      - checkout
+      - run:
+          name: "Install Dependencies"
+          command: |
+            pip3 install --upgrade semgrep
+      - run:
+          name: "Semgrep Scan"
+          no_output_timeout: 1h
+          command: |
+            export SEMGREP_REPO_NAME=splunk/${CIRCLE_PROJECT_REPONAME}
+            python -m semgrep_agent --publish-deployment ${SEMGREP_DEPLOYMENT_ID} --publish-token ${SEMGREP_PUBLISH_TOKEN}
+
+            # Generate the Semgrep Dashboard URL
+            export REPO_BRANCH=$(echo "<< pipeline.git.branch >>")
+            DASHBOARD_URL=$(python3 -c "from urllib.parse import quote; import os; print('https://semgrep.dev/manage/findings?repo=' + quote(os.environ['SEMGREP_REPO_NAME'], safe='') + '&tab=findings&ref_type=branch&ref=' + quote(os.environ['REPO_BRANCH'], safe=''))")
+            echo "View Result at Semgrep Dashboard: $DASHBOARD_URL"
+            
+            # Semgrep Exclude files
+            dos2unix .semgrepignore
+            SEMGREP_EXCLUDE=$(sed "/^#/d" .semgrepignore | sed "/^:/d" | sed -r '/^\s*$/d' | sed ':a;N;$!ba;s/\n/ --exclude /g')
+            echo "Excluding Semgrep Files: --exclude $SEMGREP_EXCLUDE"
+
+            # Generate xml file
+            semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE     
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+      - store_test_results:
+          path: test-results
+
   release:
     docker:
-      - image: circleci/node:11
+      - image: circleci/node:12
     steps:
       - setup_remote_docker:
           docker_layer_caching: true
@@ -545,7 +584,6 @@ jobs:
             PACKAGE_ID=$(crudini --get package/default/app.conf id name)
             [[ << pipeline.git.tag >> =~ ^v[0-9]*.[0-9]*.[0-9]*$ ]] || export ISPRE=-prerelease
             [ "${ISPRE}" == "-prerelease" ] && SPLUNKBASE_VIS="false" || SPLUNKBASE_VIS="true"
-            export SPLUNKBASE_SPLUNK_VERSION=$(echo << pipeline.git.tag >> | sed 's/^v\(.*\)/\1/')            
             curl -u ${SPLUNKBASE_USERNAME}:${SPLUNKBASE_PASSWORD}  --request POST https://splunkbase.splunk.com/api/v1/app/${SPLUNKBASE_ID}/new_release/ -F "files[]=@${PACKAGE}" -F "filename=${PACKAGE_ID}.spl" -F "splunk_versions=${SPLUNKBASE_SPLUNK_VERSION}" -F "visibility=${SPLUNKBASE_VIS}"
   reuse:
     docker:
@@ -570,6 +608,12 @@ jobs:
 workflows:
   build:
     jobs:
+      - semgrep:
+          context:
+            - gdi-semgrep      
+          filters:
+            branches:
+              only: /.*/
       - reuse:
           filters:
             branches:
@@ -708,4 +752,4 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v\d*\.\d*\.\d*.*$/
+              only: /^v\d*\.\d*\.\d*$/
