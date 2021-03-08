@@ -49,7 +49,7 @@ Files: semtag
 Copyright: $YEAR $NAME <$CONTACT>
 License: LicenseRef-Splunk-1-2020
 
-Files: README.*
+Files: README*
 Copyright: $YEAR $NAME <$CONTACT>
 License: LicenseRef-Splunk-1-2020
 
