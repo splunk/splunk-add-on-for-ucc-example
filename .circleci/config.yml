@@ -736,13 +736,13 @@ workflows:
               ignore: /.*/
             tags:
               only: /^v\d*\.\d*\.\d*$/
-      - publish-gh:
-          context:
-            - gdi-github
-          requires:
-            - package
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v\d*\.\d*\.\d*.*$/
+      # - publish-gh:
+      #     context:
+      #       - gdi-github
+      #     requires:
+      #       - package
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /^v\d*\.\d*\.\d*.*$/
