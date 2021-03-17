@@ -725,7 +725,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v\d*\.\d*\.\d*$/
+              only: /^v\d*\.\d*\.\d*.*$/
       - publish-gh:
           context:
             - gdi-github
@@ -735,7 +735,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^v\d*\.\d*\.\d*$/
+              only: /^v\d*\.\d*\.\d*.*$/
       - publish-sbase:
           context:
             - gdi-splunkbase
