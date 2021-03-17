@@ -9,6 +9,6 @@ plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
   - "@semantic-release/github"
-  - - assets:
-      - path: /tmp/workspace/build/package/splunkbase
-      - path: /tmp/workspace/build/package/deployment
+    - assets:
+      - /tmp/workspace/build/package/splunkbase/*
+      - /tmp/workspace/build/package/deployment/*
