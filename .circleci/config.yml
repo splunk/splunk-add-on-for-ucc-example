@@ -541,7 +541,7 @@ jobs:
       - checkout
       - run:
           command: |
-            npx semantic-release --plugins "@semantic-release/github" --success @semantic-release/github
+            npx semantic-release
 
   publish-gh:
     docker:
