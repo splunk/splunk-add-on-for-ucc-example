@@ -558,7 +558,7 @@ jobs:
           name: "Publish on GitHub"
           command: |
             PATH=$PATH:/usr/local/go/bin
-            go get -v -u github.com/tcnksm/ghr            
+            go get -v -u github.com/tcnksm/ghr
             $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
             $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
 
