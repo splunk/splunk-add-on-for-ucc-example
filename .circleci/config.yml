@@ -523,7 +523,7 @@ jobs:
             echo "Excluding Semgrep Files: --exclude $SEMGREP_EXCLUDE"
 
             # Generate xml file
-            semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE     
+            semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE
       - store_artifacts:
           path: test-results
           destination: test-results
