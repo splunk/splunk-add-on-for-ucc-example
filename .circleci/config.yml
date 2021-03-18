@@ -704,12 +704,12 @@ workflows:
       - approval-release:
           requires:
             - package
-            - splunk-app-inspect
-            - splunk-app-test-knowledge
-            - splunk-app-test-ui
-            - splunk-app-test-modinput
-            - splunk-app-unit-test
-            - splunk-app-backend-test
+            # - splunk-app-inspect
+            # - splunk-app-test-knowledge
+            # - splunk-app-test-ui
+            # - splunk-app-test-modinput
+            # - splunk-app-unit-test
+            # - splunk-app-backend-test
           context:
             - gdi-github
           type: approval
