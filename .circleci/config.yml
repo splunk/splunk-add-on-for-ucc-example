@@ -431,7 +431,7 @@ jobs:
       - run:
           name: Setup for testing
           command: |
-            pip install git+https://github.com/pixelb/crudini        
+            pip install git+https://github.com/pixelb/crudini
             mkdir test-results
             cp -rf /tmp/workspace/* .
             mkdir -p deps/apps/splunk-add-on-for-modinput-test/output
