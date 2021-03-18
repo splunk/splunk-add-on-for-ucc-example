@@ -236,7 +236,7 @@ jobs:
       - run:
           name: Setup for testing
           command: |
-            pip install git+https://github.com/pixelb/crudini        
+            pip install git+https://github.com/pixelb/crudini
             mkdir test-results
             cp -rf /tmp/workspace/* .
             mkdir -p deps/apps/splunk-add-on-for-modinput-test/output
@@ -305,7 +305,7 @@ jobs:
             [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
             docker-compose -f docker-compose-ci.yml logs sc4s
             docker ps -a
-                            
+
             # Run the tests
             test_exit_code=0
 
@@ -516,7 +516,7 @@ jobs:
             export REPO_BRANCH=$(echo "<< pipeline.git.branch >>")
             DASHBOARD_URL=$(python3 -c "from urllib.parse import quote; import os; print('https://semgrep.dev/manage/findings?repo=' + quote(os.environ['SEMGREP_REPO_NAME'], safe='') + '&tab=findings&ref_type=branch&ref=' + quote(os.environ['REPO_BRANCH'], safe=''))")
             echo "View Result at Semgrep Dashboard: $DASHBOARD_URL"
-            
+
             # Semgrep Exclude files
             dos2unix .semgrepignore
             SEMGREP_EXCLUDE=$(sed "/^#/d" .semgrepignore | sed "/^:/d" | sed -r '/^\s*$/d' | sed ':a;N;$!ba;s/\n/ --exclude /g')
