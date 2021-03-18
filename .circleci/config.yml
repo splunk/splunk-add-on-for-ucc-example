@@ -1,5 +1,5 @@
 ##
-## SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+## SPDX-FileCopyrightText: 2021 Splunk, Inc. <sales@splunk.com>
 ## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
 ##
 ##
@@ -236,7 +236,7 @@ jobs:
       - run:
           name: Setup for testing
           command: |
-            pip install git+https://github.com/pixelb/crudini        
+            pip install git+https://github.com/pixelb/crudini
             mkdir test-results
             cp -rf /tmp/workspace/* .
             mkdir -p deps/apps/splunk-add-on-for-modinput-test/output
@@ -305,7 +305,7 @@ jobs:
             [ -z $BROWSER ] || [ "$UI_TEST_HEADLESS" = "true" ] || docker-compose -f docker-compose-ci.yml logs sauceconnect
             docker-compose -f docker-compose-ci.yml logs sc4s
             docker ps -a
-                            
+
             # Run the tests
             test_exit_code=0
 
@@ -516,14 +516,14 @@ jobs:
             export REPO_BRANCH=$(echo "<< pipeline.git.branch >>")
             DASHBOARD_URL=$(python3 -c "from urllib.parse import quote; import os; print('https://semgrep.dev/manage/findings?repo=' + quote(os.environ['SEMGREP_REPO_NAME'], safe='') + '&tab=findings&ref_type=branch&ref=' + quote(os.environ['REPO_BRANCH'], safe=''))")
             echo "View Result at Semgrep Dashboard: $DASHBOARD_URL"
-            
+
             # Semgrep Exclude files
             dos2unix .semgrepignore
             SEMGREP_EXCLUDE=$(sed "/^#/d" .semgrepignore | sed "/^:/d" | sed -r '/^\s*$/d' | sed ':a;N;$!ba;s/\n/ --exclude /g')
             echo "Excluding Semgrep Files: --exclude $SEMGREP_EXCLUDE"
 
             # Generate xml file
-            semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE     
+            semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE
       - store_artifacts:
           path: test-results
           destination: test-results
@@ -540,9 +540,8 @@ jobs:
           at: /tmp/workspace
       - checkout
       - run:
-          name: "Apply Release Tag"
           command: |
-            npx semantic-release --plugins "@semantic-release/github" --success @semantic-release/github
+            npx semantic-release
 
   publish-gh:
     docker:
@@ -558,10 +557,9 @@ jobs:
           name: "Publish on GitHub"
           command: |
             PATH=$PATH:/usr/local/go/bin
-            go get -v -u github.com/tcnksm/ghr            
-            [[ << pipeline.git.tag >> =~ ^v[0-9]*.[0-9]*.[0-9]*$ ]] || export ISPRE=-prerelease
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} -delete "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
+            go get -v -u github.com/tcnksm/ghr
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
 
   publish-sbase:
     docker:
@@ -705,12 +703,6 @@ workflows:
       - approval-release:
           requires:
             - package
-            - splunk-app-inspect
-            - splunk-app-test-knowledge
-            - splunk-app-test-ui
-            - splunk-app-test-modinput
-            - splunk-app-unit-test
-            - splunk-app-backend-test
           context:
             - gdi-github
           type: approval
