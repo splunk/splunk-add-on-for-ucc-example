@@ -537,12 +537,8 @@ jobs:
       - image: circleci/node
     steps:
       - checkout
-      - run:
-              name: Setup Environment
-              command: |
-                pwd
-                ls
       - snyk/scan:
+          additional-arguments: "--package-manager=pip"
           organization: 'Splunk'
           target-file: 'requirements_dev.txt'
       - store_artifacts:
