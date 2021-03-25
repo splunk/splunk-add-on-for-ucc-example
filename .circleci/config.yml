@@ -534,7 +534,7 @@ jobs:
           path: test-results
   snyk:
     docker: 
-      - image: circleci/python:3.7
+      - image: circleci/node
     steps:
       - checkout
       - snyk/scan:
