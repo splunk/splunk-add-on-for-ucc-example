@@ -538,9 +538,8 @@ jobs:
     steps:
       - checkout
       - snyk/scan:
-          project: '${CIRCLE_PROJECT_REPONAME}'
+          additional-arguments: '--all-projects --detection-depth=10'
           organization: 'Splunk'
-          target-file: '/tmp/workspace/build/package/splunkbase'
 
 
   release:
