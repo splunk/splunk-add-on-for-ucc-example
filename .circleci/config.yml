@@ -543,15 +543,10 @@ jobs:
       - run:
           name: install-snyk
           command: 'sudo npm install -g snyk'
-      - run: # run snyk help - test snyk is installed and working
-          name: snyk-help
-          command: snyk --help
       - run:
           name: snyk auth
           command: snyk auth $SNYK_API_TOKEN
-      - run:
-          name: snyk test
-          command: snyk test
+      - snyk/scan
 
   release:
     docker:
