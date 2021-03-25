@@ -551,7 +551,7 @@ jobs:
           command: snyk auth $SNYK_API_TOKEN
       - run:
           name: snyk test
-          command: snyk test . /deps/apps /package/lib /package/lib/py2 /package/lib/py3
+          command: snyk test . /deps/apps /package/lib /package/lib/py2 /package/lib/py3 --reachable
 
   release:
     docker:
