@@ -538,8 +538,13 @@ jobs:
     steps:
       - checkout
       - snyk/scan:
-          additional-arguments: '--all-projects --detection-depth=10'
           organization: 'Splunk'
+          target-file: 'requirements*.txt'
+      - store_artifacts:
+          path: test-results
+          destination: test-results
+      - store_test_results:
+          path: test-results
 
 
   release:
