@@ -534,9 +534,13 @@ jobs:
           path: test-results
   snyk:
     docker: 
-      - image: circleci/node
+      - image: circleci/python:3.7
     steps:
       - checkout
+      - run:
+          name: Setup Environment
+          command: |
+            source ~/.venv/bin/activate
       - snyk/scan:
           additional-arguments: "--package-manager=pip"
           organization: 'Splunk'
