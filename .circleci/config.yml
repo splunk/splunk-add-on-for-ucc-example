@@ -537,16 +537,11 @@ jobs:
       - image: circleci/node
     steps:
       - checkout
-      # - run:
-      #     name: update-npm
-      #     command: 'sudo npm install -g npm@latest'
-      # - run:
-      #     name: install-snyk
-      #     command: 'sudo npm install -g snyk'
-      # - run:
-      #     name: snyk auth
-      #     command: snyk auth $SNYK_API_TOKEN
-      - snyk/scan
+      - snyk/scan:
+          project: '${CIRCLE_PROJECT_REPONAME}'
+          organization: 'Splunk'
+          target-file: '/tmp/workspace/build/package/splunkbase'
+
 
   release:
     docker:
