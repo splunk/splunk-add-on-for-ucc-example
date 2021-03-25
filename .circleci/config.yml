@@ -537,15 +537,15 @@ jobs:
       - image: circleci/node
     steps:
       - checkout
-      - run:
-          name: update-npm
-          command: 'sudo npm install -g npm@latest'
-      - run:
-          name: install-snyk
-          command: 'sudo npm install -g snyk'
-      - run:
-          name: snyk auth
-          command: snyk auth $SNYK_API_TOKEN
+      # - run:
+      #     name: update-npm
+      #     command: 'sudo npm install -g npm@latest'
+      # - run:
+      #     name: install-snyk
+      #     command: 'sudo npm install -g snyk'
+      # - run:
+      #     name: snyk auth
+      #     command: snyk auth $SNYK_API_TOKEN
       - snyk/scan
 
   release:
