@@ -542,9 +542,9 @@ jobs:
       - run:
           name: Setup Environment
           command: |
-            ls -a /home/circleci/project
+            ls -a /tmp/workspace
             pwd
-            source /home/circleci/project/activate
+            source /tmp/workspace/.venv/bin/activate
       - snyk/scan:
           additional-arguments: "--package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json"
           organization: 'Splunk'
