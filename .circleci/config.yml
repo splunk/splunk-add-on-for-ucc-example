@@ -549,7 +549,7 @@ jobs:
       - snyk/scan:
           additional-arguments: "--package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json"
           organization: 'Splunk'
-          target-file: 'requirements_dev.txt'
+          target-file: '/home/circleci/requirements_dev.txt'
       - store_artifacts:
           path: test-results
           destination: test-results
