@@ -542,7 +542,9 @@ jobs:
       - run:
           name: Setup Environment
           command: |
-            ls
+            ls -a 
+            ls package
+            source ~/.venv/bin/activate
       - snyk/scan:
           additional-arguments: "--package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json"
           organization: 'Splunk'
