@@ -541,9 +541,7 @@ jobs:
           name: Setup Environment
           command: |
             sudo apt-get update
-            sudo apt-get install -y python2 python-pip python-virtualenv python3 python3.7 python3-pip python3-virtualenv
-            python3.7 -m virtualenv ~/.venv -p python3
-            source ~/.venv/bin/activate
+            sudo apt-get install -y python2 python-pip python3 python3.7 python3-pip
             pip install pip --upgrade
             pip install -r requirements_dev.txt --use-deprecated=legacy-resolver || true
             pip install semantic_version==2.6.0
