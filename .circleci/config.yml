@@ -542,8 +542,7 @@ jobs:
       - run:
           name: Setup Environment
           command: |
-            ls -a /tmp/workspace
-            pwd
+            ls -a /tmp/workspace/*
             source /tmp/workspace/.venv/bin/activate
       - snyk/scan:
           additional-arguments: "--package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json"
