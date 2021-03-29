@@ -575,7 +575,7 @@ jobs:
       #           deactivate
       #           rm -rf ~/.venv
       #         fi
-      # - run: # run snyk test - run snyk testa
+      - run: # run snyk test - run snyk testa
             name: snyk test requirements_addon_specific.txt
             command: |
               if [ -f "requirements_addon_specific.txt" ] && [[ $(wc -l <requirements_addon_specific.txt) -ge 6 ]]; then
