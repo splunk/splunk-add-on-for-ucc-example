@@ -574,7 +574,7 @@ jobs:
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
                 pip install -r requirements_dev.txt --use-deprecated=legacy-resolver || true
-                snyk test  --severity-threshold=low  --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json
+                snyk test  --severity-threshold=low  --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json || true
                 snyk monitor    --file=requirements_dev.txt --package-manager=pip --command=python3
                 deactivate
                 rm -rf ~/.venv
