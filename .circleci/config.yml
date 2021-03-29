@@ -535,6 +535,7 @@ jobs:
   snyk:
     docker: 
       - image: circleci/python:3.7
+        user: root
     steps:
       - checkout
       # - run:
