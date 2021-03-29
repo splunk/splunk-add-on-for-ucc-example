@@ -568,17 +568,14 @@ jobs:
           fail-on-issues: false
       - snyk/scan:
           additional-arguments: "--package-manager=pip --skip-unresolved --command=python3"
-          organization: 'Splunk'
           target-file: 'requirements_addon_specific.txt'
           fail-on-issues: false
       - snyk/scan:
           additional-arguments: "--package-manager=pip --skip-unresolved --command=python3"
-          organization: 'Splunk'
           target-file: 'requirements_py2_dev.txt'
           fail-on-issues: false
       - snyk/scan:
           additional-arguments: "--package-manager=pip --skip-unresolved --command=python3"
-          organization: 'Splunk'
           target-file: 'package/lib/requirements.txt'
           fail-on-issues: false
       - store_artifacts:
