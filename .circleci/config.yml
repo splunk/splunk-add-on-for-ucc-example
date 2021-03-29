@@ -537,18 +537,18 @@ jobs:
       - image: circleci/python:3.7
     steps:
       - checkout
-      - run:
-          name: Setup Environment
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y python2 python-pip python3 python3.7 python3-pip
-            pip install pip --upgrade
-            sudo apt install npm
-            ls -al package/*
-            python3.7 -m virtualenv ~/.venv -p python3
-            source ~/.venv/bin/activate
-            pip install pip --upgrade
-            pip install -r requirements_dev.txt
+      # - run:
+      #     name: Setup Environment
+      #     command: |
+      #       sudo apt-get update
+      #       sudo apt-get install -y python2 python-pip python3 python3.7 python3-pip
+      #       pip install pip --upgrade
+      #       sudo apt install npm
+      #       ls -al package/*
+      #       python3.7 -m virtualenv ~/.venv -p python3
+      #       source ~/.venv/bin/activate
+      #       pip install pip --upgrade
+      #       pip install -r requirements_dev.txt
 
       #       - run:
       #     name: update-npm
@@ -563,7 +563,7 @@ jobs:
       #     name: snyk test
       #     command: snyk test  --severity-threshold=low --org=Splunk --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug 
       - snyk/scan:
-          additional-arguments: "--package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug"
+          additional-arguments: "--package-manager=pip --skip-unresolved --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug"
           organization: 'Splunk'
           target-file: 'requirements_dev.txt'
           fail-on-issues: false
