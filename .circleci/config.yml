@@ -568,7 +568,7 @@ jobs:
           name: snyk auth
           command: snyk auth $SNYK_TOKEN
       - run: # run snyk test - run snyk testa
-            name: snyk test
+            name: snyk test requirements_dev.txt
             command: |
               if test -f "requirements_dev.txt"; then
                 python3.7 -m virtualenv ~/.venv -p python3
@@ -579,7 +579,10 @@ jobs:
                 deactivate
                 rm -rf ~/.venv
               fi
-              if test -f "requirements_dev.txt"; then
+      - run: # run snyk test - run snyk testa
+            name: snyk test requirements_addon_specific.txt
+            command: |
+              if test -f "requirements_addon_specific.txt"; then
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
                 pip install -r requirements_addon_specific.txt --use-deprecated=legacy-resolver || true
@@ -588,7 +591,10 @@ jobs:
                 deactivate
                 rm -rf ~/.venv
               fi
-              if test -f "requirements_dev.txt"; then
+      - run: # run snyk test - run snyk testa
+            name: snyk test requirements_py2_dev.txt
+            command: |
+              if test -f "requirements_py2_dev.txt"; then
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
                 pip install -r requirements_py2_dev.txt  --use-deprecated=legacy-resolver || true
@@ -597,7 +603,10 @@ jobs:
                 deactivate
                 rm -rf ~/.venv
               fi
-              if test -f "requirements_dev.txt"; then
+      - run: # run snyk test - run snyk testa
+            name: snyk test package/lib/requirements.txt
+            command: |
+              if test -f "package/lib/requirements.txt"; then
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
                 pip install -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true
