@@ -564,72 +564,72 @@ jobs:
       - run: # run snyk auth - authenticate snyk use environment variables to add token
           name: snyk auth
           command: snyk auth $SNYK_TOKEN
-      - run: # run snyk test - run snyk testa
-            name: snyk test requirements_dev.txt
-            command: |
-              if [ -f "requirements_dev.txt" ] && [[ $(wc -l <requirements_dev.txt) -ge 6 ]]; then
-                python3.7 -m virtualenv ~/.venv -p python3
-                source ~/.venv/bin/activate
-                pip install -r requirements_dev.txt --use-deprecated=legacy-resolver || true
-                snyk test --severity-threshold=low  --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json || {snyk monitor --file=requirements_dev.txt --package-manager=pip --command=python3 && fail}
-                deactivate
-                rm -rf ~/.venv
-              fi
-      - run: # run snyk test - run snyk testa
+      # - run: # run snyk test - run snyk testa
+      #       name: snyk test requirements_dev.txt
+      #       command: |
+      #         if [ -f "requirements_dev.txt" ] && [[ $(wc -l <requirements_dev.txt) -ge 6 ]]; then
+      #           python3.7 -m virtualenv ~/.venv -p python3
+      #           source ~/.venv/bin/activate
+      #           pip install -r requirements_dev.txt --use-deprecated=legacy-resolver || true
+      #           snyk test --severity-threshold=low  --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json || snyk monitor --file=requirements_dev.txt --package-manager=pip --command=python3 && fail
+      #           deactivate
+      #           rm -rf ~/.venv
+      #         fi
+      # - run: # run snyk test - run snyk testa
             name: snyk test requirements_addon_specific.txt
             command: |
               if [ -f "requirements_addon_specific.txt" ] && [[ $(wc -l <requirements_addon_specific.txt) -ge 6 ]]; then
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
                 pip install -r requirements_addon_specific.txt --use-deprecated=legacy-resolver || true
-                snyk test --severity-threshold=low  --file=requirements_addon_specific.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scanrequirements_addon_specific.json || {snyk monitor --file=rrequirements_addon_specific.txt --package-manager=pip --command=python3 && fail}
+                snyk test --severity-threshold=low  --file=requirements_addon_specific.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scanrequirements_addon_specific.json || snyk monitor --file=rrequirements_addon_specific.txt --package-manager=pip --command=python3 && fail
                 deactivate
                 rm -rf ~/.venv
               fi
-      - run: # run snyk test - run snyk testa
-            name: snyk test requirements_py2_dev.txt
-            command: |
-              if [ -f "requirements_py2_dev.txt" ] && [[ $(wc -l <requirements_py2_dev.txt) -ge 6 ]]; then
-                python2 -m virtualenv ~/.venv -p python2
-                source ~/.venv/bin/activate
-                pip install -r requirements_py2_dev.txt  --use-deprecated=legacy-resolver || true
-                snyk test --severity-threshold=low  --file=requirements_py2_dev.txt --package-manager=pip --skip-unresolved --command=python2 --json-file-output=/root/project/test-results/snyk-scanrequirements_py2_dev.json || {snyk monitor --file=requirements_py2_dev.txt --package-manager=pip --skip-unresolved --command=python2 && fail}
-                deactivate
-                rm -rf ~/.venv
-              fi
-      - run: # run snyk test - run snyk testa
-            name: snyk test package/lib/requirements.txt
-            command: |
-              if [ -f "package/lib/requirements.txt" ]; then
-                python3.7 -m virtualenv ~/.venv -p python3
-                source ~/.venv/bin/activate
-                pip install -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true
-                snyk test --severity-threshold=low  --file=package/lib/requirements.txt --package-manager=pip --skip-unresolved --command=python3 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json || {snyk monitor --file=package/lib/requirements.txt --package-manager=pip --skip-unresolved --command=python3 && fail}
-                deactivate
-                rm -rf ~/.venv
-              fi
-      - run: # run snyk test - run snyk testa
-            name: snyk test package/lib/py2/requirements.txt
-            command: |
-              if [ -f "package/lib/py2/requirements.txt" ]; then
-                python2 -m virtualenv ~/.venv -p python2
-                source ~/.venv/bin/activate
-                pip install -r package/lib/py2/requirements.txt --use-deprecated=legacy-resolver || true
-                snyk test --severity-threshold=low  --file=package/lib/py2/requirements.txt --package-manager=pip --skip-unresolved --command=python2 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json || {snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --skip-unresolved --command=python2 && fail}
-                deactivate
-                rm -rf ~/.venv
-              fi
-      - run: # run snyk test - run snyk testa
-            name: snyk test package/lib/py3/requirements.txt
-            command: |
-              if [ -f "package/lib/py2/requirements.txt" ]; then
-                python3.7 -m virtualenv ~/.venv -p python3
-                source ~/.venv/bin/activate
-                pip install -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true
-                snyk test --severity-threshold=low  --file=package/lib/py3/requirements.txt --package-manager=pip --skip-unresolved --command=python3 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json || {snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --skip-unresolved --command=python3 && fail}
-                deactivate
-                rm -rf ~/.venv
-              fi
+      # - run: # run snyk test - run snyk testa
+      #       name: snyk test requirements_py2_dev.txt
+      #       command: |
+      #         if [ -f "requirements_py2_dev.txt" ] && [[ $(wc -l <requirements_py2_dev.txt) -ge 6 ]]; then
+      #           python2 -m virtualenv ~/.venv -p python2
+      #           source ~/.venv/bin/activate
+      #           pip install -r requirements_py2_dev.txt  --use-deprecated=legacy-resolver || true
+      #           snyk test --severity-threshold=low  --file=requirements_py2_dev.txt --package-manager=pip --skip-unresolved --command=python2 --json-file-output=/root/project/test-results/snyk-scanrequirements_py2_dev.json || snyk monitor --file=requirements_py2_dev.txt --package-manager=pip --skip-unresolved --command=python2 && fail
+      #           deactivate
+      #           rm -rf ~/.venv
+      #         fi
+      # - run: # run snyk test - run snyk testa
+      #       name: snyk test package/lib/requirements.txt
+      #       command: |
+      #         if [ -f "package/lib/requirements.txt" ]; then
+      #           python3.7 -m virtualenv ~/.venv -p python3
+      #           source ~/.venv/bin/activate
+      #           pip install -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true
+      #           snyk test --severity-threshold=low  --file=package/lib/requirements.txt --package-manager=pip --skip-unresolved --command=python3 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json || snyk monitor --file=package/lib/requirements.txt --package-manager=pip --skip-unresolved --command=python3 && fail
+      #           deactivate
+      #           rm -rf ~/.venv
+      #         fi
+      # - run: # run snyk test - run snyk testa
+      #       name: snyk test package/lib/py2/requirements.txt
+      #       command: |
+      #         if [ -f "package/lib/py2/requirements.txt" ]; then
+      #           python2 -m virtualenv ~/.venv -p python2
+      #           source ~/.venv/bin/activate
+      #           pip install -r package/lib/py2/requirements.txt --use-deprecated=legacy-resolver || true
+      #           snyk test --severity-threshold=low  --file=package/lib/py2/requirements.txt --package-manager=pip --skip-unresolved --command=python2 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json || snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --skip-unresolved --command=python2 && fail
+      #           deactivate
+      #           rm -rf ~/.venv
+      #         fi
+      # - run: # run snyk test - run snyk testa
+      #       name: snyk test package/lib/py3/requirements.txt
+      #       command: |
+      #         if [ -f "package/lib/py2/requirements.txt" ]; then
+      #           python3.7 -m virtualenv ~/.venv -p python3
+      #           source ~/.venv/bin/activate
+      #           pip install -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true
+      #           snyk test --severity-threshold=low  --file=package/lib/py3/requirements.txt --package-manager=pip --skip-unresolved --command=python3 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json || snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --skip-unresolved --command=python3 && fail
+      #           deactivate
+      #           rm -rf ~/.venv
+      #         fi
 
       # - snyk/scan:
       #     additional-arguments: "--package-manager=pip --skip-unresolved --command=python3"
