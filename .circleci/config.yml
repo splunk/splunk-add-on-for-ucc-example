@@ -546,10 +546,25 @@ jobs:
             pip3 install -r requirements_dev.txt --use-deprecated=legacy-resolver || true
             pip3 install semantic_version==2.6.0
             sudo apt install npm
-      - snyk/scan:
-          additional-arguments: "--package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug"
-          organization: 'Splunk'
-          target-file: 'requirements_dev.txt'
+            sudo npm install -g snyk
+            snyk auth $SNYK_TOKEN
+            snyk test  --severity-threshold=low --org=Splunk --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug
+      #       - run:
+      #     name: update-npm
+      #     command: 'sudo npm install -g npm@latest'
+      # - run:
+      #     name: install-snyk
+      #     command: ''   
+      # - run: # run snyk auth - authenticate snyk use environment variables to add token
+      #     name: snyk auth
+      #     command: 
+      # - run: # run snyk test - run snyk test
+      #     name: snyk test
+      #     command: snyk test  --severity-threshold=low --org=Splunk --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug 
+      # - snyk/scan:
+      #     additional-arguments: "--package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug"
+      #     organization: 'Splunk'
+      #     target-file: 'requirements_dev.txt'
       - store_artifacts:
           path: test-results
           destination: test-results
