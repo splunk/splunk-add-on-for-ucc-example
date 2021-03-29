@@ -544,6 +544,7 @@ jobs:
             sudo apt-get install -y python2 python-pip python3 python3.7 python3-pip
             pip install pip --upgrade
             sudo apt install npm
+            ls -al *
 
       #       - run:
       #     name: update-npm
@@ -561,6 +562,18 @@ jobs:
           additional-arguments: "--package-manager=pip --skip-unresolved --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug"
           organization: 'Splunk'
           target-file: 'requirements_addon_specific.txt'
+      - snyk/scan:
+          additional-arguments: "--package-manager=pip --skip-unresolved --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug"
+          organization: 'Splunk'
+          target-file: 'requirements_dev.txt'
+      - snyk/scan:
+          additional-arguments: "--package-manager=pip --skip-unresolved --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug"
+          organization: 'Splunk'
+          target-file: 'requirements_py2_dev.txt'
+      - snyk/scan:
+          additional-arguments: "--package-manager=pip --skip-unresolved --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug"
+          organization: 'Splunk'
+          target-file: 'package/lib/requirements.txt'
       - store_artifacts:
           path: test-results
           destination: test-results
