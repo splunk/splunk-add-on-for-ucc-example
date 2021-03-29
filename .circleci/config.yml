@@ -548,7 +548,7 @@ jobs:
             snyk auth $SNYK_TOKEN
             pwd 
             ls -a
-            snyk test --all-projects --severity-threshold=low --org=Splunk --file=/home/circleci/project/Dockerfile-splunk --json-file-output=/root/project/test-results/snyk-scan.json --debug
+            snyk test  --severity-threshold=low --org=Splunk --file=/home/circleci/project/requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan.json --debug
       #       - run:
       #     name: update-npm
       #     command: 'sudo npm install -g npm@latest'
