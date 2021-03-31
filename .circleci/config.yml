@@ -567,7 +567,7 @@ jobs:
       - run: # run snyk test - run snyk testa
             name: snyk test requirements_dev.txt
             command: |
-              if [ -f "requirements_dev.txt" ] && [[ $(wc -l <requirements_dev.txt) -ge 6 ]]; then
+              if [ -f "requirements_dev.txt" ] && [[ $(grep -c '^ *#' requirements_dev.txt) -gt 0 ]]; then
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
                 pip install -r requirements_dev.txt --use-deprecated=legacy-resolver || true
@@ -578,7 +578,7 @@ jobs:
       - run: # run snyk test - run snyk testa
             name: snyk test requirements_addon_specific.txt
             command: |
-              if [ -f "requirements_addon_specific.txt" ] && [[ $(wc -l <requirements_addon_specific.txt) -ge 6 ]]; then
+              if [ -f "requirements_addon_specific.txt" ] && [[ $(grep -c '^ *#' requirements_addon_specific.txt) -gt 0 ]]; then
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
                 pip install -r requirements_addon_specific.txt --use-deprecated=legacy-resolver || true
@@ -589,7 +589,7 @@ jobs:
       - run: # run snyk test - run snyk testa
             name: snyk test requirements_py2_dev.txt
             command: |
-              if [ -f "requirements_py2_dev.txt" ] && [[ $(wc -l <requirements_py2_dev.txt) -ge 6 ]]; then
+              if [ -f "requirements_py2_dev.txt" ] && [[ $(grep -c '^ *#' requirements_py2_dev.txt) -gt 0 ]]; then
                 python2 -m virtualenv ~/.venv -p python2
                 source ~/.venv/bin/activate
                 pip install -r requirements_py2_dev.txt  --use-deprecated=legacy-resolver || true
@@ -600,7 +600,7 @@ jobs:
       - run: # run snyk test - run snyk testa
             name: snyk test package/lib/requirements.txt
             command: |
-              if [ -f "package/lib/requirements.txt" ]; then
+              if [ -f "package/lib/requirements.txt" ] && [[ $(grep -c '^ *#' package/lib/requirements.txt) -gt 0 ]];; then
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
                 pip install -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true
@@ -611,7 +611,7 @@ jobs:
       - run: # run snyk test - run snyk testa
             name: snyk test package/lib/py2/requirements.txt
             command: |
-              if [ -f "package/lib/py2/requirements.txt" ]; then
+              if [ -f "package/lib/py2/requirements.txt" ] && [[ $(grep -c '^ *#' package/lib/py2/requirements.txt) -gt 0 ]];; then
                 python2 -m virtualenv ~/.venv -p python2
                 source ~/.venv/bin/activate
                 pip install -r package/lib/py2/requirements.txt --use-deprecated=legacy-resolver || true
@@ -622,7 +622,7 @@ jobs:
       - run: # run snyk test - run snyk testa
             name: snyk test package/lib/py3/requirements.txt
             command: |
-              if [ -f "package/lib/py2/requirements.txt" ]; then
+              if [ -f "package/lib/py3/requirements.txt" ] && [[ $(grep -c '^ *#' package/lib/py3/requirements.txt) -gt 0 ]];; then
                 python3.7 -m virtualenv ~/.venv -p python3
                 source ~/.venv/bin/activate
                 pip install -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true
