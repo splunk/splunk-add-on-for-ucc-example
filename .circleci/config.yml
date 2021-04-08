@@ -290,13 +290,11 @@ jobs:
             # Start Splunk
             docker-compose -f docker-compose-ci.yml up -d splunk
             until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
-
             # Run a Splunk Diag
             mkdir /tmp/diag
             diag=$(docker-compose -f docker-compose-ci.yml exec splunk sudo -u splunk /opt/splunk/bin/splunk diag | grep "Splunk diagnosis file created" | sed -n 's/.* \(\/.*\.gz\)/\1/p') 
             docker-compose -f docker-compose-ci.yml exec splunk sudo chmod +r ${diag//[$'\t\r\n']}
             docker cp project_splunk_1:${diag//[$'\t\r\n']} /tmp/diag
-
             # Check with btool
             docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
             docker-compose -f docker-compose-ci.yml up -d splunk uf
@@ -475,7 +473,7 @@ jobs:
             docker-compose -f docker-compose-ci.yml build test
 
             docker ps -a
-
+                            
             # Run the tests
             test_exit_code=0
 
@@ -518,14 +516,14 @@ jobs:
             export REPO_BRANCH=$(echo "<< pipeline.git.branch >>")
             DASHBOARD_URL=$(python3 -c "from urllib.parse import quote; import os; print('https://semgrep.dev/manage/findings?repo=' + quote(os.environ['SEMGREP_REPO_NAME'], safe='') + '&tab=findings&ref_type=branch&ref=' + quote(os.environ['REPO_BRANCH'], safe=''))")
             echo "View Result at Semgrep Dashboard: $DASHBOARD_URL"
-
+            
             # Semgrep Exclude files
             dos2unix .semgrepignore
             SEMGREP_EXCLUDE=$(sed "/^#/d" .semgrepignore | sed "/^:/d" | sed -r '/^\s*$/d' | sed ':a;N;$!ba;s/\n/ --exclude /g')
             echo "Excluding Semgrep Files: --exclude $SEMGREP_EXCLUDE"
 
             # Generate xml file
-            semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE 
+            semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE     
       - store_artifacts:
           path: test-results
           destination: test-results
@@ -544,7 +542,7 @@ jobs:
       - run:
           name: "Apply Release Tag"
           command: |
-            npx semantic-release
+            npx semantic-release --plugins "@semantic-release/github" --success @semantic-release/github
 
   publish-gh:
     docker:
@@ -560,9 +558,10 @@ jobs:
           name: "Publish on GitHub"
           command: |
             PATH=$PATH:/usr/local/go/bin
-            go get -v -u github.com/tcnksm/ghr
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
+            go get -v -u github.com/tcnksm/ghr            
+            [[ << pipeline.git.tag >> =~ ^v[0-9]*.[0-9]*.[0-9]*$ ]] || export ISPRE=-prerelease
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} -delete "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
 
   publish-sbase:
     docker:
