@@ -567,7 +567,10 @@ jobs:
               fi
       - run: # run snyk auth - authenticate snyk use environment variables to add token
           name: snyk auth
-          command: snyk auth $SNYK_TOKEN
+          command: |
+            if [<< pipeline.git.branch >> = "main"]; then
+             snyk auth $SNYK_TOKEN
+            fi
       - run: # run snyk test - run snyk testa
             name: snyk test requirements_dev.txt
             command: |
