@@ -1,5 +1,5 @@
 ##
-## SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
+## SPDX-FileCopyrightText: 2021 Splunk, Inc. <sales@splunk.com>
 ## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
 ##
 ##
@@ -49,6 +49,7 @@ orbs:
               command: |
                 PACKAGE_ID=$(ls output/)
                 BUILD_DIR=output/$PACKAGE_ID
+                find $BUILD_DIR/lib -executable -type f -exec chmod -x {} \; 2>/dev/null || true
                 source ~/.venv/bin/activate
                 slim generate-manifest $BUILD_DIR --update >/tmp/app.manifest   || true
                 cp  /tmp/app.manifest  $BUILD_DIR/app.manifest
@@ -542,7 +543,7 @@ jobs:
       - run:
           name: "Apply Release Tag"
           command: |
-            npx semantic-release --plugins "@semantic-release/github" --success @semantic-release/github
+            npx semantic-release
 
   publish-gh:
     docker:
@@ -558,10 +559,9 @@ jobs:
           name: "Publish on GitHub"
           command: |
             PATH=$PATH:/usr/local/go/bin
-            go get -v -u github.com/tcnksm/ghr            
-            [[ << pipeline.git.tag >> =~ ^v[0-9]*.[0-9]*.[0-9]*$ ]] || export ISPRE=-prerelease
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} -delete "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
+            go get -v -u github.com/tcnksm/ghr
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
 
   publish-sbase:
     docker:
