@@ -570,7 +570,7 @@ jobs:
               flag=0
               if [ << pipeline.git.branch >> == "test/snyk-POC" ]; then
                 if [ -f "requirements_dev.txt" ] && [[ $(wc -l <requirements_dev.txt) -ge 6 ]]; then
-                  echo "\ntesting file requirements_dev.txt"
+                  echo "testing file requirements_dev.txt"
                   python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r requirements_dev.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
@@ -578,9 +578,10 @@ jobs:
                   snyk monitor --file=requirements_dev.txt --package-manager=pip --command=python3 | grep "Explore this snapshot at"
                   deactivate
                   rm -rf ~/.venv
+                  echo ""
                 fi
                 if [ -f "requirements_py2_dev.txt" ] && [[ $(wc -l <requirements_py2_dev.txt) -ge 6 ]]; then
-                  echo "\ntesting file requirements_py2_dev.txt"
+                  echo "testing file requirements_py2_dev.txt"
                   python2 -m virtualenv ~/.venv -p python2 >/dev/null 2>&1
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r requirements_py2_dev.txt  --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
@@ -588,9 +589,10 @@ jobs:
                   snyk monitor --file=requirements_py2_dev.txt --package-manager=pip --command=python2 | grep "Explore this snapshot at"
                   deactivate
                   rm -rf ~/.venv
+                  echo ""
                 fi
                 if [ -f "requirements_addon_specific.txt" ] && [[ $(wc -l <requirements_addon_specific.txt) -ge 6 ]]; then
-                  echo "\ntesting file requirements_addon_specific.txt"
+                  echo "testing file requirements_addon_specific.txt"
                   python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r requirements_addon_specific.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
@@ -598,9 +600,10 @@ jobs:
                   snyk monitor --file=rrequirements_addon_specific.txt --package-manager=pip --command=python3 | grep "Explore this snapshot at"
                   deactivate
                   rm -rf ~/.venv
+                  echo ""
                 fi
                 if [ -f "package/lib/requirements.txt" ] && [[ $(wc -l <package/lib/requirements.txt) -ge 6 ]]; then
-                  echo "\ntesting file package/lib/requirements.txt"
+                  echo "testing file package/lib/requirements.txt"
                   python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
@@ -608,9 +611,10 @@ jobs:
                   snyk monitor --file=package/lib/requirements.txt --package-manager=pip --command=python3 | grep "Explore this snapshot at"
                   deactivate
                   rm -rf ~/.venv
+                  echo ""
                 fi
                 if [ -f "package/lib/py2/requirements.txt" ] && [[ $(wc -l <package/lib/py2/requirements.txt) -ge 6 ]]; then
-                  echo "\ntesting file package/lib/py2/requirements.txt"
+                  echo "testing file package/lib/py2/requirements.txt"
                   python2 -m virtualenv ~/.venv -p python2 >/dev/null 2>&1
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r package/lib/py2/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
@@ -618,9 +622,10 @@ jobs:
                   snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --command=python2 | grep "Explore this snapshot at"
                   deactivate
                   rm -rf ~/.venv
+                  echo ""
                 fi
                 if [ -f "package/lib/py3/requirements.txt" ] && [[ $(wc -l <package/lib/py3/requirements.txt) -ge 6 ]]; then
-                  echo "\ntesting file package/lib/py3/requirements.txt"
+                  echo "testing file package/lib/py3/requirements.txt"
                   python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
@@ -628,9 +633,11 @@ jobs:
                   snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --command=python3 | grep "Explore this snapshot at"
                   deactivate
                   rm -rf ~/.venv
+                  echo ""
                 fi
               fi
               if [ $flag -eq 1 ]; then
+                echo "Failures Found, failing test"
                 exit 1
               fi
       - store_artifacts:
