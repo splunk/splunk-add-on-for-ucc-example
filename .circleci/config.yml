@@ -575,7 +575,7 @@ jobs:
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r requirements_dev.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
                   snyk test --severity-threshold=low  --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json --sarif-file-output=/root/project/test-results/snyk-scan-requirements_dev.sarif | sed -n 2,15p|| flag=1
-                  snyk monitor --file=requirements_dev.txt --package-manager=pip --command=python3 | sed -n 2,4p
+                  snyk monitor --file=requirements_dev.txt --package-manager=pip --command=python3 | sed -n 3,5p
                   deactivate
                   rm -rf ~/.venv
                 fi
@@ -585,7 +585,7 @@ jobs:
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r requirements_py2_dev.txt  --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
                   snyk test --severity-threshold=low  --file=requirements_py2_dev.txt --package-manager=pip --command=python2 --json-file-output=/root/project/test-results/snyk-scanrequirements_py2_dev.json --sarif-file-output=/root/project/test-results/snyk-scanrequirements_py2_dev.sarif | sed -n 2,15p|| flag=1
-                  snyk monitor --file=requirements_py2_dev.txt --package-manager=pip --command=python2 | sed -n 2,4p
+                  snyk monitor --file=requirements_py2_dev.txt --package-manager=pip --command=python2 | sed -n 3,5p
                   deactivate
                   rm -rf ~/.venv
                 fi
@@ -595,7 +595,7 @@ jobs:
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r requirements_addon_specific.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
                   snyk test --severity-threshold=low  --file=requirements_addon_specific.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scanrequirements_addon_specific.json --sarif-file-output=/root/project/test-results/snyk-scanrequirements_addon_specific.sarif | sed -n 2,15p|| flag=1
-                  snyk monitor --file=rrequirements_addon_specific.txt --package-manager=pip --command=python3 | sed -n 2,4p
+                  snyk monitor --file=rrequirements_addon_specific.txt --package-manager=pip --command=python3 | sed -n 3,5p
                   deactivate
                   rm -rf ~/.venv
                 fi
@@ -605,7 +605,7 @@ jobs:
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
                   snyk test --severity-threshold=low  --file=package/lib/requirements.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json --sarif-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.sarif | sed -n 2,15p|| flag=1
-                  snyk monitor --file=package/lib/requirements.txt --package-manager=pip --command=python3 | sed -n 2,4p
+                  snyk monitor --file=package/lib/requirements.txt --package-manager=pip --command=python3 | sed -n 3,5p
                   deactivate
                   rm -rf ~/.venv
                 fi
@@ -615,7 +615,7 @@ jobs:
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r package/lib/py2/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
                   snyk test --severity-threshold=low  --file=package/lib/py2/requirements.txt --package-manager=pip --command=python2 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json --sarif-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.sarif | sed -n 2,15p|| flag=1
-                  snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --command=python2 | sed -n 2,4p
+                  snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --command=python2 | sed -n 3,5p
                   deactivate
                   rm -rf ~/.venv
                 fi
@@ -625,7 +625,7 @@ jobs:
                   source ~/.venv/bin/activate >/dev/null 2>&1
                   (pip install -q -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
                   snyk test --severity-threshold=low  --file=package/lib/py3/requirements.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json --sarif-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.sarif | sed -n 2,15p|| flag=1
-                  snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --command=python3 | sed -n 2,4p
+                  snyk monitor --file=package/lib/py2/requirements.txt --package-manager=pip --command=python3 | sed -n 3,5p
                   deactivate
                   rm -rf ~/.venv
                 fi
