@@ -1,0 +1,79 @@
+name: Snyk testing
+
+on: [push]
+  # pull_request:
+  #   branches: [main, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Environment
+        run:  sudo apt-get update
+              sudo apt-get install -y python2 python-pip python-virtualenv python3 python3.7 python3-pip python3-virtualenv
+              pip install pip --upgrade
+              sudo apt install npm
+              pip install pip --upgrade
+      - uses: snyk/actions/setup@master
+      - name: snyk auth - authenticate snyk use environment variables to add token
+        run:  snyk auth e1086d1f-def2-4c81-bcf2-2d6002c14c05
+      - name: snyk test requirements_dev.txt
+        if: ${{ -f "requirements_dev.txt" && $(wc -l <requirements_dev.txt) -ge 6 }}
+        run:  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
+              source ~/.venv/bin/activate >/dev/null 2>&1
+              (pip install -q -r requirements_dev.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
+        uses: snyk/actions/python-3.8@master
+        env:
+          SNYK_TOKEN: e1086d1f-def2-4c81-bcf2-2d6002c14c05
+        with:
+          json: true
+          args: --severity-threshold=low --print-deps --file=requirements_dev.txt --package-manager=pip --command=python3
+      - name: snyk second test requirements_dev.txt 
+        if: ${{ -f "requirements_dev.txt" && $(wc -l <requirements_dev.txt) -ge 6 }}
+        run:  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
+              source ~/.venv/bin/activate >/dev/null 2>&1
+              (pip install -q -r requirements_dev.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
+              snyk test --severity-threshold=low --print-deps --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json --sarif-file-output=/root/project/test-results/snyk-scan-requirements_dev.sarif || flag=1
+              deactivate
+              rm -rf ~/.venv
+      # - name: snyk test requirements_py2_dev.txt
+      #   if: ${{ -f "requirements_py2_dev.txt" && $(wc -l <requirements_py2_dev.txt) -ge 6 }}
+      #   run:  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
+      #         source ~/.venv/bin/activate >/dev/null 2>&1
+      #         (pip install -q -r requirements_py2_dev.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
+      #         snyk test --severity-threshold=low --print-deps --file=requirements_py2_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json --sarif-file-output=/root/project/test-results/snyk-scan-requirements_dev.sarif || flag=1
+      #         deactivate
+      #         rm -rf ~/.venv
+      # - name: snyk test requirements_addon_specific.txt
+      #   if: ${{ -f "requirements_addon_specific.txt" && $(wc -l <requirements_addon_specific.txt) -ge 6 }}
+      #   run:  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
+      #         source ~/.venv/bin/activate >/dev/null 2>&1
+      #         (pip install -q -r requirements_addon_specific.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
+      #         snyk test --severity-threshold=low --print-deps --file=requirements_addon_specific.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json --sarif-file-output=/root/project/test-results/snyk-scan-requirements_dev.sarif || flag=1
+      #         deactivate
+      #         rm -rf ~/.venv
+      # - name: snyk test package/lib/requirements.txt
+      #   if: ${{ -f "package/lib/requirements.txt" && $(wc -l <package/lib/requirements.txt) -ge 6 }}
+      #   run:  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
+      #         source ~/.venv/bin/activate >/dev/null 2>&1
+      #         (pip install -q -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
+      #         snyk test --severity-threshold=low --print-deps --file=package/lib/requirements.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json --sarif-file-output=/root/project/test-results/snyk-scan-requirements_dev.sarif || flag=1
+      #         deactivate
+      #         rm -rf ~/.venv
+      # - name: snyk test package/lib/py2/requirements.txt
+      #   if: ${{ -f "package/lib/py2/requirements.txt" && $(wc -l <package/lib/py2/requirements.txt) -ge 6 }}
+      #   run:  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
+      #         source ~/.venv/bin/activate >/dev/null 2>&1
+      #         (pip install -q -r package/lib/py2/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
+      #         snyk test --severity-threshold=low --print-deps --file=package/lib/py2/requirements.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json --sarif-file-output=/root/project/test-results/snyk-scan-requirements_dev.sarif || flag=1
+      #         deactivate
+      #         rm -rf ~/.venv
+      # - name: snyk test package/lib/py3/requirements.txt
+      #   if: ${{ -f "package/lib/py3/requirements.txt" && $(wc -l <package/lib/py3/requirements.txt) -ge 6 }}
+      #   run:  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
+      #         source ~/.venv/bin/activate >/dev/null 2>&1
+      #         (pip install -q -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
+      #         snyk test --severity-threshold=low --print-deps --file=package/lib/py3/requirements.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json --sarif-file-output=/root/project/test-results/snyk-scan-requirements_dev.sarif || flag=1
+      #         deactivate
+      #         rm -rf ~/.venv
