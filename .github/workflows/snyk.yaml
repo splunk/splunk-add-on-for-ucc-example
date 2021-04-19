@@ -10,7 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Setup Environment
-        run:  sudo apt-get update
+        run: |
+              sudo apt-get update
               sudo apt-get install -y python2 python-pip python-virtualenv python3 python3.7 python3-pip python3-virtualenv
               pip install pip --upgrade
               sudo apt install npm
@@ -26,7 +27,8 @@ jobs:
           json: true
           args: --severity-threshold=low --print-deps --file=requirements_dev.txt --package-manager=pip --command=python3
       - name: snyk second test requirements_dev.txt 
-        run:  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
+        run: |
+              python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r requirements_dev.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
               snyk test --severity-threshold=low --print-deps --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json --sarif-file-output=/root/project/test-results/snyk-scan-requirements_dev.sarif || flag=1
