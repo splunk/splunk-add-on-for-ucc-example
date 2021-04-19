@@ -7,15 +7,19 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7]
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Environment
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
         run: |
-              sudo apt-get update
-              sudo apt-get install -y python2 python-pip python-virtualenv python3 python3.7 python3-pip python3-virtualenv
-              pip install pip --upgrade
-              sudo apt install npm
-              pip install pip --upgrade
+          python -m pip install --upgrade pip
+          pip install virtualenv
       - uses: snyk/actions/setup@master
       - name: snyk auth - authenticate snyk use environment variables to add token
         run:  snyk auth e1086d1f-def2-4c81-bcf2-2d6002c14c05
