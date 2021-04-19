@@ -19,7 +19,6 @@ jobs:
       - name: snyk auth - authenticate snyk use environment variables to add token
         run:  snyk auth e1086d1f-def2-4c81-bcf2-2d6002c14c05
       - name: snyk test requirements_dev.txt
-        if: ${{ [[-f "requirements_dev.txt"]] && [[$(wc -l <requirements_dev.txt) -ge 6]] }}
         uses: snyk/actions/python-3.8@master
         env:
           SNYK_TOKEN: e1086d1f-def2-4c81-bcf2-2d6002c14c05
@@ -27,7 +26,6 @@ jobs:
           json: true
           args: --severity-threshold=low --print-deps --file=requirements_dev.txt --package-manager=pip --command=python3
       - name: snyk second test requirements_dev.txt 
-        if: ${{ -f "requirements_dev.txt" && $(wc -l <requirements_dev.txt) -ge 6 }}
         run:  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r requirements_dev.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
