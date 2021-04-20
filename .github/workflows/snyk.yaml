@@ -25,7 +25,7 @@ jobs:
         run:  snyk auth e1086d1f-def2-4c81-bcf2-2d6002c14c05
       - run: mkdir snyk_output
       - name: snyk test package/lib/requirements.txt
-        if: matrix.python-version == 3.7
+        if: always() && matrix.python-version == 3.7
         run: |
             if [ -f "package/lib/requirements.txt" ] && [[ $(cat package/lib/requirements.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
@@ -36,7 +36,7 @@ jobs:
               rm -rf ~/.venv
             fi
       - name: snyk test package/lib/py2/requirements.txt
-        if: matrix.python-version == 2.7
+        if: always() && matrix.python-version == 2.7
         run: |
             if [ -f "package/lib/py2/requirements.txt" ] && [[ $(cat package/lib/py2/requirements.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
               python -m virtualenv ~/.venv -p python >/dev/null 2>&1
@@ -47,7 +47,7 @@ jobs:
               rm -rf ~/.venv
             fi
       - name: snyk test package/lib/py3/requirements.txt
-        if: matrix.python-version == 3.7
+        if: always() && matrix.python-version == 3.7
         run: |
             if [ -f "package/lib/py2/requirements.txt" ] && [[ $(cat package/lib/py3/requirements.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
