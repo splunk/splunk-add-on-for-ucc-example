@@ -90,8 +90,6 @@ jobs:
               deactivate
               rm -rf ~/.venv
             fi
-      - run: ls snyk_output
-        if: always()
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
