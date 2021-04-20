@@ -91,9 +91,10 @@ jobs:
               rm -rf ~/.venv
             fi
       - run: ls snyk_output
+        if: always()
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
           name: Snyk_test_results
-          path: snyk_output
+          path: snyk_output/*
           if-no-files-found: ignore
