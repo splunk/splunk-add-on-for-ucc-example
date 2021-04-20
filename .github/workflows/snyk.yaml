@@ -49,7 +49,7 @@ jobs:
       - name: snyk test requirements_addon_specific.txt
         if: always()
         run: |
-            if [ -f "requirements_addon_specific.txt" ] && $(cat requirements_addon_specific.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
+            if [ -f "requirements_addon_specific.txt" ] && [[ $(cat requirements_addon_specific.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r requirements_addon_specific.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
@@ -82,7 +82,7 @@ jobs:
       - name: snyk test package/lib/py3/requirements.txt
         if: always()
         run: |
-            if [ -f "package/lib/py3/requirements.txt " ] && [[ $(cat package/lib/py3/requirements.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
+            if [ -f "package/lib/py2/requirements.txt" ] && [[ $(cat package/lib/py3/requirements.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
