@@ -24,7 +24,7 @@ jobs:
       - name: snyk test package/lib/requirements.txt
         if: always()
         run: |
-            if [ -f "package/lib/requirements.txt" ] && [[ $(cat package/lib/requirements.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
+            if [ -f "package/lib/requirements.txt" ] && [[ $(grep -v "^\s*#" package/lib/requirements.txt | wc -l) -gt 0 ]]; then
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
@@ -32,12 +32,12 @@ jobs:
               deactivate
               rm -rf ~/.venv
             else
-              echo "File package/lib/requirements.txt not found"
+              echo "File package/lib/requirements.txt is either not found or does not contain dependencies"
             fi
       - name: snyk test package/lib/py3/requirements.txt
         if: always()
         run: |
-            if [ -f "package/lib/py3/requirements.txt" ] && [[ $(cat package/lib/py3/requirements.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
+            if [ -f "package/lib/py3/requirements.txt" ] && [[ $(grep -v "^\s*#" package/lib/py3/requirements.txt | wc -l) -gt 0 ]]; then
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
@@ -45,7 +45,7 @@ jobs:
               deactivate
               rm -rf ~/.venv
             else
-              echo "File package/lib/py3/requirements.txt not found"
+              echo "File package/lib/py3/requirements.txt is either not found or does not contain dependencies"
             fi
       - uses: actions/upload-artifact@v2
         if: failure()
