@@ -32,7 +32,7 @@ jobs:
               deactivate
               rm -rf ~/.venv
             else
-              echo "File package/lib/py3/requirements.txt not found"
+              echo "File package/lib/requirements.txt not found"
             fi
       - name: snyk test package/lib/py3/requirements.txt
         if: always()
