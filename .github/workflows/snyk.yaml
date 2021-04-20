@@ -90,9 +90,10 @@ jobs:
               deactivate
               rm -rf ~/.venv
             fi
+      - run: ls snyk_output
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
-          name: my-artifact
+          name: Snyk_test_results
           path: snyk_output
           if-no-files-found: ignore
