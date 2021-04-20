@@ -42,7 +42,7 @@ jobs:
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r requirements_py2_dev.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-              snyk test --severity-threshold=low --print-deps --file=requirements_py2_dev.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-requirements_dev.json --sarif-file-snyk_output/snyk-scan-requirements_dev.sarif
+              snyk test --severity-threshold=low --print-deps --file=requirements_py2_dev.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-requirements_py2_dev.json --sarif-file-snyk_output/snyk-scan-requirements_py2_dev.sarif
               deactivate
               rm -rf ~/.venv
             fi
@@ -53,7 +53,7 @@ jobs:
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r requirements_addon_specific.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-              snyk test --severity-threshold=low --print-deps --file=requirements_addon_specific.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-requirements_dev.json --sarif-file-snyk_output/snyk-scan-requirements_dev.sarif
+              snyk test --severity-threshold=low --print-deps --file=requirements_addon_specific.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-requirements_addon_specific.json --sarif-file-snyk_output/snyk-scan-requirements_addon_specific.sarif
               deactivate
               rm -rf ~/.venv
             fi
@@ -64,7 +64,7 @@ jobs:
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-              snyk test --severity-threshold=low --print-deps --file=package/lib/requirements.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-requirements_dev.json --sarif-file-snyk_output/snyk-scan-requirements_dev.sarif
+              snyk test --severity-threshold=low --print-deps --file=package/lib/requirements.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-package_lib_requirements.json --sarif-file-snyk_output/snyk-scan-package_lib_requirements.sarif
               deactivate
               rm -rf ~/.venv
             fi
@@ -75,7 +75,7 @@ jobs:
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r package/lib/py2/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-              snyk test --severity-threshold=low --print-deps --file=package/lib/py2/requirements.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-requirements_dev.json --sarif-file-snyk_output/snyk-scan-requirements_dev.sarif
+              snyk test --severity-threshold=low --print-deps --file=package/lib/py2/requirements.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-package_lib_py2_requirements.json --sarif-file-snyk_output/snyk-scan-package_lib_py2_requirements.sarif
               deactivate
               rm -rf ~/.venv
             fi
@@ -86,7 +86,7 @@ jobs:
               python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-              snyk test --severity-threshold=low --print-deps --file=package/lib/py3/requirements.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-requirements_dev.json --sarif-file-snyk_output/snyk-scan-requirements_dev.sarif
+              snyk test --severity-threshold=low --print-deps --file=package/lib/py3/requirements.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-package_lib_py3_requirements.json --sarif-file-snyk_output/snyk-scan-package_lib_py3_requirements.sarif
               deactivate
               rm -rf ~/.venv
             fi
