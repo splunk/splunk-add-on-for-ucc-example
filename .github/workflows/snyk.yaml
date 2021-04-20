@@ -39,10 +39,10 @@ jobs:
         if: always() && matrix.python-version == 2.7
         run: |
             if [ -f "package/lib/py2/requirements.txt" ] && [[ $(cat package/lib/py2/requirements.txt | sed '/^\s*#/d;/^\s*$/d' | wc -l) -gt 0 ]]; then
-              python -m virtualenv ~/.venv -p python >/dev/null 2>&1
+              python2 -m virtualenv ~/.venv -p python2 >/dev/null 2>&1
               source ~/.venv/bin/activate >/dev/null 2>&1
               (pip install -q -r package/lib/py2/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-              snyk test --severity-threshold=low --print-deps --file=package/lib/py2/requirements.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-package_lib_py2_requirements.json --sarif-file-output=snyk_output/snyk-scan-package_lib_py2_requirements.sarif
+              snyk test --severity-threshold=low --print-deps --file=package/lib/py2/requirements.txt --package-manager=pip --command=python2 --json-file-output=snyk_output/snyk-scan-package_lib_py2_requirements.json --sarif-file-output=snyk_output/snyk-scan-package_lib_py2_requirements.sarif
               deactivate
               rm -rf ~/.venv
             fi
