@@ -31,6 +31,8 @@ jobs:
               snyk test --severity-threshold=high --print-deps --file=package/lib/requirements.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-package_lib_requirements.json --sarif-file-output=snyk_output/snyk-scan-package_lib_requirements.sarif
               deactivate
               rm -rf ~/.venv
+            else
+              echo "File package/lib/py3/requirements.txt not found"
             fi
       - name: snyk test package/lib/py3/requirements.txt
         if: always()
@@ -42,6 +44,8 @@ jobs:
               snyk test --severity-threshold=high --print-deps --file=package/lib/py3/requirements.txt --package-manager=pip --command=python3 --json-file-output=snyk_output/snyk-scan-package_lib_py3_requirements.json --sarif-file-output=snyk_output/snyk-scan-package_lib_py3_requirements.sarif
               deactivate
               rm -rf ~/.venv
+            else
+              echo "File package/lib/py3/requirements.txt not found"
             fi
       - uses: actions/upload-artifact@v2
         if: failure()
