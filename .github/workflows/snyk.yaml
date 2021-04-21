@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    if: (github.ref=='test/snyk-POC2' && github.event.pull_request.user.login!='seanmalloy-crest' && github.event.pull_request.merged==true)
+    if: (github.ref=='test/snyk-POC2' && github.event.pull_request.user.login!='davido-splunk' && github.event.pull_request.merged==true) || (github.ref!='test/snyk-POC2' && github.event.pull_request.merged==true)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
