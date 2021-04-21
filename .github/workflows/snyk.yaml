@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    if: github.ref=='refs/heads/test/snyk-POC' && github.actor!='seanmalloy-crest')
+    if: github.ref=='refs/heads/test/snyk-POC' && github.actor!='seanmalloy-crest'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
