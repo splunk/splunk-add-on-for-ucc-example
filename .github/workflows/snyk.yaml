@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    if: github.ref=='refs/heads/develop' && github.actor!='dependabot'
+    if: (github.ref=='refs/heads/main' && github.actor!='dependabot') || github.ref!='refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
