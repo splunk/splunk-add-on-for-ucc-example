@@ -3,11 +3,11 @@ name: Snyk testing
 on:
   pull_request:
     branches: [develop, main, test/snyk-POC, test/snyk-POC2]
-    types: [opened, closed]
+    types: [closed]
 
 jobs:
   test:
-    if: (github.ref=='refs/heads/main' && github.actor!='dependabot') || github.ref!='refs/heads/main'
+    if: (github.ref=='refs/heads/test/snyk-POC2' && github.event.pull_request.user.login!='seanmalloy-crest') || github.ref!='refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
