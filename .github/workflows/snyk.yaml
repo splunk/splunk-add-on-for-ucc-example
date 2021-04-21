@@ -15,6 +15,15 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
+      - name: Dump GitHub context variables
+        env:
+          GITHUB_CONTEXT_PR: ${{ github.event.pull_request.user.login }}
+          GITHUB_CONTEXT_REF: ${{ github.ref }}
+          GITHUB_CONTEXT_MERGED: ${{ github.event.pull_request.merged }}
+        run: |
+            echo "$GITHUB_CONTEXT_PR"
+            echo "$GITHUB_CONTEXT_MERGED"
+            echo "$GITHUB_CONTEXT_REF"
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
