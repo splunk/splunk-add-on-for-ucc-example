@@ -2,7 +2,7 @@ name: Snyk testing
 
 on:
   push:
-    branches: [develop, main, test/snyk-POC]
+    branches: [develop, main, test/snyk-POC, test/snyk-POC2]
 
 jobs:
   test:
