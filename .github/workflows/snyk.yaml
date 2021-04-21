@@ -2,12 +2,12 @@ name: Snyk testing
 
 on:
   pull_request:
-    branches: [develop, main, test/snyk-POC, test/snyk-POC2]
+    branches: [develop, main]
     types: [closed]
 
 jobs:
   test:
-    if: (github.ref=='test/snyk-POC2' && github.event.pull_request.user.login!='davido-splunk' && github.event.pull_request.merged==true) || (github.ref!='test/snyk-POC2' && github.event.pull_request.merged==true)
+    if: github.event.pull_request.merged==true && (github.ref!='main' || (github.ref=='main' && github.event.pull_request.user.login!='dependabot'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,14 +15,6 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.7
-      - name: Dump GitHub context variables
-        env:
-          GITHUB_CONTEXT_PR: ${{ github.event.pull_request.user.login }}
-          GITHUB_CONTEXT_REF: ${{ github.ref }}
-          GITHUB_CONTEXT_MERGED: ${{ github.event.pull_request.merged }}
-        run: |
-            echo "$GITHUB_CONTEXT_PR"
-            echo "$GITHUB_CONTEXT_MERGED"
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
