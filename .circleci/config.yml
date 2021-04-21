@@ -290,13 +290,11 @@ jobs:
             # Start Splunk
             docker-compose -f docker-compose-ci.yml up -d splunk
             until docker-compose -f docker-compose-ci.yml logs splunk | grep "Ansible playbook complete" ; do sleep 1; done
-
             # Run a Splunk Diag
             mkdir /tmp/diag
             diag=$(docker-compose -f docker-compose-ci.yml exec splunk sudo -u splunk /opt/splunk/bin/splunk diag | grep "Splunk diagnosis file created" | sed -n 's/.* \(\/.*\.gz\)/\1/p') 
             docker-compose -f docker-compose-ci.yml exec splunk sudo chmod +r ${diag//[$'\t\r\n']}
             docker cp project_splunk_1:${diag//[$'\t\r\n']} /tmp/diag
-
             # Check with btool
             docker-compose -f docker-compose-ci.yml exec splunk sudo /opt/splunk/bin/splunk cmd btool check
             docker-compose -f docker-compose-ci.yml up -d splunk uf
@@ -525,115 +523,7 @@ jobs:
             echo "Excluding Semgrep Files: --exclude $SEMGREP_EXCLUDE"
 
             # Generate xml file
-            semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE     
-      - store_artifacts:
-          path: test-results
-          destination: test-results
-      - store_test_results:
-          path: test-results
-  snyk:
-    docker: 
-      - image: circleci/python:3.7
-        user: root
-    steps:
-      - checkout
-      - run:
-          name: Setup Environment
-          command: |
-            if [ << pipeline.git.branch >> == "test/snyk-POC" ]; then
-              sudo apt-get update
-              sudo apt-get install -y python2 python-pip python-virtualenv python3 python3.7 python3-pip python3-virtualenv
-              pip install pip --upgrade
-              sudo apt install npm
-              pip install pip --upgrade
-            fi
-      - run: # install Snyk and run snyk auth - authenticate snyk use environment variables to add token
-          name: install and authenticate snyk
-          command: |
-              if [ << pipeline.git.branch >> == "test/snyk-POC" ]; then
-                #!/bin/bash -eo pipefail
-                if [[ ! -x "/usr/local/bin/snyk" ]]; then
-                  if [[ "linux" == "alpine" && "true" == "true" ]]; then
-                    apk add -q --no-progress --no-cache curl wget libstdc++ sudo
-                  fi
-                  curl -s https://api.github.com/repos/snyk/snyk/releases/latest | grep "browser_download_url" | grep linux | cut -d '"' -f 4 | xargs -n 1 curl -LO
-                  sha256sum -c snyk-linux.sha256
-                  sudo mv snyk-linux /usr/local/bin/snyk
-                  sudo chmod +x /usr/local/bin/snyk
-                fi
-                snyk config set disableSuggestions=true
-                snyk auth $SNYK_TOKEN
-              fi
-      - run: # run snyk test - run snyk testa
-            name: snyk test requirements files
-            command: |
-              flag=0
-              if [ << pipeline.git.branch >> == "test/snyk-POC" ]; then
-                if [ -f "requirements_dev.txt" ] && [[ $(wc -l <requirements_dev.txt) -ge 6 ]]; then
-                  echo "Testing file requirements_dev.txt"
-                  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
-                  source ~/.venv/bin/activate >/dev/null 2>&1
-                  (pip install -q -r requirements_dev.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-                  snyk test --severity-threshold=low --print-deps --file=requirements_dev.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scan-requirements_dev.json --sarif-file-output=/root/project/test-results/snyk-scan-requirements_dev.sarif || flag=1
-                  deactivate
-                  rm -rf ~/.venv
-                  echo ""
-                fi
-                if [ -f "requirements_py2_dev.txt" ] && [[ $(wc -l <requirements_py2_dev.txt) -ge 6 ]]; then
-                  echo "Testing file requirements_py2_dev.txt"
-                  python2 -m virtualenv ~/.venv -p python2 >/dev/null 2>&1
-                  source ~/.venv/bin/activate >/dev/null 2>&1
-                  (pip install -q -r requirements_py2_dev.txt  --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-                  snyk test --severity-threshold=low --print-deps --file=requirements_py2_dev.txt --package-manager=pip --command=python2 --json-file-output=/root/project/test-results/snyk-scanrequirements_py2_dev.json --sarif-file-output=/root/project/test-results/snyk-scanrequirements_py2_dev.sarif || flag=1
-                  deactivate
-                  rm -rf ~/.venv
-                  echo ""
-                fi
-                if [ -f "requirements_addon_specific.txt" ] && [[ $(wc -l <requirements_addon_specific.txt) -ge 6 ]]; then
-                  echo "Testing file requirements_addon_specific.txt"
-                  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
-                  source ~/.venv/bin/activate >/dev/null 2>&1
-                  (pip install -q -r requirements_addon_specific.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-                  snyk test --severity-threshold=low --print-deps --file=requirements_addon_specific.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scanrequirements_addon_specific.json --sarif-file-output=/root/project/test-results/snyk-scanrequirements_addon_specific.sarif || flag=1
-                  deactivate
-                  rm -rf ~/.venv
-                  echo ""
-                fi
-                if [ -f "package/lib/requirements.txt" ] && [[ $(wc -l <package/lib/requirements.txt) -ge 6 ]]; then
-                  echo "Testing file package/lib/requirements.txt"
-                  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
-                  source ~/.venv/bin/activate >/dev/null 2>&1
-                  (pip install -q -r package/lib/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-                  snyk test --severity-threshold=low --print-deps --file=package/lib/requirements.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json --sarif-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.sarif || flag=1
-                  deactivate
-                  rm -rf ~/.venv
-                  echo ""
-                fi
-                if [ -f "package/lib/py2/requirements.txt" ] && [[ $(wc -l <package/lib/py2/requirements.txt) -ge 6 ]]; then
-                  echo "Testing file package/lib/py2/requirements.txt"
-                  python2 -m virtualenv ~/.venv -p python2 >/dev/null 2>&1
-                  source ~/.venv/bin/activate >/dev/null 2>&1
-                  (pip install -q -r package/lib/py2/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-                  snyk test --severity-threshold=low --print-deps --file=package/lib/py2/requirements.txt --package-manager=pip --command=python2 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json --sarif-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.sarif || flag=1
-                  deactivate
-                  rm -rf ~/.venv
-                  echo ""
-                fi
-                if [ -f "package/lib/py3/requirements.txt" ] && [[ $(wc -l <package/lib/py3/requirements.txt) -ge 6 ]]; then
-                  echo "Testing file package/lib/py3/requirements.txt"
-                  python3.7 -m virtualenv ~/.venv -p python3 >/dev/null 2>&1
-                  source ~/.venv/bin/activate >/dev/null 2>&1
-                  (pip install -q -r package/lib/py3/requirements.txt --use-deprecated=legacy-resolver || true) >/dev/null 2>&1
-                  snyk test --severity-threshold=low --print-deps --file=package/lib/py3/requirements.txt --package-manager=pip --command=python3 --json-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.json --sarif-file-output=/root/project/test-results/snyk-scanpackage/lib/requirements.sarif || flag=1
-                  deactivate
-                  rm -rf ~/.venv
-                  echo ""
-                fi
-              fi
-              if [ $flag -eq 1 ]; then
-                echo "Failures Found, failing test"
-                exit 1
-              fi
+            semgrep --config="p/r2c-ci" --config="p/r2c-security-audit" --config="p/bandit" --error --strict --timeout=0 --junit-xml -o /root/project/test-results/semgrep-scan.xml --exclude $SEMGREP_EXCLUDE
       - store_artifacts:
           path: test-results
           destination: test-results
@@ -653,7 +543,7 @@ jobs:
       - run:
           name: "Apply Release Tag"
           command: |
-            npx semantic-release
+            npx semantic-release --plugins "@semantic-release/github" --success @semantic-release/github
 
   publish-gh:
     docker:
@@ -669,9 +559,10 @@ jobs:
           name: "Publish on GitHub"
           command: |
             PATH=$PATH:/usr/local/go/bin
-            go get -v -u github.com/tcnksm/ghr
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
-            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -replace "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
+            go get -v -u github.com/tcnksm/ghr            
+            [[ << pipeline.git.tag >> =~ ^v[0-9]*.[0-9]*.[0-9]*$ ]] || export ISPRE=-prerelease
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} -delete "<< pipeline.git.tag >>" /tmp/workspace/build/package/splunkbase
+            $HOME/go/bin/ghr -t ${GH_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${ISPRE} "<< pipeline.git.tag >>" /tmp/workspace/build/package/deployment
 
   publish-sbase:
     docker:
