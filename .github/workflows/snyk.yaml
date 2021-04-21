@@ -23,7 +23,6 @@ jobs:
         run: |
             echo "$GITHUB_CONTEXT_PR"
             echo "$GITHUB_CONTEXT_MERGED"
-            echo "$GITHUB_CONTEXT_REF"
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
