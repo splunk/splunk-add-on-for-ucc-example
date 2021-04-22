@@ -2,7 +2,7 @@ name: Snyk testing
 
 on:
   pull_request:
-    branches: [develop, main, test/snyk-POC, test/snyk-POC2]
+    branches: [develop, main, test/snyk-POC2]
     types: [closed]
 
 jobs:
