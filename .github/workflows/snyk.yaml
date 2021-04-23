@@ -1,8 +1,8 @@
-name: Snyk testing
+name: Snyk Scan
 
 on:
   pull_request:
-    branches: [develop, main]
+    branches: [develop, main, test/snyk-POC]
     types: [closed]
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
           pip install virtualenv
       - uses: snyk/actions/setup@master
       - name: snyk auth - authenticate snyk use environment variables to add token
-        run:  snyk auth e1086d1f-def2-4c81-bcf2-2d6002c14c05
+        run:  snyk auth ${{ secrets.SNYK_TOKEN }}
       - run: mkdir snyk_output
       - name: snyk test package/lib/requirements.txt
         if: always()
