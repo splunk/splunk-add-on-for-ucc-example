@@ -1,0 +1,32 @@
+name: unit-tests
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [2.7.17, 3.7.5, 3.7.8]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Run tests
+      run: ./tests/run_tests.sh
+    - name: Build coverage file
+      run: |
+        coverage json
+    - name: Archive test coverage results
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage-report-unit-tests
+        path: coverage.json
+        if-no-files-found: error
+    - name: Archive test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: test.xml
+        path: test.xml
+        if-no-files-found: error
