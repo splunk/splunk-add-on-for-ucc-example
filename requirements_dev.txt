@@ -12,7 +12,7 @@ pytest-xdist
 pytest-ordering
 pytest-splunk-addon==1.6.0
 pytest-expect
-git+https://github.com/splunk/addon-factory-smartx-ui-test-library.git@new_ucc
+git+https://github.com/splunk/addon-factory-smartx-ui-test-library.git@test/new_ucc
 pytest-rerunfailures
 mock
 requests
