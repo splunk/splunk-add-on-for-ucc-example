@@ -3,7 +3,7 @@
 ## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
 ##
 ## Addon Requirements for Testing
-splunk-add-on-ucc-framework==4.3.0
+git+https://github.com/splunk/addonfactory-ucc-generator.git@ucc_ui_lib_migration
 lovely-pytest-docker
 reuse
 pytest
