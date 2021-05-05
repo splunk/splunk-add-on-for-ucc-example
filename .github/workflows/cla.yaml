@@ -9,9 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Fetch CLA_version"
+        uses: actions/checkout@v1
         run: |
-          ls -la
-          # JSON=$(grep -Po '"cla_version": *\K"[^"]*"' /package.json)
+          ls
+          # JSON=$(grep -Po '"cla_version": *\K"[^"]*"' ./package.json)
           # cla_version="${JSON%\"}"
           cla_version="2.1.2-beta"
           cla_version="${cla_version#\"}"
@@ -21,7 +22,7 @@ jobs:
         # Alpha Release
         # uses: cla-assistant/github-action@{$env:GITHUB_CLA_VERSION}
         run: |
-          echo "GITHUB_CLA_VERSION: $GITHUB_CLA_VERSION"
+          echo "GITHUB_CLA_VERSION:$GITHUB_CLA_VERSION"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # the below token should have repo scope and must be manually added by you in the repository's secret
