@@ -8,8 +8,8 @@ jobs:
   CLAssistant:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
       - name: "Fetch CLA_version"
-        uses: actions/checkout@v1
         run: |
           ls
           # JSON=$(grep -Po '"cla_version": *\K"[^"]*"' ./package.json)
