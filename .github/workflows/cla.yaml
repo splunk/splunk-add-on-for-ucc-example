@@ -22,6 +22,8 @@ jobs:
         # if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA') || github.event_name == 'pull_request_target'
         # Alpha Release
         uses: cla-assistant/github-action@$GITHUB_CLA_VERSION
+        with:
+          ref: $GITHUB_CLA_VERSION
         # run: |
         #   echo "GITHUB_CLA_VERSION:$GITHUB_CLA_VERSION"
         env:
