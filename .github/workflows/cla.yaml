@@ -13,7 +13,7 @@ jobs:
           JSON=$(grep -Po '"cla_version": *\K"[^"]*"' ./package.json)
           cla_version="${JSON%\"}"
           cla_version="${cla_version#\"}"
-          echo "GITHUB_CLA_VERSION=$(echo $cla_version)" >> $GITHUB_ENV
+          echo "GITHUB_CLA_VERSION=$(echo $cla_version)" >> $env:GITHUB_ENV
           echo "$cla_version";
       - name: "CLA Assistant"
         # if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA') || github.event_name == 'pull_request_target'
