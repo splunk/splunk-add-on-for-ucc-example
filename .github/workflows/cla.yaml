@@ -10,8 +10,10 @@ jobs:
     steps:
       - name: "Fetch CLA_version"
         run: |
-          JSON=$(grep -Po '"cla_version": *\K"[^"]*"' ./package.json)
-          cla_version="${JSON%\"}"
+          ls -la
+          # JSON=$(grep -Po '"cla_version": *\K"[^"]*"' /package.json)
+          # cla_version="${JSON%\"}"
+          cla_version="2.1.2-beta"
           cla_version="${cla_version#\"}"
           Write-Output "::set-env name=GITHUB_CLA_VERSION::$cla_version"
       - name: "CLA Assistant"
