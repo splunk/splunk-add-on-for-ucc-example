@@ -21,15 +21,15 @@ jobs:
       - name: "CLA Assistant"
         # if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA') || github.event_name == 'pull_request_target'
         # Alpha Release
-        uses: cla-assistant/github-action@v2.1.0-alpha
+        uses: cla-assistant/github-action
         # run: |
         #   echo "GITHUB_CLA_VERSION:$GITHUB_CLA_VERSION"
         env:
+          tag: ${{ GITHUB_CLA_VERSION }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # the below token should have repo scope and must be manually added by you in the repository's secret
           PERSONAL_ACCESS_TOKEN: ${{ secrets.PAT_CLATOOL }}
         with:
-          ref: $GITHUB_CLA_VERSION
           path-to-signatures: ".github/signatures/version1/cla.json"
           path-to-document: "https://github.com/splunk/addonfactory-test-releaseci/blob/main/CLA.md" # e.g. a CLA or a DCO document
           # branch should not be protected
