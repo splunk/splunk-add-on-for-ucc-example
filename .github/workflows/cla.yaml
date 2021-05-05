@@ -15,7 +15,7 @@ jobs:
           # cla_version="${JSON%\"}"
           cla_version="2.1.2-beta"
           cla_version="${cla_version#\"}"
-          Write-Output "::set-env name=GITHUB_CLA_VERSION::$cla_version"
+          echo "GITHUB_CLA_VERSION=$(echo $cla_version)" >> $GITHUB_ENV
       - name: "CLA Assistant"
         # if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA') || github.event_name == 'pull_request_target'
         # Alpha Release
