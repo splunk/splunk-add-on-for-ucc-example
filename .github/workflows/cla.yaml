@@ -12,7 +12,13 @@ jobs:
       - name: "CLA Assistant"
         if: (github.event.comment.body == 'recheck' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA') || github.event_name == 'pull_request_target'
         # Alpha Release
-        uses: cla-assistant/github-action@v2.1.2-beta
+        run: |
+          JSON=$(grep -Po '"cla_version": *\K"[^"]*"' ./package.json)
+          cla_version="${JSON%\"}"
+          cla_version="${cla_version#\"}"
+          # echo "CLA_VERSION=$(echo $cla_version)" >> $GITHUB_ENV
+          echo "$cla_version";
+        uses: cla-assistant/github-action@$cla_version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # the below token should have repo scope and must be manually added by you in the repository's secret
