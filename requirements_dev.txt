@@ -3,7 +3,7 @@
 ## SPDX-License-Identifier: LicenseRef-Splunk-1-2020
 ##
 ## Addon Requirements for Testing
-splunk_add_on_ucc_framework-4.3.0.tar.gz
+splunk-add-on-ucc-framework==4.4.0.dev2
 lovely-pytest-docker
 reuse
 pytest
@@ -12,7 +12,7 @@ pytest-xdist
 pytest-ordering
 pytest-splunk-addon==1.6.0
 pytest-expect
-pytest-splunk-addon-ui-smartx-1.1.2.post4.dev0+442dfe9.tar.gz
+pytest-splunk-addon-ui-smartx==1.1.2
 pytest-rerunfailures
 mock
 requests
