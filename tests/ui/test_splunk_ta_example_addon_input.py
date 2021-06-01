@@ -136,7 +136,7 @@ class TestInput(UccTester):
     def test_inputs_displayed_columns(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies headers of input table"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        header_list = ["", "Name", "Account", "Interval", "Index", "Status", "Actions"]
+        header_list = ["Name", "Account", "Interval", "Index", "Status", "Actions"]
         self.assert_util(
             input_page.table.get_headers,
             header_list
@@ -193,7 +193,7 @@ class TestInput(UccTester):
         self.assert_util(input_page.table.get_row_count, 0)
         self.assert_util(
             input_page.table.get_count_title,
-            "{} Inputs".format(input_page.table.get_row_count())
+            "{} Input".format(input_page.table.get_row_count())
             )
         input_page.table.clean_filter()
 
@@ -241,7 +241,7 @@ class TestInput(UccTester):
             input_page.type_filter.get_input_type_list,
             type_filter_list
             )
-        input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)
+        input_page.type_filter.select_input_type("Example Input One")
         self.assert_util(
             input_page.table.get_row_count,
             1
@@ -331,7 +331,7 @@ class TestInput(UccTester):
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()
         input_page.entity1.example_radio.select("Yes")
-        input_page.entity1.single_select_group_test.select("Two")
+        input_page.entity1.single_select_group_test.select("two")
         input_page.entity1.interval.set_value("90")
         input_page.entity1.example_account.select("test_input")
         input_page.entity1.object.set_value("test_object")
@@ -393,7 +393,7 @@ class TestInput(UccTester):
     def test_example_input_one_select_value_single_select_group_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies selected value of Single Select Group Test dropdown in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        selected_value = "Two"
+        selected_value = "two"
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()       
         input_page.entity1.single_select_group_test.select(selected_value)
@@ -408,11 +408,11 @@ class TestInput(UccTester):
         """ Verifies singleselect seach funtionality properly"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
-        input_page.entity1.example_account.wait_for_values()       
+        input_page.entity1.example_account.wait_for_values()
         self.assert_util(
             input_page.entity1.single_select_group_test.search_get_list,
-            ["One","One"],
-            left_args={'value': 'One'}
+            ["One", "one"],
+            left_args={'value': 'One'},
             )
 
     @pytest.mark.forwarder
@@ -421,7 +421,7 @@ class TestInput(UccTester):
         """ Verifies default values of Multiple Select Test dropdown in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
-        input_page.entity1.example_account.wait_for_values()       
+        input_page.entity1.example_account.wait_for_values()
         default_values = ["A", "B"]
         self.assert_util(
             input_page.entity1.multiple_select_test.get_values,
@@ -521,6 +521,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()       
+        input_page.entity1.example_checkbox.check()
         self.assert_util(input_page.entity1.example_checkbox.uncheck, True)
 
     @pytest.mark.forwarder
@@ -586,7 +587,10 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()       
+        input_page.entity1.example_account.select("test_input")       
+        input_page.entity1.object.set_value("test_object")
         input_page.entity1.name.set_value("test_name")
+        input_page.entity1.object_fields.set_value("test_field")
         input_page.entity1.interval.set_value("abc")
         self.assert_util(
             input_page.entity1.save,
@@ -703,9 +707,9 @@ class TestInput(UccTester):
         input_page.entity1.example_account.wait_for_values()
         input_page.entity1.name.set_value("dummy_input")
         input_page.entity1.example_radio.select("Yes")
-        input_page.entity1.single_select_group_test.select("Two")
         input_page.entity1.interval.set_value("90")
         input_page.entity1.example_account.select("test_input")
+        input_page.entity1.single_select_group_test.select("Two")
         input_page.entity1.object.set_value("test_object")
         input_page.entity1.object_fields.set_value("test_field")
         input_page.entity1.query_start_date.set_value("2020-12-11T20:00:32.000z")
@@ -782,7 +786,7 @@ class TestInput(UccTester):
             )
         self.assert_util(
             input_page.entity1.query_start_date.get_input_label,
-            'Query Start Date ?'
+            'Query Start Date'
             )
         self.assert_util(
             input_page.entity1.limit.get_input_label,
@@ -825,7 +829,7 @@ class TestInput(UccTester):
             )
         self.assert_util(
             input_page.entity2.query_start_date.get_input_label,
-            'Query Start Date ?'
+            'Query Start Date'
             )
             
     @pytest.mark.forwarder
@@ -934,7 +938,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         go_to_link = "https://docs.splunk.com/Documentation"
         input_page.create_new_input.select("Example Input One")
-        input_page.entity1.example_account.wait_for_values()       
+        input_page.entity1.example_account.wait_for_values()     
         with input_page.entity1.help_link.open_link() as link_url:
             self.assert_util(
                     input_page.entity1.help_link.get_current_url,
@@ -1037,7 +1041,7 @@ class TestInput(UccTester):
         input_page.entity1.example_account.wait_for_values()
         input_page.entity1.example_checkbox.uncheck()
         input_page.entity1.example_radio.select("No")
-        input_page.entity1.single_select_group_test.select("Four")
+        input_page.entity1.single_select_group_test.select("four")
         input_page.entity1.multiple_select_test.deselect("b")
         input_page.entity1.interval.set_value("3600")
         input_page.entity1.index.select("main")
@@ -1123,7 +1127,7 @@ class TestInput(UccTester):
             )
         self.assert_util(
             input_page.entity1.single_select_group_test.get_value,
-            "Two"
+            "two"
             )
         self.assert_util(
             input_page.entity1.multiple_select_test.get_values,
@@ -1510,10 +1514,10 @@ class TestInput(UccTester):
         input_page.entity2.example_account.wait_for_values()
         input_page.entity2.name.set_value("dummy_input")
         input_page.entity2.example_checkbox.check()
+        input_page.entity2.example_account.select("test_input")
         input_page.entity2.example_radio.select("No")
         input_page.entity2.example_multiple_select.select("Option One")
         input_page.entity2.interval.set_value("90")
-        input_page.entity2.example_account.select("test_input")
         input_page.entity2.query_start_date.set_value("2020-12-11T20:00:32.000z")
         input_page.entity2.index.cancel_selected_value()
         self.assert_util(
@@ -1808,9 +1812,9 @@ class TestInput(UccTester):
         input_page.entity2.example_account.wait_for_values()
         input_page.entity2.example_checkbox.uncheck()
         input_page.entity2.example_radio.select("Yes")
+        input_page.entity2.example_account.select("test_input")
         input_page.entity2.example_multiple_select.deselect("Option One")
         input_page.entity2.interval.set_value("3600")
-        input_page.entity2.example_account.select("test_input")
         input_page.entity2.query_start_date.set_value("2020-20-20T20:20:20.000z")
         self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(1)
@@ -1835,10 +1839,10 @@ class TestInput(UccTester):
         input_page.table.edit_row("dummy_input_two")
         input_page.entity2.example_account.wait_for_values()
         input_page.entity2.example_checkbox.uncheck()
+        input_page.entity2.example_account.select("test_input")
         input_page.entity2.example_radio.select("Yes")
         input_page.entity2.example_multiple_select.deselect("Option One")
         input_page.entity2.interval.set_value("3600")
-        input_page.entity2.example_account.select("test_input")
         input_page.entity2.query_start_date.set_value("2020-20-20T20:20:20.000z")
         self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(1)

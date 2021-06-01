@@ -130,6 +130,7 @@ class TestProxy(UccTester):
         """ Verifies whether the host field in proxy is required and displays an error if left empty"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.port.set_value("3285")
@@ -140,6 +141,7 @@ class TestProxy(UccTester):
             "Proxy Host can not be empty",
             left_args={'expect_error': True}
             )
+        proxy.dns_enable.check()
         self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
@@ -175,6 +177,7 @@ class TestProxy(UccTester):
         """ Verifies whether the proxy field is required and displays an error if left empty"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.host.set_value("host")
@@ -232,6 +235,7 @@ class TestProxy(UccTester):
         """ Verifies whether proxy type is required and displays an error if left empty"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.host.set_value("host")
@@ -280,6 +284,7 @@ class TestProxy(UccTester):
         """ Verifies the proxy is saved properly in frontend after saving it"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.host.set_value("host")
@@ -295,6 +300,7 @@ class TestProxy(UccTester):
         """ Verifies the proxy is saved properly in frontend after saving it"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.host.set_value("host")
