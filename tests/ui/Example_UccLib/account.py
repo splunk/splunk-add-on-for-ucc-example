@@ -31,27 +31,27 @@ class AccountEntity(Entity):
             :param browser: The selenium webdriver
             :param container: The container in which the entity is located in
         """
-        add_btn = Button(browser, Selector(select=container.select + " button.add-button" ))
-        entity_container = Selector(select=".modal-content")
+        add_btn = Button(browser, Selector(select=container.select + ' button[data-test="button"][label="Add"]'))
+        entity_container = Selector(select='[data-test="modal"]')
         
         super(AccountEntity, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
-        self.name = TextBox(browser, Selector(select=".name"))
-        self.environment = SingleSelect(browser, Selector(select=".custom_endpoint"), False)
-        self.account_radio = Toggle(browser, Selector(select=".account_radio"))
-        self.example_checkbox = Checkbox(browser, Selector(select=".account_checkbox"))
-        self.multiple_select = MultiSelect(browser, Selector(select=".account_multiple_select"))
-        self.auth_key = OAuthSelect(browser, Selector(select=".auth_type"))
-        self.username = TextBox(browser, Selector(select=".form-horizontal .username"))
-        self.password = TextBox(browser, Selector(select=".form-horizontal .password"))
-        self.security_token = TextBox(browser, Selector(select=".form-horizontal .token"))
-        self.client_id = TextBox(browser, Selector(select=".form-horizontal .client_id"))
-        self.client_secret = TextBox(browser, Selector(select=".form-horizontal .client_secret"))
-        self.redirect_url = TextBox(browser, Selector(select=".form-horizontal .redirect_url"))
-        self.search_query  = TextBox(browser, Selector(select=" .search-query"))
-        self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
-        self.title = BaseComponent(browser, Selector(select= "h4.modal-title"))
+        self.name = TextBox(browser, Selector(select='[data-test="control-group"][data-name="name"]'))
+        self.environment = SingleSelect(browser, Selector(select='[data-test="control-group"][data-name="custom_endpoint"]'), False)
+        self.account_radio = Toggle(browser, Selector(select='[data-test="control-group"][data-name="account_radio"]'))
+        self.example_checkbox = Checkbox(browser, Selector(select='[data-test="control-group"][data-name="account_checkbox"]'))
+        self.multiple_select = MultiSelect(browser, Selector(select='[data-test="control-group"][data-name="account_multiple_select"]'))
+        self.auth_key = OAuthSelect(browser, Selector(select='[data-test="control-group"][data-name="auth_type"]'))
+        self.username = TextBox(browser, Selector(select='[data-test="control-group"][data-name="username"]'))
+        self.password = TextBox(browser, Selector(select='[data-test="control-group"][data-name="password"]'))
+        self.security_token = TextBox(browser, Selector(select='[data-test="control-group"][data-name="token"]'))
+        self.client_id = TextBox(browser, Selector(select='[data-test="control-group"][data-name="client_id"]'))
+        self.client_secret = TextBox(browser, Selector(select='[data-test="control-group"][data-name="client_secret"]'))
+        self.redirect_url = TextBox(browser, Selector(select='[data-test="control-group"][data-name="redirect_url"]'))
+        self.search_query  = TextBox(browser, Selector(select='[data-test="textbox"][role="textbox"]'))
+        self.help_link = LearnMore(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="example_help_link"]'))
+        self.title = BaseComponent(browser, Selector(select= '[data-test="title"]'))
         
 class AccountPage(Page):
     """
@@ -62,11 +62,11 @@ class AccountPage(Page):
             :param ucc_smartx_selenium_helper: smartx configuration fixture
         """
         super(AccountPage, self).__init__(ucc_smartx_selenium_helper, ucc_smartx_rest_helper, open_page)
-        account_container = Selector(select="div#account-tab")
+        account_container = Selector(select='div[id="accountTab"]')
         
         if ucc_smartx_selenium_helper:
-            self.title = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
-            self.description = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-description"))
+            self.title = Message(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="column"] .pageTitle'))
+            self.description = Message(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="column"] .pageSubtitle'))
             self.table = ConfigurationTable(ucc_smartx_selenium_helper.browser, account_container)
             self.entity = AccountEntity(ucc_smartx_selenium_helper.browser, account_container)
         

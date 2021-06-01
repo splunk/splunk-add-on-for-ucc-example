@@ -31,27 +31,27 @@ class ExampleInputOne(Entity):
             :param browser: The selenium webdriver
             :param container: The container in which the entity is located in
         """
-        add_btn = Button(browser, Selector(select=container.select + " .add-button"))
-        entity_container = Selector(select=".modal-content")
+        add_btn = Button(browser, Selector(select=container.select + '[id="addInputBtn"]'))
+        entity_container = Selector(select='[data-test="modal"]')
         
         super(ExampleInputOne, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
-        self.name = TextBox(browser, Selector(select=".name"))
-        self.example_checkbox = Checkbox(browser, Selector(select=entity_container.select + " .input_one_checkbox"))
-        self.example_radio = Toggle(browser, Selector(select=entity_container.select + " .input_one_radio"))
-        self.single_select_group_test = SingleSelect(browser, Selector(select=entity_container.select + " .singleSelectTest"))
-        self.multiple_select_test = MultiSelect(browser, Selector(select=entity_container.select + " .multipleSelectTest"))
-        self.interval = TextBox(browser, Selector(select=".interval"))
-        self.index = SingleSelect(browser, Selector(select=entity_container.select + " .index"))
-        self.example_account = SingleSelect(browser, Selector(select=entity_container.select + " .account"))
-        self.object = TextBox(browser, Selector(select=".object"))
-        self.object_fields = TextBox(browser, Selector(select=".object_fields"))
-        self.order_by = TextBox(browser, Selector(select=".order_by"))
-        self.query_start_date = TextBox(browser, Selector(select=".start_date"))
-        self.limit = TextBox(browser, Selector(select=".limit"))
-        self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
-        self.title = BaseComponent(browser, Selector(select= "h4.modal-title"))
+        self.name = TextBox(browser, Selector(select=' [data-test="control-group"][data-name="name"]'))
+        self.example_checkbox = Checkbox(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="input_one_checkbox"]'))
+        self.example_radio = Toggle(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="input_one_radio"]'))
+        self.single_select_group_test = SingleSelect(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="singleSelectTest"]'), allow_new_values=True)
+        self.multiple_select_test = MultiSelect(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="multipleSelectTest"]'))
+        self.interval = TextBox(browser, Selector(select=' [data-test="control-group"][data-name="interval"]'))
+        self.index = SingleSelect(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="index"]'), allow_new_values=True)
+        self.example_account = SingleSelect(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="account"]'))
+        self.object = TextBox(browser, Selector(select=' [data-test="control-group"][data-name="object"]'))
+        self.object_fields = TextBox(browser, Selector(select=' [data-test="control-group"][data-name="object_fields"]'))
+        self.order_by = TextBox(browser, Selector(select=' [data-test="control-group"][data-name="order_by"]'))
+        self.query_start_date = TextBox(browser, Selector(select=' [data-test="control-group"][data-name="start_date"]'))
+        self.limit = TextBox(browser, Selector(select=' [data-test="control-group"][data-name="limit"]'))
+        self.help_link = LearnMore(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="example_help_link"]'))
+        self.title = BaseComponent(browser, Selector(select= ' [data-test="title"]'))
 
 
 class ExampleInputTwo(Entity):
@@ -63,22 +63,22 @@ class ExampleInputTwo(Entity):
             :param browser: The selenium webdriver
             :param container: The container in which the entity is located in
         """
-        add_btn = Button(browser, Selector(select=container.select + " .add-button"))
-        entity_container = Selector(select=".modal-content")
+        add_btn = Button(browser, Selector(select=container.select + ' [id="addInputBtn"]'))
+        entity_container = Selector(select=' [data-test="modal"]')
         
         super(ExampleInputTwo, self).__init__(browser, entity_container, add_btn=add_btn)
 
         # Controls
-        self.name = TextBox(browser, Selector(select=".name"))
-        self.interval = TextBox(browser, Selector(select=".interval"))
-        self.index = SingleSelect(browser, Selector(select=entity_container.select + " .index"))
-        self.example_account = SingleSelect(browser, Selector(select=entity_container.select + " .account"))
-        self.example_multiple_select = MultiSelect(browser, Selector(select=entity_container.select + " .input_two_multiple_select"))
-        self.example_checkbox = Checkbox(browser, Selector(select=entity_container.select + " .input_two_checkbox"))
-        self.example_radio = Toggle(browser, Selector(select=entity_container.select + " .input_two_radio"))
-        self.query_start_date = TextBox(browser, Selector(select=".start_date"))
-        self.help_link = LearnMore(browser, Selector(select=entity_container.select + " .example_help_link a"))
-        self.title = BaseComponent(browser, Selector(select= "h4.modal-title"))
+        self.name = TextBox(browser, Selector(select='[data-test="control-group"][data-name="name"]'))
+        self.interval = TextBox(browser, Selector(select=' [data-test="control-group"][data-name="interval"]'))
+        self.index = SingleSelect(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="index"]'), allow_new_values=True)
+        self.example_account = SingleSelect(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="account"]'))
+        self.example_multiple_select = MultiSelect(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="input_two_multiple_select"]'))
+        self.example_checkbox = Checkbox(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="input_two_checkbox"]'))
+        self.example_radio = Toggle(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="input_two_radio"]'))
+        self.query_start_date = TextBox(browser, Selector(select=' [data-test="control-group"][data-name="start_date"]'))
+        self.help_link = LearnMore(browser, Selector(select=entity_container.select + ' [data-test="control-group"][data-name="example_help_link"]'))
+        self.title = BaseComponent(browser, Selector(select= ' [data-test="title"]'))
 
     
 class InputPage(Page):
@@ -94,16 +94,16 @@ class InputPage(Page):
         """
         super(InputPage, self).__init__(ucc_smartx_selenium_helper, ucc_smartx_rest_helper, open_page)
 
-        input_container = Selector(select="div.inputsContainer")
+        input_container = Selector(select=' div[role="main"]')
         if ucc_smartx_selenium_helper:
-            self.title = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-title"))
-            self.description = Message(ucc_smartx_selenium_helper.browser, Selector(by=By.CLASS_NAME, select="tool-description"))
-            self.create_new_input = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select=".add-button"))
+            self.title = Message(ucc_smartx_selenium_helper.browser, Selector(select=' [data-test="column"] .pageTitle'))
+            self.description = Message(ucc_smartx_selenium_helper.browser, Selector(select=' [data-test="column"] .pageSubtitle'))
+            self.create_new_input = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select='[id="addInputBtn"]'))
             self.table = InputTable(ucc_smartx_selenium_helper.browser, input_container, mapping={"status": "disabled", "input_type":3})
             self.entity1 = ExampleInputOne(ucc_smartx_selenium_helper.browser, input_container)
             self.entity2 = ExampleInputTwo(ucc_smartx_selenium_helper.browser, input_container)
-            self.pagination = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select="control btn-group shared-controls-syntheticselectcontrol control-default"))
-            self.type_filter = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select=" .type-filter"))
+            self.pagination = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select='.dropdownPage'))
+            self.type_filter = Dropdown(ucc_smartx_selenium_helper.browser, Selector(select='.dropdownInput'))
         
         if ucc_smartx_rest_helper:
             self.backend_conf = ListBackendConf(self._get_input_endpoint(), ucc_smartx_rest_helper.username, ucc_smartx_rest_helper.password)

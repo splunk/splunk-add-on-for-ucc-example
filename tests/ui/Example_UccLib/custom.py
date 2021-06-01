@@ -22,23 +22,23 @@ class Custom(Entity):
         """
             :param ucc_smartx_selenium_helper: fixture contains browser, urls and session key
         """
-        entity_container = Selector(select="#customized-tab-tab")
+        entity_container = Selector(select='div[id="customTab"]')
 
         # Components
         if ucc_smartx_selenium_helper:
             super(Custom, self).__init__(ucc_smartx_selenium_helper.browser, entity_container)
             self.splunk_web_url = ucc_smartx_selenium_helper.splunk_web_url
             self.open()    
-            self.test_string = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_string"))
-            self.test_number = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_number"))
-            self.test_regex = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_regex"))
-            self.test_email = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_email"))
-            self.test_ipv4 = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_ipv4"))
-            self.test_date = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_date"))
-            self.test_url = TextBox(ucc_smartx_selenium_helper.browser, Selector(select=".test_url"))
-            self.test_radio = Toggle(ucc_smartx_selenium_helper.browser, Selector(select=".test_radio"))
-            self.test_multiselect = MultiSelect(ucc_smartx_selenium_helper.browser, Selector(select=".test_multiselect"))
-            self.test_help_link = LearnMore(ucc_smartx_selenium_helper.browser, Selector(select=".test_help_link a"))
+            self.test_string = TextBox(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_string"]'))
+            self.test_number = TextBox(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_number"]'))
+            self.test_regex = TextBox(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_regex"]'))
+            self.test_email = TextBox(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_email"]'))
+            self.test_ipv4 = TextBox(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_ipv4"]'))
+            self.test_date = TextBox(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_date"]'))
+            self.test_url = TextBox(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_url"]'))
+            self.test_radio = Toggle(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_radio"]'))
+            self.test_multiselect = MultiSelect(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_multiselect"]'))
+            self.test_help_link = LearnMore(ucc_smartx_selenium_helper.browser, Selector(select='[data-test="control-group"][data-name="test_help_link"]'))
 
         if ucc_smartx_rest_helper:
             self.splunk_mgmt_url = ucc_smartx_rest_helper.splunk_mgmt_url   
@@ -51,7 +51,7 @@ class Custom(Entity):
         self.browser.get(
             '{}/en-US/app/Splunk_TA_UCCExample/configuration'.format(self.splunk_web_url))
         tab = Tab(self.browser)
-        tab.open_tab("customized-tab")
+        tab.open_tab("custom_tab")
 
     def _get_custom_url(self):
         """
