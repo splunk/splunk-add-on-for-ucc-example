@@ -127,15 +127,6 @@
                             }
                         },
                         {
-                            "type": "text",
-                            "label": "State",
-                            "help": "This is a boolean field for developers to decide whether state parameter will be passed in the OAuth flow. Value: true|false",
-                            "field": "oauth_state_enabled",
-                            "options": {
-                                "display": false
-                            }
-                        },
-                        {
                             "type": "oauth",
                             "field": "oauth",
                             "label": "Not used",

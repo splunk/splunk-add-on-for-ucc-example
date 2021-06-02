@@ -22,7 +22,7 @@ class Custom(Entity):
         """
             :param ucc_smartx_selenium_helper: fixture contains browser, urls and session key
         """
-        entity_container = Selector(select='div[id="customTab"]')
+        entity_container = Selector(select='div[id="custom_tabTab"]')
 
         # Components
         if ucc_smartx_selenium_helper:

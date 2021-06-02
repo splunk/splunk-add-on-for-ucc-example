@@ -37,7 +37,6 @@ def add_account(ucc_smartx_rest_helper):
         'client_secret': '',
         'redirect_url': '',
         'endpoint': '',
-        'oauth_state_enabled': '',
         'example_help_link': ''
     }
     yield account.backend_conf.post_stanza(url, kwargs)

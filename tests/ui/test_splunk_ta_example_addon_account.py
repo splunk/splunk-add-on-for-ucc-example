@@ -34,7 +34,6 @@ ACCOUNT_CONFIG = {
     'client_secret': '',
     'redirect_url': '',
     'endpoint': '',
-    'oauth_state_enabled': '',
     'example_help_link': ''
 }
 
