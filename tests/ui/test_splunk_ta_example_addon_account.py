@@ -755,18 +755,18 @@ class TestAccount(UccTester):
     #                 'Name {} is already in use'.format(ACCOUNT_CONFIG["name"]),
     #                 left_args={'expect_error': True})
         
-    @pytest.mark.forwarder
-    @pytest.mark.account
-    @pytest.mark.sanity_test
-    def test_account_delete_row_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
-        """ Verifies the frontend delete functionlity"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.table.delete_row(ACCOUNT_CONFIG["name"])
-        account.table.wait_for_rows_to_appear(0)
-        self.assert_util(ACCOUNT_CONFIG["name"],
-                         account.table.get_table,
-                         "not in"
-                         )
+    # @pytest.mark.forwarder
+    # @pytest.mark.account
+    # @pytest.mark.sanity_test
+    # def test_account_delete_row_frontend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+    #     """ Verifies the frontend delete functionlity"""
+    #     account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+    #     account.table.delete_row(ACCOUNT_CONFIG["name"])
+    #     account.table.wait_for_rows_to_appear(0)
+    #     self.assert_util(ACCOUNT_CONFIG["name"],
+    #                      account.table.get_table,
+    #                      "not in"
+    #                      )
 
     # @pytest.mark.forwarder
     # @pytest.mark.account
@@ -979,18 +979,18 @@ class TestAccount(UccTester):
     #                     'token': "TestEditToken"
     #                 }
     
-    @pytest.mark.forwarder
-    @pytest.mark.account
-    @pytest.mark.sanity_test
-    def test_account_delete_row_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
-        """ Verifies the account in backend after deleting the account from frontend"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.table.delete_row(ACCOUNT_CONFIG["name"])
-        account.table.wait_for_rows_to_appear(0)
-        self.assert_util(ACCOUNT_CONFIG["name"],
-                         account.backend_conf.get_all_stanzas().keys(),
-                         "not in"
-                         )
+    # @pytest.mark.forwarder
+    # @pytest.mark.account
+    # @pytest.mark.sanity_test
+    # def test_account_delete_row_backend_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
+    #     """ Verifies the account in backend after deleting the account from frontend"""
+    #     account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
+    #     account.table.delete_row(ACCOUNT_CONFIG["name"])
+    #     account.table.wait_for_rows_to_appear(0)
+    #     self.assert_util(ACCOUNT_CONFIG["name"],
+    #                      account.backend_conf.get_all_stanzas().keys(),
+    #                      "not in"
+    #                      )
     
 
     # @pytest.mark.forwarder
