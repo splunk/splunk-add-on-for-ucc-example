@@ -45,7 +45,7 @@ def clean_alert(ucc_smartx_rest_helper):
     alert_page = AlertPage(None, ucc_smartx_rest_helper, open_page=False)
     alert_page.backend_conf.delete_all_stanzas(query="search=test_alert")
 
-class TestAlertActions(UccTester):
+# class TestAlertActions(UccTester):
 
     # @pytest.mark.alert_action
     # def test_action_in_list(self, ucc_smartx_selenium_helper):

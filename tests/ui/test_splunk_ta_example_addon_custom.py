@@ -29,7 +29,7 @@ def reset_configuration(ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
     custom = Custom(ucc_smartx_rest_helper=ucc_smartx_rest_helper)
     custom.backend_conf.update_parameters(DEFAULT_CONFIGURATION)
 
-class TestCustom(UccTester):
+# class TestCustom(UccTester):
 
     # @pytest.mark.forwarder
     # @pytest.mark.custom
