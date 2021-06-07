@@ -126,7 +126,7 @@ class TestAlertActions(UccTester):
         alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
 
         # Add Action Configs
-        alert_page.action_entity.name.set_value("test_action")
+        alert_page.action_entity.name.set_value("test_action", is_alert=True)
         alert_page.action_entity.all_incident.toggle()
         alert_page.action_entity.action.select("Delete")
         alert_page.action_entity.account.select("test_input")
