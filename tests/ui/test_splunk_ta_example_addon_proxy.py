@@ -142,7 +142,6 @@ class TestProxy(UccTester):
             left_args={'expect_error': True}
             )
         proxy.dns_enable.check()
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -155,7 +154,6 @@ class TestProxy(UccTester):
             "Proxy Host should not have special characters",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -169,7 +167,6 @@ class TestProxy(UccTester):
             "Max host length is 4096",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -188,7 +185,6 @@ class TestProxy(UccTester):
             "Proxy Port can not be empty",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
 
     @pytest.mark.forwarder
@@ -203,7 +199,6 @@ class TestProxy(UccTester):
             "Field Port is not a number",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -217,7 +212,8 @@ class TestProxy(UccTester):
             "Field Port should be within the range of [1 and 65535]",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
+        proxy.port.set_value("")
+        self.assert_util(proxy.is_error_closed, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -248,7 +244,6 @@ class TestProxy(UccTester):
             "Proxy type can not be empty",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -264,7 +259,6 @@ class TestProxy(UccTester):
             "Max length of username is 50",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
