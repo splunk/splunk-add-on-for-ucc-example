@@ -240,7 +240,7 @@ class TestInput(UccTester):
             input_page.type_filter.get_input_type_list,
             type_filter_list
             )
-        input_page.type_filter.select_input_type("Example Input One")
+        input_page.type_filter.select_input_type("Example Input One", open_dropdown=False)
         self.assert_util(
             input_page.table.get_row_count,
             1
@@ -341,7 +341,7 @@ class TestInput(UccTester):
             r"Field Name is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -357,7 +357,7 @@ class TestInput(UccTester):
             r"Length of input name should be between 1 and 100",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -372,14 +372,14 @@ class TestInput(UccTester):
             r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_list_single_select_group_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies values Single Select Group Test dropdown in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        single_select_group_test_list = ["One", "Two", "Three", "Four"]
+        single_select_group_test_list = ["one", "two", "three", "four"]
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
@@ -577,7 +577,7 @@ class TestInput(UccTester):
             r"Field Interval is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -596,7 +596,7 @@ class TestInput(UccTester):
             r"Interval must be an integer.",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -619,7 +619,7 @@ class TestInput(UccTester):
             r"Field Index is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -653,7 +653,7 @@ class TestInput(UccTester):
             r"Field Example Account is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -674,7 +674,7 @@ class TestInput(UccTester):
             r"Field Object is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -695,7 +695,7 @@ class TestInput(UccTester):
             r"Field Object Fields is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -712,13 +712,13 @@ class TestInput(UccTester):
         input_page.entity1.object.set_value("test_object")
         input_page.entity1.object_fields.set_value("test_field")
         input_page.entity1.query_start_date.set_value("2020-12-11T20:00:32.000z")
-        input_page.entity1.order_by.set_value(" ")
+        input_page.entity1.order_by.set_value("")
         self.assert_util(
             input_page.entity1.save,
             r"Field Order By is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -915,7 +915,7 @@ class TestInput(UccTester):
             r"Invalid date and time format",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1335,7 +1335,7 @@ class TestInput(UccTester):
             "Name {} is already in use".format(input_name),
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1351,7 +1351,7 @@ class TestInput(UccTester):
             "Name {} is already in use".format(input_name),
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity1.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1434,7 +1434,8 @@ class TestInput(UccTester):
             r"Field Name is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        input_page.entity2.name.set_value("test_name_two")
+        self.assert_util(input_page.entity2.is_error_closed, True)
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1450,7 +1451,7 @@ class TestInput(UccTester):
             r"Length of input name should be between 1 and 100",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1465,7 +1466,7 @@ class TestInput(UccTester):
             r"Input Name must begin with a letter and consist exclusively of alphanumeric characters and underscores.",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1486,7 +1487,7 @@ class TestInput(UccTester):
             r"Field Interval is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1502,7 +1503,7 @@ class TestInput(UccTester):
             r"Interval must be an integer.",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1524,7 +1525,7 @@ class TestInput(UccTester):
             r"Field Index is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1558,7 +1559,7 @@ class TestInput(UccTester):
             r"Field Example Account is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1579,7 +1580,7 @@ class TestInput(UccTester):
             r"Field Example Multiple Select is required",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -1722,7 +1723,7 @@ class TestInput(UccTester):
             r"Invalid date and time format",
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -2062,7 +2063,7 @@ class TestInput(UccTester):
             "Name {} is already in use".format(input_name),
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
     @pytest.mark.forwarder
     @pytest.mark.input
@@ -2078,7 +2079,7 @@ class TestInput(UccTester):
             "Name {} is already in use".format(input_name),
             left_args={'expect_error': True}
             )
-        self.assert_util(input_page.entity2.close_error, True)
+        
 
 
     @pytest.mark.forwarder
