@@ -28,7 +28,7 @@ class TestAction(ActionEntity):
         super(TestAction, self).__init__(browser)
 
         # Controls
-        self.name = AlertTextBox(browser, Selector(select="#test_alert_name"))
+        self.name = AlertTextBox(browser, Selector(select="#test_alert_name"), use_child_input=True)
         self.all_incident = AlertCheckbox(browser, Selector(select="#test_alert_all_incidents"))
         self.table_list = AlertSingleSelect(browser, Selector(select="#test_alert_table_list"))
         self.action = AlertToggle(browser, Selector(select='input[name="action.test_alert.param.action"]'))
