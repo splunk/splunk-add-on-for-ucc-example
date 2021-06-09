@@ -130,6 +130,7 @@ class TestProxy(UccTester):
         """ Verifies whether the host field in proxy is required and displays an error if left empty"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.port.set_value("3285")
@@ -140,7 +141,7 @@ class TestProxy(UccTester):
             "Proxy Host can not be empty",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
+        proxy.dns_enable.check()
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -153,7 +154,6 @@ class TestProxy(UccTester):
             "Proxy Host should not have special characters",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -167,7 +167,6 @@ class TestProxy(UccTester):
             "Max host length is 4096",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -175,6 +174,7 @@ class TestProxy(UccTester):
         """ Verifies whether the proxy field is required and displays an error if left empty"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.host.set_value("host")
@@ -185,7 +185,6 @@ class TestProxy(UccTester):
             "Proxy Port can not be empty",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
 
     @pytest.mark.forwarder
@@ -200,7 +199,6 @@ class TestProxy(UccTester):
             "Field Port is not a number",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -214,7 +212,8 @@ class TestProxy(UccTester):
             "Field Port should be within the range of [1 and 65535]",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
+        proxy.port.set_value("")
+        self.assert_util(proxy.is_error_closed, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -232,6 +231,7 @@ class TestProxy(UccTester):
         """ Verifies whether proxy type is required and displays an error if left empty"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.host.set_value("host")
@@ -244,7 +244,6 @@ class TestProxy(UccTester):
             "Proxy type can not be empty",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -260,7 +259,6 @@ class TestProxy(UccTester):
             "Max length of username is 50",
             left_args={'expect_error': True}
             )
-        self.assert_util(proxy.close_error, True)
 
     @pytest.mark.forwarder
     @pytest.mark.proxy
@@ -280,6 +278,7 @@ class TestProxy(UccTester):
         """ Verifies the proxy is saved properly in frontend after saving it"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.host.set_value("host")
@@ -295,6 +294,7 @@ class TestProxy(UccTester):
         """ Verifies the proxy is saved properly in frontend after saving it"""
         proxy = Proxy(TA_NAME, TA_PROXY_URL, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         proxy.proxy_enable.check()
+        proxy.type.cancel_selected_value()
         proxy.type.select("http")
         proxy.dns_enable.check()
         proxy.host.set_value("host")

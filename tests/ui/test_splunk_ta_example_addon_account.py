@@ -34,7 +34,6 @@ ACCOUNT_CONFIG = {
     'client_secret': '',
     'redirect_url': '',
     'endpoint': '',
-    'oauth_state_enabled': '',
     'example_help_link': ''
 }
 
@@ -126,7 +125,6 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
             account.table.get_count_title,
-            
             "{} Items".format(len(account.backend_conf.get_all_stanzas()))
             )
 
@@ -135,11 +133,11 @@ class TestAccount(UccTester):
     def test_accounts_filter_functionality_negative(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account):
         """ Verifies the filter functionality (Negative)"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.table.set_filter("heloo")
+        account.table.set_filter("hello")
         self.assert_util(account.table.get_row_count, 0)      
         self.assert_util(
             account.table.get_count_title,
-            "{} Items".format(account.table.get_row_count())
+            "{} Item".format(account.table.get_row_count())
             )
         account.table.clean_filter()
         
@@ -152,7 +150,7 @@ class TestAccount(UccTester):
         self.assert_util(account.table.get_row_count, 1)              
         self.assert_util(
             account.table.get_count_title,
-            "{} Items".format(account.table.get_row_count())
+            "{} Item".format(account.table.get_row_count())
             )
         account.table.clean_filter()
 
@@ -553,6 +551,7 @@ class TestAccount(UccTester):
         account.entity.name.set_value(ACCOUNT_CONFIG["name"])
         account.entity.environment.select("Value2")
         account.entity.account_radio.select("No")
+        account.entity.multiple_select.select("Option Two")
         account.entity.auth_key.select('OAuth 2.0 Authentication')        
         self.assert_util(
             account.entity.save,
@@ -916,7 +915,6 @@ class TestAccount(UccTester):
         self.assert_util(account.entity.save, True)
         account.table.wait_for_rows_to_appear(1)
         assert account.backend_conf.get_stanza(ACCOUNT_CONFIG["name"], decrypt=True) =={
-                        'account_checkbox': '0',
                         'account_multiple_select' : ACCOUNT_CONFIG['account_multiple_select'],
                         'account_radio' : '1',
                         'auth_type' : ACCOUNT_CONFIG['auth_type'],
@@ -1016,6 +1014,6 @@ class TestAccount(UccTester):
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(
                     account.table.delete_row,
-                    r'TestAccount cannot be deleted because it is in use',
+                    r'Are you sure you want to delete "TestAccount" ? Ensure that no input is configured with "TestAccount" as this will stop data collection for that input.',
                     left_args={'name': ACCOUNT_CONFIG["name"], "prompt_msg": True},
      )
