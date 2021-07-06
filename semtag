@@ -17,6 +17,7 @@ forcetag="false"
 forcedversion=
 versionname=
 identifier=
+defaultBranch=$( git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' )
 
 HELP="\
 Usage:
@@ -50,7 +51,7 @@ Commands:
   getcurrent Returns the current version, based on the latest one, if there are uncommited or
                unstaged changes, they will be reflected in the version, adding the number of
                pending commits, current branch and commit hash.
-  final      Tags the current build as a final version, this only can be done on the main branch.
+  final      Tags the current build as a final version, this only can be done on the "${defaultBranch} " branch.
   candidate  Tags the current build as a release candidate, the tag will contain all
                the commits from the last final version.
   alpha      Tags the current build as an alpha version, the tag will contain all
@@ -533,7 +534,7 @@ function get_current {
   else
     local __buildinfo="$(git rev-parse --short HEAD)"
     local __currentbranch="$(git rev-parse --abbrev-ref HEAD)"
-    if [ "$__currentbranch" != "main" ]; then
+    if [ "$__currentbranch" != "${defaultBranch}" ]; then
       __buildinfo="$__currentbranch.$__buildinfo"
     fi
 
@@ -582,10 +583,10 @@ case $ACTION in
     ;;
   final)
     init
-    diff=$(git diff main | cat)
+    [[ $(git diff origin/${defaultBranch} 2>/dev/null ) ]] && diff=$(git diff origin/${defaultBranch} | cat) || diff=$(git diff origin/${defaultBranch} | cat)
     if [ "$forcetag" == "false" ]; then
       if [ -n "$diff" ]; then
-        echo "ERROR: Branch must be updated with main for final versions"
+        echo "ERROR: Branch must be updated with "${defaultBranch}" for final versions"
         exit 1
       fi
     fi
