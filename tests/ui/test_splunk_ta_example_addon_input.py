@@ -130,6 +130,7 @@ class TestInput(UccTester):
     ############################
 
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_displayed_columns(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -141,6 +142,7 @@ class TestInput(UccTester):
             header_list
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_pagination_list(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -151,6 +153,7 @@ class TestInput(UccTester):
             ['10 Per Page','25 Per Page','50 Per Page']
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_pagination(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_inputs):
@@ -162,6 +165,7 @@ class TestInput(UccTester):
         self.assert_util(input_page.table.switch_to_prev, True)
         self.assert_util(input_page.table.switch_to_next, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_sort_functionality(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
@@ -183,6 +187,7 @@ class TestInput(UccTester):
             )
         self.assert_util(sort_order["ascending"], True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_filter_functionality_negative(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
@@ -196,6 +201,7 @@ class TestInput(UccTester):
             )
         input_page.table.clean_filter()
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_filter_functionality_positive(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
@@ -209,6 +215,7 @@ class TestInput(UccTester):
             )
         input_page.table.clean_filter()
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_default_rows_in_table(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -219,6 +226,7 @@ class TestInput(UccTester):
             0
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_create_new_input_list_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -230,6 +238,7 @@ class TestInput(UccTester):
             create_new_input_list
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_input_type_list_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
@@ -251,6 +260,7 @@ class TestInput(UccTester):
             1
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_delete_enabled_input(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -262,6 +272,7 @@ class TestInput(UccTester):
             left_args={'name': "dummy_input_one"}
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_more_info(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -284,6 +295,7 @@ class TestInput(UccTester):
             left_args={'name': 'dummy_input_one'}
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_enable_disable(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -293,6 +305,7 @@ class TestInput(UccTester):
         self.assert_util(input_page.table.input_status_toggle, True, left_args={"name":"dummy_input_one", "enable":True})
 
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_count(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one, add_input_two):
@@ -304,6 +317,7 @@ class TestInput(UccTester):
             )
 
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_inputs_title_and_description(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -322,6 +336,7 @@ class TestInput(UccTester):
     #### TEST CASES FOR EXAMPLE INPUT ONE ####
     ##########################################
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_required_field_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -343,6 +358,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_valid_length_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -359,6 +375,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_valid_input_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -374,6 +391,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_list_single_select_group_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -387,6 +405,7 @@ class TestInput(UccTester):
             single_select_group_test_list
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_select_value_single_select_group_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -401,6 +420,7 @@ class TestInput(UccTester):
             selected_value
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_search_value_single_select_group_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -414,6 +434,7 @@ class TestInput(UccTester):
             left_args={'value': 'One'},
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_default_value_multiple_select_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -427,6 +448,7 @@ class TestInput(UccTester):
             default_values
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_list_multiple_select_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -441,6 +463,7 @@ class TestInput(UccTester):
             multiple_select_test
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_select_value_multiple_select_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -457,6 +480,7 @@ class TestInput(UccTester):
             selected_value
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_select_multiple_values_multiple_select_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -473,6 +497,7 @@ class TestInput(UccTester):
             selected_values
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_deselect_multiple_select_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -490,6 +515,7 @@ class TestInput(UccTester):
             ["B"]
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_search_value_multiple_select_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -504,6 +530,7 @@ class TestInput(UccTester):
             left_args={'value': 'A'}
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_default_value_example_checkbox(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -513,6 +540,7 @@ class TestInput(UccTester):
         input_page.entity1.example_account.wait_for_values()       
         self.assert_util(input_page.entity1.example_checkbox.is_checked, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_unchecked_example_checkbox(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -523,6 +551,7 @@ class TestInput(UccTester):
         input_page.entity1.example_checkbox.check()
         self.assert_util(input_page.entity1.example_checkbox.uncheck, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_checked_example_checkbox(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -533,6 +562,7 @@ class TestInput(UccTester):
         input_page.entity1.example_checkbox.uncheck()
         self.assert_util(input_page.entity1.example_checkbox.check, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_default_value_example_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -545,6 +575,7 @@ class TestInput(UccTester):
             "Yes"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_select_value_example_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -558,6 +589,7 @@ class TestInput(UccTester):
             "No"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_required_field_interval(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -579,6 +611,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_valid_input_interval(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -598,6 +631,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_required_field_index(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -621,6 +655,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_default_value_index(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -634,6 +669,7 @@ class TestInput(UccTester):
             default_index
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_required_field_example_account(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -655,6 +691,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_required_field_object(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -676,6 +713,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_required_field_object_fields(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -697,6 +735,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_required_field_order_by(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -720,6 +759,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_default_value_order_by(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -733,6 +773,7 @@ class TestInput(UccTester):
             default_order_by
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -792,6 +833,7 @@ class TestInput(UccTester):
             'Limit'
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -831,6 +873,7 @@ class TestInput(UccTester):
             'Query Start Date'
             )
             
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_fields_placeholder_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -842,6 +885,7 @@ class TestInput(UccTester):
             'optional'
             )
             
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_fields_placeholder_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -853,6 +897,7 @@ class TestInput(UccTester):
             'optional'
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_help_text_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -897,6 +942,7 @@ class TestInput(UccTester):
             'The datetime field by which to query results in ascending order for indexing.'
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_valid_input_query_start_date(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -917,6 +963,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_default_value_limit(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -930,6 +977,7 @@ class TestInput(UccTester):
             default_limit
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_help_link(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -949,6 +997,7 @@ class TestInput(UccTester):
     #### TEST CASES FOR ENTITY ONE ####
     ###################################
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -981,6 +1030,7 @@ class TestInput(UccTester):
 
         url = input_page._get_input_endpoint()
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1022,6 +1072,7 @@ class TestInput(UccTester):
                 )
                 
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_edit_uneditable_field_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1030,6 +1081,7 @@ class TestInput(UccTester):
         input_page.table.edit_row("dummy_input_one")
         self.assert_util(input_page.entity1.name.is_editable, False)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1064,6 +1116,7 @@ class TestInput(UccTester):
             }
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1108,6 +1161,7 @@ class TestInput(UccTester):
                 backend_stanza[each_key]
                 )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_clone_default_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1165,6 +1219,7 @@ class TestInput(UccTester):
             "1000"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1191,6 +1246,7 @@ class TestInput(UccTester):
             }
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1227,6 +1283,7 @@ class TestInput(UccTester):
                 backend_stanza[each_key]
                 )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1242,6 +1299,7 @@ class TestInput(UccTester):
             "not in"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1257,6 +1315,7 @@ class TestInput(UccTester):
             "not in"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_add_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1266,6 +1325,7 @@ class TestInput(UccTester):
         input_page.entity1.example_account.wait_for_values()       
         self.assert_util(input_page.entity1.close, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_edit_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1274,6 +1334,7 @@ class TestInput(UccTester):
         input_page.table.edit_row("dummy_input_one")
         self.assert_util(input_page.entity1.close, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_clone_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1282,6 +1343,7 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_one")
         self.assert_util(input_page.entity1.close, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_delete_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1289,6 +1351,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_one", "close":True})
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_add_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1298,6 +1361,7 @@ class TestInput(UccTester):
         input_page.entity1.example_account.wait_for_values()       
         self.assert_util(input_page.entity1.cancel, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_edit_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1306,6 +1370,7 @@ class TestInput(UccTester):
         input_page.table.edit_row("dummy_input_one")
         self.assert_util(input_page.entity1.cancel, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_clone_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1314,6 +1379,7 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_one")
         self.assert_util(input_page.entity1.cancel, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_delete_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1321,6 +1387,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_one", "cancel":True})
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_add_duplicate_names(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1337,6 +1404,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_clone_duplicate_names(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1353,6 +1421,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_add_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1365,6 +1434,7 @@ class TestInput(UccTester):
             "Add Example Input One"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_edit_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1376,6 +1446,7 @@ class TestInput(UccTester):
             "Update Example Input One"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_clone_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1387,6 +1458,7 @@ class TestInput(UccTester):
             "Clone Example Input One"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_delete_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1398,6 +1470,7 @@ class TestInput(UccTester):
             "Delete Confirmation"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_one_delete_valid_prompt_message(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_one):
@@ -1415,6 +1488,7 @@ class TestInput(UccTester):
     #### TEST CASES FOR EXAMPLE INPUT TWO ####
     ##########################################
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_required_field_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1437,6 +1511,7 @@ class TestInput(UccTester):
         input_page.entity2.name.set_value("test_name_two")
         self.assert_util(input_page.entity2.is_error_closed, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_valid_length_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1453,6 +1528,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_valid_input_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1468,6 +1544,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_required_field_interval(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1489,6 +1566,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_valid_input_interval(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1505,6 +1583,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_required_field_index(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1527,6 +1606,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_default_value_index(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1540,6 +1620,7 @@ class TestInput(UccTester):
             default_index
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_required_field_example_example_account(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1561,6 +1642,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_required_field_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1582,6 +1664,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_list_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1595,6 +1678,7 @@ class TestInput(UccTester):
             example_multiple_select_list
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_select_select_value_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1610,6 +1694,7 @@ class TestInput(UccTester):
             selected_value
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_select_multiple_values_example_multiple_select(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1625,6 +1710,7 @@ class TestInput(UccTester):
             selected_values
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_help_text_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1653,6 +1739,7 @@ class TestInput(UccTester):
             'This is an example radio button for the input two entity'
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_checked_example_checkbox(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1662,6 +1749,7 @@ class TestInput(UccTester):
         input_page.entity2.example_account.wait_for_values()
         self.assert_util(input_page.entity2.example_checkbox.check, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_unchecked_example_checkbox(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1672,6 +1760,7 @@ class TestInput(UccTester):
         input_page.entity2.example_checkbox.check()
         self.assert_util(input_page.entity2.example_checkbox.uncheck, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_required_field_example_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1692,6 +1781,7 @@ class TestInput(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_select_value_example_radio(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1705,6 +1795,7 @@ class TestInput(UccTester):
             "No"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_valid_input_query_start_date(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1725,6 +1816,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1757,6 +1849,7 @@ class TestInput(UccTester):
             )
         url = input_page._get_input_endpoint()
         
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1793,6 +1886,7 @@ class TestInput(UccTester):
                 backend_stanza[each_key]
                 )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_edit_uneditable_field_name(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -1802,6 +1896,7 @@ class TestInput(UccTester):
         input_page.entity2.example_account.wait_for_values()
         self.assert_util(input_page.entity2.name.is_editable, False)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1830,6 +1925,7 @@ class TestInput(UccTester):
             }
             )
     
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1863,6 +1959,7 @@ class TestInput(UccTester):
                 backend_stanza[each_key]
                 )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_clone_default_values(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -1900,6 +1997,7 @@ class TestInput(UccTester):
             "2016-10-10T12:10:15.000z"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1925,6 +2023,7 @@ class TestInput(UccTester):
             }
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1955,6 +2054,7 @@ class TestInput(UccTester):
                 backend_stanza[each_key]
                     )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1970,6 +2070,7 @@ class TestInput(UccTester):
                 "not in"
                 )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     @pytest.mark.sanity_test
@@ -1985,6 +2086,7 @@ class TestInput(UccTester):
                 "not in"
                 )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_add_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -1994,6 +2096,7 @@ class TestInput(UccTester):
         input_page.entity2.example_account.wait_for_values()
         self.assert_util(input_page.entity2.close, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_edit_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2002,6 +2105,7 @@ class TestInput(UccTester):
         input_page.table.edit_row("dummy_input_two")
         self.assert_util(input_page.entity2.close, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_clone_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2010,6 +2114,7 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_two")
         self.assert_util(input_page.entity2.close, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_delete_close_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2017,6 +2122,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_two", "close":True})
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_add_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -2026,6 +2132,7 @@ class TestInput(UccTester):
         input_page.entity2.example_account.wait_for_values()
         self.assert_util(input_page.entity2.cancel, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_edit_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2034,6 +2141,7 @@ class TestInput(UccTester):
         input_page.table.edit_row("dummy_input_two")
         self.assert_util(input_page.entity2.cancel, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_clone_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2042,6 +2150,7 @@ class TestInput(UccTester):
         input_page.table.clone_row("dummy_input_two")
         self.assert_util(input_page.entity2.cancel, True)
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_delete_cancel_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2049,6 +2158,7 @@ class TestInput(UccTester):
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         self.assert_util(input_page.table.delete_row, True, left_args={"name":"dummy_input_two", "cancel":True})
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_add_duplicate_names(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2065,6 +2175,7 @@ class TestInput(UccTester):
             )
         
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_clone_duplicate_names(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2082,6 +2193,7 @@ class TestInput(UccTester):
         
 
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_add_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -2094,6 +2206,7 @@ class TestInput(UccTester):
             "Add Example Input Two"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_edit_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2106,6 +2219,7 @@ class TestInput(UccTester):
             "Update Example Input Two"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_clone_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2118,6 +2232,7 @@ class TestInput(UccTester):
             "Clone Example Input Two"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_delete_valid_title(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
@@ -2129,6 +2244,7 @@ class TestInput(UccTester):
             "Delete Confirmation"
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.input
     def test_example_input_two_delete_valid_prompt_message(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_input_two):
