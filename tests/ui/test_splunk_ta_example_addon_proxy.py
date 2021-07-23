@@ -34,6 +34,7 @@ def reset_configuration(ucc_smartx_rest_helper):
 
 class TestProxy(UccTester):
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -68,6 +69,7 @@ class TestProxy(UccTester):
             'Reverse DNS resolution'
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_fields_placeholder_value(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -90,6 +92,7 @@ class TestProxy(UccTester):
             'optional'
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_default_configs(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -124,6 +127,7 @@ class TestProxy(UccTester):
             ""
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_required_field_host(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -143,6 +147,7 @@ class TestProxy(UccTester):
             )
         proxy.dns_enable.check()
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_host_valid_input(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -155,6 +160,7 @@ class TestProxy(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_host_field_length_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -168,6 +174,7 @@ class TestProxy(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_required_field_port(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -187,6 +194,7 @@ class TestProxy(UccTester):
             )
 
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_port_field_valid_range(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -200,6 +208,7 @@ class TestProxy(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_port_field_out_of_range(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -215,6 +224,7 @@ class TestProxy(UccTester):
         proxy.port.set_value("")
         self.assert_util(proxy.is_error_closed, True)
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_list_proxy_types(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -225,6 +235,7 @@ class TestProxy(UccTester):
             ["http", "socks4", "socks5"]
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_required_field_proxy_type(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -245,6 +256,7 @@ class TestProxy(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_username_field_length_validation(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -260,6 +272,7 @@ class TestProxy(UccTester):
             left_args={'expect_error': True}
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     def test_proxy_encrypted_field_password(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -271,6 +284,7 @@ class TestProxy(UccTester):
             'password'
             )
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     @pytest.mark.sanity_test
@@ -287,6 +301,7 @@ class TestProxy(UccTester):
         proxy.password.set_value("Password")
         self.assert_util(proxy.save, True)
 
+    @pytest.mark.execute_enterprise_cloud_false
     @pytest.mark.forwarder
     @pytest.mark.proxy
     @pytest.mark.sanity_test

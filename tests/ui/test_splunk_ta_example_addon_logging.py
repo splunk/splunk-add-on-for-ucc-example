@@ -26,6 +26,7 @@ def reset_configuration(ucc_smartx_rest_helper):
 
 class TestLogging(UccTester):
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_fields_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -36,6 +37,7 @@ class TestLogging(UccTester):
             'Log level'
             )
 
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_default_log_level(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -47,6 +49,7 @@ class TestLogging(UccTester):
             default_log_level.lower()
             )
         
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_select_random_log_level(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -61,6 +64,7 @@ class TestLogging(UccTester):
             level.lower()
             )
         
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.logging
     def test_logging_list_log_levels(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
@@ -71,6 +75,7 @@ class TestLogging(UccTester):
             ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
             )
         
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.logging
     @pytest.mark.sanity_test
@@ -85,6 +90,7 @@ class TestLogging(UccTester):
             selection_log.lower()
             )
         
+    @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.logging
     @pytest.mark.sanity_test
