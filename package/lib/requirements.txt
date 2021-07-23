@@ -4,4 +4,4 @@
 ##
 ##
 
-splunktaucclib==5.0.3
+splunktaucclib==5.0.4
