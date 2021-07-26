@@ -379,7 +379,7 @@ class TestInput(UccTester):
     def test_example_input_one_list_single_select_group_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies values Single Select Group Test dropdown in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        single_select_group_test_list = ["one", "two", "three", "four"]
+        single_select_group_test_list = ["One", "Two", "Three", "Four"]
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()       
         self.assert_util(
@@ -392,7 +392,7 @@ class TestInput(UccTester):
     def test_example_input_one_select_value_single_select_group_test(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
         """ Verifies selected value of Single Select Group Test dropdown in example input one"""
         input_page = InputPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        selected_value = "two"
+        selected_value = "Two"
         input_page.create_new_input.select("Example Input One")
         input_page.entity1.example_account.wait_for_values()       
         input_page.entity1.single_select_group_test.select(selected_value)
@@ -1126,7 +1126,7 @@ class TestInput(UccTester):
             )
         self.assert_util(
             input_page.entity1.single_select_group_test.get_value,
-            "two"
+            "Two"
             )
         self.assert_util(
             input_page.entity1.multiple_select_test.get_values,
