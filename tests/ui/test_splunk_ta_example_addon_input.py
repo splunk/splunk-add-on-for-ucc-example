@@ -430,8 +430,8 @@ class TestInput(UccTester):
         input_page.entity1.example_account.wait_for_values()
         self.assert_util(
             input_page.entity1.single_select_group_test.search_get_list,
-            ["One", "one"],
-            left_args={'value': 'One'},
+            ["one", "One"],
+            left_args={'value': 'one'},
             )
 
     # @pytest.mark.execute_enterprise_cloud_true
