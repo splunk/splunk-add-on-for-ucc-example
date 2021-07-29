@@ -17,7 +17,6 @@ COPY requirements_dev.txt /home/circleci/work/
 COPY requirements_py2_dev.txt /home/circleci/work/
 COPY requirements_addon_specific.txt /home/circleci/work/
 COPY tests /home/circleci/work/tests
-COPY pytest-splunk-addon-ui-smartx-2.0.7.tar.gz /home/circleci/work/
 RUN cd /home/circleci/work/tests && ls
 
 RUN cd ../..
