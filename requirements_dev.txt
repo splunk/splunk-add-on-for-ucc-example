@@ -12,7 +12,7 @@ pytest-xdist
 pytest-ordering
 pytest-splunk-addon==1.6.0
 pytest-expect
-pytest-splunk-addon-ui-smartx-1.1.2.post11.dev0+91a6f5b.tar.gz
+pytest-splunk-addon-ui-smartx-2.0.2.post2.dev0+2cacc12.tar.gz
 pytest-rerunfailures
 mock
 requests
