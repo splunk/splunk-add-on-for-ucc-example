@@ -12,7 +12,7 @@ git submodule update --init --recursive
 #setup python venv must be 3.7
 /Library/Frameworks/Python.framework/Versions/3.7/bin/python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements_dev.txt
 pip install https://download.splunk.com/misc/appinspect/splunk-appinspect-latest.tar.gz
 
 ```
@@ -29,5 +29,5 @@ pytest
 Using external Splunk instance with Eventgen and app pre-installed
 
 ```bash
-pytest --splunk_type=external --splunk_host=something --splunk_user=foo --splunk_password=something
+pytest --splunk-type=external --splunk-host=something --splunk-user=foo --splunk-password=something
 ```
