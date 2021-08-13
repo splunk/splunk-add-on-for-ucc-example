@@ -59,3 +59,15 @@ License: LicenseRef-Splunk-1-2020
 Files: package/appserver/static/test_alert.png
 Copyright: $YEAR $NAME <$CONTACT>
 License: LicenseRef-Splunk-1-2020
+
+Files: *.lock
+Copyright: $YEAR $NAME <$CONTACT>
+License: LicenseRef-Splunk-1-2020
+
+Files: pyproject.toml
+Copyright: $YEAR $NAME <$CONTACT>
+License: LicenseRef-Splunk-1-2020
+
+Files: package.json
+Copyright: $YEAR $NAME <$CONTACT>
+License: LicenseRef-Splunk-1-2020
