@@ -1687,6 +1687,7 @@ class TestInput(UccTester):
         selected_value = ["Option One"]
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.example_account.wait_for_values()
+        input_page.entity2.index.set_value("default")
         for each in selected_value:
             input_page.entity2.example_multiple_select.select(each)
         self.assert_util(
@@ -1703,6 +1704,7 @@ class TestInput(UccTester):
         selected_values = ["Option One", "Option Two"]
         input_page.create_new_input.select("Example Input Two")
         input_page.entity2.example_account.wait_for_values()
+        input_page.entity2.index.set_value("default")
         for each in selected_values:
             input_page.entity2.example_multiple_select.select(each)
         self.assert_util(
