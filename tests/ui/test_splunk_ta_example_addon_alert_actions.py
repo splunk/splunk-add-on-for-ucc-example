@@ -75,6 +75,7 @@ class TestAlertActions(UccTester):
 
         alert_page.action_entity.account.select("test_input")
         self.assert_util(alert_page.action_entity.account.get_value, "test_input") 
+        alert_page.action_entity.action.select("Delete")
         alert_page.action_entity.account.cancel_selected_value()
         self.assert_util(alert_page.action_entity.account.get_value, "test_input", "!=")
         self.assert_util("test_input", alert_page.action_entity.account.list_of_values, "in")
