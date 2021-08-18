@@ -24,6 +24,7 @@ then
 fi
 
 pip install -r requirements_dev.txt --user
+pip install pytest-splunk-addon-ui-smartx-2.0.9.post1.dev0+c063caf.tar.gz
 #pip install six>=1.15 --user
 #pip install git+https://github.com/rfaircloth-splunk/agent-python-pytest.git --user
 
