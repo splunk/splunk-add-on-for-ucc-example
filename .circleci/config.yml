@@ -626,7 +626,7 @@ workflows:
             parameters:
               splunk_version: ["8.0", "8.2"]
               sc4s_version: ["1"]
-              test_set: ["ui-chrome"]
+              test_set: ["ui-chrome, "ui-firefox", "ui-safari", "ui-edge"]
               resource_class: ["medium"]
           filters:
             branches:
