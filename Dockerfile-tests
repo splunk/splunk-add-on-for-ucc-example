@@ -14,6 +14,7 @@ RUN mkdir -p /home/circleci/work/tests;\
 COPY tests/entrypoint.sh /
 COPY .pytest.expect /home/circleci/work/.pytest.expect
 COPY requirements_dev.txt /home/circleci/work/
+COPY pytest-splunk-addon-ui-smartx-2.0.9.post1.dev0+b06321a.tar.gz /home/circleci/work
 COPY tests /home/circleci/work/tests
 # hadolint ignore=DL3003
 RUN cd /home/circleci/work/tests && ls && cd ../..
