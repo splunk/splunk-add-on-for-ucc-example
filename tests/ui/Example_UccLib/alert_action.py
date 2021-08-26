@@ -49,6 +49,7 @@ class AlertPage(Page):
         Abstract Method. Open the page
         """
         self.browser.get(self.splunk_web_url + "/en-US/manager/Splunk_TA_UCCExample/saved/searches")
+        self.popup.pop()
 
     def _get_alert_endpoint(self):
         return '{}/servicesNS/admin/Splunk_TA_UCCExample/saved/searches/'.format(self.splunk_mgmt_url)
