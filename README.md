@@ -9,14 +9,13 @@ git clone git@github.com:splunk/<repo slug>.git
 cd <repo dir>
 git submodule update --init --recursive
 
-#setup python venv must be 3.7
-/Library/Frameworks/Python.framework/Versions/3.7/bin/python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements_dev.txt
-pip install https://download.splunk.com/misc/appinspect/splunk-appinspect-latest.tar.gz
-
+poetry shell
+poetry install
+mkdir -p package/lib
+poetry export --without-hashes -o package/lib/requirements.txt
+ucc-gen
+slim package output/Splunk_TA_UCCExample
 ```
-
 
 ## Test
 
