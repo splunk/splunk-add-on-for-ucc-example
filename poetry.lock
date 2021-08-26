@@ -202,7 +202,7 @@ python-versions = "*"
 name = "future"
 version = "0.18.2"
 description = "Clean single-source support for Python 3 and 2"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
@@ -879,14 +879,13 @@ sortedcontainers = ">=2,<3"
 
 [[package]]
 name = "splunktaucclib"
-version = "5.0.3"
+version = "5.0.4"
 description = ""
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-future = ">=0,<1"
 solnlib = ">=4.0.0,<5.0.0"
 splunk-sdk = "1.6.16"
 splunktalib = ">=2.0.0,<3.0.0"
@@ -964,7 +963,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "3f04ca34bb5a4172b0e9ded02789a33f520016b701acfaeeddf1fe3e82a41814"
+content-hash = "a2f375e9feea965d27df6f38aca4e357013d46fa27339dff9201acc00642ed7c"
 
 [metadata.files]
 atomicwrites = [
@@ -1510,8 +1509,8 @@ splunktalib = [
     {file = "splunktalib-2.1.0.tar.gz", hash = "sha256:700585b36313065fa894f0960b347a3926ce17a4e8c8c0bc41e9b2a661153912"},
 ]
 splunktaucclib = [
-    {file = "splunktaucclib-5.0.3-py3-none-any.whl", hash = "sha256:166ea8aeef511610c506868dab4ae54b590960b4ee87449f9357ff531d38fd3e"},
-    {file = "splunktaucclib-5.0.3.tar.gz", hash = "sha256:fc3bc0eb467c379da6b4268d56dd0265895f6dd0d6655fa14ba886486b687f5a"},
+    {file = "splunktaucclib-5.0.4-py3-none-any.whl", hash = "sha256:b250a15696c40149e665383d44d058399c47f9da2052a6a4e6bc1a4e485915c6"},
+    {file = "splunktaucclib-5.0.4.tar.gz", hash = "sha256:8f47a0830e58893f20d24f839656e9594475896d334de55d5d9c31d9a52a70a0"},
 ]
 text-unidecode = [
     {file = "text-unidecode-1.3.tar.gz", hash = "sha256:bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93"},
