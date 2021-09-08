@@ -502,21 +502,26 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN_ADMIN }}
       - name: Download package-deployment
+        if: ${{ steps.semantic.outputs.new_release_published }} == 'true' 
         uses: actions/download-artifact@v2
         id: download-package-deployment
         with:
           name: package-deployment
           path: download/artifacts/
       - name: Download package-splunkbase
+        if: ${{ steps.semantic.outputs.new_release_published }} == 'true' 
+
         uses: actions/download-artifact@v2
         id: download-package-splunkbase
         with:
           name: package-splunkbase
           path: download/artifacts/deployment
       - name: List of assets
+        if: ${{ steps.semantic.outputs.new_release_published }} == 'true' 
         run: |
           ls -la ${{ steps.download-package-splunkbase.outputs.download-path }}
       - name: Upload assets to release
+        if: ${{ steps.semantic.outputs.new_release_published }} == 'true' 
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GH_TOKEN_ADMIN }}
