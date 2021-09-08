@@ -510,7 +510,6 @@ jobs:
           path: download/artifacts/
       - name: Download package-splunkbase
         if: ${{ steps.semantic.outputs.new_release_published }} == 'true' 
-
         uses: actions/download-artifact@v2
         id: download-package-splunkbase
         with:
