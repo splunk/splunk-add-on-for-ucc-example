@@ -2035,7 +2035,7 @@ class TestInput(UccTester):
         input_page.table.wait_for_rows_to_appear(1)
         input_page.table.clone_row("dummy_input_two")
         input_page.entity2.example_account.wait_for_values()
-        input_page.entity2.name.set_value("Clone_Test")
+        input_page.entity2.name.set_value("dummy_input_two_Clone_Test")
         input_page.entity2.interval.set_value("180")
         self.assert_util(input_page.entity2.save, True)
         input_page.table.wait_for_rows_to_appear(2)
@@ -2049,7 +2049,7 @@ class TestInput(UccTester):
             'start_date': '2016-10-10T12:10:15.000z',
             'disabled': 0,
             }
-        backend_stanza = input_page.backend_conf.get_stanza("example_input_two://Clone_Test")
+        backend_stanza = input_page.backend_conf.get_stanza("example_input_two://dummy_input_two_Clone_Test")
         for each_key, each_value in value_to_test.items():
             self.assert_util(
                 each_value ,
