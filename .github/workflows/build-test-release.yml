@@ -250,7 +250,7 @@ jobs:
           cp -f /tmp/analysis-reports/NOTICE_default package/THIRDPARTY || true
       - name: Build Package
         id: uccgen
-        uses: splunk/addonfactory-ucc-generator-action@v1
+        uses: splunk/addonfactory-ucc-generator-action@ci/remove-dist-info-files-from-package
         with:
           version: ${{ steps.BuildVersion.outputs.VERSION }}
       - name: Slim Package
