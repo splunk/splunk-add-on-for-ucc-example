@@ -645,7 +645,7 @@ docker = ["lovely-pytest-docker (>=0,<1)"]
 
 [[package]]
 name = "pytest-splunk-addon-ui-smartx"
-version = "2.0.10"
+version = "2.1.1"
 description = "Library to support testing Splunk Add-on UX"
 category = "dev"
 optional = false
@@ -983,7 +983,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "1041b906e8fe4856e32a3d49b49ea4dc8096ff9922dc4d30db62371e54e4567b"
+content-hash = "ba0f933e4be0541808cfffa785d750a197cdf646c58a8188f65cb8272b285f00"
 
 [metadata.files]
 atomicwrites = [
@@ -1419,8 +1419,8 @@ pytest-splunk-addon = [
     {file = "pytest_splunk_addon-1.7.2-py3-none-any.whl", hash = "sha256:ec2eeddc1200f0e0eb74e4dd8aea9a3752a3cbbd693930435aee19e55d2f0b8d"},
 ]
 pytest-splunk-addon-ui-smartx = [
-    {file = "pytest-splunk-addon-ui-smartx-2.0.10.tar.gz", hash = "sha256:0c4a4c651cf40ecfa642ddabe64469940c467e6ab48e3c57cc8c1ad1d71cc6b2"},
-    {file = "pytest_splunk_addon_ui_smartx-2.0.10-py3-none-any.whl", hash = "sha256:1dfe621189d552a240b92e1683af0df982cffd89d173bbc697be4e09b1bb707a"},
+    {file = "pytest-splunk-addon-ui-smartx-2.1.1.tar.gz", hash = "sha256:7ed0b19f02097db3820439d48767f72cc4c5f9a5e839b11c07d1fd5a2e335e17"},
+    {file = "pytest_splunk_addon_ui_smartx-2.1.1-py3-none-any.whl", hash = "sha256:6e7cde0c84df1cdd2ae936339783c224ccaaaf4cc5385486dcf057af6e1208b0"},
 ]
 pytest-xdist = [
     {file = "pytest-xdist-2.3.0.tar.gz", hash = "sha256:e8ecde2f85d88fbcadb7d28cb33da0fa29bca5cf7d5967fa89fc0e97e5299ea5"},
