@@ -249,6 +249,7 @@ class TestAccount(UccTester):
         """ Verifies close functionality at time of add"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.entity.open()
+        time.sleep(10)
         self.assert_util(account.entity.close, True)
 
     @pytest.mark.execute_enterprise_cloud_true
