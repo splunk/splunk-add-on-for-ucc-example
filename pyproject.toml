@@ -8,6 +8,7 @@ license = "Splunk-1-2020"
 [tool.poetry.dependencies]
 python = "^3.7"
 splunktaucclib = "5.0.3"
+pytest-splunk-addon-ui-smartx = {path = "pytest-splunk-addon-ui-smartx-0.0.0.tar.gz"}
 
 [tool.poetry.dev-dependencies]
 splunk-add-on-ucc-framework = "5.8.2"
@@ -18,7 +19,6 @@ pytest-xdist = "^2.3.0"
 pytest-ordering = "^0.6"
 pytest-splunk-addon = "1.7.2"
 pytest-expect = "^1.1.0"
-pytest-splunk-addon-ui-smartx = "2.0.9"
 pytest-rerunfailures = "^10.1"
 mock = "^4.0.3"
 requests = "^2.26.0"
