@@ -5,6 +5,7 @@ on:
     branches:
       - "main"
       - "develop"
+      - "test/safari-failures"
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
   pull_request:
@@ -847,7 +848,7 @@ jobs:
       fail-fast: false
       matrix:
         splunk: ${{ fromJson(needs.meta.outputs.matrix_supportedSplunk) }}
-        browser: ["chrome"]
+        browser: ["chrome","safari"]
     container:
       image: ghcr.io/splunk/workflow-engine-base:2.0.3
     env:
