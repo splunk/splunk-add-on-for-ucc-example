@@ -1,52 +1,52 @@
 {
-  "schemaVersion": "2.0.0",
-  "info": {
-    "title": "Splunk_TA_UCCExample",
-    "id": {
-      "group": null,
-      "name": "Splunk_TA_UCCExample",
-      "version": "1.0.0"
+    "schemaVersion": "2.0.0",
+    "info": {
+        "title": "Splunk_TA_UCCExample",
+        "id": {
+            "group": null,
+            "name": "Splunk_TA_UCCExample",
+            "version": "1.0.0"
+        },
+        "author": [
+            {
+                "name": "Splunk, Inc.",
+                "email": "support@splunk.com",
+                "company": "Splunk, Inc."
+            }
+        ],
+        "releaseDate": null,
+        "description": "Splunk_TA_UCCExample",
+        "classification": {
+            "intendedAudience": "IT Professionals",
+            "categories": [
+                "Security, Fraud & Compliance"
+            ],
+            "developmentStatus": "Production/Stable"
+        },
+        "commonInformationModels": null,
+        "license": {
+            "name": null,
+            "text": "LICENSES/LicenseRef-Splunk-8-2021.txt",
+            "uri": null
+        },
+        "privacyPolicy": {
+            "name": null,
+            "text": null,
+            "uri": null
+        },
+        "releaseNotes": {
+            "name": "README",
+            "text": "README.txt",
+            "uri": "https://docs.splunk.com/Documentation/AddOns/McAfeeEPOSyslog/About"
+        }
     },
-    "author": [
-      {
-        "name": "Splunk, Inc.",
-        "email": "support@splunk.com",
-        "company": "Splunk, Inc."
-      }
+    "supportedDeployments": [
+        "_standalone",
+        "_distributed",
+        "_search_head_clustering"
     ],
-    "releaseDate": null,
-    "description": "Splunk_TA_UCCExample",
-    "classification": {
-      "intendedAudience": "IT Professionals",
-      "categories": [
-        "Security, Fraud & Compliance"
-      ],
-      "developmentStatus": "Production/Stable"
-    },
-    "commonInformationModels": null,
-    "license": {
-      "name": null,
-      "text": "LICENSES/LicenseRef-Splunk-1-2020.txt",
-      "uri": null
-    },
-    "privacyPolicy": {
-      "name": null,
-      "text": null,
-      "uri": null
-    },
-    "releaseNotes": {
-      "name": "README",
-      "text": "README.txt",
-      "uri": "https://docs.splunk.com/Documentation/AddOns/McAfeeEPOSyslog/About"
-    }
-  },
-  "supportedDeployments": [
-    "_standalone",
-    "_distributed",
-    "_search_head_clustering"
-  ],
-  "targetWorkloads": [
-    "_search_heads",
-    "_indexers"
-  ]
+    "targetWorkloads": [
+        "_search_heads",
+        "_indexers"
+    ]
 }
