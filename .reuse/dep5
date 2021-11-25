@@ -6,68 +6,68 @@ Source: https://github.com/splunk/splunk-add-on-for-juniper
 
 Files: deps/*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: package/lookups/*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: package/static/*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: package/samples/*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: package/metadata/*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: package/app.manifest
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: package/README.*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: tests/*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: .*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: Dockerfile*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: semtag
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: README*
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: globalConfig.json
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: package/appserver/static/test_alert.png
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: *.lock
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: pyproject.toml
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
 
 Files: package.json
 Copyright: $YEAR $NAME <$CONTACT>
-License: LicenseRef-Splunk-1-2020
+License: LicenseRef-Splunk-8-2021
