@@ -7,7 +7,7 @@ license = "Splunk-1-2020"
 
 [tool.poetry.dependencies]
 python = "^3.7"
-splunktaucclib = "5.0.3"
+splunktaucclib = "5.0.7"
 
 [tool.poetry.dev-dependencies]
 splunk-add-on-ucc-framework = "5.8.2"
