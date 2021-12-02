@@ -29,6 +29,9 @@ jobs:
         with:
           submodules: false
           persist-credentials: false
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
       - name: Semantic Release
         id: version
         uses: cycjimmy/semantic-release-action@v2.6.0
@@ -383,8 +386,8 @@ jobs:
     name: quality-appinspect-${{ matrix.tags }}
     needs: build
     runs-on: ubuntu-latest
-    continue-on-error: true
     strategy:
+      fail-fast: false
       matrix:
         tags:
           - "cloud"
@@ -1203,6 +1206,7 @@ jobs:
       - run-knowledge-tests
       - run-modinput-tests
       - run-ui-tests
+      - run-requirement-tests
     runs-on: ubuntu-latest
     env:
       NEEDS: ${{ toJson(needs) }}
@@ -1235,6 +1239,9 @@ jobs:
         with:
           submodules: false
           persist-credentials: false
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
       - name: Semantic Release
         id: semantic
         uses: cycjimmy/semantic-release-action@v2.6.0
