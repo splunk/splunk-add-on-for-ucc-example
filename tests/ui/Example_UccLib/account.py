@@ -1,6 +1,6 @@
 #
 # SPDX-FileCopyrightText: 2020 Splunk, Inc. <sales@splunk.com>
-# SPDX-License-Identifier: LicenseRef-Splunk-1-2020
+# SPDX-License-Identifier: LicenseRef-Splunk-8-2021
 #
 #
 from pytest_splunk_addon_ui_smartx.pages.page import Page
