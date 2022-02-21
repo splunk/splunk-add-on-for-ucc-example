@@ -17,7 +17,6 @@ pip install https://download.splunk.com/misc/appinspect/splunk-appinspect-latest
 
 ```
 
-
 ## Test
 
 Using docker 
