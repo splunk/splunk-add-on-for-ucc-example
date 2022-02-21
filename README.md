@@ -4,6 +4,7 @@ Note: Must install docker desktop, vscode or pycharm pro optional
 
 Note2: Appinspect requires libmagic verify this has been installed correctly each time a new workstation/vm is used https://dev.splunk.com/enterprise/docs/releaseapps/appinspect/splunkappinspectclitool/installappinspect
 
+
 ```bash
 git clone git@github.com:splunk/<repo slug>.git
 cd <repo dir>
