@@ -74,8 +74,10 @@ class TestAlertActions(UccTester):
         alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
 
         alert_page.action_entity.account.select("test_input")
+        alert_page.action_entity.account.wait_for_values()
         self.assert_util(alert_page.action_entity.account.get_value, "test_input") 
         alert_page.action_entity.account.cancel_selected_value()
+        alert_page.action_entity.account.wait_for_values()
         self.assert_util(alert_page.action_entity.account.get_value, "test_input", "!=")
         self.assert_util("test_input", alert_page.action_entity.account.list_of_values, "in")
 
