@@ -747,7 +747,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "splunk-add-on-ucc-framework"
-version = "5.10.1"
+version = "5.10.2"
 description = "Splunk Add-on SDK formerly UCC is a build and code generation framework"
 category = "dev"
 optional = false
@@ -908,7 +908,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "09f15bb9f355b432dd73a322bc1a6bdf3815a05562463913a5076175878eb986"
+content-hash = "4d4db46f0dcfcc011381d2cf99c0403a46e7a7aa1ca746e4567a8c2930ab5267"
 
 [metadata.files]
 addonfactory-splunk-conf-parser-lib = [
@@ -1381,8 +1381,8 @@ soupsieve = [
     {file = "soupsieve-2.2.1.tar.gz", hash = "sha256:052774848f448cf19c7e959adf5566904d525f33a3f8b6ba6f6f8f26ec7de0cc"},
 ]
 splunk-add-on-ucc-framework = [
-    {file = "splunk_add_on_ucc_framework-5.10.1-py3-none-any.whl", hash = "sha256:1a441e6510d0bb34ca6c48432d246045a1a2dec72e44fefa40a95260fa2c273b"},
-    {file = "splunk_add_on_ucc_framework-5.10.1.tar.gz", hash = "sha256:4de80603552b511a940888b0b8279661de007681e09c7ab792b0a5fbc4dc2546"},
+    {file = "splunk_add_on_ucc_framework-5.10.2-py3-none-any.whl", hash = "sha256:0eedceff9e0598f07068b2b0a0590a8dcd391994015ee2eb1614a2a50d651cf9"},
+    {file = "splunk_add_on_ucc_framework-5.10.2.tar.gz", hash = "sha256:b292a5e5f66b520f4cdcdb5bd32bcbaabaa328de483ca0e6f3f3fbebf4e94c91"},
 ]
 splunk-appinspect = [
     {file = "splunk-appinspect-2.7.0.tar.gz", hash = "sha256:bd18f140c109cdcca52468ab8f60c10ebca3e98c711ada8d0fdbc1a3198a64d9"},
