@@ -10,7 +10,7 @@ python = "^3.7"
 splunktaucclib = "5.0.7"
 
 [tool.poetry.dev-dependencies]
-splunk-add-on-ucc-framework = "^5.10.1"
+splunk-add-on-ucc-framework = "^5.10.4"
 lovely-pytest-docker = "^0.2.1"
 pytest = "^6.2.4"
 pytest-splunk-addon = "^1.11.4"
