@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "Log level: $TYPE"
+          echo "Test type: $TYPE"
           echo "Tags: $TAGS"
         env:
           TYPE: ${{ inputs.testtype }}
