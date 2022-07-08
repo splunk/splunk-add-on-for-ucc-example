@@ -11,6 +11,8 @@ on:
         - knowledge
         - ui
         - modinput
+      splunkversion:
+        required: true
       tags:
         description: 'Test scenario tags'
         required: false 
@@ -23,6 +25,8 @@ jobs:
       - run: |
           echo "Test type: $TYPE"
           echo "Tags: $TAGS"
+          echo "Splunk version: $VERSION"
         env:
           TYPE: ${{ inputs.testtype }}
           TAGS: ${{ inputs.tags }}
+          VERSION: ${{ inputs.splunkversion }}
