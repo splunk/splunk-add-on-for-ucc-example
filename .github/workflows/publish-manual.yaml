@@ -2,15 +2,15 @@ name: test-workflow
 on: 
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'     
+      testtype:
+        description: 'Test type'     
         required: true
-        default: 'warning' 
+        default: 'knowledge' 
         type: choice
         options:
-        - info
-        - warning
-        - debug 
+        - knowledge
+        - ui
+        - modinput
       tags:
         description: 'Test scenario tags'
         required: false 
@@ -21,8 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "Log level: $LEVEL"
+          echo "Log level: $TYPE"
           echo "Tags: $TAGS"
         env:
-          LEVEL: ${{ inputs.logLevel }}
+          TYPE: ${{ inputs.testtype }}
           TAGS: ${{ inputs.tags }}
