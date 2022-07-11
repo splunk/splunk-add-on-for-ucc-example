@@ -6,17 +6,33 @@ on:
         default: '8.2.2107'
         description: 'SPLUNK_VERSION'
       TEST_TYPE:
-        description: 'Tests you want to execute, Must match foldername in test directory i.e knowledge, ui, modinput_functional.'
+        description: 'Test type'     
         default: 'knowledge'
+        required: true
+        type: choice
+        options:
+        - knowledge
+        - ui
+        - modinput
       BROWSER:
-        description: 'Browser to execute UI tests on, e.g. chrome, firefox, safari.\nIf require then pass the browser_version like, chrome:98.'
+        description: 'Browser to execute UI tests on, e.g. chrome, firefox, safari'
         default: 'chrome'
+        type: choice
+        options:
+        - chrome
+        - firefox
+        - safari
       SC4S_VERSION:
-        description: 'SC4S version that should be used for addon test-executions, e.g. 1.95.0'
+        description: 'SC4S version that should be used for addon test-executions'
         default: 'latest'
       SC4S_REGISTRY:
-        description: "SC4S registry that should be used for installing the above SC4S version from,\ne.g. ghcr.io/splunk/splunk-connect-for-syslog/container2 for SC4S Version 2.X\n ghcr.io/splunk/splunk-connect-for-syslog/container for SC4S Version 1.X."
+        description: "SC4S registry that should be used for installing the above SC4S version"
         default: 'ghcr.io/splunk/splunk-connect-for-syslog/container2'
+        type: choice
+        options:
+        - splunk/scs
+        - ghcr.io/splunk/splunk-connect-for-syslog/container
+        - ghcr.io/splunk/splunk-connect-for-syslog/container2
       ADDITIONAL_FILTER:
         description: 'Additional filter for pytest command, e.g. -k test_splunk_internal_errors'
       PYTEST_EXPECT_FILE:
