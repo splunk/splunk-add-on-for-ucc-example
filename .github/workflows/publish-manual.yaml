@@ -3,28 +3,18 @@ on:
   workflow_dispatch:
     inputs:
       TRIGGER_ALL_PIPELINE:
-        description: 'Provide TRIGGER_ALL_PIPELINE as True to trigger tests for canary batches of addons. NOTE: This parameter is applicable for both "Trigger ALL" and "Individual Addon Tests".'
+        description: 'TRIGGER_ALL_PIPELINE'
         default: false
         type: boolean
-      STACK_TYPE:
-        description: 'Provide a stack type for test execution Noah_SHC, Noah_Single_SH, Enterprise_Unreleased, Enterprise_Released. NOTE: This parameter is applicable for both "Trigger ALL" and "Individual Addon Tests". If `Enterprise_Unreleased` make sure Splunk image `repo.splunk.com/docker-solutions-local/splunk-redhat-8:$SPLUNK_VERSION` image is published in artifactory.'
-        default: 'Noah_SHC'
-      GRAVITON:
-        description: 'To run against graviton mixed builds provide value as Graviton_mixed. NOTE: This parameter is applicable for both "Trigger ALL" and "Individual Addon Tests".'
-        default: false
-        type: boolean
-      SPLUNK_VERSION:
-        default: '8.2.2107'
-        description: 'To provide commit in Noah stacks use + sign between version and commit, eg. - 8.2.2107+98ff651b0b86. NOTE: This parameter is applicable for both "Trigger ALL" and "Individual Addon Tests".'
       JOB_LIST:
-        description: "Provide canary job's list as NOAH_CO2_canary, NOAH_CO2_batch2, NOAH_CO2_batch3, NOAH_CO2_batch4, NOAH_CO2_batch5, STANDALONE_BATCH1, STANDALONE_BATCH2. NOTE: This parameter is only applicable for \"Trigger ALL\" and not for \"Individual Addon Tests\"."
+        description: "JOB_LIST: NOAH_CO2_canary, NOAH_CO2_batch2, NOAH_CO2_batch3, NOAH_CO2_batch4, NOAH_CO2_batch5, STANDALONE_BATCH1, STANDALONE_BATCH2. \nNOTE: This parameter is only applicable for \"Trigger ALL\""
         default: 'NOAH_CO2_canary'
-      TEST_TYPE_TRIGGER_ALL:
-        description: '[comma-separated list]Test-types to be triggered using trigger all, Must match foldername in test directory i.e knowledge, ui, modinput_functional. NOTE: This parameter is only applicable for "Trigger ALL" and not for "Individual Addon Tests".'
-        default: 'knowledge,ui,modinput_functional'
-      BROWSER_TRIGGER_ALL:
-        description: '[comma-separated list]Browser to be triggered using trigger all, accepted values chrome, firefox and safari . NOTE: This parameter is only applicable for "Trigger ALL" and not for "Individual Addon Tests".'
-        default: 'chrome,firefox'
+      STACK_TYPE:
+        description: 'STACK_TYPE'
+        default: 'Noah_SHC'
+      SPLUNK_VERSION:
+        description: 'SPLUNK_VERSION'
+        default: '8.2.2107'
       TEST_TYPE:
         description: 'Tests you want to execute, Must match foldername in test directory i.e knowledge, ui, modinput_functional. NOTE: This parameter is only applicable for "Individual Addon Tests" and not for "Trigger ALL".'
         default: 'knowledge'
@@ -34,19 +24,8 @@ on:
       CHECKOUT_CODE:
         description: 'Checkout specific Tag/Branch/Commit i.e v4.2.2, main, 86a3d27ef28181434c8b073a82bda3041787dc38. NOTE: This parameter is only applicable for "Individual Addon Tests" and not for "Trigger ALL".'
         default: 'latest_splunkbase_version'
-      SC4S_VERSION:
-        description: 'SC4S version that should be used for addon test-executions, e.g. 1.95.0. NOTE: This parameter is only applicable for "Individual Addon Tests" and not for "Trigger ALL".'
-        default: 'latest'
-      SC4S_REGISTRY:
-        description: "SC4S registry that should be used for installing the above SC4S version from, e.g. ghcr.io/splunk/splunk-connect-for-syslog/container2 for SC4S Version 2.X or ghcr.io/splunk/splunk-connect-for-syslog/container for SC4S Version 1.X. NOTE: This parameter is only applicable for \"Individual Addon Tests\" and not for \"Trigger ALL\"."
-        default: 'ghcr.io/splunk/splunk-connect-for-syslog/container2'
       ADDITIONAL_FILTER:
         description: 'Additional filter for pytest command, e.g. -k test_splunk_internal_errors, -m splunk_searchtime_fields. NOTE: This parameter is only applicable for "Individual Addon Tests" and not for "Trigger ALL".'
-      PYTEST_EXPECT_FILE:
-        default: '.pytest.expect'
-      EXISTING_STACK:
-        required: false
-        description: 'Name of existing CO2 Noah stack. NOTE: For running modinput test on existing stack please install Splunk_TA_Modinput_Test addon on stack before triggering this pipeline. NOTE: This parameter is only applicable for "Individual Addon Tests" and not for "Trigger ALL".'
       CREATE_INDEXES:
         description: 'Provide False if the required indexes for SC4S are already created in stack from previous executions. NOTE: This parameter is only applicable for "Individual Addon Tests" and not for "Trigger ALL".'
         default: true
@@ -64,39 +43,25 @@ jobs:
     steps:
       - run: |
           echo "TRIGGER_ALL_PIPELINE: $TRIGGER_ALL_PIPELINE"
-          echo "STACK_TYPE: $STACK_TYPE"
-          echo "GRAVITON: $GRAVITON"
-          echo "SPLUNK_VERSION: $SPLUNK_VERSION"
           echo "JOB_LIST: $JOB_LIST"
-          echo "TEST_TYPE_TRIGGER_ALL: $TEST_TYPE_TRIGGER_ALL"
-          echo "BROWSER_TRIGGER_ALL: $BROWSER_TRIGGER_ALL"
+          echo "STACK_TYPE: $STACK_TYPE"
+          echo "SPLUNK_VERSION: $SPLUNK_VERSION"
           echo "TEST_TYPE: $TEST_TYPE"
           echo "BROWSER: $BROWSER"
           echo "CHECKOUT_CODE: $CHECKOUT_CODE"
-          echo "SC4S_VERSION: $SC4S_VERSION"
-          echo "SC4S_REGISTRY: $SC4S_REGISTRY"
           echo "ADDITIONAL_FILTER: $ADDITIONAL_FILTER"
-          echo "PYTEST_EXPECT_FILE: $PYTEST_EXPECT_FILE"
-          echo "EXISTING_STACK: $EXISTING_STACK"
           echo "CREATE_INDEXES: $CREATE_INDEXES"
           echo "DELETE_STACK: $DELETE_STACK"
           echo "EVENT_TYPE: $EVENT_TYPE"
         env:
           TRIGGER_ALL_PIPELINE: ${{ inputs.TRIGGER_ALL_PIPELINE }}
           STACK_TYPE: ${{ inputs.STACK_TYPE }}
-          GRAVITON: ${{ inputs.GRAVITON }}
           SPLUNK_VERSION: ${{ inputs.SPLUNK_VERSION }}
           JOB_LIST: ${{ inputs.JOB_LIST }}
-          TEST_TYPE_TRIGGER_ALL: ${{ inputs.TEST_TYPE_TRIGGER_ALL }}
-          BROWSER_TRIGGER_ALL: ${{ inputs.BROWSER_TRIGGER_ALL }}
           TEST_TYPE: ${{ inputs.TEST_TYPE }}
           BROWSER: ${{ inputs.BROWSER }}
           CHECKOUT_CODE: ${{ inputs.CHECKOUT_CODE }}
-          SC4S_VERSION: ${{ inputs.SC4S_VERSION }}
-          SC4S_REGISTRY: ${{ inputs.SC4S_REGISTRY }}
           ADDITIONAL_FILTER: ${{ inputs.ADDITIONAL_FILTER }}
-          PYTEST_EXPECT_FILE: ${{ inputs.PYTEST_EXPECT_FILE }}
-          EXISTING_STACK: ${{ inputs.EXISTING_STACK }}
           CREATE_INDEXES: ${{ inputs.CREATE_INDEXES }}
           DELETE_STACK: ${{ inputs.DELETE_STACK }}
           EVENT_TYPE: ${{ github.event_name }}
