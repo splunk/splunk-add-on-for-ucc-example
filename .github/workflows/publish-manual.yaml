@@ -14,6 +14,13 @@ on:
         - knowledge
         - ui
         - modinput
+        - scripted-input
+        - requirements-unit
+        - unit
+        - requirement
+      OS: 
+        description: 'OS Version to test with scripted-input tests. e.g ["ubuntu:16.04","ubuntu:18.04","ubuntu:22.04"]'
+        default: 'ubuntu:16.04'
       BROWSER:
         description: 'Browser to execute UI tests on, e.g. chrome, firefox, safari'
         default: 'chrome'
@@ -50,6 +57,7 @@ jobs:
           echo "ADDITIONAL_FILTER: $ADDITIONAL_FILTER"
           echo "PYTEST_EXPECT_FILE: $PYTEST_EXPECT_FILE"
           echo "EVENT_TYPE: $EVENT_TYPE"
+          echo "OS: $OS"
         env:
           SPLUNK_VERSION: ${{ inputs.SPLUNK_VERSION }}
           TEST_TYPE: ${{ inputs.TEST_TYPE }}
@@ -58,6 +66,7 @@ jobs:
           SC4S_REGISTRY: ${{ inputs.SC4S_REGISTRY }}
           ADDITIONAL_FILTER: ${{ inputs.ADDITIONAL_FILTER }}
           PYTEST_EXPECT_FILE: ${{ inputs.PYTEST_EXPECT_FILE }}
+          OS: ${{ inputs.OS }}
           EVENT_TYPE: ${{ github.event_name }}
           
   # call-workflow:
