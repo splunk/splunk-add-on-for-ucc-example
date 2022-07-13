@@ -209,7 +209,7 @@ jobs:
           echo "::set-output name=s3-bucket::ta-staging-artifacts"
 
   run-knowledge-tests:
-    if: ${{ needs.test-inventory.outputs.knowledge == 'true' }} && ${{ inputs.TEST_TYPE == 'knowledge' }}
+    if: needs.test-inventory.outputs.knowledge == 'true' && inputs.TEST_TYPE == 'knowledge'
     needs:
       - build
       - test-inventory
@@ -376,7 +376,7 @@ jobs:
           reporter: java-junit
 
   run-scripted-input-tests:
-    if: ${{ needs.test-inventory.outputs.scripted_inputs == 'true' }} && ${{ inputs.TEST_TYPE == 'scripted-input' }}
+    if: needs.test-inventory.outputs.scripted_inputs == 'true' && inputs.TEST_TYPE == 'scripted-input'
     needs:
       - build
       - test-inventory
