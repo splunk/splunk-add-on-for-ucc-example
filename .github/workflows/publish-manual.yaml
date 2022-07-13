@@ -30,13 +30,6 @@ on:
         - ghcr.io/splunk/splunk-connect-for-syslog/container2
       ADDITIONAL_FILTER:
         description: 'Additional filter for pytest command, e.g. -k test_splunk_internal_errors'
-    secrets:
-      GH_TOKEN_ADMIN: ${{ secrets.GH_TOKEN_ADMIN }}
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      OTHER_TA_REQUIRED_CONFIGS: ${{ secrets.OTHER_TA_REQUIRED_CONFIGS }}
 
 jobs:
   build:
