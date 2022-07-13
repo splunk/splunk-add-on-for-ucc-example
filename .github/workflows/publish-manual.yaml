@@ -226,9 +226,6 @@ jobs:
       - test-inventory
       - setup
     runs-on: ubuntu-18.04
-    strategy:
-      fail-fast: false
-      matrix:
     container:
       image: ghcr.io/splunk/workflow-engine-base:2.0.3
     env:
