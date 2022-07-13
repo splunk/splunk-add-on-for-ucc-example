@@ -140,12 +140,12 @@ jobs:
           echo "::set-output name=name::$(basename "${{ steps.slim.outputs.OUTPUT }}")"
           basename "${{ steps.slim.outputs.OUTPUT }}"
           aws s3 cp "${{ steps.slim.outputs.OUTPUT }}" s3://ta-staging-artifacts/ta-apps/
-      - name: artifact-splunk-parts
-        uses: actions/upload-artifact@v3
-        with:
-          name: package-deployment
-          path: build/package/deployment**
-        if: always()
+      # - name: artifact-splunk-parts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: package-deployment
+      #     path: build/package/deployment**
+      #   if: always()
 
   test-inventory:
     runs-on: ubuntu-latest
