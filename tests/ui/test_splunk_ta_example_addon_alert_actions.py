@@ -12,6 +12,7 @@ from pytest_splunk_addon_ui_smartx.components.controls.button import Button
 from .Example_UccLib.alert_action import AlertPage
 from .test_splunk_ta_example_addon_input import add_account
 
+
 @pytest.fixture(autouse=True)
 def setup_alert(ucc_smartx_selenium_helper):
     """
@@ -22,19 +23,27 @@ def setup_alert(ucc_smartx_selenium_helper):
         if not setup_alert.first_execution:
             return
         AlertPage(ucc_smartx_selenium_helper, None, open_page=False)
-        intro_popup = Button(ucc_smartx_selenium_helper.browser, Selector(select=".modal-footer .btn-save"))
+        intro_popup = Button(
+            ucc_smartx_selenium_helper.browser,
+            Selector(select=".modal-footer .btn-save"),
+        )
         intro_popup.wait_to_be_clickable()
         intro_popup.click()
         setup_alert.first_execution = False
 
         # Splunk 8.0.x
         important_changes_coming = Button(
-            ucc_smartx_selenium_helper.browser, 
-            Selector(select='div[data-test-name="python3-notification-modal"] button[data-test="button"][data-appearance="secondary"]'))
+            ucc_smartx_selenium_helper.browser,
+            Selector(
+                select='div[data-test-name="python3-notification-modal"] button[data-test="button"][data-appearance="secondary"]'
+            ),
+        )
         important_changes_coming.wait_to_be_clickable()
         important_changes_coming.click()
     except:
         pass
+
+
 setup_alert.first_execution = True
 
 
@@ -45,15 +54,19 @@ def clean_alert(ucc_smartx_rest_helper):
     alert_page = AlertPage(None, ucc_smartx_rest_helper, open_page=False)
     alert_page.backend_conf.delete_all_stanzas(query="search=test_alert")
 
-class TestAlertActions(UccTester):
 
+class TestAlertActions(UccTester):
     @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     def test_action_in_list(self, ucc_smartx_selenium_helper):
         alert_page = AlertPage(ucc_smartx_selenium_helper, None)
         alert_page.alert_entity.open()
         alert_page.alert_entity.add_action_dropdown.wait_for_values()
-        self.assert_util("Test Alert", alert_page.alert_entity.add_action_dropdown.get_value_list, "in")
+        self.assert_util(
+            "Test Alert",
+            alert_page.alert_entity.add_action_dropdown.get_value_list,
+            "in",
+        )
 
     @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
@@ -63,7 +76,9 @@ class TestAlertActions(UccTester):
         alert_page.alert_entity.add_action_dropdown.wait_for_values()
         alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
 
-        self.assert_util(alert_page.action_entity.table_list.list_of_values, ["incident", "problem"])  
+        self.assert_util(
+            alert_page.action_entity.table_list.list_of_values, ["incident", "problem"]
+        )
 
     @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
@@ -75,11 +90,13 @@ class TestAlertActions(UccTester):
 
         alert_page.action_entity.account.select("test_input")
         alert_page.action_entity.account.wait_for_values()
-        self.assert_util(alert_page.action_entity.account.get_value, "test_input") 
+        self.assert_util(alert_page.action_entity.account.get_value, "test_input")
         alert_page.action_entity.account.cancel_selected_value()
         alert_page.action_entity.account.wait_for_values()
         self.assert_util(alert_page.action_entity.account.get_value, "test_input", "!=")
-        self.assert_util("test_input", alert_page.action_entity.account.list_of_values, "in")
+        self.assert_util(
+            "test_input", alert_page.action_entity.account.list_of_values, "in"
+        )
 
     @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
@@ -87,7 +104,7 @@ class TestAlertActions(UccTester):
         alert_page = AlertPage(ucc_smartx_selenium_helper, None)
         alert_page.alert_entity.open()
         alert_page.alert_entity.add_action_dropdown.wait_for_values()
-        alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")        
+        alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
 
         alert_page.action_entity.all_incident.toggle()
         self.assert_util(alert_page.action_entity.all_incident.is_checked, True)
@@ -100,9 +117,11 @@ class TestAlertActions(UccTester):
         alert_page = AlertPage(ucc_smartx_selenium_helper, None)
         alert_page.alert_entity.open()
         alert_page.alert_entity.add_action_dropdown.wait_for_values()
-        alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")        
+        alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
 
-        self.assert_util(alert_page.action_entity.table_list.list_of_values, ["incident", "problem"])
+        self.assert_util(
+            alert_page.action_entity.table_list.list_of_values, ["incident", "problem"]
+        )
         alert_page.action_entity.table_list.select("problem")
         self.assert_util(alert_page.action_entity.table_list.get_value, "problem")
 
@@ -112,7 +131,7 @@ class TestAlertActions(UccTester):
         alert_page = AlertPage(ucc_smartx_selenium_helper, None)
         alert_page.alert_entity.open()
         alert_page.alert_entity.add_action_dropdown.wait_for_values()
-        alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")        
+        alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
 
         alert_page.action_entity.action.select("Delete")
         assert alert_page.action_entity.action.get_value() == "Delete"
@@ -129,7 +148,7 @@ class TestAlertActions(UccTester):
 
         # Add Alert Configs
         alert_page.alert_entity.name.set_value("test_alert")
-        alert_page.alert_entity.search.set_value("| search index=_internal" + '\ue007')
+        alert_page.alert_entity.search.set_value("| search index=_internal" + "\ue007")
 
         # Open Action
         alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
@@ -152,47 +171,39 @@ class TestAlertActions(UccTester):
         alert_page.alert_entity.add_action_dropdown.wait_for_values()
         alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
         self.assert_util(
-            alert_page.action_entity.name.get_help_text,
-            'Please enter your name'
-            )
+            alert_page.action_entity.name.get_help_text, "Please enter your name"
+        )
         self.assert_util(
             alert_page.action_entity.all_incident.get_help_text,
-            'Tick if you want to update all incidents/problems'
-            )
+            "Tick if you want to update all incidents/problems",
+        )
         self.assert_util(
-            alert_page.action_entity.table_list.get_help_text,
-            'Please select the table'
-            )
+            alert_page.action_entity.table_list.get_help_text, "Please select the table"
+        )
         self.assert_util(
             alert_page.action_entity.action.get_help_text,
-            'Select the action you want to perform'
-            )
+            "Select the action you want to perform",
+        )
         self.assert_util(
             alert_page.action_entity.account.get_help_text,
-            'Select the account from the dropdown'
-            )
+            "Select the account from the dropdown",
+        )
 
     @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
-    def test_alert_action_label_entity(self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper):
-        """ Verifies the alert field labels"""
+    def test_alert_action_label_entity(
+        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
+    ):
+        """Verifies the alert field labels"""
         alert_page = AlertPage(ucc_smartx_selenium_helper, None)
         alert_page.alert_entity.open()
         alert_page.alert_entity.add_action_dropdown.wait_for_values()
         alert_page.alert_entity.add_action_dropdown.select_action("Test Alert")
+        self.assert_util(alert_page.action_entity.name.get_input_label, "Name *")
         self.assert_util(
-            alert_page.action_entity.name.get_input_label,
-            'Name *'
-            )
+            alert_page.action_entity.table_list.get_input_label, "Table List"
+        )
+        self.assert_util(alert_page.action_entity.action.get_input_label, "Action:")
         self.assert_util(
-            alert_page.action_entity.table_list.get_input_label,
-            'Table List'
-            )
-        self.assert_util(
-            alert_page.action_entity.action.get_input_label,
-            'Action:'
-            )
-        self.assert_util(
-            alert_page.action_entity.account.get_input_label,
-            'Select Account *'
-            ) 
+            alert_page.action_entity.account.get_input_label, "Select Account *"
+        )
