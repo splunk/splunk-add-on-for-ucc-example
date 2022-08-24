@@ -1,0 +1,2 @@
+security_content/tests/cloud/o365_add_app_role_assignment_grant_user.test.yml
+security_content/tests/cloud/abnormally_high_number_of_cloud_infrastructure_api_calls.test.yml
