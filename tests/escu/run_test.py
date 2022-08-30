@@ -43,4 +43,4 @@ for test_case in results:
 
 xml = JUnitXml()
 xml.add_testsuite(test_suite)
-xml.write("escu-test-result-4.xml")
+xml.write("escu-test-result.xml")
