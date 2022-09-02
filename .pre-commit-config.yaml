@@ -11,7 +11,6 @@ repos:
       - id: check-toml
       - id: check-json
       - id: end-of-file-fixer
-        exclude: ^(tests/requirement_test/logs)
         exclude: ^(tests/escu/.escu_detections)
   - repo: https://github.com/psf/black
     rev: 22.3.0
