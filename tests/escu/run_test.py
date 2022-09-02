@@ -44,5 +44,3 @@ xml = JUnitXml()
 xml.add_testsuite(test_suite)
 xml.write("test-result.xml")
 
-
-
