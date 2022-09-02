@@ -40,9 +40,9 @@ for test_case in results:
         er.text = json.dumps("Check attack_range.log file for more details")
         tc.result = [er]
         test_suite.add_testcase(tc)
-
 xml = JUnitXml()
 xml.add_testsuite(test_suite)
 xml.write("test-result.xml")
+
 
 
