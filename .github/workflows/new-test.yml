@@ -4,9 +4,7 @@ on:
   pull_request:
     branches:
       - "**"
-  label:
-    types:
-      - created
+    
 
 jobs:
   build:
