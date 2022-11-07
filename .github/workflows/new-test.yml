@@ -20,3 +20,12 @@ jobs:
         echo "running test"
         sleep 300
         echo "End"
+  test:
+    if: ${{ github.event.label.name != 'preserve_infra' }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run tests
+      run: |
+        echo "running test"
+        sleep 300
+        echo "End"
