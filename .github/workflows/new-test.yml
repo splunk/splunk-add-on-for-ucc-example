@@ -11,4 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Run tests
-      run: echo running tests
+      run: |
+        echo "running test"
+        sleep 300
+        echo "End"
