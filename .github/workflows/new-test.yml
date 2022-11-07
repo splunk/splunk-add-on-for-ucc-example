@@ -1,40 +1,40 @@
-name: Run Tests
+# name: Run Tests
 
-on:
-  pull_request:
-    branches:
-      - "**"
-    types:
-      - opened
-      - synchronize
-      - labeled
+# on:
+#   pull_request:
+#     branches:
+#       - "**"
+#     types:
+#       - opened
+#       - synchronize
+#       - labeled
 
-jobs:
-  build:
-    if: ${{ github.event.label.name == 'preserve_infra' }}
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run tests
-      run: |
-        echo "running test"
-        echo ${{ github.event.label.name }}
-        if [[ '${{ github.event.label.name }}' == 'preserve_infra' ]];
-        then
-          echo "If success"
-        fi
-        echo "End"
-  test:
-    if: ${{ github.event.label.name != 'preserve_infra' }}
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run tests
-      run: |
-        echo "running test"
-        if [[ '${{ github.event.label.name }}' == 'preserve_infra' ]];
-        then
-          echo "If success"
-        else
-          echo "Else success"
-        fi
-        sleep 60
-        echo "End"
+# jobs:
+#   build:
+#     if: ${{ github.event.label.name == 'preserve_infra' }}
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Run tests
+#       run: |
+#         echo "running test"
+#         echo ${{ github.event.label.name }}
+#         if [[ '${{ github.event.label.name }}' == 'preserve_infra' ]];
+#         then
+#           echo "If success"
+#         fi
+#         echo "End"
+#   test:
+#     if: ${{ github.event.label.name != 'preserve_infra' }}
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Run tests
+#       run: |
+#         echo "running test"
+#         if [[ '${{ github.event.label.name }}' == 'preserve_infra' ]];
+#         then
+#           echo "If success"
+#         else
+#           echo "Else success"
+#         fi
+#         sleep 60
+#         echo "End"
