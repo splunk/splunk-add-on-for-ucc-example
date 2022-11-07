@@ -28,6 +28,7 @@ jobs:
 
   call-workflow-1:
     if: ${{ github.event.label.name == 'preserve_infra' }}
+    runs-on: ubuntu-latest
     steps:
     - name: Run tests
       run: echo running tests
