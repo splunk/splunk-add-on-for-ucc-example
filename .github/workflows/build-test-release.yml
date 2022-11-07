@@ -9,6 +9,8 @@ on:
   pull_request:
     branches:
       - "**"
+    types:
+      - labeled
 
 jobs:
   call-workflow:
