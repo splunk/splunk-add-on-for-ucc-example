@@ -29,7 +29,8 @@ jobs:
       FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
 
   call-workflow-1:
-    if: ${{ github.event.label.name == 'preserve_infra' }}
+    # if: ${{ github.event.label.name == 'preserve_infra' }}
+    if: always()
     runs-on: ubuntu-latest
     steps:
     - name: Run tests
