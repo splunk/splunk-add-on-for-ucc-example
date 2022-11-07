@@ -9,12 +9,9 @@ on:
   pull_request:
     branches:
       - "**"
-    types:
-      - labeled
 
 jobs:
   call-workflow:
-    if: ${{ github.event.label.name != 'preserve_infra' }}
     uses: splunk/addonfactory-workflow-addon-release/.github/workflows/reusable-build-test-release.yml@v2.1
     secrets:
       GH_TOKEN_ADMIN: ${{ secrets.GH_TOKEN_ADMIN }}
@@ -27,11 +24,3 @@ jobs:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       OTHER_TA_REQUIRED_CONFIGS: ${{ secrets.OTHER_TA_REQUIRED_CONFIGS }}
       FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
-
-  call-workflow-1:
-    # if: ${{ github.event.label.name == 'preserve_infra' }}
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run tests
-      run: echo running tests
