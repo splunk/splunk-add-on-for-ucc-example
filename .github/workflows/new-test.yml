@@ -7,7 +7,6 @@ on:
     types:
       - opened
       - synchronize
-      - synchronize
       - labeled
 
 jobs:
@@ -18,7 +17,10 @@ jobs:
     - name: Run tests
       run: |
         echo "running test"
-        sleep 300
+        if [[ github.event.label.name == 'preserve_infra' ]];
+        then
+          echo "If success"
+        fi
         echo "End"
   test:
     if: ${{ github.event.label.name != 'preserve_infra' }}
@@ -27,5 +29,11 @@ jobs:
     - name: Run tests
       run: |
         echo "running test"
-        sleep 300
+        if [[ github.event.label.name == 'preserve_infra' ]];
+        then
+          echo "If success"
+        else
+          echo "Else success"
+        fi
+        sleep 60
         echo "End"
