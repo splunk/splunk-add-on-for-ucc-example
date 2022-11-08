@@ -17,6 +17,7 @@ on:
 
 jobs:
   call-workflow:
+    if: ${{ github.event.action != 'labeled' || github.event.label.name == 'preserve_infra' }}
     uses: splunk/addonfactory-workflow-addon-release/.github/workflows/reusable-build-test-release.yml@check-label
     secrets:
       GH_TOKEN_ADMIN: ${{ secrets.GH_TOKEN_ADMIN }}
