@@ -14,7 +14,7 @@ on:
       - reopened
       - synchronize
       - labeled
-  pull_request_comment:
+      - issue_comment
 
 jobs:
   call-workflow:
