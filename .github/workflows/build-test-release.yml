@@ -32,9 +32,9 @@ jobs:
       FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
 
   new-workflow:
+    runs-on: ubuntu-latest
     steps:
     - name: check changes
-      runs-on: ubuntu-latest
       shell: bash
       run: |
         echo ${{ github.event.changes }}
