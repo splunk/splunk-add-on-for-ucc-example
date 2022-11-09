@@ -32,7 +32,7 @@ jobs:
       FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
 
   new-workflow:
-    setps:
+    steps:
     - name: check changes
       runs-on: ubuntu-latest
       shell: bash
