@@ -14,7 +14,8 @@ on:
       - reopened
       - synchronize
       - labeled
-      - issue_comment
+  issue_comment:
+      - created
 
 jobs:
   call-workflow:
