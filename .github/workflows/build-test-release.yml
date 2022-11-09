@@ -15,6 +15,7 @@ on:
       - synchronize
       - labeled
   issue_comment:
+    types:
       - created
 
 jobs:
