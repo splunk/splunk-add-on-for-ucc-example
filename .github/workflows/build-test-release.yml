@@ -6,15 +6,15 @@ on:
       - "develop"
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
-  pull_request:
-    branches:
-      - "**"
-    types:
-      - opened
-      - reopened
-      - synchronize
-      - labeled
-  issue_comment:
+  # pull_request:
+  #   branches:
+  #     - "**"
+  #   types:
+  #     - opened
+  #     - reopened
+  #     - synchronize
+  #     - labeled
+  pull_request_review_comment:
     types:
       - created
 
