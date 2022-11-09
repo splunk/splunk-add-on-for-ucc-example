@@ -31,15 +31,3 @@ jobs:
       OTHER_TA_REQUIRED_CONFIGS: ${{ secrets.OTHER_TA_REQUIRED_CONFIGS }}
       FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
 
-  new-workflow:
-    runs-on: ubuntu-latest
-    steps:
-    - name: check changes
-      shell: bash
-      run: |
-        echo "---------"
-        echo "${{ github.event.pull_request.body }}" >> body.txt
-        echo "---------"
-        echo ${{ github.event.pull_request.title }}
-        echo "---------"
-        cat body.txt
