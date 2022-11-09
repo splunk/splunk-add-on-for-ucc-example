@@ -38,7 +38,7 @@ jobs:
       shell: bash
       run: |
         echo "---------"
-        ${{ github.event.pull_request.body }} >> body.txt
+        echo "${{ github.event.pull_request.body }}" >> body.txt
         echo "---------"
         echo ${{ github.event.pull_request.title }}
         echo "---------"
