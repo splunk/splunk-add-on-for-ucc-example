@@ -1,0 +1,11 @@
+security_content/tests/cloud/o365_add_app_role_assignment_grant_user.test.yml
+security_content/tests/cloud/o365_added_service_principal.test.yml
+security_content/tests/cloud/o365_bypass_mfa_via_trusted_ip.test.yml
+security_content/tests/cloud/o365_disable_mfa.test.yml
+security_content/tests/cloud/o365_excessive_authentication_failures_alert.test.yml
+security_content/tests/cloud/o365_excessive_sso_logon_errors.test.yml
+security_content/tests/cloud/o365_new_federated_domain_added.test.yml
+security_content/tests/cloud/o365_pst_export_alert.test.yml
+security_content/tests/cloud/o365_suspicious_admin_email_forwarding.test.yml
+security_content/tests/cloud/o365_suspicious_rights_delegation.test.yml
+security_content/tests/cloud/o365_suspicious_user_email_forwarding.test.yml
