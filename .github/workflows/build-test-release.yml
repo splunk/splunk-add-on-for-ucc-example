@@ -9,10 +9,16 @@ on:
   pull_request:
     branches:
       - "**"
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
 
 jobs:
   call-workflow:
-    uses: splunk/addonfactory-workflow-addon-release/.github/workflows/reusable-build-test-release.yml@v2.0
+    if: ${{ github.event.action != 'labeled' || github.event.label.name == 'preserve_infra' }}
+    uses: splunk/addonfactory-workflow-addon-release/.github/workflows/reusable-build-test-release.yml@ci/delay-destroy
     secrets:
       GH_TOKEN_ADMIN: ${{ secrets.GH_TOKEN_ADMIN }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
