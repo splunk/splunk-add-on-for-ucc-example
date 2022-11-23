@@ -16,7 +16,7 @@ pytest = "^6.2.4"
 pytest-splunk-addon = "^1.11.4"
 pytest-expect = "^1.1.0"
 pytest-splunk-addon-ui-smartx = "2.1"
-pytest-rerunfailures = "^10.1"
+pytest-rerunfailures = "^10.3"
 splunk-packaging-toolkit = "^1.0.1"
 
 [build-system]
