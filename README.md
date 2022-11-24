@@ -32,3 +32,4 @@ Using external Splunk instance with Eventgen and app pre-installed
 pytest --splunk-type=external --splunk-host=something --splunk-user=foo --splunk-password=something
 ```
 
+Edit for rerun
