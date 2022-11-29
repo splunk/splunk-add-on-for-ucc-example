@@ -18,7 +18,7 @@ on:
 jobs:
   call-workflow:
     if: ${{ github.event.action != 'labeled' || github.event.label.name == 'preserve_infra' }}
-    uses: splunk/addonfactory-workflow-addon-release/.github/workflows/reusable-build-test-release.yml@ci/destroy-delay
+    uses: splunk/addonfactory-workflow-addon-release/.github/workflows/reusable-build-test-release.yml@ci/replace-kustomization
     secrets:
       GH_TOKEN_ADMIN: ${{ secrets.GH_TOKEN_ADMIN }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
