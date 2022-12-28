@@ -108,5 +108,4 @@ class TestAccount(UccTester):
     ):
         """Verifies the default number of rows in the table"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        assert False
         self.assert_util(account.table.get_row_count, 0)
