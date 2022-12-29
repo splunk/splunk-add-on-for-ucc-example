@@ -1,0 +1,6 @@
+check_for_auto_update_features:
+  comment: 'There is no such auto update features happening'
+check_for_known_vulnerabilities_in_third_party_libraries:
+  comment: 'The Add-on does not send data to 3rd party services. However, there are some Workflow actions which calls third party URLs but that does not send full events to another service'
+check_for_reverse_shells:
+  comment: 'No such instance found'
