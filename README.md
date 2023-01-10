@@ -31,3 +31,5 @@ Using external Splunk instance with Eventgen and app pre-installed
 ```bash
 pytest --splunk-type=external --splunk-host=something --splunk-user=foo --splunk-password=something
 ```
+
+#Added line temporary for checking if namespaces are deleted
