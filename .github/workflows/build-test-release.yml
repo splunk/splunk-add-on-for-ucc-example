@@ -9,11 +9,26 @@ on:
   pull_request:
     branches:
       - "**"
+    types:
+      - opened      # By default, a workflow runs when a pull_request event's activity is opened, synchronize, or reopened, if the types are not specified.
+      - reopened    # If types are specificed, the workflow will trigger only on those event types.
+      - synchronize # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#pull_request
+      - labeled     # Added opened, synchronize, reopened, and labeled to run workflow on all four event.
+{% if schedule_run is defined %}
+  schedule:
+    - cron: '0 2 * * *'
+{% endif %}
 
 jobs:
   call-workflow:
-    uses: splunk/addonfactory-workflow-addon-release/.github/workflows/reusable-build-test-release.yml@v2.0
-    secrets:
+    if: ${{ github.event.action != 'labeled' || github.event.label.name == 'preserve_infra' }}
+    uses: splunk/addonfactory-workflow-addon-release/.github/workflows/reusable-build-test-release.yml@feature/preserve-infra
+{% if markers is defined %}
+    with:
+      marker: >-
+        ["configuration", "data_collection_flaky", "data_collection_1", "data_collection_2", "data_collection_3", "data_collection_4", "data_collection_5", "data_collection_6"]
+{% endif %}
+{%- raw %}    secrets:
       GH_TOKEN_ADMIN: ${{ secrets.GH_TOKEN_ADMIN }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       SEMGREP_PUBLISH_TOKEN: ${{ secrets.SEMGREP_PUBLISH_TOKEN }}
@@ -24,3 +39,4 @@ jobs:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       OTHER_TA_REQUIRED_CONFIGS: ${{ secrets.OTHER_TA_REQUIRED_CONFIGS }}
       FOSSA_API_KEY: ${{ secrets.FOSSA_API_KEY }}
+{% endraw %}

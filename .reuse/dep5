@@ -71,3 +71,7 @@ License: LicenseRef-Splunk-8-2021
 Files: package.json
 Copyright: $YEAR $NAME <$CONTACT>
 License: LicenseRef-Splunk-8-2021
+
+Files: renovate.json
+Copyright: $YEAR $NAME <$CONTACT>
+License: LicenseRef-Splunk-8-2021
