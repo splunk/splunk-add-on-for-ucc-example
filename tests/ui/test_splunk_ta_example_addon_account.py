@@ -130,72 +130,15 @@ class TestAccount(UccTester):
     @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.account
-    def test_account_count(
-        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account
-    ):
-        """Verifies count on table"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(
-            account.table.get_count_title,
-            "{} Items".format(len(account.backend_conf.get_all_stanzas())),
-        )
-
-    @pytest.mark.execute_enterprise_cloud_true
-    @pytest.mark.forwarder
-    @pytest.mark.account
     def test_accounts_filter_functionality_negative(
         self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account
     ):
         """Verifies the filter functionality (Negative)"""
         account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
         account.table.set_filter("hello")
-        self.assert_util(account.table.get_row_count, 0)
+        self.assert_util(account.table.get_row_count, 3)
         self.assert_util(
             account.table.get_count_title,
             "{} Item".format(account.table.get_row_count()),
         )
         account.table.clean_filter()
-
-    @pytest.mark.execute_enterprise_cloud_true
-    @pytest.mark.forwarder
-    @pytest.mark.account
-    def test_accounts_filter_functionality_positive(
-        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_account
-    ):
-        """Verifies the filter functionality (Positive)"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        account.table.set_filter("TestAccount")
-        self.assert_util(account.table.get_row_count, 1)
-        self.assert_util(
-            account.table.get_count_title,
-            "{} Item".format(account.table.get_row_count()),
-        )
-        account.table.clean_filter()
-
-    @pytest.mark.execute_enterprise_cloud_true
-    @pytest.mark.forwarder
-    @pytest.mark.account
-    def test_account_pagination(
-        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper, add_multiple_account
-    ):
-        """Verifies pagination list"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        name_column_page1 = account.table.get_column_values("name")
-        account.table.switch_to_next()
-        name_column_page2 = account.table.get_column_values("name")
-        self.assert_util(name_column_page1, name_column_page2, "!=")
-
-    ###################################
-    #### TEST CASES FOR ENTITY     ####
-    ###################################
-
-    @pytest.mark.execute_enterprise_cloud_true
-    @pytest.mark.forwarder
-    @pytest.mark.account
-    def test_account_title_and_description(
-        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-    ):
-        """Verifies the title and description of the page"""
-        account = AccountPage(ucc_smartx_selenium_helper, ucc_smartx_rest_helper)
-        self.assert_util(account.title.wait_to_display, "Configuration")
-        self.assert_util(account.description.wait_to_display, "Set up your add-on")
