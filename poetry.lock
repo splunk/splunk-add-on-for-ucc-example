@@ -200,7 +200,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 name = "httplib2"
 version = "0.21.0"
 description = "A comprehensive HTTP client library."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
@@ -414,7 +414,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 name = "pyparsing"
 version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6.8"
 
@@ -428,6 +428,14 @@ description = "Persistent/Functional/Immutable data structures"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "pysocks"
+version = "1.7.1"
+description = "A Python SOCKS client module. See https://github.com/Anorov/PySocks for more information."
+category = "main"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "pytest"
@@ -739,7 +747,7 @@ splunk-sdk = ">=1.6.18,<2.0.0"
 
 [[package]]
 name = "splunktalib"
-version = "2.2.6"
+version = "3.0.3"
 description = "Supporting library for Splunk Add-ons"
 category = "main"
 optional = false
@@ -747,21 +755,23 @@ python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
 defusedxml = ">=0,<1"
-httplib2 = ">=0,<1"
+requests = ">=2.26.0,<3.0.0"
 sortedcontainers = ">=2,<3"
 
 [[package]]
 name = "splunktaucclib"
-version = "5.0.7"
+version = "6.0.7"
 description = ""
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 
 [package.dependencies]
-solnlib = ">=4.0.0,<5.0.0"
-splunk-sdk = ">=1.6.16,<2.0.0"
-splunktalib = ">=2.0.0,<3.0.0"
+PySocks = ">=1.7.1,<2.0.0"
+requests = ">=2.26.0,<3.0.0"
+solnlib = ">=4.7.0,<5.0.0"
+splunk-sdk = ">=1.6.18"
+splunktalib = ">=3.0.0,<4.0.0"
 
 [[package]]
 name = "text-unidecode"
@@ -878,7 +888,7 @@ testing = ["big-o", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "b5c72fb0699b85dfebbf68508490e3b085765fdf070c46b6dd2da982f0c8d68d"
+content-hash = "fc44790d6c9c390135d0508949bac27acc721dcab317b94b0db63878bee17011"
 
 [metadata.files]
 addonfactory-splunk-conf-parser-lib = [
@@ -1266,6 +1276,11 @@ pyrsistent = [
     {file = "pyrsistent-0.19.3-py3-none-any.whl", hash = "sha256:ccf0d6bd208f8111179f0c26fdf84ed7c3891982f2edaeae7422575f47e66b64"},
     {file = "pyrsistent-0.19.3.tar.gz", hash = "sha256:1a2994773706bbb4995c31a97bc94f1418314923bd1048c6d964837040376440"},
 ]
+pysocks = [
+    {file = "PySocks-1.7.1-py27-none-any.whl", hash = "sha256:08e69f092cc6dbe92a0fdd16eeb9b9ffbc13cadfe5ca4c7bd92ffb078b293299"},
+    {file = "PySocks-1.7.1-py3-none-any.whl", hash = "sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5"},
+    {file = "PySocks-1.7.1.tar.gz", hash = "sha256:3f8804571ebe159c380ac6de37643bb4685970655d3bba243530d6558b799aa0"},
+]
 pytest = [
     {file = "pytest-6.2.5-py3-none-any.whl", hash = "sha256:7310f8d27bc79ced999e760ca304d69f6ba6c6649c0b60fb0e04a4a77cacc134"},
     {file = "pytest-6.2.5.tar.gz", hash = "sha256:131b36680866a76e6781d13f101efb86cf674ebb9762eb70d3082b6f29889e89"},
@@ -1395,12 +1410,12 @@ splunksplwrapper = [
     {file = "splunksplwrapper-1.0.1.tar.gz", hash = "sha256:d6102ab03fea642ed445adf38f11a151668e07a1a2dd5f2c1ff62d8c5626414e"},
 ]
 splunktalib = [
-    {file = "splunktalib-2.2.6-py3-none-any.whl", hash = "sha256:bba70ac7407cdedcb45437cb152ac0e43aae16b978031308e6bec548d3543119"},
-    {file = "splunktalib-2.2.6.tar.gz", hash = "sha256:8d58d697a842319b4c675557b0cc4a9c68e8d909389a98ed240e2bb4ff358d31"},
+    {file = "splunktalib-3.0.3-py3-none-any.whl", hash = "sha256:828e5a7d3874239e1f36bf1c8c10a985b73b9307857bf01112438bd1cbd608e9"},
+    {file = "splunktalib-3.0.3.tar.gz", hash = "sha256:5392f520050d3edcf594badb946e53e3b8fda84a1dc0bec68585f9fae0b20037"},
 ]
 splunktaucclib = [
-    {file = "splunktaucclib-5.0.7-py3-none-any.whl", hash = "sha256:3ddc1276c41c809c16ae810cb20e9eb4abd2f94dba5ddf460cf9c49b50f659ac"},
-    {file = "splunktaucclib-5.0.7.tar.gz", hash = "sha256:a1e3f710fcb0b24dff8913e6e5df0d36f0693b7f3ed7c0a9a43b08372b08eb90"},
+    {file = "splunktaucclib-6.0.7-py3-none-any.whl", hash = "sha256:3970db9d8ba0a0427b7a5d1df6e00a695946016ef7bc89f9ec3c32ebd03c9d45"},
+    {file = "splunktaucclib-6.0.7.tar.gz", hash = "sha256:d8ade282a06560a1c4c578aafbd2cfde037e4e0673a18cb24830a2b3be8c88a6"},
 ]
 text-unidecode = [
     {file = "text-unidecode-1.3.tar.gz", hash = "sha256:bad6603bb14d279193107714b288be206cac565dfa49aa5b105294dd5c4aab93"},
