@@ -32,3 +32,25 @@ check_documented_included_open_source:
   comment: 'Y'
 check_requires_access_to_files_outside_apps_dir:
   comment: 'Y'
+check_for_file_and_directory_access:
+  comment: 'Y'
+check_for_generic_operating_system_services:
+  comment: 'Y'
+check_python_untrusted_xml_functions:
+  comment: 'Y'
+check_for_data_compression_and_archiving:
+  comment: 'Y'
+check_built_in_import_function:
+  comment: 'Y'
+check_for_importing_modules:
+  comment: 'Y'
+check_for_environment_variable_use_in_python:
+  comment: 'Y'
+check_for_builtin_functions:
+  comment: 'Y'
+check_for_executable_flag:
+  comment: 'Y'
+check_for_interprocess_communication_and_networking:
+  comment: 'Y'
+check_for_plain_text_credentials_in_python:
+  comment: 'Y'
