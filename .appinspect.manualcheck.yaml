@@ -1,0 +1,60 @@
+check_for_remote_code_execution_in_javascript:
+  comment: 'Y'
+check_external_data_sources:
+  comment: 'Y'
+check_splunk_logo:
+  comment: 'Y'
+check_hard_coded_paths:
+  comment: 'Y'
+check_editing_and_proofreading:
+  comment: 'Y'
+check_install_on_claimed_targets:
+  comment: 'Y'
+check_link_includes_contact_info:
+  comment: 'Y'
+check_for_auto_update_features:
+  comment: 'Y'
+check_for_known_vulnerabilities_in_third_party_libraries:
+  comment: 'Y'
+check_for_reverse_shells:
+  comment: 'Y'
+check_authorization_credentials:
+  comment: 'Y'
+check_embedded_links:
+  comment: 'Y'
+check_fs_writes:
+  comment: 'Y'
+check_for_stacktrace_returned_to_user:
+  comment: 'Y'
+check_dependencies:
+  comment: 'Y'
+check_documented_included_open_source:
+  comment: 'Y'
+check_requires_access_to_files_outside_apps_dir:
+  comment: 'Y'
+check_for_file_and_directory_access:
+  comment: 'Y'
+check_for_generic_operating_system_services:
+  comment: 'Y'
+check_python_untrusted_xml_functions:
+  comment: 'Y'
+check_for_data_compression_and_archiving:
+  comment: 'Y'
+check_built_in_import_function:
+  comment: 'Y'
+check_for_importing_modules:
+  comment: 'Y'
+check_for_environment_variable_use_in_python:
+  comment: 'Y'
+check_for_builtin_functions:
+  comment: 'Y'
+check_for_executable_flag:
+  comment: 'Y'
+check_for_interprocess_communication_and_networking:
+  comment: 'Y'
+check_for_plain_text_credentials_in_python:
+  comment: 'Y'
+check_for_offensive_material:
+  comment: 'Y'
+check_for_binary_files_without_source_code:
+  comment: 'Y'

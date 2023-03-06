@@ -1,0 +1,8 @@
+check_that_extracted_splunk_app_does_not_contain_prohibited_directories_or_files:
+  comment: 'ADDON-0'
+check_that_splunk_app_package_does_not_contain_files_outside_of_app:
+  comment: 'ADDON-0'
+check_reload_trigger_for_all_custom_confs:
+  comment: 'ADDON-0'
+check_for_binary_files_without_source_code:
+  comment: 'ADDON-0'

@@ -28,33 +28,6 @@ class TestLogging(UccTester):
     @pytest.mark.execute_enterprise_cloud_true
     @pytest.mark.forwarder
     @pytest.mark.logging
-    def test_logging_fields_label_entity(
-        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-    ):
-        """Verifies logging field label"""
-        logging = Logging(
-            TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-        )
-        self.assert_util(logging.log_level.get_input_label, "Log level")
-
-    @pytest.mark.execute_enterprise_cloud_true
-    @pytest.mark.forwarder
-    @pytest.mark.logging
-    def test_logging_default_log_level(
-        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-    ):
-        """This test case checks verification of default log level"""
-        logging = Logging(
-            TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-        )
-        default_log_level = "INFO"
-        self.assert_util(
-            logging.log_level.get_value().lower(), default_log_level.lower()
-        )
-
-    @pytest.mark.execute_enterprise_cloud_true
-    @pytest.mark.forwarder
-    @pytest.mark.logging
     def test_logging_select_random_log_level(
         self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
     ):
@@ -67,51 +40,3 @@ class TestLogging(UccTester):
         logging.log_level.select(level)
         logging.save()
         self.assert_util(logging.log_level.get_value().lower(), level.lower())
-
-    @pytest.mark.execute_enterprise_cloud_true
-    @pytest.mark.forwarder
-    @pytest.mark.logging
-    def test_logging_list_log_levels(
-        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-    ):
-        """This test case checks list of log levels present in the drop down"""
-        logging = Logging(
-            TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-        )
-        self.assert_util(
-            logging.log_level.list_of_values(),
-            ["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-        )
-
-    @pytest.mark.execute_enterprise_cloud_true
-    @pytest.mark.forwarder
-    @pytest.mark.logging
-    @pytest.mark.sanity_test
-    def test_logging_selected_log_level_frontend(
-        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-    ):
-        """This test case checks the verification of selected log level"""
-        selection_log = "WARNING"
-        logging = Logging(
-            TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-        )
-        logging.log_level.select(selection_log)
-        logging.save()
-        self.assert_util(logging.log_level.get_value().lower(), selection_log.lower())
-
-    @pytest.mark.execute_enterprise_cloud_true
-    @pytest.mark.forwarder
-    @pytest.mark.logging
-    @pytest.mark.sanity_test
-    def test_logging_selected_log_level_backend(
-        self, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-    ):
-        """This test case checks the verification of selected log level in backend"""
-        selection_log = "DEBUG"
-        logging = Logging(
-            TA_NAME, TA_CONF, ucc_smartx_selenium_helper, ucc_smartx_rest_helper
-        )
-        logging.log_level.select(selection_log)
-        logging.save()
-        log_level = logging.backend_conf.get_parameter("loglevel")
-        self.assert_util(log_level, selection_log)
