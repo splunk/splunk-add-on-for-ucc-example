@@ -54,3 +54,5 @@ check_for_interprocess_communication_and_networking:
   comment: 'Y'
 check_for_plain_text_credentials_in_python:
   comment: 'Y'
+check_for_offensive_material:
+  comment: 'Y'
