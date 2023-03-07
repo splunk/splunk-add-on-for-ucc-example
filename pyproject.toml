@@ -11,7 +11,7 @@ splunktaucclib = "^6.0.7"
 
 [tool.poetry.dev-dependencies]
 lovely-pytest-docker = "^0.2.1"
-pytest = "^6.2.4"
+pytest = "^7.2.2"
 pytest-expect = "^1.1.0"
 pytest-rerunfailures = "^10.1"
 splunk-packaging-toolkit = "^1.0.1"
