@@ -17,7 +17,7 @@ pytest-rerunfailures = "^10.1"
 splunk-packaging-toolkit = "^1.0.1"
 pytest-splunk-addon = "^5.0.0"
 pytest-splunk-addon-ui-smartx = "^2.3.1"
-splunk-add-on-ucc-framework = "5.10.1"
+splunk-add-on-ucc-framework = "5.27.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
