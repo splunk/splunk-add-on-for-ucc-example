@@ -3,10 +3,17 @@
     "config:base",
     "group:all",
     ":semanticCommitTypeAll(chore)",
-    "schedule:earlyMondays",
-    ":disableDependencyDashboard"
+    ":prHourlyLimit2"
   ],
+  "reviewers": ["team:products-gdi-addons-adminrepo"],
+  "schedule": ["every 2 weeks on Sunday"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["every 2 weeks on Sunday"]
+  },
   "enabledManagers": ["poetry", "npm", "gradle"],
+  "rangeStrategy": "pin",
+  "prConcurrentLimit": 5,
   "packageRules": [
     {
       "matchPackageNames": ["urllib3"],
